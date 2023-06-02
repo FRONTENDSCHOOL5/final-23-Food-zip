@@ -4,7 +4,7 @@
    <tr>
      <td align="center">
        <a href="https://github.com/easyxxu">
-       <img src="https://avatars.githubusercontent.com/u/107910342?v=4" width="100px;" alt=""/><br />
+       <img src="https://avatars.githubusercontent.com/u/107910342?v=4" width="150px;" alt=""/><br />
        <sub>
          <b>이지수</b>
          <br>
@@ -15,7 +15,7 @@
      </td>
      <td align="center">
        <a href="https://github.com/yyuli">
-       <img src="https://avatars.githubusercontent.com/u/119276010?v=4" width="100px;" alt=""/><br />
+       <img src="https://avatars.githubusercontent.com/u/119276010?v=4" width="150px;" alt=""/><br />
        <sub>
          <b>김율이</b>
          <br>
@@ -26,7 +26,7 @@
      </td>
      <td align="center">
        <a href="https://github.com/shyoun94">
-       <img src="https://avatars.githubusercontent.com/u/38209666?v=4?s=100" width="100px;" alt=""/><br />
+       <img src="https://avatars.githubusercontent.com/u/38209666?v=4?s=100" width="150px;" alt=""/><br />
        <sub>
          <b>윤선호</b>
          <br>
@@ -37,7 +37,7 @@
      </td>
      <td align="center">
        <a href="https://github.com/eunjoo0311">
-       <img src="https://avatars.githubusercontent.com/u/120389195?v=4" width="100px;" alt=""/><br />
+       <img src="https://avatars.githubusercontent.com/u/120389195?v=4" width="150px;" alt=""/><br />
        <sub>
          <b>이은주</b>
          <br>
