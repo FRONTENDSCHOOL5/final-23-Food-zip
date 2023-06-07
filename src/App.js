@@ -1,11 +1,13 @@
-import Header from "./components/Header/Header";
+import ProfileInformation from "./components/Profile/ProfileInformation";
+// import RecommendList from "./components/Profile/RecommendList";
 import { GlobalStyle } from "./styles/Globalstyle";
 
 function App() {
   return (
     <div>
       <GlobalStyle />
-      <Header type="home" />
+      <ProfileInformation/>
+      {/* <RecommendList/> */}
     </div>
   );
 }
