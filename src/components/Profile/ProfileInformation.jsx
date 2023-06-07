@@ -9,6 +9,8 @@ const ProfileInfoWrapDiv = styled.div`
   width: 390px;
   padding: 78px 55px 26px;
   box-sizing: border-box;
+  margin-bottom: 6px;
+  box-shadow: inset 0 0 0 1px orange;
 `;
 
 const InformationTopDiv = styled.div`
