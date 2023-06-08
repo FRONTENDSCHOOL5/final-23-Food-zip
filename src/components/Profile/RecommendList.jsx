@@ -8,6 +8,7 @@ const RecommendWrapDiv = styled.div`
   padding: 20px 16px;
   overflow: auto;
   box-sizing: border-box;
+  background-color: white;
   /* -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;

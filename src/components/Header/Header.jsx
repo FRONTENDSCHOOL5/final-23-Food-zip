@@ -9,7 +9,6 @@ const HeaderWrap = styled.header`
   top: 0;
   z-index: 1;
   width: 100%;
-  background-color: #ffffff;
 `;
 
 const HeaderLayoutDiv = styled.div`

@@ -10,6 +10,7 @@ const ProfileInfoWrapDiv = styled.div`
   padding: 78px 55px 26px;
   box-sizing: border-box;
   margin-bottom: 6px;
+  background-color: white;
   box-shadow: inset 0 0 0 1px orange;
 `;
 

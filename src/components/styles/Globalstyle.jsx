@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   :root {
     font-family: 'SUIT', sans-serif;
+    background-color: #dbdbdb;
   }
 
   button {
