@@ -1,3 +1,4 @@
+import Alert from "./components/Modal/Alert";
 import Modal from "./components/Modal/Modal";
 import ProfileInformation from "./components/Profile/ProfileInformation";
 import RecommendList from "./components/Profile/RecommendList";
@@ -7,11 +8,11 @@ function App() {
   return (
     <div>
       <GlobalStyle />
-      <ProfileInformation/>
-      <RecommendList/>
-      <Modal type="modification" />
+      <ProfileInformation />
+      <RecommendList />
+      <Modal type="setting" />
+      <Alert type="logout" />
     </div>
   );
 }
 export default App;
- 
