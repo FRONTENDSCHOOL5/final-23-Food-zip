@@ -24,7 +24,7 @@ const InformationTopDiv = styled.div`
 const FollowCommonSpan = css`
   font-size: 18px;
   font-weight: 600;
-`;
+`; 
 
 const FollowCommonP = css`
   font-size: 10px;
@@ -116,7 +116,7 @@ const ImgCircleBtn = styled.button`
 export default function Profile() {
   return (
     <div>
-      <Header type="profile" />
+      <Header type="save" />
       <ProfileInfoWrapDiv>
         <InformationTopDiv>
           <div>
