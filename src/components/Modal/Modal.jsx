@@ -18,50 +18,55 @@ const ModalLineSpan = styled.span`
   margin: 0 auto 16px;
 `;
 
-const ModalTextP = styled.p`
+const ModalTextBtn = styled.button`
+  display: block;
   padding: 14px 0;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
 `;
 
 export default function Modal({ type }) {
   const UI = {
     setting: (
       <ModalWrapDiv>
-        <ModalLineSpan></ModalLineSpan>
-        <ModalTextP>설정 및 개인정보</ModalTextP>
-        <ModalTextP>로그아웃</ModalTextP>
+        <ModalLineSpan />
+        <ModalTextBtn>설정 및 개인정보</ModalTextBtn>
+        <ModalTextBtn>로그아웃</ModalTextBtn>
       </ModalWrapDiv>
     ),
     modification: (
       <ModalWrapDiv>
-        <ModalLineSpan></ModalLineSpan>
-        <ModalTextP>삭제</ModalTextP>
-        <ModalTextP>수정</ModalTextP>
+        <ModalLineSpan />
+        <ModalTextBtn>삭제</ModalTextBtn>
+        <ModalTextBtn>수정</ModalTextBtn>
       </ModalWrapDiv>
     ),
     product: (
       <ModalWrapDiv>
-        <ModalLineSpan></ModalLineSpan>
-        <ModalTextP>삭제</ModalTextP>
-        <ModalTextP>수정</ModalTextP>
-        <ModalTextP>웹사이트에서 상품 보기</ModalTextP>
+        <ModalLineSpan />
+        <ModalTextBtn>삭제</ModalTextBtn>
+        <ModalTextBtn>수정</ModalTextBtn>
+        <ModalTextBtn>웹사이트에서 상품 보기</ModalTextBtn>
       </ModalWrapDiv>
     ),
     report: (
       <ModalWrapDiv>
-        <ModalLineSpan></ModalLineSpan>
-        <ModalTextP>신고하기</ModalTextP>
+        <ModalLineSpan />
+        <ModalTextBtn>신고하기</ModalTextBtn>
       </ModalWrapDiv>
     ),
     delete: (
       <ModalWrapDiv>
-        <ModalLineSpan></ModalLineSpan>
-        <ModalTextP>삭제</ModalTextP>
+        <ModalLineSpan />
+        <ModalTextBtn>삭제</ModalTextBtn>
       </ModalWrapDiv>
     ),
     chat: (
       <ModalWrapDiv>
-        <ModalLineSpan></ModalLineSpan>
-        <ModalTextP>채팅방 나가기</ModalTextP>
+        <ModalLineSpan />
+        <ModalTextBtn>채팅방 나가기</ModalTextBtn>
       </ModalWrapDiv>
     ),
   };

@@ -1,25 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import IconSearch from "../../assets/images/icon-search.svg";
-import IconArrowLeft from "../../assets/images/icon-arrow-left.svg";
-import IconMoreVertical from "../../assets/images/icon-more-vertical.svg";
+import IconSearch from "../../../assets/images/icon-search.svg";
+import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
+import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
 
 const HeaderWrap = styled.header`
   position: fixed;
   top: 0;
-  z-index: 1;
-  width: 100%;
+  z-index: 999;
+  width: 390px;
 `;
 
 const HeaderLayoutDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 390px;
+  width: 100%;
   height: 48px;
   padding: 0px 16px;
   border-bottom: 1px solid #dbdbdb;
   box-sizing: border-box;
+  background-color: white;
 `;
 
 const HeaderTitleP = styled.p`
@@ -27,10 +28,18 @@ const HeaderTitleP = styled.p`
   font-weight: 600;
 `;
 
-const HeaderSearchBtn = styled.button`
-  background-color: transparent;
+const HeaderLeftBtn = styled.button`
   border: 0;
-  padding: 2px 6px;
+  padding: 10px;
+  padding-left: 0;
+  background-color: transparent;
+`;
+
+const HeaderRightBtn = styled.button`
+  border: 0;
+  padding: 10px;
+  padding-right: 0;
+  background-color: transparent;
 `;
 
 const HeaderSearchInp = styled.input`
@@ -49,9 +58,13 @@ const HeaderSearchInp = styled.input`
   }
 `;
 
+const HeaderSpan = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
 const HeaderTextP = styled.p`
   display: inline-block;
-  line-height: 22px;
   margin-left: 8px;
   font-size: 14px;
   font-weight: 600;
@@ -71,34 +84,44 @@ export default function Header({ type, active }) {
     home: (
       <HeaderLayoutDiv>
         <HeaderTitleP>FOODZIP 피드</HeaderTitleP>
-        <HeaderSearchBtn type="button">
+        <HeaderRightBtn type="button">
           <img src={IconSearch} alt="돋보기 아이콘" />
-        </HeaderSearchBtn>
+        </HeaderRightBtn>
       </HeaderLayoutDiv>
     ),
     search: (
       <HeaderLayoutDiv>
-        <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+        <HeaderLeftBtn type="button">
+          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+        </HeaderLeftBtn>
         <HeaderSearchInp type="text" placeholder="계정 검색" />
       </HeaderLayoutDiv>
     ),
     profile: (
       <HeaderLayoutDiv>
-        <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
-        <img src={IconMoreVertical} alt="더보기 아이콘" />
+        <HeaderLeftBtn type="button">
+          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+        </HeaderLeftBtn>
+        <HeaderRightBtn type="button">
+          <img src={IconMoreVertical} alt="더보기 아이콘" />
+        </HeaderRightBtn>
       </HeaderLayoutDiv>
     ),
     followers: (
       <HeaderLayoutDiv>
-        <span>
-          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+        <HeaderSpan>
+          <HeaderLeftBtn type="button">
+            <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+          </HeaderLeftBtn>
           <HeaderTextP>Followers</HeaderTextP>
-        </span>
+        </HeaderSpan>
       </HeaderLayoutDiv>
     ),
     save: (
       <HeaderLayoutDiv>
-        <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+        <HeaderLeftBtn type="button">
+          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+        </HeaderLeftBtn>
         <HeaderSaveBtn type="button" active={active}>
           저장
         </HeaderSaveBtn>
@@ -106,7 +129,9 @@ export default function Header({ type, active }) {
     ),
     upload: (
       <HeaderLayoutDiv>
-        <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+        <HeaderLeftBtn type="button">
+          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+        </HeaderLeftBtn>
         <HeaderSaveBtn type="button" active={active}>
           업로드
         </HeaderSaveBtn>
@@ -114,11 +139,15 @@ export default function Header({ type, active }) {
     ),
     chat: (
       <HeaderLayoutDiv>
-        <span>
-          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+        <HeaderSpan>
+          <HeaderLeftBtn type="button">
+            <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+          </HeaderLeftBtn>
           <HeaderTextP>애월읍 위니브 감귤농장</HeaderTextP>
-        </span>
-        <img src={IconMoreVertical} alt="더보기 아이콘" />
+        </HeaderSpan>
+        <HeaderRightBtn type="button">
+          <img src={IconMoreVertical} alt="더보기 아이콘" />
+        </HeaderRightBtn>
       </HeaderLayoutDiv>
     ),
   };
