@@ -3,16 +3,12 @@ import styled from "styled-components";
 import ListImg from "../../assets/images/list-example.png";
 
 const RecommendWrapDiv = styled.div`
-  width: 390px;
+  width: 100%;
   box-shadow: inset 0 0 0 1px red;
   padding: 20px 16px;
   overflow: auto;
   box-sizing: border-box;
   background-color: white;
-  /* -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  } */
 `;
 
 const RecommendTitleP = styled.p`

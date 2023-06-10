@@ -1,12 +1,12 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Header from "../Header/Header";
+import Header from "../common/Header/Header";
 import ProfileImage from "../../assets/images/basic-profile-lg.svg";
 import IconMessage from "../../assets/images/icon-message-circle.svg";
 import IconShare from "../../assets/images/icon-share.svg";
 
 const ProfileInfoWrapDiv = styled.div`
-  width: 390px;
+  width: 100%;
   padding: 78px 55px 26px;
   box-sizing: border-box;
   margin-bottom: 6px;
@@ -24,7 +24,7 @@ const InformationTopDiv = styled.div`
 const FollowCommonSpan = css`
   font-size: 18px;
   font-weight: 600;
-`; 
+`;
 
 const FollowCommonP = css`
   font-size: 10px;
@@ -90,7 +90,7 @@ const BtnCommon = css`
 const FollowBtn = styled.button`
   ${BtnCommon}
   color: white;
-  background-color: #f26e22;
+  background-color: #286140;
   border: 0;
   margin: 0 10px;
 `;
@@ -116,18 +116,17 @@ const ImgCircleBtn = styled.button`
 export default function Profile() {
   return (
     <div>
-      <Header type="save" />
       <ProfileInfoWrapDiv>
         <InformationTopDiv>
-          <div>
+          <a href="#!">
             <FollowerCntSpan>2950</FollowerCntSpan>
             <FollowerCntP>followers</FollowerCntP>
-          </div>
+          </a>
           <img src={ProfileImage} alt="프로필 이미지" />
-          <div>
+          <a href="#!">
             <FollowingCntSpan>128</FollowingCntSpan>
             <FollowingCntP>followings</FollowingCntP>
-          </div>
+          </a>
         </InformationTopDiv>
         <InformationDiv>
           <InfoNameP>애월읍 위니브 감귤농장</InfoNameP>
