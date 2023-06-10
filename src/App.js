@@ -11,6 +11,7 @@ import SignUp from "./pages/AuthorPage/SignUp/SignUp";
 const Container = styled.div`
   max-width: 390px;
   margin: 0 auto;
+  background-color: white;
 `;
 
 function App() {
