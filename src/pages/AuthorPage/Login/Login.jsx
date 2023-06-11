@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import Button from "../../../components/common/Button";
+import Button from "../../../components/common/Button/Button";
 import Form from "../../../components/common/Form";
 
 const Section = styled.section`
@@ -31,7 +31,12 @@ export default function Login() {
     <Section className="l-wrapper">
       <LoginTitle>로그인</LoginTitle>
       <Form />
-      <StyledButton type="submit" className="btn-login" content="로그인" />
+      <StyledButton
+        type="submit"
+        className="btn-login"
+        bgColor="inactive"
+        content="로그인"
+      />
       <a href="#" className="join-email">
         이메일로 회원가입
       </a>
