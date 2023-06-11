@@ -5,6 +5,7 @@ const ButtonStyle = styled.button`
   display: block;
   border-radius: 20px;
   margin: 10px auto;
+  cursor: pointer;
   padding: ${props =>
     props.size === "s"
       ? "7px 11px"

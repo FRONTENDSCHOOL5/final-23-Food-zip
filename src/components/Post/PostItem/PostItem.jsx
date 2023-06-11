@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import UserImg from "../../../assets/images/basic-profile-sm.svg";
-import PostTestImg from "../../../assets/images/post-test.jpeg";
+import PostTestImg from "../../../assets/images/post-test.png";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
-import BtnHeart from "../../../assets/images/icon-heart.svg";
+// import BtnHeart from "../../../assets/images/icon-heart.svg";
 const Container = styled.section`
   position: relative;
-  width: 342px;
+  width: 390px;
 `;
 const PostUser = styled.div`
   display: flex;
@@ -28,14 +28,16 @@ const PostUserId = styled.p`
   color: #767676;
 `;
 const PostContent = styled.div`
-  margin-top: 17px;
+  width: 90%;
+  margin: 17px auto 0 auto;
   font-size: 14px;
   line-height: 17px;
 `;
 const PostImg = styled.img`
-  width: 342px;
+  display: block;
+  width: 100%;
   height: 228px;
-  margin: 17px 0 12px;
+  margin: 17px auto 12px auto;
   border: 0.5px solid #dbdbdb;
   border-radius: 10px;
 `;
@@ -100,7 +102,7 @@ export default function PostItem() {
           <PostBtnBox>
             <BtnLike>
               <BtnImg
-                src={require("../../../assets/icon-heart.svg").default}
+                src={require("../../../assets/images/icon-heart.svg").default}
                 alt="게시글 좋아요"
               />
               58
@@ -108,7 +110,8 @@ export default function PostItem() {
             <BtnComment>
               <BtnImg
                 src={
-                  require("../../../assets/icon-message-circle-1.svg").default
+                  require("../../../assets/images/icon-message-circle-1.svg")
+                    .default
                 }
                 alt="게시글 댓글"
               />
