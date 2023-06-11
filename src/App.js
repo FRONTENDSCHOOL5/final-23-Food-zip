@@ -18,12 +18,6 @@ function App() {
   return (
     <Container>
       <GlobalStyle />
-      {/* <Header type="profile" />
-      <ProfileInformation />
-      <RecommendList />
-      <Splash /> */}
-      <Login />
-      <SignUp />
     </Container>
     // <>
     //   <BrowserRouter>
