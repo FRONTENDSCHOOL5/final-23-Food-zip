@@ -7,6 +7,8 @@ import Header from "./components/common/Header/Header";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/AuthorPage/Login/Login";
 import SignUp from "./pages/AuthorPage/SignUp/SignUp";
+import MakePost from "./pages/Post/MakePost";
+import DetailPost from "./pages/Post/DetailPost";
 
 const Container = styled.div`
   max-width: 390px;
