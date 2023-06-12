@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 const ChatNavBar = styled.div`
   position: fixed;
+  max-width: 356px;
+  margin: 0 auto;
   left: 0;
   right: 0;
   bottom: 0;
@@ -20,10 +22,6 @@ const ImageIcon = styled.img`
 `;
 
 const Input = styled.input`
-  /* 입력 요소의 기본 스타일 초기화 */
-  border: none;
-  outline: none;
-  padding: 0;
   margin: 0 18px;
   width: 100%;
   font-size: 14px;
@@ -35,11 +33,7 @@ const Input = styled.input`
 const SendBtn = styled.button`
   /* 버튼 스타일 수정 */
   width: 70px;
-  border: none;
-  background: none;
   color: ${({ hasText }) => (hasText ? "#286140" : "#C4C4C4")};
-  padding: 0;
-  margin: 0;
   font-size: 14px;
   cursor: pointer;
 `;
