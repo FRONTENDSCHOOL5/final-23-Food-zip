@@ -4,16 +4,22 @@ import styled from "styled-components";
 const ButtonStyle = styled.button`
   display: block;
   border-radius: 20px;
-  margin: 10px auto;
-  cursor: pointer;
+  width: ${props =>
+    props.width === "s"
+      ? "56px"
+      : props.width === "ms"
+      ? "90px"
+      : props.width === "m"
+      ? "120px"
+      : "322px"};
   padding: ${props =>
     props.size === "s"
-      ? "7px 11px"
+      ? "7px 0px"
       : props.size === "ms"
-      ? "8px 32px"
+      ? "8px 0px"
       : props.size === "m"
-      ? "8px 42px"
-      : "13px 149px"};
+      ? "9px 0px"
+      : "13px 0px"};
   background-color: ${props =>
     props.bgColor === "active"
       ? "#286140"
@@ -27,6 +33,7 @@ export default function Button({
   type,
   content,
   size,
+  width,
   bgColor,
   color,
   border,
@@ -37,6 +44,7 @@ export default function Button({
     <ButtonStyle
       type={type ? "button" : "submit"}
       size={size}
+      width={width}
       bgColor={bgColor}
       color={color}
       border={border}
