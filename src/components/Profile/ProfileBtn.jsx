@@ -36,7 +36,7 @@ const AddBtn = styled(ButtonStyle)`
 
 export default function ProfileBtn({ type }) {
   const UI = {
-    my: (
+    your: (
       <>
         <InformationBottomDiv>
           <ImgCircleBtn>
@@ -52,7 +52,7 @@ export default function ProfileBtn({ type }) {
       </>
     ),
 
-    your: (
+    my: (
       <InformationBottomDiv>
         <Button
           type="button"

@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import ProfileImage from "../../assets/images/basic-profile-lg.svg";
 import ProfileBtn from "./ProfileBtn";
+import Header from "../common/Header/Header";
 
 const ProfileInfoWrapDiv = styled.div`
   width: 100%;
@@ -67,9 +68,10 @@ const InfoTextP = styled.p`
   color: #767676;
 `;
 
-export default function Profile() {
+export default function ProfileInformation({ type }) {
   return (
-    <div>
+    <>
+      <Header type="profile" />
       <ProfileInfoWrapDiv>
         <InformationTopDiv>
           <a href="#!">
@@ -87,8 +89,8 @@ export default function Profile() {
           <InfoIdP>@ weniv_Mandarin</InfoIdP>
           <InfoTextP>애월읍 감귤 전국 배송, 귤따기 체험, 감귤 농장</InfoTextP>
         </InformationDiv>
-        <ProfileBtn type="my" />
+        <ProfileBtn type={type} />
       </ProfileInfoWrapDiv>
-    </div>
+    </>
   );
 }
