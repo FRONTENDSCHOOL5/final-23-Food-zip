@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Button from "../../../components/common/Button";
+import Button from "../../../components/common/Button/Button";
 import Form from "../../../components/common/Form";
 
 const Section = styled.section`
@@ -27,7 +27,12 @@ export default function SignUp() {
       <Section className="l-wrapper">
         <SignUpTitle>회원가입</SignUpTitle>
         <Form />
-        <StyledButton type="submit" className="btn-login" content="다음" />
+        <StyledButton
+          type="submit"
+          className="btn-login"
+          bgColor="inactive"
+          content="다음"
+        />
       </Section>
     </>
   );
