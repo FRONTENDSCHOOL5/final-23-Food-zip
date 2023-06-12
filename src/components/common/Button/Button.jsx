@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const ButtonStyle = styled.button`
+export const ButtonStyle = styled.button`
   display: block;
   border-radius: 20px;
   width: ${props =>
