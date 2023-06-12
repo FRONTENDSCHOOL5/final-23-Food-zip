@@ -10,7 +10,9 @@ import fillUserIcon from "../../../../assets/images/icon-user-fill.svg";
 
 const NavWrapper = styled.div`
   position: fixed;
+  max-width: 390px;
   height: 60px;
+  margin: 0 auto;
   left: 0;
   right: 0;
   bottom: 0;
