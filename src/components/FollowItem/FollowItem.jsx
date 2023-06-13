@@ -1,7 +1,7 @@
-import React from "react";
-// import ProfileImg from "../../assets/profile-img-test.png";
+import React, { useState } from "react";
 import ProfileImg from "../../assets/images/list-example.png";
 import styled from "styled-components";
+import Button from "../common/Button/Button";
 const Container = styled.div`
   width: 358px;
   display: flex;
@@ -25,24 +25,16 @@ const FollowerIntro = styled.p`
   font-size: 12px;
   color: #767676;
 `;
-const BtnFollow = styled.button`
-  width: 56px;
-  padding: 7px 11px;
-  background: #286140;
-  font-size: 12px;
-  color: #fff;
-  border-radius: 26px;
-`;
-const BtnUnFollow = styled.button`
-  width: 56px;
-  padding: 7px 11px;
-  background: #fff;
-  font-size: 12px;
-  color: #767676;
-  border: 1px solid #dbdbdb;
-  border-radius: 26px;
-`;
+
 export default function FollowItem() {
+  const [follow, setFollow] = useState(true);
+  const FollowBtn = () => {
+    setFollow(!follow);
+  };
+  const UnFollowBtn = () => {
+    setFollow(!follow);
+  };
+
   return (
     <Container>
       <FollowerImgTest src={ProfileImg} alt="프로필 이미지" />
@@ -50,8 +42,26 @@ export default function FollowItem() {
         <FollowerName>애월읍 한라봉 최고 맛집</FollowerName>
         <FollowerIntro>정성을 다해 농사짓는 한라봉</FollowerIntro>
       </FollowerInfo>
-      {/* <BtnFollow>팔로우</BtnFollow> */}
-      <BtnUnFollow>취소</BtnUnFollow>
+      {follow ? (
+        <Button
+          type="button"
+          content="팔로우"
+          width="s"
+          size="s"
+          bgColor="active"
+          onClick={FollowBtn}
+        />
+      ) : (
+        <Button
+          type="button"
+          content="취소"
+          width="s"
+          size="s"
+          border="active"
+          color="active"
+          onClick={UnFollowBtn}
+        />
+      )}
     </Container>
   );
 }
