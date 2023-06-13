@@ -11,6 +11,7 @@ const ModalDiv = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 390px;
+  transition: all 0.3s ease;
 `;
 
 const ModalWrapDiv = styled.div`
@@ -18,10 +19,10 @@ const ModalWrapDiv = styled.div`
   padding: 16px 26px 10px;
   background-color: white;
   box-sizing: border-box;
-
-  /* display: flex;
-  flex-direction: column;
-  align-items: flex-start; */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transition: all 0.3s ease;
 `;
 
 const ModalLineSpan = styled.span`
@@ -42,7 +43,7 @@ const ModalTextBtn = styled.button`
   border: 0;
 `;
 
-export default function Modal({ type }) {
+export default function Modal({ type, modalClose }) {
   const UI = {
     setting: (
       <ModalWrapDiv>
@@ -86,5 +87,5 @@ export default function Modal({ type }) {
     ),
   };
 
-  return <ModalDiv>{UI[type]}</ModalDiv>;
+  return <ModalDiv onClick={modalClose}>{UI[type]}</ModalDiv>;
 }
