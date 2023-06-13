@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import grayLogo from "../../assets/images/symbol-logo-gray.svg";
+import Button from "../common/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const EmptyWrapper = styled.div`
   display: flex;
@@ -18,21 +20,26 @@ const EmptyText = styled.h2`
   font-size: 14px;
   color: #767676;
 `;
-const EmptyBtn = styled.button`
-  padding: 13px 25px;
-  background-color: #286140;
-  color: white;
-  border: none;
-  border-radius: 44px;
-  font-size: 14px;
-`;
 
 export default function EmptyHome() {
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate("/search");
+  }
   return (
     <EmptyWrapper>
       <EmptyImg src={grayLogo} alt="로고이미지" />
       <EmptyText>유저를 검색해 팔로우 해보세요!</EmptyText>
-      <EmptyBtn>검색하기</EmptyBtn>
+      <Button
+        type="button"
+        content="검색하기"
+        size="l"
+        width="m"
+        bgColor="active"
+        color="#fff"
+        border="null"
+        onClick={handleClick}
+      />
     </EmptyWrapper>
   );
 }
