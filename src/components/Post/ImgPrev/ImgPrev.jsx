@@ -41,17 +41,17 @@ export default function ImgPrev() {
   const fileInputRef = useRef(null);
 
   const handleUploadImg = () => {
-    const file = fileInputRef.current.files[0];
-    const fileUrl = URL.createObjectURL(file);
-    console.log(fileUrl);
+    if (fileInputRef.current && fileInputRef.current.files.length > 0) {
+      const file = fileInputRef.current.files[0];
+      const fileUrl = URL.createObjectURL(file); // 파일 객체에 대한 URL 생성
+      console.log(fileUrl); // 파일 URL 출력
 
-    const reader = new FileReader();
+      const reader = new FileReader();
 
-    reader.onload = e => {
-      setImgUrl(e.target.result);
-    };
+      reader.onload = e => {
+        setImgUrl(e.target.result);
+      };
 
-    if (file) {
       reader.readAsDataURL(file);
     }
   };

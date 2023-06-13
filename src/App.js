@@ -21,9 +21,9 @@ function App() {
   return (
     <Container>
       <GlobalStyle />
-      {/* <MakeRecommend /> */}
+      <MakeRecommend />
       {/* <MakePost /> */}
-      <Routers />
+      {/* <Routers /> */}
       {/* <ProfileInformation type="your" />
       <RecommendList />
       <PostList /> */}
