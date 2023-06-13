@@ -4,9 +4,9 @@ import Splash from "../pages/Splash/Splash";
 import Welcome from "../pages/Welcome/Welcome";
 import Login from "../pages/AuthorPage/Login/Login";
 import SignUp from "../pages/AuthorPage/SignUp/SignUp";
+import ProfileSetting from "../pages/ProfileSetting/ProfileSetting";
 import Home from "../pages/Home/Home";
 import Search from "../pages/Search/Search";
-import FollowList from "../pages/FollowList/FollowList";
 import ChatList from "../pages/Chat/ChatList";
 import ErrorPage from "../pages/Error/ErrorPage";
 
