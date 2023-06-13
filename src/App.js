@@ -4,6 +4,8 @@ import ProfileInformation from "./components/Profile/ProfileInformation";
 import Modal from "./components/Modal/Modal";
 import RecommendList from "./components/Profile/RecommendList";
 import PostList from "./components/Post/PostList/PostList";
+import Routers from "./routes/Routers";
+import EmptyHome from "./components/Feed/EmptyHome";
 
 const Container = styled.div`
   max-width: 390px;
@@ -15,10 +17,12 @@ function App() {
   return (
     <Container>
       <GlobalStyle />
-      <ProfileInformation type="your" />
+      <Routers />
+      {/* <ProfileInformation type="your" />
       <RecommendList />
-      <PostList />
+      <PostList /> */}
       {/* <Modal type="setting" /> */}
+      <EmptyHome />
     </Container>
   );
 }

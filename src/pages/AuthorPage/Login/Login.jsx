@@ -22,10 +22,10 @@ const LoginTitle = styled.h2`
 const StyledButton = styled(Button)`
   margin: 30px auto 20px auto;
 `;
-// const StyledLink = styled(a)`
-//   color: #767676;
-//   font-size: 12px;
-// `;
+const StyledLink = styled(Link)`
+  color: #767676;
+  font-size: 12px;
+`;
 export default function Login() {
   return (
     <Section className="l-wrapper">
@@ -37,9 +37,9 @@ export default function Login() {
         bgColor="inactive"
         content="로그인"
       />
-      <a href="#" className="join-email">
+      <StyledLink to="/signup" className="join-email">
         이메일로 회원가입
-      </a>
+      </StyledLink>
     </Section>
   );
 }
