@@ -14,7 +14,7 @@ const List = styled.li`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
+  background-color: white;
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
@@ -34,6 +34,7 @@ const TextWrap = styled.div`
 
 const UserName = styled.strong`
   font-size: 14px;
+  font-weight: 600;
 `;
 const Result = styled.span`
   color: #286140;

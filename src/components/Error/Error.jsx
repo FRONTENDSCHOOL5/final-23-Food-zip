@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import errorIcon from "../../assets/images/icon-404.svg";
-
+import Button from "../common/Button/Button";
 const ErrorWrapper = styled.div`
   display: flex;
   height: 100vh;
@@ -10,8 +10,8 @@ const ErrorWrapper = styled.div`
   gap: 20px;
 `;
 const ErrorImg = styled.img`
-  margin-bottom: -10px;
-  width: 200px;
+  margin: -70px 0 -10px 0;
+  width: 150px;
 `;
 const ErrorText = styled.h2`
   margin: 0px;
@@ -19,20 +19,22 @@ const ErrorText = styled.h2`
   font-size: 14px;
   color: #767676;
 `;
-const ErrorBtn = styled.button`
-  padding: 13px 25px;
-  background-color: #286140;
-  color: white;
-  border: none;
-  border-radius: 44px;
-  font-size: 14px;
-`;
+
 export default function Error() {
   return (
     <ErrorWrapper>
       <ErrorImg src={errorIcon} alt="404페이지" />
       <ErrorText>페이지를 찾을 수 없습니다.:&#40;</ErrorText>
-      <ErrorBtn>이전 페이지</ErrorBtn>
+      <Button
+        type="button"
+        content="이전 페이지"
+        size="l"
+        width="m"
+        bgColor="active"
+        color="#fff"
+        border="null"
+        // onClick={handleClick}
+      />
     </ErrorWrapper>
   );
 }
