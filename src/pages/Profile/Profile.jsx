@@ -7,7 +7,7 @@ import Navigation from "../../components/common/Nav/Navigation";
 import Alert from "../../components/Modal/Alert";
 import { useState } from "react";
 
-export default function Profile() {
+export default function Profile({ type }) {
   const [modalShow, setModalShow] = useState(false);
   function modalClose(e) {
     if (e.target === e.currentTarget) {
@@ -32,7 +32,7 @@ export default function Profile() {
 
   return (
     <div>
-      <ProfileInformation type="my" modalOpen={modalOpen} />
+      <ProfileInformation type={type} modalOpen={modalOpen} />
       <RecommendList />
       <PostList />
       {modalShow && (
