@@ -20,6 +20,7 @@ const NavWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   background-color: #fff;
+  border-top: 1px solid #dbdbdb;
 `;
 
 const NavLink = styled.a`

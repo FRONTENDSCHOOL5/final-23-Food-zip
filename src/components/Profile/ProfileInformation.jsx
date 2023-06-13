@@ -68,10 +68,10 @@ const InfoTextP = styled.p`
   color: #767676;
 `;
 
-export default function ProfileInformation({ type }) {
+export default function ProfileInformation({ type, modalOpen }) {
   return (
     <>
-      <Header type="profile" />
+      <Header type="profile" modalOpen={modalOpen} />
       <ProfileInfoWrapDiv>
         <InformationTopDiv>
           <a href="#!">

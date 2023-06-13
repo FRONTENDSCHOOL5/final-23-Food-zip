@@ -3,7 +3,15 @@ import { useRef } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { Rating } from "react-simple-star-rating";
-import uploadPhoto from "../../assets/images/camera-sm.svg";
+import uploadPhoto from "../../assets/images/camera-color.svg";
+
+const RecommendWrapper = styled.div`
+  padding: 30px 36px;
+  background: #fff;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+`;
 const RecommendInfo = styled.input`
   display: block;
   width: 322px;
@@ -17,11 +25,15 @@ const RecommendInfo = styled.input`
   margin: 0 auto 36px auto;
   outline: none;
   background: transparent;
+  &:focus {
+    border-bottom: #629678;
+  }
 `;
 const RecommendImgWrapper = styled.div`
   width: 100%;
   height: 236px;
   margin-bottom: 10px;
+  position: relative;
 `;
 const RatingWrapper = styled.div`
   margin-bottom: 30px;
@@ -32,38 +44,40 @@ const RatingP = styled.p`
 const ResultRating = styled.p`
   /* float: right; */
 `;
-const RecommendWrapper = styled.div`
-  padding: 30px 36px;
-`;
 const RecommendImgInput = styled.input`
   display: none;
 `;
 const RecommendImg = styled.img`
-  width: 195px;
-  height: 145px;
-  object-fit: contain;
-  margin: 0 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border: 0.5px solid #dbdbdb;
   border-radius: 10px;
 `;
 const EmptyBox = styled.div`
-  background: #c4c4c4;
+  background: #dbdbdb;
+  margin-top: 5px;
+  width: 100%;
+  height: 204px;
+`;
+const ImgWrapper = styled.div`
   margin-top: 5px;
   width: 100%;
   height: 204px;
 `;
 const RecommendIconWrapper = styled.label`
-  /* display: inline-block;
-  width: 195px;
-  height: 145px;
-  flex-shrink: 0; */
+  display: inline-block;
   cursor: pointer;
+  position: absolute;
+  bottom: 40px;
+  right: 0px;
+  /* background: #c4c4c4; */
 `;
 const RecommendImgIcon = styled.img`
-  /* width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px; */
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  border-radius: 10px;
 `;
 export default function MakeRecommend() {
   const [rating, setRating] = useState(0);
@@ -72,20 +86,21 @@ export default function MakeRecommend() {
   // useRef를 사용하여 파일 입력(input) 요소에 대한 참조 생성
 
   const handleUploadImg = () => {
-    const file = fileInputRef.current.files[0];
-    const fileUrl = URL.createObjectURL(file); // 파일 객체에 대한 URL 생성
-    console.log(fileUrl); // 파일 URL 출력
+    if (fileInputRef.current && fileInputRef.current.files.length > 0) {
+      const file = fileInputRef.current.files[0];
+      const fileUrl = URL.createObjectURL(file); // 파일 객체에 대한 URL 생성
+      console.log(fileUrl); // 파일 URL 출력
 
-    const reader = new FileReader();
+      const reader = new FileReader();
 
-    reader.onload = e => {
-      setImgUrl(e.target.result);
-    };
+      reader.onload = e => {
+        setImgUrl(e.target.result);
+      };
 
-    if (file) {
       reader.readAsDataURL(file);
     }
   };
+
   const handleRating = rate => {
     setRating(rate);
 
@@ -112,9 +127,9 @@ export default function MakeRecommend() {
             />
           </RecommendIconWrapper>
           {imgUrl ? (
-            <div>
+            <ImgWrapper>
               <RecommendImg src={imgUrl} alt="업로드된 이미지" />
-            </div>
+            </ImgWrapper>
           ) : (
             <EmptyBox></EmptyBox>
           )}
@@ -130,7 +145,7 @@ export default function MakeRecommend() {
             onPointerMove={onPointerMove}
             /* Available Props */
           />
-          <ResultRating>{rating} / 5</ResultRating>
+          {/* <ResultRating>{rating} / 5</ResultRating> */}
         </RatingWrapper>
         <label htmlFor="address">주소</label>
         <RecommendInfo id="address" type="text" />

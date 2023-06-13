@@ -1,62 +1,43 @@
 import React from "react";
-import uploadPhoto from "../../assets/images/upload-file.svg";
 import styled from "styled-components";
+import ImgPrev from "../../components/Post/ImgPrev/ImgPrev";
+import Header from "../../components/common/Header/Header";
 
 const StyledContainer = styled.div`
   width: 100%;
-  position: relative;
-  height: 100vh;
+  height: calc(100vh - 48px);
+  padding-top: 48px;
+  overflow: hidden;
 `;
 
 const StyledPost = styled.textarea`
+  padding: 20px;
+  box-sizing: border-box;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   border: none;
+  font-size: 22px;
   resize: none;
   &:focus {
     outline: none;
   }
 `;
-const UploadContainer = styled.div`
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-`;
-const UploadImgWrapper = styled.label`
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-`;
-
-const UploadImgInput = styled.input`
-  display: none;
-`;
-
-const UploadImgIcon = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
 
 export default function MakePost() {
   return (
     <div>
+      <Header type="upload" active={true} />
       <StyledContainer className="post-wrapper">
+        <ImgPrev />
         <form className="post-section">
           <StyledPost
+            rows="20"
             className="input-content"
             placeholder="게시글 입력하기"
             // value={input}
             // onChange={onChangeInput}
           ></StyledPost>
         </form>
-        <UploadContainer>
-          <UploadImgWrapper htmlFor="file-input" className="upload-img">
-            <UploadImgInput type="file" id="file-input" />
-            <UploadImgIcon src={uploadPhoto} alt="사진을 올리는 버튼 이미지" />
-          </UploadImgWrapper>
-        </UploadContainer>
       </StyledContainer>
     </div>
   );

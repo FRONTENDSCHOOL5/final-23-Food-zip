@@ -64,7 +64,7 @@ export default function ProfileBtn({ type }) {
           color="active"
         ></Button>
         <AddBtn type="button" size="m" border="active" color="active">
-          맛집 추가
+          맛집 등록
         </AddBtn>
       </InformationBottomDiv>
     ),
