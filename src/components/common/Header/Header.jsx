@@ -71,7 +71,7 @@ const HeaderTextP = styled.p`
   font-weight: 600;
 `;
 
-export default function Header({ type, active }) {
+export default function Header({ type, modalOpen }) {
   const UI = {
     home: (
       <HeaderLayoutDiv>
@@ -94,7 +94,7 @@ export default function Header({ type, active }) {
         <HeaderLeftBtn type="button">
           <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
         </HeaderLeftBtn>
-        <HeaderRightBtn type="button">
+        <HeaderRightBtn type="button" onClick={modalOpen}>
           <img src={IconMoreVertical} alt="더보기 아이콘" />
         </HeaderRightBtn>
       </HeaderLayoutDiv>
@@ -145,7 +145,7 @@ export default function Header({ type, active }) {
           </HeaderLeftBtn>
           <HeaderTextP>애월읍 위니브 감귤농장</HeaderTextP>
         </HeaderSpan>
-        <HeaderRightBtn type="button">
+        <HeaderRightBtn type="button" onClick={modalOpen}>
           <img src={IconMoreVertical} alt="더보기 아이콘" />
         </HeaderRightBtn>
       </HeaderLayoutDiv>

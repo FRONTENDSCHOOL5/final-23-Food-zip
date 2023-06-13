@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const ModalDiv = styled.div`
   position: fixed;
@@ -13,15 +13,24 @@ const ModalDiv = styled.div`
   max-width: 390px;
 `;
 
+const slideUp = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
+
 const ModalWrapDiv = styled.div`
   border-radius: 10px 10px 0 0;
   padding: 16px 26px 10px;
   background-color: white;
   box-sizing: border-box;
-
-  /* display: flex;
-  flex-direction: column;
-  align-items: flex-start; */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  animation: ${slideUp} 0.5s ease;
 `;
 
 const ModalLineSpan = styled.span`
@@ -42,13 +51,13 @@ const ModalTextBtn = styled.button`
   border: 0;
 `;
 
-export default function Modal({ type }) {
+export default function Modal({ type, modalClose, alertOpen }) {
   const UI = {
     setting: (
       <ModalWrapDiv>
         <ModalLineSpan />
         <ModalTextBtn>설정 및 개인정보</ModalTextBtn>
-        <ModalTextBtn>로그아웃</ModalTextBtn>
+        <ModalTextBtn onClick={alertOpen}>로그아웃</ModalTextBtn>
       </ModalWrapDiv>
     ),
     modification: (
@@ -86,5 +95,9 @@ export default function Modal({ type }) {
     ),
   };
 
-  return <ModalDiv>{UI[type]}</ModalDiv>;
+  return (
+    <>
+      <ModalDiv onClick={modalClose}>{UI[type]}</ModalDiv>;
+    </>
+  );
 }

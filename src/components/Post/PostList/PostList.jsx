@@ -35,8 +35,17 @@ const PostItemList = styled.div`
   align-items: center;
   overflow: auto;
   background-color: white;
-  padding: 16px 20px 30px;
+  padding: 16px 20px 60px;
   box-sizing: border-box;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #dbdbdb;
+    border-radius: 50px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
 `;
 
 export default function PostList() {
@@ -51,6 +60,7 @@ export default function PostList() {
         </PostListBtn>
       </PostListDiv>
       <PostItemList>
+        <PostItem />
         <PostItem />
         <PostItem />
         <PostItem />

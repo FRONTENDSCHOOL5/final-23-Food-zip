@@ -27,9 +27,9 @@ export default function Routers() {
         <Route path="/error" element={<ErrorPage />} />
 
         {/* <Route path="profile" element={<ProfileSetting />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/home" element={<Home />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/chat" element={<Chat />} />
         <Route path="/chat/:id" element={<ChatDetail />} />
         <Route path="/post">
           <Route path=":id" element={<PostDetail />} />
