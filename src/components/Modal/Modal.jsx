@@ -1,12 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 
+const ModalDiv = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 390px;
+`;
+
 const ModalWrapDiv = styled.div`
-  width: 390px;
   border-radius: 10px 10px 0 0;
   padding: 16px 26px 10px;
   background-color: white;
   box-sizing: border-box;
+
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start; */
 `;
 
 const ModalLineSpan = styled.span`
@@ -71,5 +86,5 @@ export default function Modal({ type }) {
     ),
   };
 
-  return UI[type];
+  return <ModalDiv>{UI[type]}</ModalDiv>;
 }

@@ -6,7 +6,8 @@ import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
 // import BtnHeart from "../../../assets/images/icon-heart.svg";
 const Container = styled.section`
   position: relative;
-  width: 390px;
+  width: 100%;
+  margin-bottom: 20px;
 `;
 const PostUser = styled.div`
   display: flex;

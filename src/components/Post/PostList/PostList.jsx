@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-// import PostItem from "../Profile/PostItem";
-import IconAlbumOff from "../../assets/images/icon-post-album-off.svg";
-import IconAlbumOn from "../../assets/images/icon-post-album-on.svg";
-import IconListOff from "../../assets/images/icon-post-list-off.svg";
-import IconListOn from "../../assets/images/icon-post-list-on.svg";
+import PostItem from "../PostItem/PostItem";
+import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
+import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
+import IconListOff from "../../../assets/images/icon-post-list-off.svg";
+import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 
 const PostListDiv = styled.div`
   display: flex;
@@ -16,6 +16,7 @@ const PostListDiv = styled.div`
   box-sizing: border-box;
   background-color: white;
   margin-top: 6px;
+  border-bottom: 1px solid #dbdbdb;
 `;
 
 const PostListBtn = styled.button`
@@ -27,16 +28,15 @@ const PostListBtn = styled.button`
 `;
 
 const PostItemList = styled.div`
-  width: 390px;
+  width: 100%;
   height: 480px;
-  box-shadow: inset 0 0 0 1px green;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: auto;
-  /* background-color: #f2f2f2; */
   background-color: white;
-  padding: 16px 0 30px;
+  padding: 16px 20px 30px;
+  box-sizing: border-box;
 `;
 
 export default function PostList() {
@@ -50,7 +50,11 @@ export default function PostList() {
           <img src={IconAlbumOff} alt="앨범형 아이콘" />
         </PostListBtn>
       </PostListDiv>
-      <PostItemList></PostItemList>
+      <PostItemList>
+        <PostItem />
+        <PostItem />
+        <PostItem />
+      </PostItemList>
     </>
   );
 }
