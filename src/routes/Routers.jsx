@@ -4,6 +4,9 @@ import Splash from "../pages/Splash/Splash";
 import Welcome from "../pages/Welcome/Welcome";
 import Login from "../pages/AuthorPage/Login/Login";
 import SignUp from "../pages/AuthorPage/SignUp/SignUp";
+import ProfileSetting from "../pages/ProfileSetting/ProfileSetting";
+import MyProfile from "../pages/Profile/MyProfile/MyProfile";
+import ProfileEdit from "../pages/Profile/ProfileEdit/ProfileEdit";
 export default function Routers() {
   return (
     <BrowserRouter>
@@ -13,7 +16,13 @@ export default function Routers() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup">
           <Route index element={<SignUp />} />
+          <Route path="profile" element={<ProfileSetting />} />
         </Route>
+        <Route path="/profile">
+          <Route path="my" element={<MyProfile />} />
+          <Route path="edit" element={<ProfileEdit />} />
+        </Route>
+
         {/* <Route path="profile" element={<ProfileSetting />} />
         <Route path="/home" element={<Home />} />
         <Route path="/search" element={<Search />} />

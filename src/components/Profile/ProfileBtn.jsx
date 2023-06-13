@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import IconMessage from "../../assets/images/icon-message-circle.svg";
 import IconShare from "../../assets/images/icon-share.svg";
@@ -11,7 +12,7 @@ const FlexCommon = css`
   align-items: center;
 `;
 
-const InformationBottomDiv = styled.div`
+const InformationBottomDiv = styled(Link)`
   ${FlexCommon}
 `;
 
@@ -53,7 +54,7 @@ export default function ProfileBtn({ type }) {
     ),
 
     my: (
-      <InformationBottomDiv>
+      <InformationBottomDiv to="/profile/edit">
         <Button
           type="button"
           content="프로필 수정"
