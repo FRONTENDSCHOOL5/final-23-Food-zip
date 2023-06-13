@@ -9,6 +9,7 @@ import Search from "../pages/Search/Search";
 import FollowList from "../pages/FollowList/FollowList";
 import ChatList from "../pages/Chat/ChatList";
 import ErrorPage from "../pages/Error/ErrorPage";
+
 export default function Routers() {
   return (
     <BrowserRouter>
@@ -18,14 +19,13 @@ export default function Routers() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup">
           <Route index element={<SignUp />} />
+          <Route path="profile" element={<ProfileSetting />} />
         </Route>
         <Route path="/home" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/chat" element={<ChatList />} />
         <Route path="/chatroom" element={<ChatList />} />
-
         <Route path="/error" element={<ErrorPage />} />
-
         {/* <Route path="profile" element={<ProfileSetting />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/home" element={<Home />} />
