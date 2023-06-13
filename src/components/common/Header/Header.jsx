@@ -3,19 +3,20 @@ import styled from "styled-components";
 import IconSearch from "../../../assets/images/icon-search.svg";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
 import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
+import Button from "../Button/Button";
 
 const HeaderWrap = styled.header`
   position: fixed;
   top: 0;
   z-index: 999;
-  width: 390px;
+  width: 100%;
+  max-width: 390px;
 `;
 
 const HeaderLayoutDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   height: 48px;
   padding: 0px 16px;
   border-bottom: 1px solid #dbdbdb;
@@ -70,15 +71,6 @@ const HeaderTextP = styled.p`
   font-weight: 600;
 `;
 
-const HeaderSaveBtn = styled.button`
-  width: 90px;
-  height: 32px;
-  color: #fff;
-  border: 0;
-  border-radius: 32px;
-  background-color: ${({ active }) => (active ? "#286140" : "#629678")};
-`;
-
 export default function Header({ type, active }) {
   const UI = {
     home: (
@@ -122,9 +114,13 @@ export default function Header({ type, active }) {
         <HeaderLeftBtn type="button">
           <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
         </HeaderLeftBtn>
-        <HeaderSaveBtn type="button" active={active}>
-          저장
-        </HeaderSaveBtn>
+        <Button
+          type="button"
+          content="저장"
+          size="ms"
+          width="ms"
+          bgColor="inactive"
+        ></Button>
       </HeaderLayoutDiv>
     ),
     upload: (
@@ -132,9 +128,13 @@ export default function Header({ type, active }) {
         <HeaderLeftBtn type="button">
           <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
         </HeaderLeftBtn>
-        <HeaderSaveBtn type="button" active={active}>
-          업로드
-        </HeaderSaveBtn>
+        <Button
+          type="button"
+          content="업로드"
+          size="ms"
+          width="ms"
+          bgColor="inactive"
+        ></Button>
       </HeaderLayoutDiv>
     ),
     chat: (

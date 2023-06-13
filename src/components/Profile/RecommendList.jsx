@@ -4,11 +4,19 @@ import ListImg from "../../assets/images/list-example.png";
 
 const RecommendWrapDiv = styled.div`
   width: 100%;
-  box-shadow: inset 0 0 0 1px red;
-  padding: 20px 16px;
+  padding: 20px 16px 16px;
   overflow: auto;
   box-sizing: border-box;
   background-color: white;
+  &::-webkit-scrollbar {
+    height: 12px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #dbdbdb;
+    border-radius: 50px;
+    background-clip: padding-box;
+    border: 3px solid transparent;
+  }
 `;
 
 const RecommendTitleP = styled.p`
@@ -20,6 +28,9 @@ const RecommendTitleP = styled.p`
 const RecommendListDiv = styled.div`
   display: flex;
   gap: 10px;
+  & :last-child {
+    padding-right: 16px;
+  }
 `;
 
 const RecommendListImg = styled.img`
@@ -45,6 +56,11 @@ export default function RecommendList() {
     <RecommendWrapDiv>
       <RecommendTitleP>추천 맛집</RecommendTitleP>
       <RecommendListDiv>
+        <div>
+          <RecommendListImg src={ListImg} alt="" />
+          <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
+          <RecommendPriceSpan>35,000원</RecommendPriceSpan>
+        </div>
         <div>
           <RecommendListImg src={ListImg} alt="" />
           <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
