@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import homeIcon from "../../../../assets/images/icon-home.svg";
-import editIcon from "../../../../assets/images/icon-edit.svg";
-import fillHomeIcon from "../../../../assets/images/icon-home-fill.svg";
-import messageIcon from "../../../../assets/images/icon-message-circle.svg";
-import fillMessageIcon from "../../../../assets/images/icon-message-circle-fill.svg";
-import userIcon from "../../../../assets/images/icon-user.svg";
-import fillUserIcon from "../../../../assets/images/icon-user-fill.svg";
+import homeIcon from "../../../assets/images/icon-home.svg";
+import editIcon from "../../../assets/images/icon-edit.svg";
+import fillHomeIcon from "../../../assets/images/icon-home-fill.svg";
+import messageIcon from "../../../assets/images/icon-message-circle.svg";
+import fillMessageIcon from "../../../assets/images/icon-message-circle-fill.svg";
+import userIcon from "../../../assets/images/icon-user.svg";
+import fillUserIcon from "../../../assets/images/icon-user-fill.svg";
 
 const NavWrapper = styled.div`
   position: fixed;
@@ -20,6 +20,7 @@ const NavWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   background-color: #fff;
+  border-top: 1px solid #dbdbdb;
 `;
 
 const NavLink = styled.a`

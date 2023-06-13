@@ -12,7 +12,6 @@ const List = styled.li`
   display: flex;
   padding: 8px 16px;
   gap: 12px;
-  align-items: flex-start;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
@@ -30,7 +29,7 @@ const ProfileImg = styled.img`
 const ProfileDot = styled.span`
   content: "";
   position: absolute;
-  top: 10px;
+  top: 60px;
   width: 12px;
   height: 12px;
   background-color: #286140;
@@ -59,20 +58,39 @@ const Date = styled.p`
   font-size: 10px;
   color: #dbdbdb;
   margin-left: auto;
+  margin-top: auto;
 `;
 
-export default function ChatList() {
+export default function ChatListItem() {
+  const chatListData = [
+    {
+      id: 1,
+      profileImg: foodzim,
+      username: "애월읍 위니브 감귤농장",
+      chatContent: "채팅이다",
+      date: "2023.06.09",
+    },
+    {
+      id: 2,
+      profileImg: foodzim,
+      username: "은주",
+      chatContent: "채팅이야",
+      date: "2023.06.13",
+    },
+  ]; // 이미지 변경이랑 dot 변경해라
   return (
     <ChatWrapper>
-      <List>
-        <ProfileImg src={foodzim} alt="프로필 이미지" />
-        <ProfileDot />
-        <TextWrap>
-          <UserName>애월읍 위니브 감귤농장</UserName>
-          <ChatContent>채팅이다</ChatContent>
-        </TextWrap>
-        <Date>2023.06.09</Date>
-      </List>
+      {chatListData.map(chatItem => (
+        <List key={chatItem.id}>
+          <ProfileImg src={chatItem.profileImg} alt="프로필 이미지" />
+          <ProfileDot />
+          <TextWrap>
+            <UserName>{chatItem.username}</UserName>
+            <ChatContent>{chatItem.chatContent}</ChatContent>
+          </TextWrap>
+          <Date>{chatItem.date}</Date>
+        </List>
+      ))}
     </ChatWrapper>
   );
 }
