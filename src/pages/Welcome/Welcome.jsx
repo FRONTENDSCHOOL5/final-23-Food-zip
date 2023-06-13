@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Logo from "../../assets/images/symbol-logo-white.svg";
 import KakaoLogo from "../../assets/images/kakao.svg";
 import GoogleLogo from "../../assets/images/Google.svg";
@@ -63,11 +64,11 @@ const LoginJoinBox = styled.div`
   gap: 12px;
   margin-top: 10px;
 `;
-const EmailLogin = styled.a`
+const EmailLogin = styled(Link)`
   color: #767676;
   font-size: 12px;
 `;
-const Join = styled.a`
+const Join = styled(Link)`
   color: #767676;
   font-size: 12px;
 `;
@@ -85,9 +86,9 @@ export default function Welcome() {
         <GoogleLogin>구글 계정으로 로그인</GoogleLogin>
         <FacebookLogin>페이스북 계정으로 로그인</FacebookLogin>
         <LoginJoinBox>
-          <EmailLogin href="#">이메일로 로그인</EmailLogin>
+          <EmailLogin to="/login">이메일로 로그인</EmailLogin>
           <Divider></Divider>
-          <Join href="#">회원가입</Join>
+          <Join to="/signup">회원가입</Join>
         </LoginJoinBox>
       </LoginBox>
     </Container>
