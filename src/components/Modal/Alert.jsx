@@ -1,11 +1,27 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
+const AlertDiv = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 390px;
+`;
+
 const AlertWrapDiv = styled.div`
   width: 252px;
   background-color: white;
   border-radius: 10px;
   box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const AlertTextP = styled.p`
@@ -47,13 +63,13 @@ const AlertLineSpan = styled.span`
   background-color: #dbdbdb;
 `;
 
-export default function Alert({ type }) {
+export default function Alert({ type, alertClose }) {
   const UI = {
     logout: (
       <AlertWrapDiv>
         <AlertTextP>로그아웃하시겠어요?</AlertTextP>
         <AlertBottomDiv>
-          <AlertDeleteBtn>취소</AlertDeleteBtn>
+          <AlertDeleteBtn onClick={alertClose}>취소</AlertDeleteBtn>
           <AlertLineSpan></AlertLineSpan>
           <AlertMainBtn>로그아웃</AlertMainBtn>
         </AlertBottomDiv>
@@ -63,7 +79,7 @@ export default function Alert({ type }) {
       <AlertWrapDiv>
         <AlertTextP>게시글을 삭제할까요?</AlertTextP>
         <AlertBottomDiv>
-          <AlertDeleteBtn>취소</AlertDeleteBtn>
+          <AlertDeleteBtn onClick={alertClose}>취소</AlertDeleteBtn>
           <AlertLineSpan></AlertLineSpan>
           <AlertMainBtn>삭제</AlertMainBtn>
         </AlertBottomDiv>
@@ -73,7 +89,7 @@ export default function Alert({ type }) {
       <AlertWrapDiv>
         <AlertTextP>상품을 삭제할까요?</AlertTextP>
         <AlertBottomDiv>
-          <AlertDeleteBtn>취소</AlertDeleteBtn>
+          <AlertDeleteBtn onClick={alertClose}>취소</AlertDeleteBtn>
           <AlertLineSpan></AlertLineSpan>
           <AlertMainBtn>삭제</AlertMainBtn>
         </AlertBottomDiv>
@@ -81,5 +97,5 @@ export default function Alert({ type }) {
     ),
   };
 
-  return UI[type];
+  return <AlertDiv>{UI[type]}</AlertDiv>;
 }
