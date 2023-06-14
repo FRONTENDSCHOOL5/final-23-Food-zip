@@ -7,7 +7,7 @@ import Modal from "../../components/Modal/Modal";
 const DetailPostWrapper = styled.div`
   background: #fff;
   width: 100%;
-  height: calc(100vh - 48px);
+  height: 100vh;
   padding: 68px 0 0 0;
   overflow: hidden;
   box-sizing: border-box;
