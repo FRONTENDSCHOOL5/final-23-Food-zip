@@ -4,6 +4,7 @@ import IconSearch from "../../../assets/images/icon-search.svg";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
 import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
 import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const HeaderWrap = styled.header`
   position: fixed;
@@ -72,19 +73,27 @@ const HeaderTextP = styled.p`
 `;
 
 export default function Header({ type, modalOpen }) {
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate("/search");
+  }
   const UI = {
     home: (
       <HeaderLayoutDiv>
         <HeaderTitleP>FOODZIP 피드</HeaderTitleP>
         <HeaderRightBtn type="button">
-          <img src={IconSearch} alt="돋보기 아이콘" />
+          <img src={IconSearch} alt="돋보기 아이콘" onClick={handleClick} />
         </HeaderRightBtn>
       </HeaderLayoutDiv>
     ),
     search: (
       <HeaderLayoutDiv>
         <HeaderLeftBtn type="button">
-          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+          <img
+            src={IconArrowLeft}
+            alt="뒤로가기 아이콘"
+            onClick={() => navigate(-1)}
+          />
         </HeaderLeftBtn>
         <HeaderSearchInp type="text" placeholder="계정 검색" />
       </HeaderLayoutDiv>
@@ -92,7 +101,11 @@ export default function Header({ type, modalOpen }) {
     profile: (
       <HeaderLayoutDiv>
         <HeaderLeftBtn type="button">
-          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+          <img
+            src={IconArrowLeft}
+            alt="뒤로가기 아이콘"
+            onClick={() => navigate(-1)}
+          />
         </HeaderLeftBtn>
         <HeaderRightBtn type="button" onClick={modalOpen}>
           <img src={IconMoreVertical} alt="더보기 아이콘" />
@@ -103,7 +116,11 @@ export default function Header({ type, modalOpen }) {
       <HeaderLayoutDiv>
         <HeaderSpan>
           <HeaderLeftBtn type="button">
-            <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+            <img
+              src={IconArrowLeft}
+              alt="뒤로가기 아이콘"
+              onClick={() => navigate(-1)}
+            />
           </HeaderLeftBtn>
           <HeaderTextP>Followers</HeaderTextP>
         </HeaderSpan>
@@ -112,7 +129,11 @@ export default function Header({ type, modalOpen }) {
     save: (
       <HeaderLayoutDiv>
         <HeaderLeftBtn type="button">
-          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+          <img
+            src={IconArrowLeft}
+            alt="뒤로가기 아이콘"
+            onClick={() => navigate(-1)}
+          />
         </HeaderLeftBtn>
         <Button
           type="button"
@@ -126,7 +147,11 @@ export default function Header({ type, modalOpen }) {
     upload: (
       <HeaderLayoutDiv>
         <HeaderLeftBtn type="button">
-          <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+          <img
+            src={IconArrowLeft}
+            alt="뒤로가기 아이콘"
+            onClick={() => navigate(-1)}
+          />
         </HeaderLeftBtn>
         <Button
           type="button"
@@ -141,7 +166,11 @@ export default function Header({ type, modalOpen }) {
       <HeaderLayoutDiv>
         <HeaderSpan>
           <HeaderLeftBtn type="button">
-            <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
+            <img
+              src={IconArrowLeft}
+              alt="뒤로가기 아이콘"
+              onClick={() => navigate(-1)}
+            />
           </HeaderLeftBtn>
           <HeaderTextP>푸짐가게</HeaderTextP>
         </HeaderSpan>
