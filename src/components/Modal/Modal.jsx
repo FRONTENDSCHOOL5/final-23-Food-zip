@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 const ModalDiv = styled.div`
@@ -52,6 +53,7 @@ const ModalTextBtn = styled.button`
 `;
 
 export default function Modal({ type, modalClose, alertOpen }) {
+  const navigate = useNavigate();
   const UI = {
     setting: (
       <ModalWrapDiv>
@@ -90,7 +92,7 @@ export default function Modal({ type, modalClose, alertOpen }) {
     chat: (
       <ModalWrapDiv>
         <ModalLineSpan />
-        <ModalTextBtn>채팅방 나가기</ModalTextBtn>
+        <ModalTextBtn onClick={() => navigate(-1)}>채팅방 나가기</ModalTextBtn>
       </ModalWrapDiv>
     ),
   };
