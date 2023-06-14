@@ -5,7 +5,7 @@ import FullLogo from "../../assets/images/full-logo.svg";
 
 const SplashWrapDiv = styled.div`
   width: 390px;
-  height: 820px;
+  height: 100vh;
   background-color: white;
   padding-top: 256px;
   box-sizing: border-box;
