@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import IconMessage from "../../assets/images/icon-message-circle.svg";
 import IconShare from "../../assets/images/icon-share.svg";
@@ -12,7 +12,7 @@ const FlexCommon = css`
   align-items: center;
 `;
 
-const InformationBottomDiv = styled(Link)`
+const InformationBottomDiv = styled.div`
   ${FlexCommon}
 `;
 
@@ -36,11 +36,25 @@ const AddBtn = styled(ButtonStyle)`
 `;
 
 export default function ProfileBtn({ type }) {
+  const navigate = useNavigate();
+  function moveProfileEdit() {
+    console.log(true);
+    navigate("/myprofile/edit");
+  }
+  function moveRecommend() {
+    console.log(true);
+    navigate("/makerecommend");
+  }
+  function moveChat() {
+    navigate("/chatroom");
+    console.log("move");
+  }
+
   const UI = {
     your: (
       <>
         <InformationBottomDiv>
-          <ImgCircleBtn>
+          <ImgCircleBtn type="button" onClick={moveChat}>
             <img src={IconMessage} alt="메시지 아이콘" />
           </ImgCircleBtn>
           <FollowBtn type="button" size="m" width="m" bgColor="active">
@@ -54,7 +68,7 @@ export default function ProfileBtn({ type }) {
     ),
 
     my: (
-      <InformationBottomDiv to="/myprofile/edit">
+      <InformationBottomDiv>
         <Button
           type="button"
           content="프로필 수정"
@@ -62,8 +76,15 @@ export default function ProfileBtn({ type }) {
           width="m"
           border="active"
           color="active"
+          onClick={moveProfileEdit}
         ></Button>
-        <AddBtn type="button" size="m" border="active" color="active">
+        <AddBtn
+          type="button"
+          size="m"
+          border="active"
+          color="active"
+          onClick={moveRecommend}
+        >
           맛집 등록
         </AddBtn>
       </InformationBottomDiv>
