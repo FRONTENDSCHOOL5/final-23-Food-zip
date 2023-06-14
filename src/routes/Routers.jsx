@@ -11,6 +11,7 @@ import ChatList from "../pages/Chat/ChatList";
 import ErrorPage from "../pages/Error/ErrorPage";
 import ChatRoom from "../pages/Chat/ChatRoom";
 import MakePost from "../pages/Post/MakePost";
+import Profile from "../pages/Profile/Profile";
 
 export default function Routers() {
   return (
@@ -29,6 +30,7 @@ export default function Routers() {
         <Route path="/chatroom" element={<ChatRoom />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/makepost" element={<MakePost />} />
+        <Route path="/myprofile" element={<Profile type="my" />} />
 
         {/* <Route path="profile" element={<ProfileSetting />} />
         <Route path="/chat" element={<Chat />} />
