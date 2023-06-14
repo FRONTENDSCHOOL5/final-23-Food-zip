@@ -15,6 +15,7 @@ import Profile from "../pages/Profile/Profile";
 import ProfileEdit from "../pages/Profile/ProfileEdit/ProfileEdit";
 import DetailPost from "../pages/Post/DetailPost";
 import FollowerList from "../pages/FollowerList/FollowerList";
+import MakeRecommend from "../pages/Post/MakeRecommend";
 
 export default function Routers() {
   return (
@@ -37,8 +38,12 @@ export default function Routers() {
           <Route index element={<Profile type="my" />} />
           <Route path="edit" element={<ProfileEdit />} />
         </Route>
+        <Route path="/yourprofile">
+          <Route index element={<Profile type="your" />} />
+        </Route>
         <Route path="/followerlist" element={<FollowerList />} />
         <Route path="/detailpost" element={<DetailPost />} />
+        <Route path="/makerecommend" element={<MakeRecommend />} />
       </Routes>
     </BrowserRouter>
   );

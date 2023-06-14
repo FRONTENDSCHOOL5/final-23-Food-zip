@@ -47,7 +47,7 @@ const FollowingCntP = styled.p`
   ${FollowCommonP}
 `;
 
-const InformationDiv = styled.p`
+const InformationDiv = styled.div`
   text-align: center;
   margin: 16px 0 24px;
 `;
