@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ImgPrev from "../../components/Post/ImgPrev/ImgPrev";
+import ImgPrev from "../../components/Post/ImgPrev/PostImgPrev";
 import Header from "../../components/common/Header/Header";
 
 const StyledContainer = styled.div`

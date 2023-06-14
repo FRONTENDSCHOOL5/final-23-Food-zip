@@ -1,16 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import MoreIcon from "../../assets/images/icon-more-vertical.svg";
-const StyledCommentWrapper = styled.section`
-  border-top: 1px solid #dbdbdb;
-  border-bottom: 1px solid #dbdbdb;
-  margin-top: 20px;
-`;
+const StyledCommentWrapper = styled.section``;
 const StyledComment = styled.div`
   position: relative;
   display: flex;
   gap: 12px;
-  padding: 20px 16px 16px 16px;
+  padding: 20px 0 16px 0;
 `;
 const CommentBtnMore = styled.button`
   width: 18px;
@@ -65,7 +61,7 @@ const CommentContent = styled.p`
   margin: 16px 0;
 `;
 
-export default function Comment() {
+export default function Comment({ modalOpen }) {
   return (
     <>
       <StyledCommentWrapper className="comment-section">
@@ -84,7 +80,7 @@ export default function Comment() {
               게시들 답글~~!! 최고최고
             </CommentContent>
           </StyledCommentContent>
-          <CommentBtnMore></CommentBtnMore>
+          <CommentBtnMore type="button" onClick={modalOpen}></CommentBtnMore>
         </StyledComment>
       </StyledCommentWrapper>
     </>
