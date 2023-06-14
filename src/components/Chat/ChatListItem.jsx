@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import foodzim from "../../assets/images/basic-profile-lg.svg";
+import bear from "../../assets/images/chattest.jpg";
+import { useNavigate } from "react-router-dom";
 
 const ChatWrapper = styled.ul`
   padding: 0;
@@ -14,7 +16,7 @@ const List = styled.li`
   gap: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
+  background-color: white;
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
@@ -22,6 +24,7 @@ const List = styled.li`
 
 const ProfileImg = styled.img`
   width: 42px;
+  height: 42px;
   border-radius: 50%;
   position: relative;
 `;
@@ -66,22 +69,33 @@ export default function ChatListItem() {
     {
       id: 1,
       profileImg: foodzim,
-      username: "애월읍 위니브 감귤농장",
-      chatContent: "채팅이다",
+      username: "푸짐가게",
+      chatContent: "안됩니다",
       date: "2023.06.09",
     },
     {
       id: 2,
       profileImg: foodzim,
-      username: "은주",
-      chatContent: "채팅이야",
+      username: "채팅",
+      chatContent: "너 채팅칠 줄 알아?",
       date: "2023.06.13",
     },
-  ]; // 이미지 변경이랑 dot 변경해라
+    {
+      id: 3,
+      profileImg: bear,
+      username: "곰돌",
+      chatContent: "나는 곰돌이다",
+      date: "2023.06.14",
+    },
+  ];
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate("/chatroom");
+  }
   return (
     <ChatWrapper>
       {chatListData.map(chatItem => (
-        <List key={chatItem.id}>
+        <List key={chatItem.id} onClick={handleClick}>
           <ProfileImg src={chatItem.profileImg} alt="프로필 이미지" />
           <ProfileDot />
           <TextWrap>

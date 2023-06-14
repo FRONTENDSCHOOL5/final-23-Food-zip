@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import errorIcon from "../../assets/images/icon-404.svg";
 import Button from "../common/Button/Button";
+import { useNavigate } from "react-router-dom";
 const ErrorWrapper = styled.div`
   display: flex;
   height: 100vh;
@@ -8,6 +9,7 @@ const ErrorWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 20px;
+  background-color: #fff;
 `;
 const ErrorImg = styled.img`
   margin: -70px 0 -10px 0;
@@ -21,6 +23,7 @@ const ErrorText = styled.h2`
 `;
 
 export default function Error() {
+  const navigate = useNavigate();
   return (
     <ErrorWrapper>
       <ErrorImg src={errorIcon} alt="404페이지" />
@@ -33,7 +36,7 @@ export default function Error() {
         bgColor="active"
         color="#fff"
         border="null"
-        // onClick={handleClick}
+        onClick={() => navigate(-1)}
       />
     </ErrorWrapper>
   );

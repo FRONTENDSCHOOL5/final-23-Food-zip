@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import foodzim from "../../assets/images/basic-profile-lg.svg";
 
@@ -20,7 +21,9 @@ const MessageText = styled.div`
   border: 1px solid #c4c4c4;
   border-radius: 0 10px 10px 10px;
   font-size: 14px;
+  line-height: 16px;
   position: relative;
+  background-color: white;
 `;
 
 const TimeStamp = styled.span`
@@ -32,15 +35,36 @@ const TimeStamp = styled.span`
 `;
 
 export default function ReceiveMessage() {
+  const messageList = [
+    {
+      id: 1,
+      messageText:
+        "대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다. 모든 국민은 학문과 예술의 자유를 가진다. 이 헌법시행 당시의 법령과 조약은 이 헌법에 위배되지 아니하는 한 그 효력을 지속한다.",
+      time: "12.39",
+    },
+    {
+      id: 2,
+      messageText: "집 가고 싶다",
+      time: "13.45",
+    },
+    {
+      id: 3,
+      messageText: "밥 먹으러 가도 되나요?",
+      time: "13.45",
+    },
+  ];
+
   return (
-    <MessageWrap>
-      <ProfileImg src={foodzim} alt="사용자 프로필 사진" />
-      <MessageText>
-        옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다.
-        이상의 청춘의 뼈 따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게
-        뛰노는 인생의 힘있다.
-        <TimeStamp>12:39</TimeStamp>
-      </MessageText>
-    </MessageWrap>
+    <ul>
+      {messageList.map(messageItem => (
+        <MessageWrap key={messageItem.id}>
+          <ProfileImg src={foodzim} alt="사용자 프로필 사진" />
+          <MessageText>
+            {messageItem.messageText}
+            <TimeStamp>{messageItem.time}</TimeStamp>
+          </MessageText>
+        </MessageWrap>
+      ))}
+    </ul>
   );
 }

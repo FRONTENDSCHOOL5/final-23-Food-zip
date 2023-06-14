@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import foodzim from "../../assets/images/basic-profile-lg.svg";
-
+import bear from "../../assets/images/chattest.jpg";
+import gyul from "../../assets/images/list-example.png";
 const SearchWrapper = styled.ul`
   padding: 0;
 `;
@@ -9,6 +10,7 @@ const SearchWrapper = styled.ul`
 const List = styled.li`
   list-style: none;
   display: flex;
+  background-color: white;
   padding: 8px 16px;
   gap: 12px;
   align-items: center;
@@ -22,6 +24,7 @@ const List = styled.li`
 
 const ProfileImg = styled.img`
   width: 50px;
+  height: 50px;
   border-radius: 50%;
 `;
 
@@ -46,17 +49,43 @@ const UserID = styled.p`
 `;
 
 export default function SearchList() {
+  const searchListData = [
+    {
+      id: 1,
+      profileImg: foodzim,
+      result: "애월읍 ",
+      userName: "위니브 감귤농장",
+      userId: "@ weniv_Mandarin",
+    },
+    {
+      id: 2,
+      profileImg: bear,
+      result: "애월읍 ",
+      userName: "곰 농장",
+      userId: "@ bear_farm",
+    },
+    {
+      id: 3,
+      profileImg: gyul,
+      result: "애월읍 ",
+      userName: "귤 과수원",
+      userId: "@ gyul_farm",
+    },
+  ];
   return (
     <SearchWrapper>
-      <List>
-        <ProfileImg src={foodzim} alt="프로필 이미지" />
-        <TextWrap>
-          <UserName>
-            <Result>애월읍</Result> 위니브 감귤농장
-          </UserName>
-          <UserID>@ weniv_Mandarin</UserID>
-        </TextWrap>
-      </List>
+      {searchListData.map(searchItem => (
+        <List key={searchItem.id}>
+          <ProfileImg src={searchItem.profileImg} alt="프로필 이미지" />
+          <TextWrap>
+            <UserName>
+              <Result>{searchItem.result}</Result>
+              {searchItem.userName}
+            </UserName>
+            <UserID>{searchItem.userId}</UserID>
+          </TextWrap>
+        </List>
+      ))}
     </SearchWrapper>
   );
 }

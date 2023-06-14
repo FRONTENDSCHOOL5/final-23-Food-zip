@@ -12,7 +12,7 @@ const EmptyWrapper = styled.div`
   gap: 20px;
 `;
 const EmptyImg = styled.img`
-  margin-bottom: 12px;
+  margin: -70px 0 12px 0;
 `;
 const EmptyText = styled.h2`
   margin: 0px;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import imageIcon from "../../../../assets/images/img-button.svg";
+import imageIcon from "../../../assets/images/img-button.svg";
 import styled from "styled-components";
 
 const ChatNavBar = styled.div`
@@ -31,7 +31,6 @@ const Input = styled.input`
 `;
 
 const SendBtn = styled.button`
-  /* 버튼 스타일 수정 */
   width: 70px;
   color: ${({ hasText }) => (hasText ? "#286140" : "#C4C4C4")};
   font-size: 14px;
