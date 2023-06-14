@@ -3,7 +3,7 @@ import styled from "styled-components";
 import UserImg from "../../../assets/images/basic-profile-sm.svg";
 import PostTestImg from "../../../assets/images/post-test.png";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
-// import BtnHeart from "../../../assets/images/icon-heart.svg";
+
 const Container = styled.section`
   position: relative;
   width: 100%;
@@ -29,8 +29,8 @@ const PostUserId = styled.p`
   color: #767676;
 `;
 const PostContent = styled.div`
-  width: 90%;
-  margin: 17px auto 0 auto;
+  width: 100%;
+  margin: 17px 0;
   font-size: 14px;
   line-height: 17px;
 `;
@@ -38,7 +38,7 @@ const PostImg = styled.img`
   display: block;
   width: 100%;
   height: 228px;
-  margin: 17px auto 12px auto;
+  margin: 17px 0 12px;
   border: 0.5px solid #dbdbdb;
   border-radius: 10px;
 `;
