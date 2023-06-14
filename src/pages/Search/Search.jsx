@@ -11,16 +11,23 @@ const Container = styled.div`
 const List = styled.section`
   margin: 48px 0 60px 0;
   height: calc(100vh - 108px);
+  background-color: white;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    height: 12px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #dbdbdb;
+    border-radius: 50px;
+    background-clip: padding-box;
+    border: 3px solid transparent;
+  }
 `;
 export default function Search() {
   return (
     <Container>
       <Header type="search" />
       <List>
-        <SearchList />
-        <SearchList />
-        <SearchList /> <SearchList />
-        <SearchList />
         <SearchList />
       </List>
       <Navigation />

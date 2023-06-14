@@ -10,6 +10,7 @@ const Container = styled.div`
 const List = styled.section`
   margin: 48px 0 60px 0;
   height: calc(100vh - 108px);
+  background-color: white;
 `;
 export default function ChatList() {
   return (

@@ -9,6 +9,8 @@ import Home from "../pages/Home/Home";
 import Search from "../pages/Search/Search";
 import ChatList from "../pages/Chat/ChatList";
 import ErrorPage from "../pages/Error/ErrorPage";
+import ChatRoom from "../pages/Chat/ChatRoom";
+import MakePost from "../pages/Post/MakePost";
 
 export default function Routers() {
   return (
@@ -24,8 +26,10 @@ export default function Routers() {
         <Route path="/home" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/chat" element={<ChatList />} />
-        <Route path="/chatroom" element={<ChatList />} />
+        <Route path="/chatroom" element={<ChatRoom />} />
         <Route path="/error" element={<ErrorPage />} />
+        <Route path="/makepost" element={<MakePost />} />
+
         {/* <Route path="profile" element={<ProfileSetting />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/home" element={<Home />} />

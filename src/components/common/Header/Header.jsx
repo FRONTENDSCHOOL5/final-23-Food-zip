@@ -143,7 +143,7 @@ export default function Header({ type, modalOpen }) {
           <HeaderLeftBtn type="button">
             <img src={IconArrowLeft} alt="뒤로가기 아이콘" />
           </HeaderLeftBtn>
-          <HeaderTextP>애월읍 위니브 감귤농장</HeaderTextP>
+          <HeaderTextP>푸짐가게</HeaderTextP>
         </HeaderSpan>
         <HeaderRightBtn type="button" onClick={modalOpen}>
           <img src={IconMoreVertical} alt="더보기 아이콘" />

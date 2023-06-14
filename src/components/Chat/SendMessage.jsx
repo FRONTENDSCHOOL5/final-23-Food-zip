@@ -15,6 +15,7 @@ const MessageText = styled.div`
   background-color: #286140;
   color: white;
   font-size: 14px;
+  line-height: 16px;
   position: relative;
   margin: 0 16px 0 auto;
 `;
@@ -31,8 +32,8 @@ export default function SendMessage() {
   return (
     <MessageWrap>
       <MessageText>
-        네 말씀하세요
-        <TimeStamp>12:39</TimeStamp>
+        안됩니다
+        <TimeStamp>13.50</TimeStamp>
       </MessageText>
     </MessageWrap>
   );
