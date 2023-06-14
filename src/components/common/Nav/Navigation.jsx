@@ -78,13 +78,13 @@ export default function Navigation() {
         <StyledNavText>게시물 작성</StyledNavText>
       </NavLink>
       <NavLink
-        to="/search"
+        to="/myprofile"
         className={`nav-link ${
-          location.pathname === "/search" ? "active" : ""
+          location.pathname === "/myprofile" ? "active" : ""
         }`}
       >
         <img
-          src={location.pathname === "/search" ? fillUserIcon : userIcon}
+          src={location.pathname === "/myprofile" ? fillUserIcon : userIcon}
           alt="프로필"
         />
         <StyledNavText>프로필</StyledNavText>

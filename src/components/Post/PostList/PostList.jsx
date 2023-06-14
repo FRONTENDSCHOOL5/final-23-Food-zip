@@ -15,7 +15,7 @@ const PostListDiv = styled.div`
   height: 44px;
   box-sizing: border-box;
   background-color: white;
-  margin-top: 6px;
+  border-top: 1px solid #dbdbdb;
   border-bottom: 1px solid #dbdbdb;
 `;
 

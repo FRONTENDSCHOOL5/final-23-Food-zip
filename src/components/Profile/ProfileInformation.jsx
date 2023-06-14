@@ -8,7 +8,7 @@ const ProfileInfoWrapDiv = styled.div`
   width: 100%;
   padding: 78px 55px 26px;
   box-sizing: border-box;
-  margin-bottom: 6px;
+  border-bottom: 1px solid #dbdbdb;
   background-color: white;
 `;
 
