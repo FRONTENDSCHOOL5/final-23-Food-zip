@@ -14,7 +14,7 @@ export default function Routers() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Splash />} /> */}
+        <Route path="/" element={<Splash />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup">

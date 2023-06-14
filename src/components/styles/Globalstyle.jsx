@@ -10,12 +10,12 @@ export const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
   :root {
-    font-family: 'SUIT', sans-serif;
+    font-family: 'SUIT-Regular', sans-serif;
     background-color: #2861311f;
   }
 
   button {
-    font-family: 'SUIT', sans-serif;
+    font-family: 'SUIT-Regular', sans-serif;
     cursor: pointer;
     padding: 0;
     border: 0;

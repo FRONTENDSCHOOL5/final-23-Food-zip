@@ -36,7 +36,7 @@ const UploadImg = styled.img`
   object-fit: contain;
   border-radius: 10px;
 `;
-export default function ImgPrev() {
+export default function PostImgPrev() {
   const [imgUrl, setImgUrl] = useState("");
   const fileInputRef = useRef(null);
 

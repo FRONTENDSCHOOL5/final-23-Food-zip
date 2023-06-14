@@ -1,6 +1,7 @@
 import { GlobalStyle } from "./components/styles/Globalstyle";
 import styled from "styled-components";
 import Routers from "./routes/Routers";
+import DetailPost from "./pages/Post/DetailPost";
 
 const Container = styled.div`
   max-width: 390px;
@@ -13,6 +14,7 @@ function App() {
     <Container>
       <GlobalStyle />
       <Routers />
+      {/* <DetailPost /> */}
     </Container>
   );
 }
