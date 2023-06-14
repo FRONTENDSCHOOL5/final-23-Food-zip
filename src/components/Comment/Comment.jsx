@@ -9,12 +9,12 @@ const StyledComment = styled.div`
   padding: 20px 0 16px 0;
 `;
 const CommentBtnMore = styled.button`
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   background: url(${MoreIcon});
   position: absolute;
   top: 20px;
-  right: 16px;
+  right: 0;
 `;
 
 const CommentUserProfile = styled.img`
