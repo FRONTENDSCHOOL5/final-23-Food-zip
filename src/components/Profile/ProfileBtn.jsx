@@ -54,7 +54,7 @@ export default function ProfileBtn({ type }) {
     ),
 
     my: (
-      <InformationBottomDiv to="/profile/edit">
+      <InformationBottomDiv to="/myprofile/edit">
         <Button
           type="button"
           content="프로필 수정"
