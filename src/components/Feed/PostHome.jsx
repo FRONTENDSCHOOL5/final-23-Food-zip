@@ -18,7 +18,7 @@ const List = styled.section`
     background: #dbdbdb;
     border-radius: 50px;
     background-clip: padding-box;
-    border: 3px solid transparent;
+    border: 5px solid transparent;
   }
 `;
 export default function PostHome() {

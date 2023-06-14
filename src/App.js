@@ -14,7 +14,6 @@ function App() {
     <Container>
       <GlobalStyle />
       <Routers />
-      {/* <DetailPost /> */}
     </Container>
   );
 }
