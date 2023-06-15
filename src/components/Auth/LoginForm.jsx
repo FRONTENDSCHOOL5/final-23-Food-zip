@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { ButtonStyle } from "./Button/Button";
+import { ButtonStyle } from "../common/Button/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -150,4 +150,4 @@ const LoginForm = ({ onSubmit }) => {
   );
 };
 
-export default Form;
+export default LoginForm;

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import Form from "../../../components/common/Form";
+import Form from "../../../components/Auth/LoginForm";
 
 const Section = styled.section`
   padding-top: 30px;

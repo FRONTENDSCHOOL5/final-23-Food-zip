@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import Button from "../../../components/common/Button/Button";
-import Form from "../../../components/common/Form";
 import SignUpForm from "../../../components/Auth/SignUpForm";
 import axios from "axios";
 const Section = styled.section`

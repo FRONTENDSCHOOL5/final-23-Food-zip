@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PostItem from "../PostItem/PostItem";
 import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
@@ -27,7 +27,7 @@ const PostListBtn = styled.button`
   border: 0;
 `;
 
-const PostItemList = styled.div`
+const PostItemList = styled.ul`
   width: 100%;
   height: 480px;
   display: flex;
@@ -48,23 +48,68 @@ const PostItemList = styled.div`
   }
 `;
 
+const GridItemList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 114px);
+  /* grid-template-rows: repeat(3, 114px); */
+  gap: 8px;
+  padding: 16px 16px 80px 16px;
+  overflow: auto;
+  /* width: 100%; */
+  /* max-width: 390px; */
+  height: 480px;
+  /* box-sizing: border-box; */
+  background-color: white;
+`;
+
+const PostGridImg = styled.a`
+  position: relative;
+  width: 114px;
+  height: 114px;
+  background-size: cover;
+  /* background: url(${props =>
+    props.image}) no-repeat center center / cover; */
+  background: url("http://localhost:3000/static/media/post-test.dc757e448c096f10e4c7.png")
+    no-repeat center center / cover;
+  cursor: pointer;
+  overflow: auto;
+`;
+
 export default function PostList() {
+  const [viewMode, setViewMode] = useState("list");
+
+  const handleViewModeChange = mode => {
+    setViewMode(mode);
+  };
+
   return (
     <>
       <PostListDiv>
-        <PostListBtn type="button">
-          <img src={IconListOn} alt="리스트형 아이콘" />
+        <PostListBtn type="button" onClick={() => handleViewModeChange("list")}>
+          <img
+            src={viewMode === "list" ? IconListOn : IconListOff}
+            alt="리스트형 아이콘"
+          />
         </PostListBtn>
-        <PostListBtn type="button">
-          <img src={IconAlbumOff} alt="앨범형 아이콘" />
+        <PostListBtn
+          type="button"
+          onClick={() => handleViewModeChange("album")}
+        >
+          <img
+            src={viewMode === "album" ? IconAlbumOn : IconAlbumOff}
+            alt="앨범형 아이콘"
+          />
         </PostListBtn>
       </PostListDiv>
-      <PostItemList>
-        <PostItem />
-        <PostItem />
-        <PostItem />
-        <PostItem />
-      </PostItemList>
+      {viewMode === "list" ? (
+        <PostItemList>
+          <PostItem />
+        </PostItemList>
+      ) : (
+        <GridItemList>
+          <PostGridImg />
+        </GridItemList>
+      )}
     </>
   );
 }
