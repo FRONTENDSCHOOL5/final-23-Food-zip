@@ -1,9 +1,8 @@
-import { useState } from "react";
-import React, { useRef } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import BasicProfileInput from "../../../assets/images/basic-profile-lg.svg";
 import ImgButton from "../../../assets/images/upload-file.svg";
 import styled from "styled-components";
-import { useCallback } from "react";
+import { ButtonStyle } from "../../common/Button/Button";
 
 const ProfileInputForm = styled.form`
   width: 322px;
@@ -49,6 +48,9 @@ const ProfileFormInput = styled.input`
     outline: none;
     border-bottom: 1px solid #286140;
   }
+`;
+const StartButton = styled(ButtonStyle)`
+  margin-top: 18px;
 `;
 
 export default function ProfileForm() {
@@ -102,6 +104,9 @@ export default function ProfileForm() {
           placeholder="자신과 선호하는 음식에 대해 소개해주세요!"
         />
       </ProfileFormLabel>
+      <StartButton type="submit" bgColor="inactive">
+        FOOD ZIP 시작하기
+      </StartButton>
     </ProfileInputForm>
   );
 }

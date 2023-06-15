@@ -8,7 +8,7 @@ import Header from "../../components/common/Header/Header";
 const RecommendWrapper = styled.div`
   padding: 78px 36px;
   background: #fff;
-  height: calc(100vh - 48px);
+  height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
 `;
