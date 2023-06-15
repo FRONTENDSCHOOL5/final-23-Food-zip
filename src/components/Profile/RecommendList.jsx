@@ -25,12 +25,16 @@ const RecommendTitleP = styled.p`
   margin-bottom: 16px;
 `;
 
-const RecommendListDiv = styled.div`
+const RecommendListUl = styled.ul`
   display: flex;
   gap: 10px;
-  & :last-child {
+  /* & :last-child {
     padding-right: 16px;
-  }
+  } */
+`;
+
+const RecommendLiBtn = styled.button`
+  text-align: left;
 `;
 
 const RecommendListImg = styled.img`
@@ -55,33 +59,24 @@ export default function RecommendList() {
   return (
     <RecommendWrapDiv>
       <RecommendTitleP>추천 맛집</RecommendTitleP>
-      <RecommendListDiv>
-        <div>
-          <RecommendListImg src={ListImg} alt="" />
-          <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-          <RecommendPriceSpan>35,000원</RecommendPriceSpan>
-        </div>
-        <div>
-          <RecommendListImg src={ListImg} alt="" />
-          <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-          <RecommendPriceSpan>35,000원</RecommendPriceSpan>
-        </div>
-        <div>
-          <RecommendListImg src={ListImg} alt="" />
-          <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-          <RecommendPriceSpan>35,000원</RecommendPriceSpan>
-        </div>
-        <div>
-          <RecommendListImg src={ListImg} alt="" />
-          <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-          <RecommendPriceSpan>35,000원</RecommendPriceSpan>
-        </div>
-        <div>
-          <RecommendListImg src={ListImg} alt="" />
-          <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-          <RecommendPriceSpan>35,000원</RecommendPriceSpan>
-        </div>
-      </RecommendListDiv>
+      <RecommendListUl>
+        {/* {recommendations.map((recommendation, index) => (
+          <li key={index}>
+            <RecommendLiBtn type="button">
+              <RecommendListImg src={recommendation.image} alt="" />
+              <RecommendNameP>{recommendation.name}</RecommendNameP>
+              <RecommendPriceSpan>{recommendation.price}</RecommendPriceSpan>
+            </RecommendLiBtn>
+          </li>
+        ))} */}
+        <li>
+          <RecommendLiBtn type="button">
+            <RecommendListImg src={ListImg} alt="" />
+            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
+            <RecommendPriceSpan>35,000원</RecommendPriceSpan>
+          </RecommendLiBtn>
+        </li>
+      </RecommendListUl>
     </RecommendWrapDiv>
   );
 }
