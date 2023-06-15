@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <Container>
       <Header type="home" />
-      {/* <EmptyHome /> */}
+      <EmptyHome />
       <List>
         <PostHome />
       </List>
