@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState } from "react";
 import BasicProfileInput from "../../../assets/images/basic-profile-lg.svg";
 import ImgButton from "../../../assets/images/upload-file.svg";
 import styled from "styled-components";
@@ -96,6 +96,7 @@ export default function ProfileForm() {
   // 프로필 이미지 설정
   const [selectedImage, setSelectedImage] = useState(null);
   const [imgProfile, setImgProfile] = useState(null);
+  const [accountName, setAccountName] = useState("");
   const fileInputRef = useRef(null);
   const location = useLocation();
   const data = location.state;
@@ -114,7 +115,6 @@ export default function ProfileForm() {
       },
     );
     const json = await res.json();
-    // console.log(json);
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -137,22 +137,22 @@ export default function ProfileForm() {
   const navigate = useNavigate();
 
   const handleFormSubmit = async formData => {
-    const userName = formData.username;
+    const username = formData.username;
     const email = data.email;
     const password = data.password;
-    const accountName = formData.accountname;
+    const accountname = formData.accountname;
     const intro = formData.intro;
     const image = imgProfile;
-    console.log(email, password, userName, accountName, image);
+    setAccountName(accountname);
     try {
       const res = await axios.post(
         "https://api.mandarin.weniv.co.kr/user/",
         {
           user: {
-            username: userName,
+            username: username,
             email: email,
             password: password,
-            accountname: accountName,
+            accountname: accountname,
             intro: intro,
             image: image,
           },
@@ -237,9 +237,12 @@ export default function ProfileForm() {
           placeholder="자신과 선호하는 음식에 대해 소개해주세요!"
         />
       </ProfileFormLabel>
-      <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
-        FOOD ZIP 시작하기
-      </StartButton>
+      {/* 경로에 따른 submit 버튼 활성화 */}
+      {location.pathname === "/signup/profile" && (
+        <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
+          FOOD ZIP 시작하기
+        </StartButton>
+      )}
     </ProfileInputForm>
   );
 }

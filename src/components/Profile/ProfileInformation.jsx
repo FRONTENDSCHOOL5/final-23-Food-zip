@@ -3,6 +3,9 @@ import styled, { css } from "styled-components";
 import ProfileImage from "../../assets/images/basic-profile-lg.svg";
 import ProfileBtn from "./ProfileBtn";
 import Header from "../common/Header/Header";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const ProfileInfoWrapDiv = styled.div`
   width: 100%;
@@ -67,27 +70,74 @@ const InfoTextP = styled.p`
   font-size: 14px;
   color: #767676;
 `;
-
+const ProfileImg = styled.img`
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+`;
 export default function ProfileInformation({ type, modalOpen }) {
+  const [userInfo, setUserInfo] = useState({
+    image: "",
+    accountname: "",
+    username: "",
+    followerCount: "",
+    followingCount: "",
+    isfollow: "",
+    intro: "",
+  });
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+  const getUserInfo = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    const res = await axios.get(
+      "https://api.mandarin.weniv.co.kr/user/myinfo",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    const {
+      accountname,
+      username,
+      followingCount,
+      followerCount,
+      image,
+      isfollow,
+      intro,
+    } = res.data.user;
+    setUserInfo({
+      accountname,
+      username,
+      followingCount,
+      followerCount,
+      image,
+      isfollow,
+      intro,
+    });
+  };
+  console.log(userInfo);
   return (
     <>
       <Header type="profile" modalOpen={modalOpen} />
       <ProfileInfoWrapDiv>
         <InformationTopDiv>
           <a href="#!">
-            <FollowerCntSpan>2950</FollowerCntSpan>
+            <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
             <FollowerCntP>followers</FollowerCntP>
           </a>
-          <img src={ProfileImage} alt="프로필 이미지" />
+          <ProfileImg src={userInfo.image} alt="프로필 이미지" />
           <a href="#!">
-            <FollowingCntSpan>128</FollowingCntSpan>
+            <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
             <FollowingCntP>followings</FollowingCntP>
           </a>
         </InformationTopDiv>
         <InformationDiv>
-          <InfoNameP>애월읍 위니브 감귤농장</InfoNameP>
-          <InfoIdP>@ weniv_Mandarin</InfoIdP>
-          <InfoTextP>애월읍 감귤 전국 배송, 귤따기 체험, 감귤 농장</InfoTextP>
+          <InfoNameP>{userInfo.username}</InfoNameP>
+          <InfoIdP>@ {userInfo.accountname}</InfoIdP>
+          <InfoTextP>{userInfo.intro}</InfoTextP>
         </InformationDiv>
         <ProfileBtn type={type} />
       </ProfileInfoWrapDiv>
