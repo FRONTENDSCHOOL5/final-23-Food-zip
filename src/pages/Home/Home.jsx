@@ -20,10 +20,10 @@ export default function Home() {
   return (
     <Container>
       <Header type="home" />
-      {/* <EmptyHome /> */}
-      <List>
+      <EmptyHome />
+      {/* <List>
         <PostHome />
-      </List>
+      </List> */}
       <Navigation />
     </Container>
   );

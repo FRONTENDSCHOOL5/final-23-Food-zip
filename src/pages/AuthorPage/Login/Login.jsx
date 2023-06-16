@@ -6,7 +6,7 @@ import LoginForm from "../../../components/Auth/LoginForm";
 const Section = styled.section`
   padding-top: 30px;
   width: 390px;
-  height: 100vh;
+  height: calc(100vh - 30px);
   margin: auto;
   text-align: center;
   background: #fff;
