@@ -30,11 +30,11 @@ const PostListBtn = styled.button`
 
 const PostItemList = styled.ul`
   width: 100%;
-  height: 480px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
+  /* overflow: auto; */
   background-color: white;
   padding: 16px 20px 60px;
   box-sizing: border-box;
@@ -52,12 +52,14 @@ const PostItemList = styled.ul`
 const GridItemList = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 114px);
   gap: 8px;
   padding: 16px 16px 80px 16px;
   /* overflow: auto; */
   /* width: 100%; */
   /* max-width: 390px; */
   height: 100%;
+  min-height: 480px;
   /* box-sizing: border-box; */
   background-color: white;
 `;
