@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import LoginForm from "../../../components/Auth/LoginForm";
+
 const Section = styled.section`
   padding-top: 30px;
   width: 390px;

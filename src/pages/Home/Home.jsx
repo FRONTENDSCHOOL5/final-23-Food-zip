@@ -20,9 +20,9 @@ export default function Home() {
     <Container>
       <Header type="home" />
       <EmptyHome />
-      <List>
+      {/* <List>
         <PostHome />
-      </List>
+      </List> */}
       <Navigation />
     </Container>
   );
