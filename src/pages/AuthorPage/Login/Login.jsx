@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-
-import Form from "../../../components/common/Form";
+import LoginForm from "../../../components/Auth/LoginForm";
 
 const Section = styled.section`
   padding-top: 30px;
@@ -28,7 +27,7 @@ export default function Login() {
   return (
     <Section className="l-wrapper">
       <LoginTitle>로그인</LoginTitle>
-      <Form />
+      <LoginForm />
       <StyledLink to="/signup" className="join-email">
         이메일로 회원가입
       </StyledLink>
