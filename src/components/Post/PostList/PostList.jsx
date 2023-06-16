@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import PostItem from "../PostItem/PostItem";
+import PostTestImg from "../../../assets/images/post-test.png";
 import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
 import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
@@ -50,14 +51,13 @@ const PostItemList = styled.ul`
 
 const GridItemList = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 114px);
-  /* grid-template-rows: repeat(3, 114px); */
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   padding: 16px 16px 80px 16px;
-  overflow: auto;
+  /* overflow: auto; */
   /* width: 100%; */
   /* max-width: 390px; */
-  height: 480px;
+  height: 100%;
   /* box-sizing: border-box; */
   background-color: white;
 `;
@@ -66,16 +66,14 @@ const PostGridImg = styled.a`
   position: relative;
   width: 114px;
   height: 114px;
-  background-size: cover;
-  /* background: url(${props =>
-    props.image}) no-repeat center center / cover; */
-  background: url("http://localhost:3000/static/media/post-test.dc757e448c096f10e4c7.png")
-    no-repeat center center / cover;
   cursor: pointer;
-  overflow: auto;
+  & img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
-export default function PostList() {
+export default function PostList({ post }) {
   const [viewMode, setViewMode] = useState("list");
 
   const handleViewModeChange = mode => {
@@ -107,7 +105,11 @@ export default function PostList() {
         </PostItemList>
       ) : (
         <GridItemList>
-          <PostGridImg />
+          {post.map(item => (
+            <PostGridImg key={item.id}>
+              <img src={item.image} alt="" />
+            </PostGridImg>
+          ))}
         </GridItemList>
       )}
     </>
