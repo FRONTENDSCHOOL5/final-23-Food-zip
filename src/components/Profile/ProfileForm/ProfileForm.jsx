@@ -115,7 +115,6 @@ export default function ProfileForm() {
       },
     );
     const json = await res.json();
-
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -145,7 +144,6 @@ export default function ProfileForm() {
     const intro = formData.intro;
     const image = imgProfile;
     setAccountName(accountname);
-
     try {
       const res = await axios.post(
         "https://api.mandarin.weniv.co.kr/user/",

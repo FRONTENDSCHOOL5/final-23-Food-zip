@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PostItem from "../PostItem/PostItem";
+import PostTestImg from "../../../assets/images/post-test.png";
 import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
 import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
@@ -27,13 +28,13 @@ const PostListBtn = styled.button`
   border: 0;
 `;
 
-const PostItemList = styled.div`
+const PostItemList = styled.ul`
   width: 100%;
-  height: 480px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
+  /* overflow: auto; */
   background-color: white;
   padding: 16px 20px 60px;
   box-sizing: border-box;
@@ -48,23 +49,71 @@ const PostItemList = styled.div`
   }
 `;
 
-export default function PostList() {
+const GridItemList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 114px);
+  gap: 8px;
+  padding: 16px 16px 80px 16px;
+  /* overflow: auto; */
+  /* width: 100%; */
+  /* max-width: 390px; */
+  height: 100%;
+  min-height: 480px;
+  /* box-sizing: border-box; */
+  background-color: white;
+`;
+
+const PostGridImg = styled.a`
+  position: relative;
+  width: 114px;
+  height: 114px;
+  cursor: pointer;
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export default function PostList({ post }) {
+  const [viewMode, setViewMode] = useState("list");
+
+  const handleViewModeChange = mode => {
+    setViewMode(mode);
+  };
+
   return (
     <>
       <PostListDiv>
-        <PostListBtn type="button">
-          <img src={IconListOn} alt="리스트형 아이콘" />
+        <PostListBtn type="button" onClick={() => handleViewModeChange("list")}>
+          <img
+            src={viewMode === "list" ? IconListOn : IconListOff}
+            alt="리스트형 아이콘"
+          />
         </PostListBtn>
-        <PostListBtn type="button">
-          <img src={IconAlbumOff} alt="앨범형 아이콘" />
+        <PostListBtn
+          type="button"
+          onClick={() => handleViewModeChange("album")}
+        >
+          <img
+            src={viewMode === "album" ? IconAlbumOn : IconAlbumOff}
+            alt="앨범형 아이콘"
+          />
         </PostListBtn>
       </PostListDiv>
-      <PostItemList>
-        <PostItem />
-        <PostItem />
-        <PostItem />
-        <PostItem />
-      </PostItemList>
+      {viewMode === "list" ? (
+        <PostItemList>
+          <PostItem />
+        </PostItemList>
+      ) : (
+        <GridItemList>
+          {post.map(item => (
+            <PostGridImg key={item.id}>
+              <img src={item.image} alt="" />
+            </PostGridImg>
+          ))}
+        </GridItemList>
+      )}
     </>
   );
 }

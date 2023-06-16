@@ -6,6 +6,7 @@ import Modal from "../../components/Modal/Modal";
 import Navigation from "../../components/common/Nav/Navigation";
 import Alert from "../../components/Modal/Alert";
 import { useState } from "react";
+import post from "../../dummy/dummyapi";
 
 export default function Profile({ type }) {
   const [modalShow, setModalShow] = useState(false);
@@ -29,12 +30,11 @@ export default function Profile({ type }) {
   function alertOpen() {
     setAlertShow(true);
   }
-
   return (
     <div>
       <ProfileInformation type={type} modalOpen={modalOpen} />
       <RecommendList />
-      <PostList />
+      <PostList post={post} />
       {modalShow && (
         <Modal type="setting" modalClose={modalClose} alertOpen={alertOpen} />
       )}
