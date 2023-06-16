@@ -46,10 +46,11 @@ const RecommendListImg = styled.img`
 
 const RecommendNameP = styled.p`
   font-size: 14px;
-  margin: 6px 0 4px;
+  margin: 6px 0 2px;
+  /* font-weight: 600; */
 `;
 
-const RecommendPriceSpan = styled.span`
+const RecommendScoreSpan = styled.span`
   font-size: 12px;
   font-weight: 600;
   color: #286140;
@@ -73,7 +74,7 @@ export default function RecommendList() {
           <RecommendLiBtn type="button">
             <RecommendListImg src={ListImg} alt="" />
             <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-            <RecommendPriceSpan>35,000원</RecommendPriceSpan>
+            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
           </RecommendLiBtn>
         </li>
       </RecommendListUl>
