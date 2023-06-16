@@ -11,9 +11,8 @@ const StyledForm = styled.form`
 `;
 
 const StyledButton = styled(ButtonStyle)`
-  margin: 100px auto 20px auto;
+  margin: 30px auto 20px auto;
 `;
-
 const StyledInputContainer = styled.div`
   position: relative;
 `;
@@ -51,7 +50,6 @@ const StyledError = styled.small`
 `;
 
 const LoginForm = ({ onSubmit }) => {
-  //파일 이름 바꾸면서 버꿨으니 확인하세요
   const {
     register,
     handleSubmit,
@@ -78,23 +76,24 @@ const LoginForm = ({ onSubmit }) => {
         },
       );
       console.log(res.data, "제이손입니다");
+      console.log(res.status);
       const token = res.data.user["token"];
       localStorage.setItem("token", token);
-
-      alert(JSON.stringify(res.data));
 
       if (res.status === 200) {
         setLoginSuccess(true);
         console.log(loginSuccess);
       } else {
         setLoginSuccess(false);
+        alert(
+          "일시적인 오류로 서비스 접속에 실패했습니다. 잠시 후 다시 시도해 주세요.",
+        );
       }
     } catch (err) {
-      console.log(err);
       const errorMessage =
-        err.response?.data?.message || "오류가 발생했습니다.";
+        err.response?.data?.message ||
+        "이메일 또는 비밀번호가 일치하지 않습니다.";
       alert(errorMessage);
-      console.log(errorMessage);
     }
   };
   useEffect(() => {
@@ -143,7 +142,11 @@ const LoginForm = ({ onSubmit }) => {
         )}
       </StyledInputContainer>
 
-      <StyledButton type="submit" disabled={!isValid}>
+      <StyledButton
+        type="submit"
+        disabled={!isValid}
+        bgColor={isValid ? "active" : "inactive"}
+      >
         로그인
       </StyledButton>
     </StyledForm>
