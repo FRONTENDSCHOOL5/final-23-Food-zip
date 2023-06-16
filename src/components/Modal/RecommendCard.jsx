@@ -45,7 +45,7 @@ export default function RecommendCard() {
       <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
       <RecommendScoreSpan>35,000원</RecommendScoreSpan>
       <RecommendLocationP>
-        서울 강남구 강남대로 358 2층 201호{" "}
+        서울 강남구 강남대로 358 2층 201호
       </RecommendLocationP>
     </RecommendCardDiv>
   );
