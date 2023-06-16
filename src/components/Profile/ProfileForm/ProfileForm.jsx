@@ -3,6 +3,9 @@ import BasicProfileInput from "../../../assets/images/basic-profile-lg.svg";
 import ImgButton from "../../../assets/images/upload-file.svg";
 import styled from "styled-components";
 import { ButtonStyle } from "../../common/Button/Button";
+import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ProfileInputForm = styled.form`
   width: 322px;
@@ -14,13 +17,15 @@ const ProfileInputForm = styled.form`
 
 const ProfileImg = styled.img`
   width: 110px;
+  height: 110px;
+  border-radius: 50%;
   margin: 30px 0;
   align-self: center;
 `;
 
 const ProfileInputImgButton = styled.button`
   position: absolute;
-  transform: translate(180px, -70px);
+  transform: translate(180px, -110px);
 `;
 const ProfileInputImg = styled.img`
   width: 36px;
@@ -32,12 +37,13 @@ const ProfileInput = styled.input`
 
 const ProfileFormLabel = styled.label`
   color: #767676;
+  position: relative;
 `;
 
 const ProfileFormInput = styled.input`
   width: 100%;
   display: block;
-  margin-top: 10px;
+  margin: 10px 0 8px;
   padding-bottom: 8px;
   border-bottom: 1px solid #dbdbdb;
   font-size: 14px;
@@ -52,59 +58,186 @@ const ProfileFormInput = styled.input`
 const StartButton = styled(ButtonStyle)`
   margin-top: 18px;
 `;
+const StyledError = styled.small`
+  font-size: 12px;
+  color: red;
+  position: absolute;
+  bottom: -10px;
+`;
+const StyledInputContainer = styled.div`
+  position: relative;
+`;
+
+const StyledLabel = styled.label`
+  display: block;
+  text-align: left;
+  padding: 0 35px;
+  font-size: 16px;
+  color: #767676;
+  pointer-events: none;
+`;
+
+const StyledInput = styled.input`
+  display: block;
+  width: 322px;
+  box-sizing: border-box;
+  border: none;
+  box-shadow: 0 1px 0 0 #677880;
+  height: 48px;
+  border-radius: 4px 4px 0 0;
+  padding: 0 px;
+  font-size: 16px;
+  margin: 0 auto 36px auto;
+  outline: none;
+  background: transparent;
+`;
 
 export default function ProfileForm() {
-  // const [profileImg, setProfileImg] = useState({ BasicProfileInput });
-  // const fileInputRef = (useRef < HTMLInputElement) | (null > null);
+  // 프로필 이미지 설정
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imgProfile, setImgProfile] = useState(null);
+  const fileInputRef = useRef(null);
+  const location = useLocation();
+  const data = location.state;
+  // console.log(data); // 회원가입 페이지에서 넘겨온 이메일,비밀번호 데이터
 
-  // const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (!e.target.files) {
-  //     return;
-  //   }
-  //   console.log(e.target.files[0].name);
-  // }, []);
-  // const UploadBtn = useCallback(() => {
-  //   if (!fileInputRef.current) {
-  //     return;
-  //   }
-  //   fileInputRef.current.click();
-  // }, []);
+  const handleImageChange = async event => {
+    const formData = new FormData();
+    const file = event.target.files[0];
+    let imgUrl = "";
+    formData.append("image", file);
+    const res = await fetch(
+      "https://api.mandarin.weniv.co.kr/image/uploadfile",
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
+    const json = await res.json();
+    // console.log(json);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+    imgUrl = "https://api.mandarin.weniv.co.kr/" + json.filename;
+    setImgProfile(imgUrl);
+  };
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ mode: "onChange" });
+
+  const navigate = useNavigate();
+
+  const handleFormSubmit = async formData => {
+    const userName = formData.username;
+    const email = data.email;
+    const password = data.password;
+    const accountName = formData.accountname;
+    const intro = formData.intro;
+    const image = imgProfile;
+    console.log(email, password, userName, accountName, image);
+    try {
+      const res = await axios.post(
+        "https://api.mandarin.weniv.co.kr/user/",
+        {
+          user: {
+            username: userName,
+            email: email,
+            password: password,
+            accountname: accountName,
+            intro: intro,
+            image: image,
+          },
+        },
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        },
+      );
+      console.log(JSON.stringify(res.data));
+      alert(JSON.stringify(res.data));
+
+      // 로그인 페이지로 이동함.
+      navigate("/login");
+    } catch (err) {
+      alert(err.response.data.message);
+      console.log(err.response.data.message);
+    }
+  };
   return (
-    <ProfileInputForm>
-      <ProfileImg src={BasicProfileInput} alt="기본 프로필" />
+    <ProfileInputForm onSubmit={handleSubmit(handleFormSubmit)}>
+      <label htmlFor="profileImg"></label>
+      <ProfileImg src={selectedImage || BasicProfileInput} alt="기본 프로필" />
       <ProfileInput
+        id="profileImg"
         type="file"
         accept="image/jpg, image/jpeg, image/png"
-        // ref={fileInputRef}
-        // onChange={handleChange}
+        ref={fileInputRef}
+        onChange={handleImageChange}
       />
-      <ProfileInputImgButton type="button">
-        {/* onClick={UploadBtn} */}
+      <ProfileInputImgButton type="button" onClick={handleButtonClick}>
         <ProfileInputImg src={ImgButton} />
       </ProfileInputImgButton>
+
       <ProfileFormLabel>
         사용자 이름
         <ProfileFormInput
+          id="username"
           type="text"
           placeholder="2~10자 이내여야 합니다."
-          required
+          {...register("username", {
+            required: "사용자 이름은 필수 입력입니다.",
+            minLength: {
+              value: 2,
+              message: "사용자 이름은 최소 2자 이상이어야 합니다.",
+            },
+            maxLength: {
+              value: 10,
+              message: "사용자 이름은 최대 10자까지 허용됩니다.",
+            },
+          })}
         />
+        {errors.username && (
+          <StyledError role="alert">{errors.username.message}</StyledError>
+        )}
       </ProfileFormLabel>
+
       <ProfileFormLabel>
         계정 ID
         <ProfileFormInput
+          id="accountname"
           type="text"
           placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
+          {...register("accountname", {
+            required: "계정 ID는 필수 입력입니다.",
+            pattern: {
+              value: /^[0-9a-zA-Z._]+$/,
+              message: "영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.",
+            },
+          })}
         />
+        {errors.accountname && (
+          <StyledError role="alert">{errors.accountname.message}</StyledError>
+        )}
       </ProfileFormLabel>
       <ProfileFormLabel>
         소개
         <ProfileFormInput
+          id="intro"
           type="text"
           placeholder="자신과 선호하는 음식에 대해 소개해주세요!"
         />
       </ProfileFormLabel>
-      <StartButton type="submit" bgColor="inactive">
+      <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
         FOOD ZIP 시작하기
       </StartButton>
     </ProfileInputForm>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ProfileImg from "../../assets/images/list-example.png";
 import styled from "styled-components";
 import Button from "../common/Button/Button";
+
 const Container = styled.div`
   width: 358px;
   display: flex;

@@ -5,6 +5,7 @@ import EmptyHome from "../../components/Feed/EmptyHome";
 import Header from "../../components/common/Header/Header";
 import Navigation from "../../components/common/Nav/Navigation";
 import PostHome from "../../components/Feed/PostHome";
+
 const Container = styled.div`
   max-width: 390px;
   margin: 0 auto;
