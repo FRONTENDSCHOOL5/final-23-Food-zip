@@ -15,22 +15,32 @@ const ProfileInputForm = styled.form`
   gap: 16px;
 `;
 
+const ProfileImgDiv = styled.div`
+  position: relative;
+  margin: 0 auto;
+`;
+
+const ProfileInputImgButton = styled.button`
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    bottom: 0;
+    right: 0;
+    transform: translateY(-30px);
+    background: url(${ImgButton}) no-repeat center / cover;
+  }
+`;
+
 const ProfileImg = styled.img`
   width: 110px;
   height: 110px;
   border-radius: 50%;
   margin: 30px 0;
-  align-self: center;
 `;
 
-const ProfileInputImgButton = styled.button`
-  position: absolute;
-  transform: translate(180px, -110px);
-`;
-const ProfileInputImg = styled.img`
-  width: 36px;
-  height: 36px;
-`;
 const ProfileInput = styled.input`
   display: none;
 `;
@@ -64,43 +74,14 @@ const StyledError = styled.small`
   position: absolute;
   bottom: -10px;
 `;
-const StyledInputContainer = styled.div`
-  position: relative;
-`;
-
-const StyledLabel = styled.label`
-  display: block;
-  text-align: left;
-  padding: 0 35px;
-  font-size: 16px;
-  color: #767676;
-  pointer-events: none;
-`;
-
-const StyledInput = styled.input`
-  display: block;
-  width: 322px;
-  box-sizing: border-box;
-  border: none;
-  box-shadow: 0 1px 0 0 #677880;
-  height: 48px;
-  border-radius: 4px 4px 0 0;
-  padding: 0 px;
-  font-size: 16px;
-  margin: 0 auto 36px auto;
-  outline: none;
-  background: transparent;
-`;
 
 export default function ProfileForm() {
-  // 프로필 이미지 설정
   const [selectedImage, setSelectedImage] = useState(null);
-  const [imgProfile, setImgProfile] = useState(null);
+  const [profileImg, setProfileImg] = useState(null);
   const [accountName, setAccountName] = useState("");
   const fileInputRef = useRef(null);
   const location = useLocation();
   const data = location.state;
-  // console.log(data); // 회원가입 페이지에서 넘겨온 이메일,비밀번호 데이터
 
   // 이미지 업로드 함수
   const handleImageChange = async event => {
@@ -125,7 +106,7 @@ export default function ProfileForm() {
       reader.readAsDataURL(file);
     }
     imgUrl = "https://api.mandarin.weniv.co.kr/" + json.filename;
-    setImgProfile(imgUrl);
+    setProfileImg(imgUrl);
   };
   const handleButtonClick = () => {
     fileInputRef.current.click();
@@ -144,7 +125,7 @@ export default function ProfileForm() {
     const password = data.password;
     const accountname = formData.accountname;
     const intro = formData.intro;
-    const image = imgProfile;
+    const image = profileImg;
     console.log(intro);
     setAccountName(accountname);
     if (location.pathname === "/signup/profile") {
@@ -178,19 +159,25 @@ export default function ProfileForm() {
   };
   return (
     <ProfileInputForm onSubmit={handleSubmit(handleFormSubmit)}>
-      <label htmlFor="profileImg"></label>
-      <ProfileImg src={selectedImage || BasicProfileInput} alt="기본 프로필" />
-      <ProfileInput
-        id="profileImg"
-        type="file"
-        accept="image/jpg, image/jpeg, image/png"
-        ref={fileInputRef}
-        onChange={handleImageChange}
-      />
-      <ProfileInputImgButton type="button" onClick={handleButtonClick}>
-        <ProfileInputImg src={ImgButton} />
-      </ProfileInputImgButton>
+      <ProfileImgDiv>
+        <label>
+          <ProfileInput
+            id="profileImg"
+            type="file"
+            accept="image/jpg, image/jpeg, image/png"
+            ref={fileInputRef}
+            onChange={handleImageChange}
+          />
+        </label>
 
+        <ProfileInputImgButton type="button" onClick={handleButtonClick}>
+          <ProfileImg
+            src={selectedImage || BasicProfileInput}
+            alt="기본 프로필"
+          />
+          {/* <ProfileInputImg src={ImgButton} /> */}
+        </ProfileInputImgButton>
+      </ProfileImgDiv>
       <ProfileFormLabel>
         사용자 이름
         <ProfileFormInput
@@ -241,7 +228,7 @@ export default function ProfileForm() {
           {...register("intro")}
         />
       </ProfileFormLabel>
-      {/* 경로에 따른 submit 버튼 활성화 */}
+
       {location.pathname === "/signup/profile" && (
         <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
           FOOD ZIP 시작하기
