@@ -102,6 +102,7 @@ export default function ProfileForm() {
   const data = location.state;
   // console.log(data); // 회원가입 페이지에서 넘겨온 이메일,비밀번호 데이터
 
+  // 이미지 업로드 함수
   const handleImageChange = async event => {
     const formData = new FormData();
     const file = event.target.files[0];
@@ -115,6 +116,7 @@ export default function ProfileForm() {
       },
     );
     const json = await res.json();
+    // 화면에 선택한 이미지 파일 보여줌
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -143,34 +145,35 @@ export default function ProfileForm() {
     const accountname = formData.accountname;
     const intro = formData.intro;
     const image = imgProfile;
+    console.log(intro);
     setAccountName(accountname);
-    try {
-      const res = await axios.post(
-        "https://api.mandarin.weniv.co.kr/user/",
-        {
-          user: {
-            username: username,
-            email: email,
-            password: password,
-            accountname: accountname,
-            intro: intro,
-            image: image,
+    if (location.pathname === "/signup/profile") {
+      try {
+        const res = await axios.post(
+          "https://api.mandarin.weniv.co.kr/user/",
+          {
+            user: {
+              username: username,
+              email: email,
+              password: password,
+              accountname: accountname,
+              intro: intro,
+              image: image,
+            },
           },
-        },
-        {
-          headers: {
-            "Content-type": "application/json",
+          {
+            headers: {
+              "Content-type": "application/json",
+            },
           },
-        },
-      );
-      console.log(JSON.stringify(res.data));
-      alert(JSON.stringify(res.data));
-
-      // 로그인 페이지로 이동함.
-      navigate("/login");
-    } catch (err) {
-      alert(err.response.data.message);
-      console.log(err.response.data.message);
+        );
+        console.log(JSON.stringify(res.data));
+        // 로그인 페이지로 이동함.
+        navigate("/login");
+      } catch (err) {
+        alert(err.response.data.message);
+        console.log(err.response.data.message);
+      }
     }
   };
   return (
@@ -235,6 +238,7 @@ export default function ProfileForm() {
           id="intro"
           type="text"
           placeholder="자신과 선호하는 음식에 대해 소개해주세요!"
+          {...register("intro")}
         />
       </ProfileFormLabel>
       {/* 경로에 따른 submit 버튼 활성화 */}
