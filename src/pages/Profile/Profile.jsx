@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import ProfileInformation from "../../components/Profile/ProfileInformation";
 import PostList from "../../components/Post/PostList/PostList";
 import RecommendList from "../../components/Profile/RecommendList";
@@ -7,6 +8,13 @@ import Navigation from "../../components/common/Nav/Navigation";
 import Alert from "../../components/Modal/Alert";
 import { useState } from "react";
 import post from "../../dummy/dummyapi";
+import Header from "../../components/common/Header/Header";
+
+const Container = styled.div`
+  max-width: 390px;
+  margin: 0 auto;
+  background-color: #fff;
+`;
 
 export default function Profile({ type }) {
   const [modalShow, setModalShow] = useState(false);
@@ -30,8 +38,10 @@ export default function Profile({ type }) {
   function alertOpen() {
     setAlertShow(true);
   }
+
   return (
-    <div>
+    <Container>
+      <Header type="profile" />
       <ProfileInformation type={type} modalOpen={modalOpen} />
       <RecommendList />
       <PostList post={post} />
@@ -40,6 +50,6 @@ export default function Profile({ type }) {
       )}
       {alertShow && <Alert type="logout" alertClose={alertClose} />}
       <Navigation />
-    </div>
+    </Container>
   );
 }

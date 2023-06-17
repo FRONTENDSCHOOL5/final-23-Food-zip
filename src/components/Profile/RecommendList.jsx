@@ -3,8 +3,7 @@ import styled from "styled-components";
 import ListImg from "../../assets/images/list-example.png";
 
 const RecommendWrapDiv = styled.div`
-  width: 100%;
-  padding: 20px 16px 16px;
+  margin: 20px 16px 8px;
   overflow: auto;
   box-sizing: border-box;
   background-color: white;
@@ -28,9 +27,6 @@ const RecommendTitleP = styled.p`
 const RecommendListUl = styled.ul`
   display: flex;
   gap: 10px;
-  /* & :last-child {
-    padding-right: 16px;
-  } */
 `;
 
 const RecommendLiBtn = styled.button`
@@ -51,9 +47,11 @@ const RecommendNameP = styled.p`
 `;
 
 const RecommendScoreSpan = styled.span`
+  display: inline-block;
   font-size: 12px;
   font-weight: 600;
   color: #286140;
+  margin-bottom: 8px;
 `;
 
 export default function RecommendList() {
@@ -70,6 +68,34 @@ export default function RecommendList() {
             </RecommendLiBtn>
           </li>
         ))} */}
+        <li>
+          <RecommendLiBtn type="button">
+            <RecommendListImg src={ListImg} alt="" />
+            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
+            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
+          </RecommendLiBtn>
+        </li>
+        <li>
+          <RecommendLiBtn type="button">
+            <RecommendListImg src={ListImg} alt="" />
+            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
+            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
+          </RecommendLiBtn>
+        </li>
+        <li>
+          <RecommendLiBtn type="button">
+            <RecommendListImg src={ListImg} alt="" />
+            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
+            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
+          </RecommendLiBtn>
+        </li>
+        <li>
+          <RecommendLiBtn type="button">
+            <RecommendListImg src={ListImg} alt="" />
+            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
+            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
+          </RecommendLiBtn>
+        </li>
         <li>
           <RecommendLiBtn type="button">
             <RecommendListImg src={ListImg} alt="" />

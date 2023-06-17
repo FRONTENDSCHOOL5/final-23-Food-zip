@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import IconMessage from "../../assets/images/icon-message-circle.svg";
 import IconShare from "../../assets/images/icon-share.svg";
@@ -13,7 +13,9 @@ const FlexCommon = css`
 `;
 
 const InformationBottomDiv = styled.div`
-  ${FlexCommon}
+  ${FlexCommon};
+  padding-bottom: 26px;
+  border-bottom: 1px solid #dbdbdb;
 `;
 
 const ImgCircleBtn = styled.button`

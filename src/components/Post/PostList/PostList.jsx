@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import PostItem from "../PostItem/PostItem";
-import PostTestImg from "../../../assets/images/post-test.png";
 import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
 import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
@@ -11,8 +10,6 @@ const PostListDiv = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 0 16px;
-  width: 390px;
   height: 44px;
   box-sizing: border-box;
   background-color: white;
@@ -21,23 +18,19 @@ const PostListDiv = styled.div`
 `;
 
 const PostListBtn = styled.button`
-  padding: 4px;
-  margin-left: 10px;
+  margin-right: 16px;
   box-sizing: border-box;
   background-color: transparent;
   border: 0;
 `;
 
 const PostItemList = styled.ul`
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* overflow: auto; */
   background-color: white;
-  padding: 16px 20px 60px;
-  box-sizing: border-box;
+  margin: 16px 20px 60px;
   &::-webkit-scrollbar {
     width: 10px;
   }
@@ -55,12 +48,8 @@ const GridItemList = styled.div`
   grid-template-rows: repeat(3, 114px);
   gap: 8px;
   padding: 16px 16px 80px 16px;
-  /* overflow: auto; */
-  /* width: 100%; */
-  /* max-width: 390px; */
   height: 100%;
-  min-height: 480px;
-  /* box-sizing: border-box; */
+  min-height: 425px;
   background-color: white;
 `;
 
