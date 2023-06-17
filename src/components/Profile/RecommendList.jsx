@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ListImg from "../../assets/images/list-example.png";
+import RecommendCard from "../Modal/RecommendCard";
 
 const RecommendWrapDiv = styled.div`
   margin: 20px 16px 8px;
@@ -54,13 +55,13 @@ const RecommendScoreSpan = styled.span`
   margin-bottom: 8px;
 `;
 
-export default function RecommendList() {
+export default function RecommendList({ cardOpen, cardClose }) {
   return (
     <RecommendWrapDiv>
       <RecommendTitleP>추천 맛집</RecommendTitleP>
       <RecommendListUl>
         {/* {recommendations.map((recommendation, index) => (
-          <li key={index}>
+          <li key={index} onClick={}>
             <RecommendLiBtn type="button">
               <RecommendListImg src={recommendation.image} alt="" />
               <RecommendNameP>{recommendation.name}</RecommendNameP>
@@ -68,35 +69,7 @@ export default function RecommendList() {
             </RecommendLiBtn>
           </li>
         ))} */}
-        <li>
-          <RecommendLiBtn type="button">
-            <RecommendListImg src={ListImg} alt="" />
-            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
-          </RecommendLiBtn>
-        </li>
-        <li>
-          <RecommendLiBtn type="button">
-            <RecommendListImg src={ListImg} alt="" />
-            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
-          </RecommendLiBtn>
-        </li>
-        <li>
-          <RecommendLiBtn type="button">
-            <RecommendListImg src={ListImg} alt="" />
-            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
-          </RecommendLiBtn>
-        </li>
-        <li>
-          <RecommendLiBtn type="button">
-            <RecommendListImg src={ListImg} alt="" />
-            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
-          </RecommendLiBtn>
-        </li>
-        <li>
+        <li onClick={cardOpen}>
           <RecommendLiBtn type="button">
             <RecommendListImg src={ListImg} alt="" />
             <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
