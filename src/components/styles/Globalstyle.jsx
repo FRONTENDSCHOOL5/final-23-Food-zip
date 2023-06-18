@@ -33,12 +33,12 @@ export const GlobalStyle = createGlobalStyle`
 
   input {
     border: 0;
+    font-family: 'SUIT-Regular';
     resize: none;
     &:focus {
       outline: none;
     }
   }
-
   .a11y-hidden {
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);

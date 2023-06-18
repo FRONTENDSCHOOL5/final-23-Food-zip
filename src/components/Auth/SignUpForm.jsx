@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { ButtonStyle } from "../common/Button/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState, useRef, useCallback } from "react";
 import debounce from "lodash/debounce";
 const StyledForm = styled.form`
   margin-top: 40px;
@@ -35,7 +34,7 @@ const StyledInput = styled.input`
   box-shadow: 0 1px 0 0 #677880;
   height: 48px;
   border-radius: 4px 4px 0 0;
-  padding: 0 px;
+  padding: 0px;
   font-size: 16px;
   margin: 0 auto 36px auto;
   outline: none;
@@ -56,8 +55,17 @@ const SignUpForm = ({ onSubmit }) => {
     handleSubmit,
     setError,
     clearErrors,
-    formState: { errors, isValid },
-  } = useForm({ mode: "onChange" });
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+    defaultValues: { email: null, password: null },
+  });
+  const watchFields = watch(["email", "password"]);
+  const isValid = Object.values(watchFields).every(value => value !== null);
+
   const onValid = data => console.log(data, "onvalid");
   const onInvalid = data => console.log(data, "onInvalid");
 
@@ -95,22 +103,29 @@ const SignUpForm = ({ onSubmit }) => {
       return false;
     }
   };
+  //useCallback , useEffect, useMemo
   const handleEmailBlur = useCallback(
     debounce(async e => {
       e.preventDefault();
       const email = e.target.value;
       const isEmailValid = await checkEmailValid(email);
-      console.log(isEmailValid);
+      console.log("이게" + isEmailValid);
+      clearErrors("email"); // 이메일 필드의 에러 초기화
+      setValue("email", email); // 이메일 값 업데이트
+      trigger("email");
+      // clearErrors("email");
       if (!isEmailValid) {
         // 이메일이 이미 가입된 경우 에러 메시지 표시
+        console.log("이게 출력되야 함");
         setError("email", {
           type: "manual",
           message: "이미 가입된 이메일 주소입니다.",
         });
+        console.log(errors.email);
       } else {
         clearErrors("email"); // 이메일이 유효한 경우 에러 메시지 제거
       }
-      console.log("1 : " + isValid, isEmailValid);
+      // console.log("1 : " + isValid, isEmailValid);
       if (isValid && isEmailValid) {
         console.log("2 : " + isValid, isEmailValid);
         setAbledBtn(true);
@@ -120,7 +135,7 @@ const SignUpForm = ({ onSubmit }) => {
       }
       console.log("btn:" + abledBtn);
     }, 1000), // debounce 함수의 시간을 1000ms로 설정
-    [setAbledBtn, checkEmailValid, setError, clearErrors],
+    [setAbledBtn, checkEmailValid, setError, clearErrors, setValue, trigger],
   );
   const handleFormSubmit = data => {
     navigate("/signup/profile", {

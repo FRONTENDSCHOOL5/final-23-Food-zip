@@ -14,8 +14,8 @@ const UploadContainer = styled.div`
 
 const UploadImgWrapper = styled.label`
   display: inline-block;
-  width: 195px; /* 변경된 너비 */
-  height: 145px; /* 변경된 높이 */
+  width: 130px; /* 변경된 너비 */
+  height: 130px; /* 변경된 높이 */
   flex-shrink: 0;
   cursor: pointer;
   margin-right: 10px;
@@ -31,12 +31,12 @@ const UploadImgIcon = styled.img`
   border-radius: 10px;
 `;
 const UploadImg = styled.img`
-  max-width: 195px;
-  max-height: 145px;
+  max-width: 130px;
+  max-height: 130px;
   object-fit: contain;
   border-radius: 10px;
 `;
-export default function PostImgPrev() {
+export default function PostImgPrev({ onImageUrlChange }) {
   const [imgUrl, setImgUrl] = useState("");
   const fileInputRef = useRef(null);
 
@@ -49,7 +49,9 @@ export default function PostImgPrev() {
       const reader = new FileReader();
 
       reader.onload = e => {
-        setImgUrl(e.target.result);
+        const imageUrl = e.target.result;
+        onImageUrlChange(file, imageUrl); // imgUrl을 MakePost 컴포넌트로 전달
+        setImgUrl(imageUrl);
       };
 
       reader.readAsDataURL(file);
