@@ -4,8 +4,9 @@ import Routers from "./routes/Routers";
 
 const Container = styled.div`
   max-width: 390px;
+  min-height: 100vh;
   margin: 0 auto;
-  background-color: #e4ebe5;
+  background-color: #fff;
 `;
 
 function App() {

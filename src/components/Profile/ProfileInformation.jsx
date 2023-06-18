@@ -1,25 +1,16 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import ProfileImage from "../../assets/images/basic-profile-lg.svg";
 import ProfileBtn from "./ProfileBtn";
-import Header from "../common/Header/Header";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const ProfileInfoWrapDiv = styled.div`
-  width: 100%;
-  padding: 78px 55px 26px;
-  box-sizing: border-box;
-  border-bottom: 1px solid #dbdbdb;
-  background-color: white;
-`;
-
 const InformationTopDiv = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   text-align: center;
+  padding-top: 78px;
 `;
 
 const FollowCommonSpan = css`
@@ -73,7 +64,10 @@ const InfoTextP = styled.p`
 const ProfileImg = styled.img`
   width: 110px;
   height: 110px;
+  margin: 0 40px;
   border-radius: 50%;
+  border: 1px solid #dbdbdb;
+  object-fit: cover;
 `;
 export default function ProfileInformation({ type, modalOpen }) {
   const [userInfo, setUserInfo] = useState({
@@ -121,26 +115,25 @@ export default function ProfileInformation({ type, modalOpen }) {
   console.log(userInfo);
   return (
     <>
-      <Header type="profile" modalOpen={modalOpen} />
-      <ProfileInfoWrapDiv>
-        <InformationTopDiv>
-          <a href="#!">
-            <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
-            <FollowerCntP>followers</FollowerCntP>
-          </a>
-          <ProfileImg src={userInfo.image} alt="프로필 이미지" />
-          <a href="#!">
-            <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
-            <FollowingCntP>followings</FollowingCntP>
-          </a>
-        </InformationTopDiv>
-        <InformationDiv>
-          <InfoNameP>{userInfo.username}</InfoNameP>
-          <InfoIdP>@ {userInfo.accountname}</InfoIdP>
-          <InfoTextP>{userInfo.intro}</InfoTextP>
-        </InformationDiv>
-        <ProfileBtn type={type} />
-      </ProfileInfoWrapDiv>
+      {/* <ProfileInfoWrapDiv> */}
+      <InformationTopDiv>
+        <a href="#!">
+          <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
+          <FollowerCntP>followers</FollowerCntP>
+        </a>
+        <ProfileImg src={userInfo.image} alt="프로필 이미지" />
+        <a href="#!">
+          <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
+          <FollowingCntP>followings</FollowingCntP>
+        </a>
+      </InformationTopDiv>
+      <InformationDiv>
+        <InfoNameP>{userInfo.username}</InfoNameP>
+        <InfoIdP>@ {userInfo.accountname}</InfoIdP>
+        <InfoTextP>{userInfo.intro}</InfoTextP>
+      </InformationDiv>
+      <ProfileBtn type={type} />
+      {/* </ProfileInfoWrapDiv> */}
     </>
   );
 }

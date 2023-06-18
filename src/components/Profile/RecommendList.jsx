@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import ListImg from "../../assets/images/list-example.png";
+import RecommendCard from "../Modal/RecommendCard";
 
 const RecommendWrapDiv = styled.div`
-  width: 100%;
-  padding: 20px 16px 16px;
+  margin: 20px 16px 8px;
   overflow: auto;
   box-sizing: border-box;
   background-color: white;
@@ -28,9 +28,6 @@ const RecommendTitleP = styled.p`
 const RecommendListUl = styled.ul`
   display: flex;
   gap: 10px;
-  /* & :last-child {
-    padding-right: 16px;
-  } */
 `;
 
 const RecommendLiBtn = styled.button`
@@ -51,18 +48,20 @@ const RecommendNameP = styled.p`
 `;
 
 const RecommendScoreSpan = styled.span`
+  display: inline-block;
   font-size: 12px;
   font-weight: 600;
   color: #286140;
+  margin-bottom: 8px;
 `;
 
-export default function RecommendList() {
+export default function RecommendList({ cardOpen, cardClose }) {
   return (
     <RecommendWrapDiv>
       <RecommendTitleP>추천 맛집</RecommendTitleP>
       <RecommendListUl>
         {/* {recommendations.map((recommendation, index) => (
-          <li key={index}>
+          <li key={index} onClick={}>
             <RecommendLiBtn type="button">
               <RecommendListImg src={recommendation.image} alt="" />
               <RecommendNameP>{recommendation.name}</RecommendNameP>
@@ -70,7 +69,7 @@ export default function RecommendList() {
             </RecommendLiBtn>
           </li>
         ))} */}
-        <li>
+        <li onClick={cardOpen}>
           <RecommendLiBtn type="button">
             <RecommendListImg src={ListImg} alt="" />
             <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
