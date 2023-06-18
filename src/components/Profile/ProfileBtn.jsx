@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import IconMessage from "../../assets/images/icon-message-circle.svg";
@@ -52,6 +52,14 @@ export default function ProfileBtn({ type }) {
     console.log("move");
   }
 
+  const [follow, setFollow] = useState(true);
+  const Follow = () => {
+    setFollow(!follow);
+  };
+  const UnFollow = () => {
+    setFollow(!follow);
+  };
+
   const UI = {
     your: (
       <>
@@ -59,9 +67,29 @@ export default function ProfileBtn({ type }) {
           <ImgCircleBtn type="button" onClick={moveChat}>
             <img src={IconMessage} alt="메시지 아이콘" />
           </ImgCircleBtn>
-          <FollowBtn type="button" size="m" width="m" bgColor="active">
-            팔로우
-          </FollowBtn>
+          {follow ? (
+            <FollowBtn
+              type="button"
+              size="m"
+              width="m"
+              bgColor="active"
+              onClick={Follow}
+            >
+              팔로우
+            </FollowBtn>
+          ) : (
+            <FollowBtn
+              type="button"
+              size="ms"
+              width="m"
+              border="active"
+              color="active"
+              onClick={UnFollow}
+            >
+              언팔로우
+            </FollowBtn>
+          )}
+
           <ImgCircleBtn>
             <img src={IconShare} alt="공유 아이콘" />
           </ImgCircleBtn>
