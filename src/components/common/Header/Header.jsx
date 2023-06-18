@@ -72,7 +72,7 @@ const HeaderTextP = styled.p`
   font-weight: 600;
 `;
 
-export default function Header({ type, modalOpen }) {
+export default function Header({ type, modalOpen, uploadHandler }) {
   const navigate = useNavigate();
   function handleClick() {
     navigate("/search");
@@ -159,6 +159,7 @@ export default function Header({ type, modalOpen }) {
           size="ms"
           width="ms"
           bgColor="inactive"
+          onClick={uploadHandler}
         ></Button>
       </HeaderLayoutDiv>
     ),
