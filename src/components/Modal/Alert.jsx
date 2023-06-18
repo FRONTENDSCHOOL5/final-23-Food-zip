@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const AlertDiv = styled.div`
   position: fixed;
@@ -64,6 +65,11 @@ const AlertLineSpan = styled.span`
 `;
 
 export default function Alert({ type, alertClose }) {
+  const navigate = useNavigate();
+  const onClickLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/welcome");
+  };
   const UI = {
     logout: (
       <AlertWrapDiv>
@@ -71,7 +77,7 @@ export default function Alert({ type, alertClose }) {
         <AlertBottomDiv>
           <AlertDeleteBtn onClick={alertClose}>취소</AlertDeleteBtn>
           <AlertLineSpan></AlertLineSpan>
-          <AlertMainBtn>로그아웃</AlertMainBtn>
+          <AlertMainBtn onClick={onClickLogout}>로그아웃</AlertMainBtn>
         </AlertBottomDiv>
       </AlertWrapDiv>
     ),
