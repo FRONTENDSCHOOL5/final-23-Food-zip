@@ -3,6 +3,7 @@ import styled from "styled-components";
 import UserImg from "../../../assets/images/basic-profile-sm.svg";
 import PostTestImg from "../../../assets/images/post-test.png";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.section`
   position: relative;
@@ -82,7 +83,11 @@ const BtnMore = styled.button`
   top: 7px;
   right: 0;
 `;
-export default function PostItem() {
+export default function PostItem({ modalOpen }) {
+  const navigate = useNavigate();
+  function moveDetail() {
+    navigate("/detailpost");
+  }
   return (
     <Container>
       <PostUser>
@@ -108,7 +113,7 @@ export default function PostItem() {
               />
               58
             </BtnLike>
-            <BtnComment>
+            <BtnComment onClick={moveDetail}>
               <BtnImg
                 src={
                   require("../../../assets/images/icon-message-circle-1.svg")
@@ -122,7 +127,7 @@ export default function PostItem() {
           <PostDate>2023년 6월 8일</PostDate>
         </PostInfoBox>
       </PostContent>
-      <BtnMore></BtnMore>
+      <BtnMore onClick={modalOpen}></BtnMore>
     </Container>
   );
 }

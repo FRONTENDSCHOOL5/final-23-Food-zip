@@ -11,7 +11,7 @@ const FollowLists = styled.ul`
 const FollowListItem = styled.li`
   margin-bottom: 12px;
 `;
-export default function FollowerList() {
+export default function FollowerList({ type }) {
   const followItem = [];
   for (let i = 0; i < 15; i++) {
     followItem.push(
@@ -22,7 +22,7 @@ export default function FollowerList() {
   }
   return (
     <>
-      <Header type="followers" />
+      <Header type={type} />
       <FollowLists>{followItem}</FollowLists>
       <Navigation />
     </>

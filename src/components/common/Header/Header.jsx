@@ -126,6 +126,20 @@ export default function Header({ type, modalOpen, uploadHandler }) {
         </HeaderSpan>
       </HeaderLayoutDiv>
     ),
+    followings: (
+      <HeaderLayoutDiv>
+        <HeaderSpan>
+          <HeaderLeftBtn type="button">
+            <img
+              src={IconArrowLeft}
+              alt="뒤로가기 아이콘"
+              onClick={() => navigate(-1)}
+            />
+          </HeaderLeftBtn>
+          <HeaderTextP>Followings</HeaderTextP>
+        </HeaderSpan>
+      </HeaderLayoutDiv>
+    ),
     save: (
       <HeaderLayoutDiv>
         <HeaderLeftBtn type="button">

@@ -123,10 +123,10 @@ export default function ProfileInformation({ type, modalOpen }) {
           <FollowerCntP>followers</FollowerCntP>
         </Link>
         <ProfileImg src={userInfo.image} alt="프로필 이미지" />
-        <a href="#!">
+        <Link to="/followinglist">
           <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
           <FollowingCntP>followings</FollowingCntP>
-        </a>
+        </Link>
       </InformationTopDiv>
       <InformationDiv>
         <InfoNameP>{userInfo.username}</InfoNameP>

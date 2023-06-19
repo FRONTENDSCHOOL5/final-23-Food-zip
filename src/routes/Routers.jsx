@@ -41,7 +41,14 @@ export default function Routers() {
         <Route path="/yourprofile">
           <Route index element={<Profile type="your" />} />
         </Route>
-        <Route path="/followerlist" element={<FollowerList />} />
+        <Route
+          path="/followerlist"
+          element={<FollowerList type="followers" />}
+        />
+        <Route
+          path="/followinglist"
+          element={<FollowerList type="followings" />}
+        />
         <Route path="/detailpost" element={<DetailPost />} />
         <Route path="/makerecommend" element={<MakeRecommend />} />
       </Routes>

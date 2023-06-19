@@ -19,14 +19,16 @@ const Container = styled.div`
 
 export default function Profile({ type }) {
   const [modalShow, setModalShow] = useState(false);
+  const [modalType, setModalType] = useState("setting");
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
     }
   }
 
-  function modalOpen() {
+  function modalOpen(type) {
     setModalShow(true);
+    setModalType(type);
   }
 
   const [alertShow, setAlertShow] = useState(false);
@@ -53,12 +55,12 @@ export default function Profile({ type }) {
 
   return (
     <Container>
-      <Header type="profile" modalOpen={modalOpen} />
+      <Header type="profile" modalOpen={() => modalOpen("setting")} />
       <ProfileInformation type={type} />
       <RecommendList cardOpen={cardOpen} />
-      <PostList post={post} />
+      <PostList post={post} modalOpen={() => modalOpen("modification")} />
       {modalShow && (
-        <Modal type="setting" modalClose={modalClose} alertOpen={alertOpen} />
+        <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
       )}
       {alertShow && <Alert type="logout" alertClose={alertClose} />}
       {cardShow && <RecommendCard cardClose={cardClose} />}

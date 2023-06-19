@@ -51,24 +51,26 @@ const CommentSection = styled.div`
 
 export default function DetailPost() {
   const [modalShow, setModalShow] = useState(false);
+  const [modalType, setModalType] = useState("modification");
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
     }
   }
 
-  function modalOpen() {
+  function modalOpen(type) {
     setModalShow(true);
+    setModalType(type);
   }
   return (
     <>
       <Header type="profile" active={true} />
       <DetailPostWrapper class="l-wrapper">
         <PostItemSection>
-          <PostItem />
+          <PostItem modalOpen={() => modalOpen("modification")} />
         </PostItemSection>
         <CommentSection>
-          <Comment modalOpen={modalOpen} />
+          <Comment modalOpen={() => modalOpen("report")} />
         </CommentSection>
         <WriteCommentSection class="make-replay">
           <PostUserImg
@@ -79,7 +81,7 @@ export default function DetailPost() {
           <BtnDisplay class="display">게시</BtnDisplay>
         </WriteCommentSection>
       </DetailPostWrapper>
-      {modalShow && <Modal type="report" modalClose={modalClose} />}
+      {modalShow && <Modal type={modalType} modalClose={modalClose} />}
     </>
   );
 }
