@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import ListImg from "../../assets/images/list-example.png";
-
+import axios from "axios";
 const RecommendDiv = styled.div`
   position: fixed;
   bottom: 0;
@@ -63,16 +63,51 @@ const RecommendCloseBtn = styled.button`
   font-weight: 600;
 `;
 
-export default function RecommendCard({ cardClose }) {
+export default function RecommendCard({ cardClose, id }) {
+  const [recommendInfo, setRecommendInfo] = useState({
+    postimage: "",
+    restaurantname: "",
+    price: "",
+    address: "",
+  });
+  useEffect(() => {
+    getUserInfo();
+  }, [id]);
+  // const [selectedId, setSelectedId] = useState(null);
+
+  const getUserInfo = async () => {
+    const token = localStorage.getItem("token");
+    console.log(id);
+    // const accountname = localStorage.getItem("accountname");
+    console.log(token);
+    const res = await axios.get(
+      `https://api.mandarin.weniv.co.kr/product/detail/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-type": "application/json",
+        },
+      },
+    );
+    console.log(res.data);
+    const { itemImage, itemName, link, price } = res.data.product;
+    setRecommendInfo({
+      itemImage,
+      itemName,
+      link,
+      price,
+    });
+  };
+  console.log(recommendInfo);
   return (
     <RecommendDiv>
       <RecommendCardDiv>
-        <RecommendListImg src={ListImg} alt="" />
+        <RecommendListImg src={recommendInfo.itemImage} alt="" />
         <RecommendTextDiv>
-          <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-          <RecommendScoreSpan>35,000원</RecommendScoreSpan>
+          <RecommendNameP>{recommendInfo.itemName}</RecommendNameP>
+          <RecommendScoreSpan>{recommendInfo.price}</RecommendScoreSpan>
           <RecommendLocationP>
-            서울 강남구 강남대로 358 2층 201호
+            {recommendInfo.link}
           </RecommendLocationP>
           <RecommendCloseBtn type="button" onClick={cardClose}>
             &#62; 닫기

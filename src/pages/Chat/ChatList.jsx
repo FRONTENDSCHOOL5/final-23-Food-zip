@@ -10,8 +10,7 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const List = styled.section`
-  margin: 48px 0 60px 0;
-  height: calc(100vh - 108px);
+  padding: 48px 0 60px 0;
   background-color: white;
 `;
 export default function ChatList() {

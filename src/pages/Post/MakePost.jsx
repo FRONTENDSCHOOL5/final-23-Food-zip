@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PostImgPrev from "../../components/Post/ImgPrev/PostImgPrev";
 import Header from "../../components/common/Header/Header";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -34,7 +35,7 @@ export default function MakePost() {
   const [imgUrl, setImgUrl] = useState("");
   const [content, setContent] = useState("");
   const token = localStorage.getItem("token");
-
+  const navigate = useNavigate();
   const handleImageUrlChange = (file, url) => {
     setImgFile(file);
     // const fileUrl = URL.createObjectURL(file);
@@ -55,7 +56,8 @@ export default function MakePost() {
         },
       );
       console.log("1 : " + uploadResponse.data);
-      const imageUrl = uploadResponse.data.filename;
+      const imageUrl =
+        "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
 
       const postResponse = await axios.post(
         "https://api.mandarin.weniv.co.kr/post",
@@ -74,6 +76,7 @@ export default function MakePost() {
       );
 
       console.log(postResponse);
+      navigate("/myprofile");
     } catch (error) {
       console.error(error);
     }

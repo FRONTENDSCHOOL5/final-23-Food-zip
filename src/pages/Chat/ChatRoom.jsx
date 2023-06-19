@@ -5,9 +5,8 @@ import ChatNavigation from "../../components/common/Nav/ChatNavigation";
 import SendMessage from "../../components/Chat/SendMessage";
 import ReceiveMessage from "../../components/Chat/ReceiveMessage";
 import Modal from "../../components/Modal/Modal";
-import Alert from "../../components/Modal/Alert";
 const List = styled.section`
-  margin: 48px 0 60px 0;
+  padding: 48px 0 60px 0;
   height: calc(100vh - 108px);
   background-color: #f2f2f2;
   display: flex;

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ListImg from "../../assets/images/list-example.png";
 import RecommendCard from "../Modal/RecommendCard";
-
+import axios from "axios";
 const RecommendWrapDiv = styled.div`
   margin: 20px 16px 8px;
   overflow: auto;
@@ -56,26 +56,49 @@ const RecommendScoreSpan = styled.span`
 `;
 
 export default function RecommendList({ cardOpen, cardClose }) {
+  const [recommendInfo, setRecommendInfo] = useState([]);
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+  const getUserInfo = async () => {
+    const token = localStorage.getItem("token");
+    const accountname = localStorage.getItem("accountname");
+    console.log(token);
+    const res = await axios.get(
+      `https://api.mandarin.weniv.co.kr/product/${accountname}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-type": "application/json",
+        },
+      },
+    );
+    // console.log(res.data);
+    // console.log(res.data.product);
+    // console.log(res.data.product[0].id);
+    const products = res.data.product;
+    setRecommendInfo(products);
+  };
+  // console.log("여기");
+  // console.log(recommendInfo[0].id);
   return (
     <RecommendWrapDiv>
       <RecommendTitleP>추천 맛집</RecommendTitleP>
       <RecommendListUl>
-        {/* {recommendations.map((recommendation, index) => (
-          <li key={index} onClick={}>
+        {recommendInfo.map(recommendation => (
+          <li
+            key={recommendation.id}
+            onClick={() => cardOpen(recommendation.id)}
+          >
             <RecommendLiBtn type="button">
-              <RecommendListImg src={recommendation.image} alt="" />
-              <RecommendNameP>{recommendation.name}</RecommendNameP>
-              <RecommendPriceSpan>{recommendation.price}</RecommendPriceSpan>
+              <RecommendListImg src={recommendation.itemImage} alt="" />
+              <RecommendNameP>{recommendation.itemName}</RecommendNameP>
+              <RecommendScoreSpan>
+                {recommendation.price} / 5점
+              </RecommendScoreSpan>
             </RecommendLiBtn>
           </li>
-        ))} */}
-        <li onClick={cardOpen}>
-          <RecommendLiBtn type="button">
-            <RecommendListImg src={ListImg} alt="" />
-            <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-            <RecommendScoreSpan>35,000원</RecommendScoreSpan>
-          </RecommendLiBtn>
-        </li>
+        ))}
       </RecommendListUl>
     </RecommendWrapDiv>
   );
