@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import ListImg from "../../assets/images/list-example.png";
+import Modal from "./Modal";
+import IconMoreVertical from "../../assets/images/icon-more-vertical.svg";
 import axios from "axios";
 const RecommendDiv = styled.div`
   position: fixed;
@@ -58,12 +59,18 @@ const RecommendLocationP = styled.p`
   margin-bottom: 16px;
 `;
 
+const RecommendMoreBtn = styled.button`
+  position: absolute;
+  bottom: 29%;
+  left: 90%;
+`;
+
 const RecommendCloseBtn = styled.button`
   font-size: 15px;
   font-weight: 600;
 `;
 
-export default function RecommendCard({ cardClose, id }) {
+export default function RecommendCard({ cardClose, id, modalOpen }) {
   const [recommendInfo, setRecommendInfo] = useState({
     postimage: "",
     restaurantname: "",
@@ -99,6 +106,18 @@ export default function RecommendCard({ cardClose, id }) {
     });
   };
   console.log(recommendInfo);
+
+  const [modalShow, setModalShow] = useState(false);
+
+  function modalClose(e) {
+    if (e.target === e.currentTarget) {
+      setModalShow(false);
+    }
+  }
+
+  function modalOpen(type) {
+    setModalShow(true);
+  }
   return (
     <RecommendDiv>
       <RecommendCardDiv>
@@ -106,14 +125,16 @@ export default function RecommendCard({ cardClose, id }) {
         <RecommendTextDiv>
           <RecommendNameP>{recommendInfo.itemName}</RecommendNameP>
           <RecommendScoreSpan>{recommendInfo.price}</RecommendScoreSpan>
-          <RecommendLocationP>
-            {recommendInfo.link}
-          </RecommendLocationP>
+          <RecommendLocationP>{recommendInfo.link}</RecommendLocationP>
+          <RecommendMoreBtn type="button" onClick={modalOpen}>
+            <img src={IconMoreVertical} alt="더보기 아이콘" />
+          </RecommendMoreBtn>
           <RecommendCloseBtn type="button" onClick={cardClose}>
             &#62; 닫기
           </RecommendCloseBtn>
         </RecommendTextDiv>
       </RecommendCardDiv>
+      {modalShow && <Modal type="product" modalClose={modalClose} />}
     </RecommendDiv>
   );
 }

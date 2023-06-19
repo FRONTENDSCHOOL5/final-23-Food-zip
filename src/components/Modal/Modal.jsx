@@ -74,7 +74,8 @@ export default function Modal({ type, modalClose, alertOpen }) {
         <ModalLineSpan />
         <ModalTextBtn>삭제</ModalTextBtn>
         <ModalTextBtn>수정</ModalTextBtn>
-        <ModalTextBtn>웹사이트에서 상품 보기</ModalTextBtn>
+        <ModalTextBtn>카카오맵으로 이동하기</ModalTextBtn>
+        <ModalTextBtn>SNS 공유하기</ModalTextBtn>
       </ModalWrapDiv>
     ),
     report: (

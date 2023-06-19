@@ -88,7 +88,7 @@ export default function PostItem({ modalOpen }) {
   const navigate = useNavigate();
   function moveDetail() {
     navigate("/detailpost");
-  };
+  }
   const [postInfo, setPostInfo] = useState({
     postimage: "",
     content: "",

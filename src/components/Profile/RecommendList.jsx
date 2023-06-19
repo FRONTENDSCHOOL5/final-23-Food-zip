@@ -4,7 +4,8 @@ import ListImg from "../../assets/images/list-example.png";
 import RecommendCard from "../Modal/RecommendCard";
 import axios from "axios";
 const RecommendWrapDiv = styled.div`
-  margin: 20px 16px 8px;
+  width: 100%;
+  padding: 20px 16px 2px;
   overflow: auto;
   box-sizing: border-box;
   background-color: white;
@@ -27,7 +28,10 @@ const RecommendTitleP = styled.p`
 
 const RecommendListUl = styled.ul`
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  & :last-child {
+    padding-right: 8px;
+  }
 `;
 
 const RecommendLiBtn = styled.button`
