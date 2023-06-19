@@ -11,19 +11,12 @@ const Container = styled.div`
   margin: 0 auto;
   background-color: #fff;
 `;
-const List = styled.section`
-  margin: 48px 0 60px 0;
-  height: calc(100vh - 108px);
-  background-color: white;
-`;
 export default function Home() {
   return (
     <Container>
       <Header type="home" />
-      <EmptyHome />
-      {/* <List>
-        <PostHome />
-      </List> */}
+      {/* <EmptyHome /> */}
+      <PostHome />
       <Navigation />
     </Container>
   );
