@@ -113,7 +113,7 @@ export default function ProfileInformation({ type, modalOpen }) {
       intro,
     });
   };
-  console.log(userInfo);
+  // console.log(userInfo);
   return (
     <>
       {/* <ProfileInfoWrapDiv> */}

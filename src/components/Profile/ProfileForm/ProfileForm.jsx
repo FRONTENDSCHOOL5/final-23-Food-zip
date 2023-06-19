@@ -83,13 +83,13 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
-    defaultValues: {
-      image: userInfo?.image || BasicProfileInput,
-      username: userInfo?.username || null,
-      accountname: userInfo?.accountname || null,
-    },
   });
-
+  const [accountname, setAccountname] = useState(null);
+  useEffect(() => {
+    setAccountname(localStorage.getItem("accountname"));
+  }, []);
+  // console.log(accountname);
+  const token = localStorage.getItem("token");
   const location = useLocation();
 
   useEffect(() => {
@@ -98,10 +98,12 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
       setValue("image", userInfo?.image || BasicProfileInput); // Set a default value for image
       setValue("username", userInfo?.username || null); // Set a default value for username
       setValue("accountname", userInfo?.accountname || null); // Set a default value for accountname
+      setValue("intro", userInfo?.intro || null); // Set a default value for intro
     } else if (location.pathname === "/signup/profile") {
       setValue("image", BasicProfileInput); // Set a default value for image
       setValue("username", null); // Set a default value for username
       setValue("accountname", null); // Set a default value for accountname
+      setValue("intro", null); // Set a default value for intro
     }
   }, [location.pathname, userInfo]);
 
@@ -110,15 +112,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
   const fileInputRef = useRef(null);
   const data = location.state;
 
-  const handleInputEntered = e => {
-    const { name, value } = e.target;
-    setUserInfo({
-      ...userInfo,
-      [name]: value,
-    });
-  };
-
-  // 이미지 업로드 함수
   const handleImageChange = async event => {
     const formData = new FormData();
     const file = event.target.files[0];
@@ -144,32 +137,25 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     imgUrl = "https://api.mandarin.weniv.co.kr/" + res.data.filename;
     setProfileImg(imgUrl);
   };
+
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
   const navigate = useNavigate();
 
   const handleFormSubmit = async formData => {
-    const username = formData.username;
-    const email = data.email;
-    const password = data.password;
-    const accountname = formData.accountname;
-    const intro = formData.intro;
-    const image = profileImg;
-    console.log(intro);
-    // setAccountName(accountname);
     if (location.pathname === "/signup/profile") {
       try {
         const res = await axios.post(
           "https://api.mandarin.weniv.co.kr/user/",
           {
             user: {
-              username: username,
-              email: email,
-              password: password,
-              accountname: accountname,
-              intro: intro,
-              image: image,
+              username: formData.username,
+              email: data.email,
+              password: data.password,
+              accountname: formData.accountname,
+              intro: formData.intro,
+              image: profileImg,
             },
           },
           {
@@ -179,11 +165,36 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
           },
         );
         console.log(JSON.stringify(res.data));
-        // 로그인 페이지로 이동함.
         navigate("/login");
       } catch (err) {
         alert(err.response.data.message);
         console.log(err.response.data.message);
+      }
+    } else if (location.pathname === "/myprofile/edit") {
+      try {
+        setProfileImg(userInfo?.image || BasicProfileInput);
+        const res = await axios.put(
+          "https://api.mandarin.weniv.co.kr/user/",
+          {
+            user: {
+              username: formData.username,
+              accountname: formData.accountname,
+              intro: formData.intro,
+              image: profileImg || userInfo?.image,
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
+          },
+        );
+        localStorage.setItem("accountname", formData.accountname);
+        console.log(JSON.stringify(res.data));
+        navigate("/myprofile");
+      } catch (err) {
+        console.error(err);
       }
     }
   };
@@ -210,7 +221,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
             }
             alt="기본 프로필"
           />
-          {/* <ProfileInputImg src={ImgButton} /> */}
         </ProfileInputImgButton>
       </ProfileImgDiv>
       <ProfileFormLabel>
@@ -219,7 +229,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
           id="username"
           type="text"
           defaultValue={userInfo?.username || ""}
-          onChange={handleInputEntered}
           placeholder="2~10자 이내여야 합니다."
           {...register("username", {
             required: "사용자 이름은 필수 입력입니다.",
@@ -244,7 +253,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
           id="accountname"
           type="text"
           defaultValue={userInfo?.accountname || ""}
-          onChange={handleInputEntered}
           placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
           {...register("accountname", {
             required: "계정 ID는 필수 입력입니다.",
@@ -263,18 +271,20 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         <ProfileFormInput
           id="intro"
           defaultValue={userInfo?.intro || ""}
-          onChange={handleInputEntered}
           type="text"
           placeholder="자신과 선호하는 음식에 대해 소개해주세요!"
           {...register("intro")}
         />
       </ProfileFormLabel>
 
-      {location.pathname === "/signup/profile" && (
+      {/* {location.pathname === "/signup/profile" && (
         <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
           FOOD ZIP 시작하기
         </StartButton>
-      )}
+      )} */}
+      <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
+        FOOD ZIP 시작하기
+      </StartButton>
     </ProfileInputForm>
   );
 }
