@@ -1,22 +1,54 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../../../components/common/Header/Header";
 import ProfileForm from "../../../components/Profile/ProfileForm/ProfileForm";
-
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 48px;
+  gap: 12px;
+  background: #fff;
+  height: 100vh;
+`;
 export default function ProfileEdit() {
-  const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 48px;
-    gap: 12px;
-    background: #fff;
-    height: 100vh;
-  `;
+  const token = localStorage.getItem("token");
+  const [userInfo, setUserInfo] = useState({
+    image: "",
+    username: "",
+    accountname: "",
+    intro: "",
+  });
+
+  useEffect(() => {
+    prevUserInfo();
+  }, []);
+
+  const prevUserInfo = async () => {
+    try {
+      const res = await axios.get(
+        "https://api.mandarin.weniv.co.kr/user/myinfo",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const { image, username, accountname, intro } = res.data.user;
+      setUserInfo({ image, username, accountname, intro });
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+  console.log(userInfo);
+  // 프로필 수정하면 저장할 함수 (작성해야함)
+
   return (
     <Container>
       <Header type="save" />
-      <ProfileForm />
+      <ProfileForm userInfo={userInfo} setUserInfo={setUserInfo} />
     </Container>
   );
 }

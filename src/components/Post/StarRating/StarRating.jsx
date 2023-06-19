@@ -8,11 +8,11 @@ const RatingWrapper = styled.div`
 const RatingP = styled.p`
   margin-bottom: 10px;
 `;
-export default function StarRating() {
+export default function StarRating({ onRatingChange }) {
   const [rating, setRating] = useState(0);
   const handleRating = rate => {
     setRating(rate);
-
+    onRatingChange(rate);
     // other logic
   };
   // Optinal callback functions

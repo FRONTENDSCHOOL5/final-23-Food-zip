@@ -19,6 +19,8 @@ const Container = styled.div`
 
 export default function Profile({ type }) {
   const [modalShow, setModalShow] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -47,7 +49,8 @@ export default function Profile({ type }) {
     }
   }
 
-  function cardOpen() {
+  function cardOpen(id) {
+    setSelectedId(id);
     setCardShow(true);
   }
 
@@ -61,7 +64,7 @@ export default function Profile({ type }) {
         <Modal type="setting" modalClose={modalClose} alertOpen={alertOpen} />
       )}
       {alertShow && <Alert type="logout" alertClose={alertClose} />}
-      {cardShow && <RecommendCard cardClose={cardClose} />}
+      {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
       <Navigation />
     </Container>
   );
