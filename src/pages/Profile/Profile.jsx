@@ -61,7 +61,7 @@ export default function Profile({ type }) {
       <Header type="profile" modalOpen={() => modalOpen("setting")} />
       <ProfileInformation type={type} />
       <RecommendList cardOpen={cardOpen} />
-      <PostList post={post} modalOpen={() => modalOpen("modification")} />
+      <PostList modalOpen={() => modalOpen("modification")} />
       {modalShow && (
         <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
       )}
