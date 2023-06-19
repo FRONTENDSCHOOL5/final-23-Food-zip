@@ -64,7 +64,7 @@ const PostGridImg = styled.a`
   }
 `;
 
-export default function PostList({ post }) {
+export default function PostList({ post, modalOpen }) {
   const [viewMode, setViewMode] = useState("list");
 
   const handleViewModeChange = mode => {
@@ -92,7 +92,7 @@ export default function PostList({ post }) {
       </PostListDiv>
       {viewMode === "list" ? (
         <PostItemList>
-          <PostItem />
+          <PostItem modalOpen={modalOpen} />
         </PostItemList>
       ) : (
         <GridItemList>

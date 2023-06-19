@@ -16,10 +16,9 @@ const RecommendDiv = styled.div`
 
 const RecommendCardDiv = styled.div`
   width: 304px;
-  height: 260px;
+  /* height: 320px; */
   background-color: white;
   border-radius: 10px;
-  padding: 23px 33px;
   box-sizing: border-box;
   position: absolute;
   top: 50%;
@@ -28,30 +27,40 @@ const RecommendCardDiv = styled.div`
 `;
 
 const RecommendListImg = styled.img`
-  width: 238px;
-  height: 154px;
+  width: 100%;
+  height: 180px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 8px 8px 0 0;
+`;
+
+const RecommendTextDiv = styled.div`
+  padding: 13px;
 `;
 
 const RecommendCommonText = css`
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
+  margin-bottom: 7px;
 `;
 
 const RecommendNameP = styled.p`
   ${RecommendCommonText}
-  margin: 10px 0 4px;
 `;
 
 const RecommendScoreSpan = styled.span`
+  display: inline-block;
   ${RecommendCommonText}
   color: #286140;
 `;
 
 const RecommendLocationP = styled.p`
-  font-size: 14px;
-  margin: 6px 0 0px;
+  font-size: 15px;
+  margin-bottom: 16px;
+`;
+
+const RecommendCloseBtn = styled.button`
+  font-size: 15px;
+  font-weight: 600;
 `;
 
 export default function RecommendCard({ cardClose, id }) {
@@ -91,12 +100,19 @@ export default function RecommendCard({ cardClose, id }) {
   };
   console.log(recommendInfo);
   return (
-    <RecommendDiv onClick={cardClose}>
+    <RecommendDiv>
       <RecommendCardDiv>
         <RecommendListImg src={recommendInfo.itemImage} alt="" />
-        <RecommendNameP>{recommendInfo.itemName}</RecommendNameP>
-        <RecommendScoreSpan>{recommendInfo.price}</RecommendScoreSpan>
-        <RecommendLocationP>{recommendInfo.link}</RecommendLocationP>
+        <RecommendTextDiv>
+          <RecommendNameP>{recommendInfo.itemName}</RecommendNameP>
+          <RecommendScoreSpan>{recommendInfo.price}</RecommendScoreSpan>
+          <RecommendLocationP>
+            {recommendInfo.link}
+          </RecommendLocationP>
+          <RecommendCloseBtn type="button" onClick={cardClose}>
+            &#62; 닫기
+          </RecommendCloseBtn>
+        </RecommendTextDiv>
       </RecommendCardDiv>
     </RecommendDiv>
   );

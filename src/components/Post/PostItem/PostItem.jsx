@@ -3,7 +3,9 @@ import styled from "styled-components";
 import UserImg from "../../../assets/images/basic-profile-sm.svg";
 import PostTestImg from "../../../assets/images/post-test.png";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 const Container = styled.section`
   position: relative;
   width: 100%;
@@ -82,7 +84,11 @@ const BtnMore = styled.button`
   top: 7px;
   right: 0;
 `;
-export default function PostItem() {
+export default function PostItem({ modalOpen }) {
+  const navigate = useNavigate();
+  function moveDetail() {
+    navigate("/detailpost");
+  };
   const [postInfo, setPostInfo] = useState({
     postimage: "",
     content: "",
@@ -146,7 +152,7 @@ export default function PostItem() {
               />
               58
             </BtnLike>
-            <BtnComment>
+            <BtnComment onClick={moveDetail}>
               <BtnImg
                 src={
                   require("../../../assets/images/icon-message-circle-1.svg")
@@ -160,7 +166,7 @@ export default function PostItem() {
           <PostDate>{postInfo.updatedAt}</PostDate>
         </PostInfoBox>
       </PostContent>
-      <BtnMore></BtnMore>
+      <BtnMore onClick={modalOpen}></BtnMore>
     </Container>
   );
 }

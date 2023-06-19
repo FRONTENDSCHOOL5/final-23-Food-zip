@@ -4,6 +4,7 @@ import ProfileBtn from "./ProfileBtn";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const InformationTopDiv = styled.div`
   display: flex;
@@ -117,15 +118,15 @@ export default function ProfileInformation({ type, modalOpen }) {
     <>
       {/* <ProfileInfoWrapDiv> */}
       <InformationTopDiv>
-        <a href="#!">
+        <Link to="/followerlist">
           <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
           <FollowerCntP>followers</FollowerCntP>
-        </a>
+        </Link>
         <ProfileImg src={userInfo.image} alt="프로필 이미지" />
-        <a href="#!">
+        <Link to="/followinglist">
           <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
           <FollowingCntP>followings</FollowingCntP>
-        </a>
+        </Link>
       </InformationTopDiv>
       <InformationDiv>
         <InfoNameP>{userInfo.username}</InfoNameP>

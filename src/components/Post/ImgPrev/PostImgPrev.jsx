@@ -14,8 +14,8 @@ const UploadContainer = styled.div`
 
 const UploadImgWrapper = styled.label`
   display: inline-block;
-  width: 130px; /* 변경된 너비 */
-  height: 130px; /* 변경된 높이 */
+  width: 90px; /* 변경된 너비 */
+  height: 90px; /* 변경된 높이 */
   flex-shrink: 0;
   cursor: pointer;
   margin-right: 10px;
@@ -31,8 +31,8 @@ const UploadImgIcon = styled.img`
   border-radius: 10px;
 `;
 const UploadImg = styled.img`
-  max-width: 130px;
-  max-height: 130px;
+  max-width: 90px;
+  max-height: 90px;
   object-fit: contain;
   border-radius: 10px;
 `;
