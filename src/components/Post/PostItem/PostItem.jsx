@@ -6,7 +6,7 @@ import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Container = styled.section`
+const Container = styled.li`
   position: relative;
   width: 100%;
   margin-bottom: 20px;
@@ -18,6 +18,7 @@ const PostUser = styled.div`
 const PostUserImg = styled.img`
   width: 42px;
   height: 42px;
+  border-radius: 50%;
 `;
 const PostUserBox = styled.a`
   align-self: center;
@@ -88,17 +89,9 @@ export default function PostItem({ modalOpen }) {
   const navigate = useNavigate();
   function moveDetail() {
     navigate("/detailpost");
-  };
-  const [postInfo, setPostInfo] = useState({
-    postimage: "",
-    content: "",
-    updatedAt: "",
-  });
-  const [userInfo, setUserInfo] = useState({
-    image: "",
-    accountname: "",
-    username: "",
-  });
+  }
+  const [postInfo, setPostInfo] = useState([]);
+  const [authorInfo, setAuthorInfo] = useState([]);
 
   useEffect(() => {
     getUserInfo();
@@ -116,57 +109,63 @@ export default function PostItem({ modalOpen }) {
         },
       },
     );
-    console.log(res.data);
+    // console.log("여기");
+    console.log("여기", res.data.post[0].author);
     // const { username, image } = res.data.post.author;
     // setUserInfo({
     //   username,
     //   image,
     // });
-    const { image, content, updatedAt } = res.data.post[0];
-    setPostInfo({
-      image,
-      content,
-      updatedAt,
-    });
+    const posts = res.data.post;
+    const authors = res.data.post[0].author;
+    setPostInfo(posts);
+    setAuthorInfo(authors);
   };
   console.log(postInfo);
+  console.log(authorInfo);
 
   return (
-    <Container>
-      <PostUser>
-        <PostUserImg src={userInfo.followerCount} alt="사용자 이미지" />
-        <PostUserBox>
-          <PostUserName>{userInfo.username}</PostUserName>
-          <PostUserId>@ {userInfo.accountname}</PostUserId>
-        </PostUserBox>
-      </PostUser>
-      <PostContent>
-        <p>{postInfo.content}</p>
-        <PostImg src={postInfo.postimage} alt="포스트 이미지" />
-        <PostInfoBox>
-          <PostBtnBox>
-            <BtnLike>
-              <BtnImg
-                src={require("../../../assets/images/icon-heart.svg").default}
-                alt="게시글 좋아요"
-              />
-              58
-            </BtnLike>
-            <BtnComment onClick={moveDetail}>
-              <BtnImg
-                src={
-                  require("../../../assets/images/icon-message-circle-1.svg")
-                    .default
-                }
-                alt="게시글 댓글"
-              />
-              12
-            </BtnComment>
-          </PostBtnBox>
-          <PostDate>{postInfo.updatedAt}</PostDate>
-        </PostInfoBox>
-      </PostContent>
-      <BtnMore onClick={modalOpen}></BtnMore>
-    </Container>
+    <>
+      {postInfo.map(item => (
+        <Container key={item.id}>
+          <PostUser>
+            <PostUserImg src={authorInfo.image} alt="사용자 이미지" />
+            <PostUserBox>
+              <PostUserName>{authorInfo.username}</PostUserName>
+              <PostUserId>@ {authorInfo.accountname}</PostUserId>
+            </PostUserBox>
+          </PostUser>
+          <PostContent>
+            <p>{item.content}</p>
+            <PostImg src={item.image} alt="포스트 이미지" />
+            <PostInfoBox>
+              <PostBtnBox>
+                <BtnLike>
+                  <BtnImg
+                    src={
+                      require("../../../assets/images/icon-heart.svg").default
+                    }
+                    alt="게시글 좋아요"
+                  />
+                  58
+                </BtnLike>
+                <BtnComment onClick={moveDetail}>
+                  <BtnImg
+                    src={
+                      require("../../../assets/images/icon-message-circle-1.svg")
+                        .default
+                    }
+                    alt="게시글 댓글"
+                  />
+                  12
+                </BtnComment>
+              </PostBtnBox>
+              <PostDate>{item.updatedAt}</PostDate>
+            </PostInfoBox>
+          </PostContent>
+          <BtnMore onClick={modalOpen}></BtnMore>
+        </Container>
+      ))}
+    </>
   );
 }
