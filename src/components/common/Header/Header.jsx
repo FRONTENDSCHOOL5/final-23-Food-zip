@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import IconSearch from "../../../assets/images/icon-search.svg";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
@@ -72,11 +72,18 @@ const HeaderTextP = styled.p`
   font-weight: 600;
 `;
 
-export default function Header({ type, modalOpen, uploadHandler }) {
+export default function Header({
+  type,
+  modalOpen,
+  uploadHandler,
+  searchKeyword,
+  handleSearchKeyword,
+}) {
   const navigate = useNavigate();
   function handleClick() {
     navigate("/search");
   }
+
   const UI = {
     home: (
       <HeaderLayoutDiv>
@@ -95,7 +102,12 @@ export default function Header({ type, modalOpen, uploadHandler }) {
             onClick={() => navigate(-1)}
           />
         </HeaderLeftBtn>
-        <HeaderSearchInp type="text" placeholder="계정 검색" />
+        <HeaderSearchInp
+          type="text"
+          placeholder="계정 검색"
+          value={searchKeyword}
+          onChange={handleSearchKeyword}
+        />
       </HeaderLayoutDiv>
     ),
     profile: (
@@ -195,5 +207,6 @@ export default function Header({ type, modalOpen, uploadHandler }) {
       </HeaderLayoutDiv>
     ),
   };
+
   return <HeaderWrap>{UI[type]}</HeaderWrap>;
 }
