@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import ListImg from "../../assets/images/list-example.png";
-import closeBtn from "../../assets/images/x-gray.svg";
 
 const RecommendDiv = styled.div`
   position: fixed;
@@ -16,11 +15,10 @@ const RecommendDiv = styled.div`
 `;
 
 const RecommendCardDiv = styled.div`
-  /* width: 304px; */
-  /* height: 280px; */
+  width: 304px;
+  /* height: 320px; */
   background-color: white;
   border-radius: 10px;
-  padding: 28px 25px 24px 25px;
   box-sizing: border-box;
   position: absolute;
   top: 50%;
@@ -29,40 +27,40 @@ const RecommendCardDiv = styled.div`
 `;
 
 const RecommendListImg = styled.img`
-  width: 260px;
-  height: 168px;
+  width: 100%;
+  height: 180px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 8px 8px 0 0;
+`;
+
+const RecommendTextDiv = styled.div`
+  padding: 13px;
 `;
 
 const RecommendCommonText = css`
   font-size: 15px;
   font-weight: 600;
+  margin-bottom: 7px;
 `;
 
 const RecommendNameP = styled.p`
   ${RecommendCommonText}
-  margin: 18px 0 7px;
 `;
 
 const RecommendScoreSpan = styled.span`
+  display: inline-block;
   ${RecommendCommonText}
   color: #286140;
 `;
 
 const RecommendLocationP = styled.p`
   font-size: 15px;
-  margin: 7px 0 0px;
+  margin-bottom: 16px;
 `;
 
 const RecommendCloseBtn = styled.button`
-  position: absolute;
-  top: 1.5%;
-  right: 0.8%;
-`;
-
-const RecommendCloseImg = styled.img`
-  width: 24px;
+  font-size: 15px;
+  font-weight: 600;
 `;
 
 export default function RecommendCard({ cardClose }) {
@@ -70,18 +68,16 @@ export default function RecommendCard({ cardClose }) {
     <RecommendDiv>
       <RecommendCardDiv>
         <RecommendListImg src={ListImg} alt="" />
-        <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
-        <RecommendScoreSpan>35,000원</RecommendScoreSpan>
-        <RecommendLocationP>
-          서울 강남구 강남대로 358 2층 201호
-        </RecommendLocationP>
-        <RecommendCloseBtn type="button">
-          <RecommendCloseImg
-            src={closeBtn}
-            alt="닫기 버튼"
-            onClick={cardClose}
-          />
-        </RecommendCloseBtn>
+        <RecommendTextDiv>
+          <RecommendNameP>애월읍 노지 감귤</RecommendNameP>
+          <RecommendScoreSpan>35,000원</RecommendScoreSpan>
+          <RecommendLocationP>
+            서울 강남구 강남대로 358 2층 201호
+          </RecommendLocationP>
+          <RecommendCloseBtn type="button" onClick={cardClose}>
+            &#62; 닫기
+          </RecommendCloseBtn>
+        </RecommendTextDiv>
       </RecommendCardDiv>
     </RecommendDiv>
   );

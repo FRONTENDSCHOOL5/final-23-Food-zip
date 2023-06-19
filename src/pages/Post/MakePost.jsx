@@ -18,11 +18,14 @@ const StyledPost = styled.textarea`
   width: 100%;
   height: 100%;
   border: none;
-  font-size: 22px;
+  font-size: 15px;
   font-family: "SUIT-Regular";
   resize: none;
   &:focus {
     outline: none;
+  }
+  &::placeholder {
+    color: #c0c0c0;
   }
 `;
 

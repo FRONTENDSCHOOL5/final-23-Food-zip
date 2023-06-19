@@ -4,6 +4,7 @@ import Comment from "../../components/Comment/Comment";
 import styled from "styled-components";
 import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal";
+import Alert from "../../components/Modal/Alert";
 const DetailPostWrapper = styled.div`
   background: #fff;
   width: 100%;
@@ -62,9 +63,24 @@ export default function DetailPost() {
     setModalShow(true);
     setModalType(type);
   }
+
+  const [alertShow, setAlertShow] = useState(false);
+  function alertClose(e) {
+    if (e.target === e.currentTarget) {
+      setAlertShow(false);
+    }
+  }
+
+  function alertOpen() {
+    setAlertShow(true);
+  }
   return (
     <>
-      <Header type="profile" active={true} />
+      <Header
+        type="profile"
+        active={true}
+        modalOpen={() => modalOpen("setting")}
+      />
       <DetailPostWrapper class="l-wrapper">
         <PostItemSection>
           <PostItem modalOpen={() => modalOpen("modification")} />
@@ -81,7 +97,10 @@ export default function DetailPost() {
           <BtnDisplay class="display">게시</BtnDisplay>
         </WriteCommentSection>
       </DetailPostWrapper>
-      {modalShow && <Modal type={modalType} modalClose={modalClose} />}
+      {modalShow && (
+        <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
+      )}
+      {alertShow && <Alert type="logout" alertClose={alertClose} />}
     </>
   );
 }
