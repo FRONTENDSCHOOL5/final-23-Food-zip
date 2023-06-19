@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../../components/common/Header/Header";
 import ProfileForm from "../../../components/Profile/ProfileForm/ProfileForm";
@@ -14,6 +15,7 @@ const Container = styled.div`
 `;
 export default function ProfileEdit() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     image: "",
     username: "",
@@ -43,11 +45,65 @@ export default function ProfileEdit() {
     }
   };
   console.log(userInfo);
-  // 프로필 수정하면 저장할 함수 (작성해야함)
+
+  const imgUpload = async file => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const res = await axios.post(
+        "https://api.mandarin.weniv.co.kr/image/uploadfile",
+        formData,
+        {
+          headers: {
+            "Content-type": "multipart/form-data",
+          },
+        },
+      );
+      console.log(res.data);
+      return res;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const editProfile = async userInfo => {
+    try {
+      const userData = {
+        user: {
+          ...userInfo,
+        },
+      };
+      const res = await axios.put(
+        "https://api.mandarin.weniv.co.kr/user",
+        userData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      console.log(res.data);
+      return res;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSaveBtn = async () => {
+    await imgUpload(userInfo.image).then(res => {
+      const image = res.data.filename
+        ? `https://api.mandarin.weniv.co.kr/${res.data.filename}`
+        : userInfo.image;
+      editProfile({ ...userInfo, image });
+      console.log(image);
+    });
+    navigate("/myprofile");
+  };
 
   return (
     <Container>
-      <Header type="save" />
+      <Header type="save" handleSaveBtn={handleSaveBtn} />
       <ProfileForm userInfo={userInfo} setUserInfo={setUserInfo} />
     </Container>
   );

@@ -84,7 +84,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      image: userInfo?.image || null,
+      image: userInfo?.image || BasicProfileInput,
       username: userInfo?.username || null,
       accountname: userInfo?.accountname || null,
     },
@@ -94,12 +94,12 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
 
   useEffect(() => {
     if (location.pathname === "/myprofile/edit") {
-      console.log(userInfo);
-      setValue("image", userInfo?.image || null); // Set a default value for image
+      // console.log(userInfo);
+      setValue("image", userInfo?.image || BasicProfileInput); // Set a default value for image
       setValue("username", userInfo?.username || null); // Set a default value for username
       setValue("accountname", userInfo?.accountname || null); // Set a default value for accountname
     } else if (location.pathname === "/signup/profile") {
-      setValue("image", null); // Set a default value for image
+      setValue("image", BasicProfileInput); // Set a default value for image
       setValue("username", null); // Set a default value for username
       setValue("accountname", null); // Set a default value for accountname
     }
@@ -107,9 +107,16 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [profileImg, setProfileImg] = useState(null);
-  // const [accountName, setAccountName] = useState("");
   const fileInputRef = useRef(null);
   const data = location.state;
+
+  const handleInputEntered = e => {
+    const { name, value } = e.target;
+    setUserInfo({
+      ...userInfo,
+      [name]: value,
+    });
+  };
 
   // 이미지 업로드 함수
   const handleImageChange = async event => {
@@ -126,7 +133,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         },
       },
     );
-    const json = await res.json();
     // 화면에 선택한 이미지 파일 보여줌
     if (file) {
       const reader = new FileReader();
@@ -135,7 +141,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
       };
       reader.readAsDataURL(file);
     }
-    imgUrl = "https://api.mandarin.weniv.co.kr/" + json.filename;
+    imgUrl = "https://api.mandarin.weniv.co.kr/" + res.data.filename;
     setProfileImg(imgUrl);
   };
   const handleButtonClick = () => {
@@ -200,7 +206,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
               selectedImage ||
               (location.pathname === "/myprofile/edit"
                 ? userInfo?.image || BasicProfileInput
-                : null)
+                : BasicProfileInput)
             }
             alt="기본 프로필"
           />
@@ -213,6 +219,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
           id="username"
           type="text"
           defaultValue={userInfo?.username || ""}
+          onChange={handleInputEntered}
           placeholder="2~10자 이내여야 합니다."
           {...register("username", {
             required: "사용자 이름은 필수 입력입니다.",
@@ -237,6 +244,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
           id="accountname"
           type="text"
           defaultValue={userInfo?.accountname || ""}
+          onChange={handleInputEntered}
           placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
           {...register("accountname", {
             required: "계정 ID는 필수 입력입니다.",
@@ -255,6 +263,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         <ProfileFormInput
           id="intro"
           defaultValue={userInfo?.intro || ""}
+          onChange={handleInputEntered}
           type="text"
           placeholder="자신과 선호하는 음식에 대해 소개해주세요!"
           {...register("intro")}
