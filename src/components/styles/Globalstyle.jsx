@@ -12,6 +12,10 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     font-family: 'SUIT-Regular', sans-serif;
     background-color: #2861311f;
+    -ms-overflow-style: none;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   button {
