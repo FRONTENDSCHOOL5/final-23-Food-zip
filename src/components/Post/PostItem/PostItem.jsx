@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import UserImg from "../../../assets/images/basic-profile-sm.svg";
 import PostTestImg from "../../../assets/images/post-test.png";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
-
+import axios from "axios";
 const Container = styled.section`
   position: relative;
   width: 100%;
@@ -83,22 +83,60 @@ const BtnMore = styled.button`
   right: 0;
 `;
 export default function PostItem() {
+  const [postInfo, setPostInfo] = useState({
+    postimage: "",
+    content: "",
+    updatedAt: "",
+  });
+  const [userInfo, setUserInfo] = useState({
+    image: "",
+    accountname: "",
+    username: "",
+  });
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+  const getUserInfo = async () => {
+    const token = localStorage.getItem("token");
+    const accountname = localStorage.getItem("accountname");
+    console.log(token);
+    const res = await axios.get(
+      `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-type": "application/json",
+        },
+      },
+    );
+    console.log(res.data);
+    // const { username, image } = res.data.post.author;
+    // setUserInfo({
+    //   username,
+    //   image,
+    // });
+    const { image, content, updatedAt } = res.data.post[0];
+    setPostInfo({
+      image,
+      content,
+      updatedAt,
+    });
+  };
+  console.log(postInfo);
+
   return (
     <Container>
       <PostUser>
-        <PostUserImg src={UserImg} alt="사용자 이미지" />
+        <PostUserImg src={userInfo.followerCount} alt="사용자 이미지" />
         <PostUserBox>
-          <PostUserName>애월읍 위니브 감귤농장</PostUserName>
-          <PostUserId>@ weniv_Mandarin</PostUserId>
+          <PostUserName>{userInfo.username}</PostUserName>
+          <PostUserId>@ {userInfo.accountname}</PostUserId>
         </PostUserBox>
       </PostUser>
       <PostContent>
-        <p>
-          옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다.
-          이상의 청춘의 뼈 따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게
-          뛰노는 인생의 힘있다.
-        </p>
-        <PostImg src={PostTestImg} alt="포스트 이미지" />
+        <p>{postInfo.content}</p>
+        <PostImg src={postInfo.postimage} alt="포스트 이미지" />
         <PostInfoBox>
           <PostBtnBox>
             <BtnLike>
@@ -119,7 +157,7 @@ export default function PostItem() {
               12
             </BtnComment>
           </PostBtnBox>
-          <PostDate>2023년 6월 8일</PostDate>
+          <PostDate>{postInfo.updatedAt}</PostDate>
         </PostInfoBox>
       </PostContent>
       <BtnMore></BtnMore>

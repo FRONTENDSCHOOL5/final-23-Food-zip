@@ -46,7 +46,7 @@ const RecommendImgIcon = styled.img`
   border-radius: 10px;
 `;
 
-export default function RecommendImgPrev() {
+export default function RecommendImgPrev({ onRecommendImageUrlChange }) {
   const [imgUrl, setImgUrl] = useState("");
   const fileInputRef = useRef(null);
   // useRef를 사용하여 파일 입력(input) 요소에 대한 참조 생성
@@ -60,7 +60,9 @@ export default function RecommendImgPrev() {
       const reader = new FileReader();
 
       reader.onload = e => {
-        setImgUrl(e.target.result);
+        const imageUrl = e.target.result;
+        onRecommendImageUrlChange(file, imageUrl); // imgUrl을 MakePost 컴포넌트로 전달
+        setImgUrl(imageUrl);
       };
 
       reader.readAsDataURL(file);

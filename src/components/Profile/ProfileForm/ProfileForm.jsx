@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BasicProfileInput from "../../../assets/images/basic-profile-lg.svg";
 import ImgButton from "../../../assets/images/upload-file.svg";
 import styled from "styled-components";
@@ -75,12 +75,40 @@ const StyledError = styled.small`
   bottom: -10px;
 `;
 
-export default function ProfileForm() {
+export default function ProfileForm({ userInfo, setUserInfo }) {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      image: userInfo?.image || null,
+      username: userInfo?.username || null,
+      accountname: userInfo?.accountname || null,
+    },
+  });
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/myprofile/edit") {
+      console.log(userInfo);
+      setValue("image", userInfo?.image || null); // Set a default value for image
+      setValue("username", userInfo?.username || null); // Set a default value for username
+      setValue("accountname", userInfo?.accountname || null); // Set a default value for accountname
+    } else if (location.pathname === "/signup/profile") {
+      setValue("image", null); // Set a default value for image
+      setValue("username", null); // Set a default value for username
+      setValue("accountname", null); // Set a default value for accountname
+    }
+  }, [location.pathname, userInfo]);
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [profileImg, setProfileImg] = useState(null);
-  const [accountName, setAccountName] = useState("");
+  // const [accountName, setAccountName] = useState("");
   const fileInputRef = useRef(null);
-  const location = useLocation();
   const data = location.state;
 
   // 이미지 업로드 함수
@@ -89,11 +117,13 @@ export default function ProfileForm() {
     const file = event.target.files[0];
     let imgUrl = "";
     formData.append("image", file);
-    const res = await fetch(
+    const res = await axios.post(
       "https://api.mandarin.weniv.co.kr/image/uploadfile",
+      formData,
       {
-        method: "POST",
-        body: formData,
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
       },
     );
     const json = await res.json();
@@ -111,12 +141,6 @@ export default function ProfileForm() {
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ mode: "onChange" });
-
   const navigate = useNavigate();
 
   const handleFormSubmit = async formData => {
@@ -127,7 +151,7 @@ export default function ProfileForm() {
     const intro = formData.intro;
     const image = profileImg;
     console.log(intro);
-    setAccountName(accountname);
+    // setAccountName(accountname);
     if (location.pathname === "/signup/profile") {
       try {
         const res = await axios.post(
@@ -172,7 +196,12 @@ export default function ProfileForm() {
 
         <ProfileInputImgButton type="button" onClick={handleButtonClick}>
           <ProfileImg
-            src={selectedImage || BasicProfileInput}
+            src={
+              selectedImage ||
+              (location.pathname === "/myprofile/edit"
+                ? userInfo?.image || BasicProfileInput
+                : null)
+            }
             alt="기본 프로필"
           />
           {/* <ProfileInputImg src={ImgButton} /> */}
@@ -183,6 +212,7 @@ export default function ProfileForm() {
         <ProfileFormInput
           id="username"
           type="text"
+          defaultValue={userInfo?.username || ""}
           placeholder="2~10자 이내여야 합니다."
           {...register("username", {
             required: "사용자 이름은 필수 입력입니다.",
@@ -206,6 +236,7 @@ export default function ProfileForm() {
         <ProfileFormInput
           id="accountname"
           type="text"
+          defaultValue={userInfo?.accountname || ""}
           placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
           {...register("accountname", {
             required: "계정 ID는 필수 입력입니다.",
@@ -223,6 +254,7 @@ export default function ProfileForm() {
         소개
         <ProfileFormInput
           id="intro"
+          defaultValue={userInfo?.intro || ""}
           type="text"
           placeholder="자신과 선호하는 음식에 대해 소개해주세요!"
           {...register("intro")}
