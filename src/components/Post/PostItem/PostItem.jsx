@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import UserImg from "../../../assets/images/basic-profile-sm.svg";
-import PostTestImg from "../../../assets/images/post-test.png";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import Alert from "../../Modal/Alert";
 import Modal from "../../Modal/Modal";
 
 const Container = styled.li`

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AlertDiv = styled.div`
@@ -67,7 +67,6 @@ const AlertLineSpan = styled.span`
 
 export default function Alert({ type, alertClose, id, modalClose }) {
   const navigate = useNavigate();
-  const location = useLocation();
   const onClickLogout = () => {
     localStorage.removeItem("token");
     navigate("/welcome");

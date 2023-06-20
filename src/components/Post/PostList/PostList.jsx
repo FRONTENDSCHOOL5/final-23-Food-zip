@@ -6,7 +6,6 @@ import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const PostListDiv = styled.div`
   display: flex;
