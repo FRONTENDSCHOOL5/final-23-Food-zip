@@ -91,6 +91,7 @@ export default function PostList({ post, modalOpen }) {
         },
       },
     );
+
     // console.log("여기");
     // console.log("여기", res.data.post[0].author);
     // const { username, image } = res.data.post.author;
@@ -116,10 +117,8 @@ export default function PostList({ post, modalOpen }) {
       setAuthorInfo(authors);
     }
   };
-  console.log(postInfo);
+  console.log("여기", postInfo[0]);
   console.log(authorInfo);
-
-  // console.log(postImages);
   return (
     <>
       <PostListDiv>

@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import UserImg from "../../../assets/images/basic-profile-sm.svg";
-import PostTestImg from "../../../assets/images/post-test.png";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import Modal from "../../Modal/Modal";
 
 const Container = styled.li`
   position: relative;
@@ -85,17 +83,26 @@ const BtnMore = styled.button`
   top: 7px;
   right: 0;
 `;
-export default function PostItem({ modalOpen, postInfo, authorInfo }) {
+export default function PostItem({ postInfo, authorInfo }) {
   const navigate = useNavigate();
   function moveDetail() {
     navigate("/detailpost");
   }
   console.log(postInfo, authorInfo);
 
-  // console.log("과감히:", postInfo);
-  // const imageUrls = postInfo[0].;
-  // console.log(imageUrls[0]);
-  // console.log("제발", postInfo.id);
+  const [modalShow, setModalShow] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+
+  function modalClose(e) {
+    if (e.target === e.currentTarget) {
+      setModalShow(false);
+    }
+  }
+
+  function modalOpen(id) {
+    setSelectedId(id);
+    setModalShow(true);
+  }
   return (
     <>
       {postInfo?.map(item => (
@@ -141,7 +148,14 @@ export default function PostItem({ modalOpen, postInfo, authorInfo }) {
               <PostDate>{item.updatedAt}</PostDate>
             </PostInfoBox>
           </PostContent>
-          <BtnMore onClick={modalOpen}></BtnMore>
+          <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>
+          {modalShow && (
+            <Modal
+              type="modification"
+              modalClose={modalClose}
+              id={selectedId}
+            />
+          )}
         </Container>
       ))}
     </>
