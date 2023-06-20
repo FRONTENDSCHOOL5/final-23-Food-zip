@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ListImg from "../../assets/images/list-example.png";
 import RecommendCard from "../Modal/RecommendCard";
+import ImgStar from "../../assets/images/star.svg";
 import axios from "axios";
 const RecommendWrapDiv = styled.div`
-  margin: 20px 16px 8px;
+  width: 100%;
+  padding: 20px 16px 2px;
   overflow: auto;
   box-sizing: border-box;
   background-color: white;
@@ -27,7 +29,10 @@ const RecommendTitleP = styled.p`
 
 const RecommendListUl = styled.ul`
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  & :last-child {
+    padding-right: 8px;
+  }
 `;
 
 const RecommendLiBtn = styled.button`
@@ -49,9 +54,17 @@ const RecommendNameP = styled.p`
 
 const RecommendScoreSpan = styled.span`
   display: inline-block;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
-  color: #286140;
+  color: #000;
+  margin-left: 2px;
+  line-height: 17px;
+`;
+
+const RecommendStarImg = styled.img`
+  display: inline-block;
+  width: 15px;
+  vertical-align: top;
   margin-bottom: 8px;
 `;
 
@@ -93,9 +106,11 @@ export default function RecommendList({ cardOpen, cardClose }) {
             <RecommendLiBtn type="button">
               <RecommendListImg src={recommendation.itemImage} alt="" />
               <RecommendNameP>{recommendation.itemName}</RecommendNameP>
-              <RecommendScoreSpan>
+              {/* <RecommendScoreSpan>
                 {recommendation.price} / 5점
-              </RecommendScoreSpan>
+              </RecommendScoreSpan> */}
+              <RecommendStarImg src={ImgStar} alt="" />
+              <RecommendScoreSpan>{recommendation.price}.0</RecommendScoreSpan>
             </RecommendLiBtn>
           </li>
         ))}

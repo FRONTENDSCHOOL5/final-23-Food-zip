@@ -85,11 +85,12 @@ const BtnMore = styled.button`
   top: 7px;
   right: 0;
 `;
-export default function PostItem({ modalOpen }) {
+export default function PostItem({ modalOpen, postInfo, authorInfo }) {
   const navigate = useNavigate();
   function moveDetail() {
     navigate("/detailpost");
   }
+
   const [postInfo, setPostInfo] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
 

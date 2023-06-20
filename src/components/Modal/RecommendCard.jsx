@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import ListImg from "../../assets/images/list-example.png";
+import Modal from "./Modal";
+import IconMoreVertical from "../../assets/images/icon-more-vertical.svg";
+import ImgStar from "../../assets/images/star.svg";
+import Alert from "./Alert";
 import axios from "axios";
 const RecommendDiv = styled.div`
   position: fixed;
@@ -44,26 +47,53 @@ const RecommendCommonText = css`
 `;
 
 const RecommendNameP = styled.p`
-  ${RecommendCommonText}
+  font-size: 17px;
+  margin-bottom: 13px;
+  font-weight: 600;
+  display: inline-block;
 `;
 
 const RecommendScoreSpan = styled.span`
+  /* ${RecommendCommonText} */
   display: inline-block;
-  ${RecommendCommonText}
-  color: #286140;
+  color: #000;
+  position: relative;
+  padding-left: 23px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 16px;
+  &::after {
+    display: block;
+    content: "";
+    width: 16px;
+    height: 16px;
+    background-image: url(${ImgStar});
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 45%;
+    left: 4px;
+    transform: translateY(-50%);
+  }
 `;
 
 const RecommendLocationP = styled.p`
   font-size: 15px;
-  margin-bottom: 16px;
+  margin-bottom: 27px;
+`;
+
+const RecommendMoreBtn = styled.button`
+  position: absolute;
+  top: 64.5%;
+  left: 91%;
 `;
 
 const RecommendCloseBtn = styled.button`
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
 `;
 
-export default function RecommendCard({ cardClose, id }) {
+export default function RecommendCard({ cardClose, id, modalOpen }) {
   const [recommendInfo, setRecommendInfo] = useState({
     postimage: "",
     restaurantname: "",
@@ -99,21 +129,36 @@ export default function RecommendCard({ cardClose, id }) {
     });
   };
   console.log(recommendInfo);
+
+  const [modalShow, setModalShow] = useState(false);
+
+  function modalClose(e) {
+    if (e.target === e.currentTarget) {
+      setModalShow(false);
+    }
+  }
+
+  function modalOpen() {
+    setModalShow(true);
+  }
+
   return (
     <RecommendDiv>
       <RecommendCardDiv>
         <RecommendListImg src={recommendInfo.itemImage} alt="" />
         <RecommendTextDiv>
           <RecommendNameP>{recommendInfo.itemName}</RecommendNameP>
-          <RecommendScoreSpan>{recommendInfo.price}</RecommendScoreSpan>
-          <RecommendLocationP>
-            {recommendInfo.link}
-          </RecommendLocationP>
+          <RecommendScoreSpan>{recommendInfo.price}.0</RecommendScoreSpan>
+          <RecommendLocationP>{recommendInfo.link}</RecommendLocationP>
+          <RecommendMoreBtn type="button" onClick={modalOpen}>
+            <img src={IconMoreVertical} alt="더보기 아이콘" />
+          </RecommendMoreBtn>
           <RecommendCloseBtn type="button" onClick={cardClose}>
-            &#62; 닫기
+            &#60; 닫기
           </RecommendCloseBtn>
         </RecommendTextDiv>
       </RecommendCardDiv>
+      {modalShow && <Modal type="product" modalClose={modalClose} />}
     </RecommendDiv>
   );
 }

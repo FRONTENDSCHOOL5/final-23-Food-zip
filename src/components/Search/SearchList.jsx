@@ -1,8 +1,8 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import foodzim from "../../assets/images/basic-profile-lg.svg";
-import bear from "../../assets/images/chattest.jpg";
-import gyul from "../../assets/images/list-example.png";
+import { useDebounce } from "use-debounce";
+
 const SearchWrapper = styled.ul`
   padding: 0;
 `;
@@ -39,50 +39,56 @@ const UserName = styled.strong`
   font-size: 14px;
   font-weight: 600;
 `;
-const Result = styled.span`
-  color: #286140;
-`;
+
 const UserID = styled.p`
   margin: 0;
   font-size: 12px;
   color: #767676;
 `;
 
-export default function SearchList() {
-  const searchListData = [
-    {
-      id: 1,
-      profileImg: foodzim,
-      result: "애월읍 ",
-      userName: "위니브 감귤농장",
-      userId: "@ weniv_Mandarin",
-    },
-    {
-      id: 2,
-      profileImg: bear,
-      result: "애월읍 ",
-      userName: "곰 농장",
-      userId: "@ bear_farm",
-    },
-    {
-      id: 3,
-      profileImg: gyul,
-      result: "애월읍 ",
-      userName: "귤 과수원",
-      userId: "@ gyul_farm",
-    },
-  ];
+export default function SearchList({ searchKeyword }) {
+  const [searchListData, setSearchListData] = useState([]);
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500); // 500ms 디바운스 적용
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!debouncedSearchKeyword) {
+        // If debouncedSearchKeyword is empty or falsy, exit the function
+        return;
+      } else {
+        try {
+          const token = localStorage.getItem("token");
+          console.log(debouncedSearchKeyword);
+          const response = await axios.get(
+            `https://api.mandarin.weniv.co.kr/user/searchuser/?keyword=${debouncedSearchKeyword}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-type": "application/json",
+              },
+            },
+          );
+
+          setSearchListData(response.data);
+        } catch (error) {
+          console.error("검색 결과를 가져오는 중 오류 발생:", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [debouncedSearchKeyword]);
+
+  console.log(searchListData);
+
   return (
     <SearchWrapper>
-      {searchListData.map(searchItem => (
-        <List key={searchItem.id}>
-          <ProfileImg src={searchItem.profileImg} alt="프로필 이미지" />
+      {searchListData.map((searchItem, i) => (
+        <List key={i}>
+          <ProfileImg src={searchItem.image} alt="프로필 이미지" />
           <TextWrap>
-            <UserName>
-              <Result>{searchItem.result}</Result>
-              {searchItem.userName}
-            </UserName>
-            <UserID>{searchItem.userId}</UserID>
+            <UserName>{searchItem.username}</UserName>
+            <UserID>@ {searchItem.accountname}</UserID>
           </TextWrap>
         </List>
       ))}

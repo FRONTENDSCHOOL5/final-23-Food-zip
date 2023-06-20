@@ -42,8 +42,6 @@ export default function ProfileEdit() {
       return false;
     }
   };
-  console.log(userInfo);
-  // 프로필 수정하면 저장할 함수 (작성해야함)
 
   return (
     <Container>

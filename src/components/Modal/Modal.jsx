@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
+import Alert from "./Alert";
 
 const ModalDiv = styled.div`
   position: fixed;
@@ -54,27 +55,43 @@ const ModalTextBtn = styled.button`
 
 export default function Modal({ type, modalClose, alertOpen }) {
   const navigate = useNavigate();
+  const [alertShow, setAlertShow] = useState(false);
+  const [alertType, setAlertType] = useState("logout");
+
+  function alertClose(e) {
+    if (e.target === e.currentTarget) {
+      setAlertShow(false);
+    }
+  }
+
+  function alertOpen(type) {
+    setAlertShow(true);
+    setAlertType(type);
+  }
   const UI = {
     setting: (
       <ModalWrapDiv>
         <ModalLineSpan />
         <ModalTextBtn>설정 및 개인정보</ModalTextBtn>
-        <ModalTextBtn onClick={alertOpen}>로그아웃</ModalTextBtn>
+        <ModalTextBtn onClick={() => alertOpen("logout")}>
+          로그아웃
+        </ModalTextBtn>
       </ModalWrapDiv>
     ),
     modification: (
       <ModalWrapDiv>
         <ModalLineSpan />
-        <ModalTextBtn>삭제</ModalTextBtn>
+        <ModalTextBtn onClick={() => alertOpen("post")}>삭제</ModalTextBtn>
         <ModalTextBtn>수정</ModalTextBtn>
       </ModalWrapDiv>
     ),
     product: (
       <ModalWrapDiv>
         <ModalLineSpan />
-        <ModalTextBtn>삭제</ModalTextBtn>
+        <ModalTextBtn onClick={() => alertOpen("product")}>삭제</ModalTextBtn>
         <ModalTextBtn>수정</ModalTextBtn>
-        <ModalTextBtn>웹사이트에서 상품 보기</ModalTextBtn>
+        <ModalTextBtn>카카오맵으로 이동하기</ModalTextBtn>
+        <ModalTextBtn>SNS 공유하기</ModalTextBtn>
       </ModalWrapDiv>
     ),
     report: (
@@ -100,6 +117,7 @@ export default function Modal({ type, modalClose, alertOpen }) {
   return (
     <>
       <ModalDiv onClick={modalClose}>{UI[type]}</ModalDiv>;
+      {alertShow && <Alert type={alertType} alertClose={alertClose} />}
     </>
   );
 }

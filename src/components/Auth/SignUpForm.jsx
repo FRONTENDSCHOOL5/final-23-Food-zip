@@ -61,7 +61,10 @@ const SignUpForm = ({ onSubmit }) => {
     formState: { errors },
   } = useForm({
     mode: "onChange",
-    defaultValues: { email: null, password: null },
+    defaultValues: {
+      email: null,
+      password: null,
+    },
   });
   const watchFields = watch(["email", "password"]);
   const isValid = Object.values(watchFields).every(value => value !== null);
@@ -139,7 +142,10 @@ const SignUpForm = ({ onSubmit }) => {
   );
   const handleFormSubmit = data => {
     navigate("/signup/profile", {
-      state: { email: data.email, password: data.password },
+      state: {
+        email: data.email,
+        password: data.password,
+      },
     });
   };
   return (
