@@ -103,13 +103,9 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
   useEffect(() => {
     getUserInfo();
   }, [id]);
-  // const [selectedId, setSelectedId] = useState(null);
 
   const getUserInfo = async () => {
     const token = localStorage.getItem("token");
-    console.log(id);
-    // const accountname = localStorage.getItem("accountname");
-    console.log(token);
     const res = await axios.get(
       `https://api.mandarin.weniv.co.kr/product/detail/${id}`,
       {
@@ -119,7 +115,6 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
         },
       },
     );
-    console.log(res.data);
     const { itemImage, itemName, link, price } = res.data.product;
     setRecommendInfo({
       itemImage,
@@ -128,7 +123,6 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
       price,
     });
   };
-  console.log(recommendInfo);
 
   const [modalShow, setModalShow] = useState(false);
 
@@ -158,7 +152,9 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
           </RecommendCloseBtn>
         </RecommendTextDiv>
       </RecommendCardDiv>
-      {modalShow && <Modal type="product" modalClose={modalClose} />}
+      {modalShow && (
+        <Modal type="product" modalClose={modalClose} productId={id} />
+      )}
     </RecommendDiv>
   );
 }

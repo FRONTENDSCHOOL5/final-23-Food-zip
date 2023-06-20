@@ -65,7 +65,13 @@ const AlertLineSpan = styled.span`
   background-color: #dbdbdb;
 `;
 
-export default function Alert({ type, alertClose, id, modalClose }) {
+export default function Alert({
+  type,
+  alertClose,
+  postId,
+  modalClose,
+  productId,
+}) {
   const navigate = useNavigate();
   const onClickLogout = () => {
     localStorage.removeItem("token");
@@ -74,15 +80,33 @@ export default function Alert({ type, alertClose, id, modalClose }) {
 
   const handleDeletePost = async () => {
     const token = localStorage.getItem("token");
-    console.log("여기", token);
-    console.log("id", id);
     try {
-      await axios.delete(`https://api.mandarin.weniv.co.kr/post/${id}`, {
+      await axios.delete(`https://api.mandarin.weniv.co.kr/post/${postId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-type": "application/json",
         },
       });
+      alertClose("post");
+      modalClose("modification");
+      window.location.reload();
+    } catch (error) {
+      console.error("Delete request failed", error);
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `https://api.mandarin.weniv.co.kr/product/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
       alertClose("post");
       modalClose("modification");
       window.location.reload();
@@ -118,7 +142,7 @@ export default function Alert({ type, alertClose, id, modalClose }) {
         <AlertBottomDiv>
           <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
           <AlertLineSpan></AlertLineSpan>
-          <AlertMainBtn>삭제</AlertMainBtn>
+          <AlertMainBtn onClick={handleDeleteProduct}>삭제</AlertMainBtn>
         </AlertBottomDiv>
       </AlertWrapDiv>
     ),

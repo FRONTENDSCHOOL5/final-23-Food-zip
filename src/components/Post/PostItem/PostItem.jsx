@@ -146,7 +146,7 @@ export default function PostItem({ postInfo, authorInfo }) {
             <Modal
               type="modification"
               modalClose={modalClose}
-              id={selectedId}
+              postId={selectedId}
             />
           )}
         </Container>

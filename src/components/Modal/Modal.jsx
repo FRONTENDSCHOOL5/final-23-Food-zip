@@ -53,7 +53,13 @@ const ModalTextBtn = styled.button`
   border: 0;
 `;
 
-export default function Modal({ type, modalClose, alertOpen, id }) {
+export default function Modal({
+  type,
+  modalClose,
+  alertOpen,
+  postId,
+  productId,
+}) {
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
   const [alertType, setAlertType] = useState("logout");
@@ -68,8 +74,6 @@ export default function Modal({ type, modalClose, alertOpen, id }) {
     setAlertShow(true);
     setAlertType(type);
   }
-
-  console.log(id);
 
   const UI = {
     setting: (
@@ -125,7 +129,8 @@ export default function Modal({ type, modalClose, alertOpen, id }) {
           type={alertType}
           modalClose={modalClose}
           alertClose={alertClose}
-          id={id}
+          postId={postId}
+          productId={productId}
         />
       )}
     </>
