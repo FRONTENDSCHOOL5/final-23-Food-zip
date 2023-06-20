@@ -92,20 +92,24 @@ export default function PostList({ post, modalOpen }) {
       },
     );
     // console.log("여기");
-    console.log("여기", res.data.post[0].author);
+    // console.log("여기", res.data.post[0].author);
     // const { username, image } = res.data.post.author;
     // setUserInfo({
     //   username,
     //   image,
     // });
     const posts = res.data.post;
-    const authors = res.data.post[0].author;
-    setPostInfo(posts);
-    setAuthorInfo(authors);
+    if (posts.length === 0) {
+      setAuthorInfo([]);
+      setPostInfo([]);
+    } else {
+      const authors = res.data.post[0].author;
+      setPostInfo(posts);
+      setAuthorInfo(authors);
+    }
   };
   console.log(postInfo);
   console.log(authorInfo);
-
   return (
     <>
       <PostListDiv>

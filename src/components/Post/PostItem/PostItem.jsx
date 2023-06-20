@@ -90,49 +90,49 @@ export default function PostItem({ modalOpen, postInfo, authorInfo }) {
   function moveDetail() {
     navigate("/detailpost");
   }
+  console.log(postInfo, authorInfo);
+  // const [postInfo, setPostInfo] = useState([]);
+  // const [authorInfo, setAuthorInfo] = useState([]);
 
-  const [postInfo, setPostInfo] = useState([]);
-  const [authorInfo, setAuthorInfo] = useState([]);
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-  const getUserInfo = async () => {
-    const token = localStorage.getItem("token");
-    const accountname = localStorage.getItem("accountname");
-    console.log(token);
-    const res = await axios.get(
-      `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-type": "application/json",
-        },
-      },
-    );
-    // console.log("여기");
-    // console.log("여기", res.data.post[0].author);
-    // const { username, image } = res.data.post.author;
-    // setUserInfo({
-    //   username,
-    //   image,
-    // });
-    const posts = res.data.post;
-    if (posts.length === 0) {
-      setAuthorInfo([]);
-      setPostInfo([]);
-    } else {
-      const authors = res.data.post[0].author;
-      setPostInfo(posts);
-      setAuthorInfo(authors);
-    }
-  };
-  console.log(postInfo);
-  console.log(authorInfo);
+  // useEffect(() => {
+  //   getUserInfo();
+  // }, []);
+  // const getUserInfo = async () => {
+  //   const token = localStorage.getItem("token");
+  //   const accountname = localStorage.getItem("accountname");
+  //   console.log(token);
+  //   const res = await axios.get(
+  //     `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-type": "application/json",
+  //       },
+  //     },
+  //   );
+  // console.log("여기");
+  // console.log("여기", res.data.post[0].author);
+  // const { username, image } = res.data.post.author;
+  // setUserInfo({
+  //   username,
+  //   image,
+  // });
+  //   const posts = res.data.post;
+  //   if (posts.length === 0) {
+  //     setAuthorInfo([]);
+  //     setPostInfo([]);
+  //   } else {
+  //     const authors = res.data.post[0].author;
+  //     setPostInfo(posts);
+  //     setAuthorInfo(authors);
+  //   }
+  // };
+  // console.log(postInfo);
+  // console.log(authorInfo);
 
   return (
     <>
-      {postInfo.map(item => (
+      {postInfo?.map(item => (
         <Container key={item.id}>
           <PostUser>
             <PostUserImg src={authorInfo.image} alt="사용자 이미지" />
