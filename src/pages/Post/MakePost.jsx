@@ -31,23 +31,26 @@ const StyledPost = styled.textarea`
 `;
 
 export default function MakePost() {
-  const [imgFile, setImgFile] = useState(null);
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgFile, setImgFile] = useState([]);
+  const [imgUrl, setImgUrl] = useState([]);
   const [content, setContent] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+
   const handleImageUrlChange = (file, url) => {
-    setImgFile(file);
-    // const fileUrl = URL.createObjectURL(file);
-    setImgUrl(url);
+    setImgFile(prevFiles => [...prevFiles, file]);
+    setImgUrl(prevUrls => [...prevUrls, url]);
   };
-  console.log(imgFile);
-  const uploadPost = async (url, content) => {
+
+  const uploadPost = async () => {
     try {
       const formData = new FormData();
-      formData.append("image", imgFile);
+      imgFile.forEach(file => {
+        formData.append("image", file);
+      });
+
       const uploadResponse = await axios.post(
-        "https://api.mandarin.weniv.co.kr/image/uploadfile",
+        "https://api.mandarin.weniv.co.kr/image/uploadfiles",
         formData,
         {
           headers: {
@@ -55,16 +58,20 @@ export default function MakePost() {
           },
         },
       );
-      console.log("1 : " + uploadResponse.data);
-      const imageUrl =
-        "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
-
+      console.log(uploadResponse);
+      const imageUrls = uploadResponse.data.map(file => {
+        const filename = file.filename;
+        console.log(filename);
+        return `https://api.mandarin.weniv.co.kr/${filename}`;
+      });
+      const joinedUrls = imageUrls.join(",");
+      console.log(joinedUrls);
       const postResponse = await axios.post(
         "https://api.mandarin.weniv.co.kr/post",
         {
           post: {
             content: content,
-            image: imageUrl,
+            image: joinedUrls,
           },
         },
         {
@@ -75,7 +82,7 @@ export default function MakePost() {
         },
       );
 
-      console.log(postResponse);
+      console.log("이봐", postResponse);
       navigate("/myprofile");
     } catch (error) {
       console.error(error);
@@ -83,7 +90,7 @@ export default function MakePost() {
   };
 
   const handleUpload = () => {
-    uploadPost(imgUrl, content);
+    uploadPost();
   };
 
   const onChangeInput = event => {

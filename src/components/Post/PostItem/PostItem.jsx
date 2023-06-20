@@ -90,49 +90,15 @@ export default function PostItem({ modalOpen, postInfo, authorInfo }) {
   function moveDetail() {
     navigate("/detailpost");
   }
+  console.log(postInfo, authorInfo);
 
-  const [postInfo, setPostInfo] = useState([]);
-  const [authorInfo, setAuthorInfo] = useState([]);
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-  const getUserInfo = async () => {
-    const token = localStorage.getItem("token");
-    const accountname = localStorage.getItem("accountname");
-    console.log(token);
-    const res = await axios.get(
-      `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-type": "application/json",
-        },
-      },
-    );
-    // console.log("여기");
-    // console.log("여기", res.data.post[0].author);
-    // const { username, image } = res.data.post.author;
-    // setUserInfo({
-    //   username,
-    //   image,
-    // });
-    const posts = res.data.post;
-    if (posts.length === 0) {
-      setAuthorInfo([]);
-      setPostInfo([]);
-    } else {
-      const authors = res.data.post[0].author;
-      setPostInfo(posts);
-      setAuthorInfo(authors);
-    }
-  };
-  console.log(postInfo);
-  console.log(authorInfo);
-
+  // console.log("과감히:", postInfo);
+  const imageUrls = postInfo[0].image.split(",");
+  console.log(imageUrls[0]);
+  // console.log("제발", postInfo.id);
   return (
     <>
-      {postInfo.map(item => (
+      {postInfo?.map(item => (
         <Container key={item.id}>
           <PostUser>
             <PostUserImg src={authorInfo.image} alt="사용자 이미지" />
@@ -143,7 +109,13 @@ export default function PostItem({ modalOpen, postInfo, authorInfo }) {
           </PostUser>
           <PostContent>
             <p>{item.content}</p>
-            <PostImg src={item.image} alt="포스트 이미지" />
+            {/* {item.image.map((url, index) => (
+              <PostImg key={index} src={url} alt="포스트 이미지" />
+            ))} */}
+            {imageUrls.map((imageUrl, index) => (
+              <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
+            ))}
+            {/* <PostImg src={item.image} alt="포스트 이미지" /> */}
             <PostInfoBox>
               <PostBtnBox>
                 <BtnLike>

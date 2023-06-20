@@ -14,8 +14,8 @@ const UploadContainer = styled.div`
 
 const UploadImgWrapper = styled.label`
   display: inline-block;
-  width: 90px; /* 변경된 너비 */
-  height: 90px; /* 변경된 높이 */
+  width: 90px;
+  height: 90px;
   flex-shrink: 0;
   cursor: pointer;
   margin-right: 10px;
@@ -36,25 +36,34 @@ const UploadImg = styled.img`
   object-fit: contain;
   border-radius: 10px;
 `;
+
 export default function PostImgPrev({ onImageUrlChange }) {
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState([]);
+  const [imgFile, setImgFile] = useState([]);
   const fileInputRef = useRef(null);
 
   const handleUploadImg = () => {
     if (fileInputRef.current && fileInputRef.current.files.length > 0) {
-      const file = fileInputRef.current.files[0];
-      const fileUrl = URL.createObjectURL(file); // 파일 객체에 대한 URL 생성
-      console.log(fileUrl); // 파일 URL 출력
+      const files = fileInputRef.current.files;
+      const nowImgFileList = [...imgFile];
+      const nowImgUrlList = [...imgUrl];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileUrl = URL.createObjectURL(file);
+        nowImgFileList.push(file);
+        nowImgUrlList.push(fileUrl);
 
-      const reader = new FileReader();
+        const reader = new FileReader();
+        reader.onload = e => {
+          const imageUrl = e.target.result;
+          onImageUrlChange(nowImgFileList[i], imageUrl);
+        };
 
-      reader.onload = e => {
-        const imageUrl = e.target.result;
-        onImageUrlChange(file, imageUrl); // imgUrl을 MakePost 컴포넌트로 전달
-        setImgUrl(imageUrl);
-      };
+        reader.readAsDataURL(file);
+      }
 
-      reader.readAsDataURL(file);
+      setImgFile(nowImgFileList);
+      setImgUrl(nowImgUrlList);
     }
   };
 
@@ -64,17 +73,18 @@ export default function PostImgPrev({ onImageUrlChange }) {
         <UploadImgInput
           type="file"
           id="file-input"
+          multiple="multiple"
           accept="image/jpeg,image/jpg,image/png"
           onChange={handleUploadImg}
           ref={fileInputRef}
         />
         <UploadImgIcon src={uploadPhoto} alt="사진을 올리는 버튼 이미지" />
       </UploadImgWrapper>
-      {imgUrl && (
-        <div>
-          <UploadImg src={imgUrl} alt="업로드된 이미지" />
+      {imgUrl.map((url, index) => (
+        <div key={index}>
+          <UploadImg src={url} alt="업로드된 이미지" />
         </div>
-      )}
+      ))}
     </UploadContainer>
   );
 }
