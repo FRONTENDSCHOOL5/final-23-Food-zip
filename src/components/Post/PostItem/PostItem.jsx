@@ -88,6 +88,7 @@ export default function PostItem({ postInfo, authorInfo }) {
   function moveDetail() {
     navigate("/detailpost");
   }
+  console.log(postInfo, authorInfo);
 
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -115,7 +116,13 @@ export default function PostItem({ postInfo, authorInfo }) {
           </PostUser>
           <PostContent>
             <p>{item.content}</p>
-            <PostImg src={item.image} alt="포스트 이미지" />
+            {/* {item.image.map((url, index) => (
+              <PostImg key={index} src={url} alt="포스트 이미지" />
+            ))} */}
+            {item.image.split(",").map((imageUrl, index) => (
+              <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
+            ))}
+            {/* <PostImg src={item.image} alt="포스트 이미지" /> */}
             <PostInfoBox>
               <PostBtnBox>
                 <BtnLike>
