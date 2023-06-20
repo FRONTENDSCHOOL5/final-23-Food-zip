@@ -26,7 +26,7 @@ const AlertWrapDiv = styled.div`
 `;
 
 const AlertTextP = styled.p`
-  padding: 22px 58px;
+  padding: 22px 56px;
   text-align: center;
   font-size: 16px;
   border-bottom: 1px solid #dbdbdb;

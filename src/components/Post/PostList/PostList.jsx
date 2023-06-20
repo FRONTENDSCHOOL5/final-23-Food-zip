@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PostItem from "../PostItem/PostItem";
 import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
 import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
+import axios from "axios";
 
 const PostListDiv = styled.div`
   display: flex;
@@ -71,6 +72,40 @@ export default function PostList({ post, modalOpen }) {
     setViewMode(mode);
   };
 
+  const [postInfo, setPostInfo] = useState([]);
+  const [authorInfo, setAuthorInfo] = useState([]);
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+  const getUserInfo = async () => {
+    const token = localStorage.getItem("token");
+    const accountname = localStorage.getItem("accountname");
+    console.log(token);
+    const res = await axios.get(
+      `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-type": "application/json",
+        },
+      },
+    );
+    // console.log("여기");
+    console.log("여기", res.data.post[0].author);
+    // const { username, image } = res.data.post.author;
+    // setUserInfo({
+    //   username,
+    //   image,
+    // });
+    const posts = res.data.post;
+    const authors = res.data.post[0].author;
+    setPostInfo(posts);
+    setAuthorInfo(authors);
+  };
+  console.log(postInfo);
+  console.log(authorInfo);
+
   return (
     <>
       <PostListDiv>
@@ -92,13 +127,17 @@ export default function PostList({ post, modalOpen }) {
       </PostListDiv>
       {viewMode === "list" ? (
         <PostItemList>
-          <PostItem modalOpen={modalOpen} />
+          <PostItem
+            modalOpen={modalOpen}
+            postInfo={postInfo}
+            authorInfo={authorInfo}
+          />
         </PostItemList>
       ) : (
         <GridItemList>
-          {post.map(item => (
+          {postInfo.map(item => (
             <PostGridImg key={item.id}>
-              <img src={item.image} alt="" />
+              <img src={item.image} alt="grid" />
             </PostGridImg>
           ))}
         </GridItemList>
