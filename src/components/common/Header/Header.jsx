@@ -78,6 +78,7 @@ export default function Header({
   uploadHandler,
   searchKeyword,
   handleSearchKeyword,
+  handleSaveBtn,
 }) {
   const navigate = useNavigate();
   function handleClick() {
@@ -162,11 +163,12 @@ export default function Header({
           />
         </HeaderLeftBtn>
         <Button
-          type="button"
+          type="submit"
           content="저장"
           size="ms"
           width="ms"
           bgColor="inactive"
+          onClick={handleSaveBtn}
         ></Button>
       </HeaderLayoutDiv>
     ),

@@ -17,7 +17,9 @@ export const GlobalStyle = createGlobalStyle`
       display: none;
     }
   }
-
+li{
+  list-style:none;
+}
   button {
     font-family: 'SUIT-Regular', sans-serif;
     cursor: pointer;
@@ -43,6 +45,7 @@ export const GlobalStyle = createGlobalStyle`
       outline: none;
     }
   }
+  
   .a11y-hidden {
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);

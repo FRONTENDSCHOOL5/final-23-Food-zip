@@ -83,35 +83,35 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
-    defaultValues: {
-      image: userInfo?.image || null,
-      username: userInfo?.username || null,
-      accountname: userInfo?.accountname || null,
-    },
   });
-
+  const [accountname, setAccountname] = useState(null);
+  useEffect(() => {
+    setAccountname(localStorage.getItem("accountname"));
+  }, []);
+  // console.log(accountname);
+  const token = localStorage.getItem("token");
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/myprofile/edit") {
-      console.log(userInfo);
-      setValue("image", userInfo?.image || null); // Set a default value for image
+      // console.log(userInfo);
+      setValue("image", userInfo?.image || BasicProfileInput); // Set a default value for image
       setValue("username", userInfo?.username || null); // Set a default value for username
       setValue("accountname", userInfo?.accountname || null); // Set a default value for accountname
+      setValue("intro", userInfo?.intro || null); // Set a default value for intro
     } else if (location.pathname === "/signup/profile") {
-      setValue("image", null); // Set a default value for image
+      setValue("image", BasicProfileInput); // Set a default value for image
       setValue("username", null); // Set a default value for username
       setValue("accountname", null); // Set a default value for accountname
+      setValue("intro", null); // Set a default value for intro
     }
   }, [location.pathname, userInfo]);
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [profileImg, setProfileImg] = useState(null);
-  // const [accountName, setAccountName] = useState("");
   const fileInputRef = useRef(null);
   const data = location.state;
 
-  // 이미지 업로드 함수
   const handleImageChange = async event => {
     const formData = new FormData();
     const file = event.target.files[0];
@@ -126,7 +126,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         },
       },
     );
-    const json = await res.json();
     // 화면에 선택한 이미지 파일 보여줌
     if (file) {
       const reader = new FileReader();
@@ -135,35 +134,28 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
       };
       reader.readAsDataURL(file);
     }
-    imgUrl = "https://api.mandarin.weniv.co.kr/" + json.filename;
+    imgUrl = "https://api.mandarin.weniv.co.kr/" + res.data.filename;
     setProfileImg(imgUrl);
   };
+
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
   const navigate = useNavigate();
 
   const handleFormSubmit = async formData => {
-    const username = formData.username;
-    const email = data.email;
-    const password = data.password;
-    const accountname = formData.accountname;
-    const intro = formData.intro;
-    const image = profileImg;
-    console.log(intro);
-    // setAccountName(accountname);
     if (location.pathname === "/signup/profile") {
       try {
         const res = await axios.post(
           "https://api.mandarin.weniv.co.kr/user/",
           {
             user: {
-              username: username,
-              email: email,
-              password: password,
-              accountname: accountname,
-              intro: intro,
-              image: image,
+              username: formData.username,
+              email: data.email,
+              password: data.password,
+              accountname: formData.accountname,
+              intro: formData.intro,
+              image: profileImg,
             },
           },
           {
@@ -173,11 +165,36 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
           },
         );
         console.log(JSON.stringify(res.data));
-        // 로그인 페이지로 이동함.
         navigate("/login");
       } catch (err) {
         alert(err.response.data.message);
         console.log(err.response.data.message);
+      }
+    } else if (location.pathname === "/myprofile/edit") {
+      try {
+        setProfileImg(userInfo?.image || BasicProfileInput);
+        const res = await axios.put(
+          "https://api.mandarin.weniv.co.kr/user/",
+          {
+            user: {
+              username: formData.username,
+              accountname: formData.accountname,
+              intro: formData.intro,
+              image: profileImg || userInfo?.image,
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
+          },
+        );
+        localStorage.setItem("accountname", formData.accountname);
+        console.log(JSON.stringify(res.data));
+        navigate("/myprofile");
+      } catch (err) {
+        console.error(err);
       }
     }
   };
@@ -200,11 +217,10 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
               selectedImage ||
               (location.pathname === "/myprofile/edit"
                 ? userInfo?.image || BasicProfileInput
-                : null)
+                : BasicProfileInput)
             }
             alt="기본 프로필"
           />
-          {/* <ProfileInputImg src={ImgButton} /> */}
         </ProfileInputImgButton>
       </ProfileImgDiv>
       <ProfileFormLabel>
@@ -261,11 +277,14 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         />
       </ProfileFormLabel>
 
-      {location.pathname === "/signup/profile" && (
+      {/* {location.pathname === "/signup/profile" && (
         <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
           FOOD ZIP 시작하기
         </StartButton>
-      )}
+      )} */}
+      <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
+        FOOD ZIP 시작하기
+      </StartButton>
     </ProfileInputForm>
   );
 }

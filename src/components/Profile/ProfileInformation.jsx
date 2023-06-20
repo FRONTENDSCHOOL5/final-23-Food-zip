@@ -85,7 +85,7 @@ export default function ProfileInformation({ type, modalOpen }) {
   }, []);
   const getUserInfo = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
+    // console.log(token);
     const res = await axios.get(
       "https://api.mandarin.weniv.co.kr/user/myinfo",
       {
@@ -113,7 +113,7 @@ export default function ProfileInformation({ type, modalOpen }) {
       intro,
     });
   };
-  console.log(userInfo);
+  // console.log(userInfo);
   return (
     <>
       {/* <ProfileInfoWrapDiv> */}
