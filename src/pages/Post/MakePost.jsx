@@ -33,6 +33,7 @@ const StyledPost = styled.textarea`
 export default function MakePost() {
   const [imgFile, setImgFile] = useState([]);
   const [imgUrl, setImgUrl] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
   const [content, setContent] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -44,26 +45,6 @@ export default function MakePost() {
 
   const uploadPost = async () => {
     try {
-      const formData = new FormData();
-      imgFile.forEach(file => {
-        formData.append("image", file);
-      });
-
-      const uploadResponse = await axios.post(
-        "https://api.mandarin.weniv.co.kr/image/uploadfiles",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
-      console.log(uploadResponse);
-      const imageUrls = uploadResponse.data.map(file => {
-        const filename = file.filename;
-        console.log(filename);
-        return `https://api.mandarin.weniv.co.kr/${filename}`;
-      });
       const joinedUrls = imageUrls.join(",");
       console.log(joinedUrls);
       const postResponse = await axios.post(
@@ -101,7 +82,10 @@ export default function MakePost() {
     <div>
       <Header type="upload" active={true} uploadHandler={handleUpload} />
       <StyledContainer className="post-wrapper">
-        <PostImgPrev onImageUrlChange={handleImageUrlChange} />
+        <PostImgPrev
+          onImageUrlChange={handleImageUrlChange}
+          setImageUrls={setImageUrls}
+        />
         <form className="post-section">
           <StyledPost
             rows="28"

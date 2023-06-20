@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import uploadPhoto from "../../../assets/images/camera-btn.svg";
+import axios from "axios";
 
 const UploadContainer = styled.div`
   width: 100%;
@@ -24,12 +25,14 @@ const UploadImgWrapper = styled.label`
 const UploadImgInput = styled.input`
   display: none;
 `;
+
 const UploadImgIcon = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
 `;
+
 const UploadImg = styled.img`
   max-width: 90px;
   max-height: 90px;
@@ -37,33 +40,62 @@ const UploadImg = styled.img`
   border-radius: 10px;
 `;
 
-export default function PostImgPrev({ onImageUrlChange }) {
+export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [imgFile, setImgFile] = useState([]);
   const fileInputRef = useRef(null);
 
-  const handleUploadImg = () => {
-    if (fileInputRef.current && fileInputRef.current.files.length > 0) {
-      const files = fileInputRef.current.files;
-      const nowImgFileList = [...imgFile];
-      const nowImgUrlList = [...imgUrl];
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const fileUrl = URL.createObjectURL(file);
-        nowImgFileList.push(file);
-        nowImgUrlList.push(fileUrl);
+  const handleUploadImg = async () => {
+    try {
+      if (fileInputRef.current && fileInputRef.current.files.length > 0) {
+        const files = Array.from(fileInputRef.current.files);
+        console.log("Files:", files);
 
-        const reader = new FileReader();
-        reader.onload = e => {
-          const imageUrl = e.target.result;
-          onImageUrlChange(nowImgFileList[i], imageUrl);
-        };
+        const nowImgFileList = [...imgFile];
+        const nowImgUrlList = [...imgUrl];
 
-        reader.readAsDataURL(file);
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const fileUrl = URL.createObjectURL(file);
+          nowImgFileList.push(file);
+          nowImgUrlList.push(fileUrl);
+
+          const reader = new FileReader();
+          reader.onload = e => {
+            const imageUrl = e.target.result;
+            onImageUrlChange(nowImgFileList[i], imageUrl);
+          };
+
+          reader.readAsDataURL(file);
+        }
+
+        setImgFile(nowImgFileList);
+        setImgUrl(nowImgUrlList);
+
+        const formData = new FormData();
+        files.forEach(file => {
+          formData.append("image", file);
+        });
+
+        console.log("FormData:", formData);
+
+        const uploadResponse = await axios.post(
+          "https://api.mandarin.weniv.co.kr/image/uploadfiles",
+          formData,
+        );
+
+        console.log("Upload Response:", uploadResponse);
+
+        const imageUrls = uploadResponse.data.map(file => {
+          const filename = file.filename;
+          console.log("Filename:", filename);
+          return `https://api.mandarin.weniv.co.kr/${filename}`;
+        });
+        setImageUrls(imageUrls);
+        console.log("Image URLs:", imageUrls);
       }
-
-      setImgFile(nowImgFileList);
-      setImgUrl(nowImgUrlList);
+    } catch (error) {
+      console.error(error);
     }
   };
 

@@ -93,8 +93,8 @@ export default function PostItem({ modalOpen, postInfo, authorInfo }) {
   console.log(postInfo, authorInfo);
 
   // console.log("과감히:", postInfo);
-  const imageUrls = postInfo[0].image.split(",");
-  console.log(imageUrls[0]);
+  // const imageUrls = postInfo[0].;
+  // console.log(imageUrls[0]);
   // console.log("제발", postInfo.id);
   return (
     <>
@@ -112,7 +112,7 @@ export default function PostItem({ modalOpen, postInfo, authorInfo }) {
             {/* {item.image.map((url, index) => (
               <PostImg key={index} src={url} alt="포스트 이미지" />
             ))} */}
-            {imageUrls.map((imageUrl, index) => (
+            {item.image.split(",").map((imageUrl, index) => (
               <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
             ))}
             {/* <PostImg src={item.image} alt="포스트 이미지" /> */}
