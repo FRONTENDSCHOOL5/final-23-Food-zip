@@ -91,6 +91,7 @@ export default function PostList({ post, modalOpen }) {
         },
       },
     );
+
     const posts = res.data.post;
     if (posts.length === 0) {
       setAuthorInfo([]);

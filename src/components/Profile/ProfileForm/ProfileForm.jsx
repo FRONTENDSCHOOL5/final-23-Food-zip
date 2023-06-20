@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import BasicProfileInput from "../../../assets/images/basic-profile-lg.svg";
+import BasicProfile from "../../../assets/images/basic-profile-lg.png";
 import ImgButton from "../../../assets/images/upload-file.svg";
 import styled from "styled-components";
 import { ButtonStyle } from "../../common/Button/Button";
@@ -84,17 +85,11 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
   } = useForm({
     mode: "onChange",
   });
-  const [accountname, setAccountname] = useState(null);
-  useEffect(() => {
-    setAccountname(localStorage.getItem("accountname"));
-  }, []);
-  // console.log(accountname);
   const token = localStorage.getItem("token");
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/myprofile/edit") {
-      // console.log(userInfo);
       setValue("image", userInfo?.image || BasicProfileInput); // Set a default value for image
       setValue("username", userInfo?.username || null); // Set a default value for username
       setValue("accountname", userInfo?.accountname || null); // Set a default value for accountname
@@ -107,16 +102,26 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     }
   }, [location.pathname, userInfo]);
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  // const [selectedImage, setSelectedImage] = useState(null);
+  // const [imgFile, setImgFile] = useState(BasicProfile);
   const [profileImg, setProfileImg] = useState(null);
   const fileInputRef = useRef(null);
   const data = location.state;
+  useEffect(() => {
+    console.log("프로필 이미지:", profileImg);
+  }, [profileImg]);
+  const convertURLToFile = async (url, filename) => {
+    const response = await fetch(url);
+    const data = await response.blob();
+    return new File([data], filename, { type: data.type });
+  };
 
   const handleImageChange = async event => {
     const formData = new FormData();
     const file = event.target.files[0];
-    let imgUrl = "";
+
     formData.append("image", file);
+
     const res = await axios.post(
       "https://api.mandarin.weniv.co.kr/image/uploadfile",
       formData,
@@ -126,26 +131,40 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         },
       },
     );
-    // 화면에 선택한 이미지 파일 보여줌
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-    imgUrl = "https://api.mandarin.weniv.co.kr/" + res.data.filename;
+    const imgUrl = "https://api.mandarin.weniv.co.kr/" + res.data.filename;
     setProfileImg(imgUrl);
   };
 
-  const handleButtonClick = () => {
-    fileInputRef.current.click();
-  };
   const navigate = useNavigate();
-
+  // 사진을 변경하지 않으면 handleImageChange함수가 실행되지 않아서 푸짐이가 업로드 되지않아서 원래 기본이미지가 프로필 이미지로 저장됨
+  // 사진을 변경하지 않는 경우 폼 제출 버튼을 눌러서 푸짐이 이미지가 업로드되고 푸짐이 이미지로 유저정보에 저장되도록 해야함
   const handleFormSubmit = async formData => {
     if (location.pathname === "/signup/profile") {
       try {
+        if (!profileImg) {
+          console.log("프로필 이미지 설정안해서 푸짐이가 프사임");
+          // 기본 이미지 URL에서 파일 객체 생성
+          const defaultImageToUpload = await convertURLToFile(
+            BasicProfile,
+            "basic-profile-lg.png",
+          );
+          const imgformData = new FormData();
+          imgformData.append("image", defaultImageToUpload);
+          const imgUploadRes = await axios.post(
+            "https://api.mandarin.weniv.co.kr/image/uploadfile",
+            imgformData,
+            {
+              headers: {
+                "Content-type": "multipart/form-data",
+              },
+            },
+          );
+          const basicProfile =
+            "https://api.mandarin.weniv.co.kr/" + imgUploadRes.data.filename;
+          console.log("기본이미지로 서버에 올라감!!! 주소: ", basicProfile);
+          setProfileImg(basicProfile);
+          console.log("프로필 이미지:", profileImg);
+        }
         const res = await axios.post(
           "https://api.mandarin.weniv.co.kr/user/",
           {
@@ -211,14 +230,12 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
           />
         </label>
 
-        <ProfileInputImgButton type="button" onClick={handleButtonClick}>
+        <ProfileInputImgButton
+          type="button"
+          onClick={() => fileInputRef.current.click()}
+        >
           <ProfileImg
-            src={
-              selectedImage ||
-              (location.pathname === "/myprofile/edit"
-                ? userInfo?.image || BasicProfileInput
-                : BasicProfileInput)
-            }
+            src={profileImg || userInfo?.image || BasicProfileInput}
             alt="기본 프로필"
           />
         </ProfileInputImgButton>

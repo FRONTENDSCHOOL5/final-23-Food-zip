@@ -88,6 +88,7 @@ export default function PostItem({ postInfo, authorInfo }) {
   function moveDetail() {
     navigate("/detailpost");
   }
+
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -101,7 +102,6 @@ export default function PostItem({ postInfo, authorInfo }) {
     setSelectedId(id);
     setModalShow(true);
   }
-
   return (
     <>
       {postInfo?.map(item => (
