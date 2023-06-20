@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import ProfileBtn from "./ProfileBtn";
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const InformationTopDiv = styled.div`
   display: flex;
@@ -62,6 +60,7 @@ const InfoTextP = styled.p`
   font-size: 14px;
   color: #767676;
 `;
+
 const ProfileImg = styled.img`
   width: 110px;
   height: 110px;
@@ -70,6 +69,7 @@ const ProfileImg = styled.img`
   border: 1px solid #dbdbdb;
   object-fit: cover;
 `;
+
 export default function ProfileInformation({ type, modalOpen }) {
   const [userInfo, setUserInfo] = useState({
     image: "",
@@ -80,43 +80,52 @@ export default function ProfileInformation({ type, modalOpen }) {
     isfollow: "",
     intro: "",
   });
+  const myAccountname = localStorage.getItem("accountname");
+
   useEffect(() => {
-    getUserInfo();
-  }, []);
-  const getUserInfo = async () => {
-    const token = localStorage.getItem("token");
-    // console.log(token);
-    const res = await axios.get(
-      "https://api.mandarin.weniv.co.kr/user/myinfo",
-      {
+    const getUserInfo = async () => {
+      const token = localStorage.getItem("token");
+
+      let apiUrl = "";
+      if (type === "my") {
+        apiUrl = "https://api.mandarin.weniv.co.kr/user/myinfo";
+      } else if (type === "your") {
+        if (myAccountname) {
+          apiUrl = `https://api.mandarin.weniv.co.kr/profile/${myAccountname}`;
+        }
+      }
+      const res = await axios.get(apiUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
-    );
-    const {
-      accountname,
-      username,
-      followingCount,
-      followerCount,
-      image,
-      isfollow,
-      intro,
-    } = res.data.user;
-    setUserInfo({
-      accountname,
-      username,
-      followingCount,
-      followerCount,
-      image,
-      isfollow,
-      intro,
-    });
-  };
-  // console.log(userInfo);
+      });
+      const {
+        accountname,
+        username,
+        followingCount,
+        followerCount,
+        image,
+        isfollow,
+        intro,
+      } = res.data.user;
+      setUserInfo({
+        accountname,
+        username,
+        followingCount,
+        followerCount,
+        image,
+        isfollow,
+        intro,
+      });
+    };
+
+    if (type === "your" && myAccountname) {
+      getUserInfo();
+    }
+  }, [myAccountname, type]);
+
   return (
     <>
-      {/* <ProfileInfoWrapDiv> */}
       <InformationTopDiv>
         <Link to="/followerlist">
           <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
@@ -134,7 +143,6 @@ export default function ProfileInformation({ type, modalOpen }) {
         <InfoTextP>{userInfo.intro}</InfoTextP>
       </InformationDiv>
       <ProfileBtn type={type} />
-      {/* </ProfileInfoWrapDiv> */}
     </>
   );
 }

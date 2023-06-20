@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDebounce } from "use-debounce";
+import { useNavigate } from "react-router-dom";
+import ErrorPage from "../../pages/Error/ErrorPage";
 
 const SearchWrapper = styled.ul`
   padding: 0;
@@ -47,13 +49,16 @@ const UserID = styled.p`
 `;
 
 export default function SearchList({ searchKeyword }) {
+  const navigate = useNavigate();
+  function handleClick(accountname) {
+    navigate(`/profile/${accountname}`);
+  }
   const [searchListData, setSearchListData] = useState([]);
   const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500); // 500ms 디바운스 적용
 
   useEffect(() => {
     const fetchData = async () => {
       if (!debouncedSearchKeyword) {
-        // If debouncedSearchKeyword is empty or falsy, exit the function
         return;
       } else {
         try {
@@ -71,7 +76,7 @@ export default function SearchList({ searchKeyword }) {
 
           setSearchListData(response.data);
         } catch (error) {
-          console.error("검색 결과를 가져오는 중 오류 발생:", error);
+          <ErrorPage />;
         }
       }
     };
@@ -84,7 +89,7 @@ export default function SearchList({ searchKeyword }) {
   return (
     <SearchWrapper>
       {searchListData.map((searchItem, i) => (
-        <List key={i}>
+        <List key={i} onClick={handleClick}>
           <ProfileImg src={searchItem.image} alt="프로필 이미지" />
           <TextWrap>
             <UserName>{searchItem.username}</UserName>

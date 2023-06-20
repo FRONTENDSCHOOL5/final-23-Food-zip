@@ -108,6 +108,7 @@ export default function PostList({ post, modalOpen }) {
     }));
     setPostInfo(combinedInfo);
     console.log("혹시: ", postInfo);
+    
     if (posts.length === 0) {
       setAuthorInfo([]);
       setPostInfo([]);
