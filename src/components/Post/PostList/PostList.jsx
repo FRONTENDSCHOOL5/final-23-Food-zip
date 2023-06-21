@@ -144,48 +144,55 @@ export default function PostList({ post, modalOpen }) {
   }
 
   return (
-     <>
+    <>
       {hasPosts && (
         <>
-      <PostListDiv>
-        <PostListBtn type="button" onClick={() => handleViewModeChange("list")}>
-          <img
-            src={viewMode === "list" ? IconListOn : IconListOff}
-            alt="리스트형 아이콘"
-          />
-        </PostListBtn>
-        <PostListBtn
-          type="button"
-          onClick={() => handleViewModeChange("album")}
-        >
-          <img
-            src={viewMode === "album" ? IconAlbumOn : IconAlbumOff}
-            alt="앨범형 아이콘"
-          />
-        </PostListBtn>
-      </PostListDiv>
-      {viewMode === "list" ? (
-        <PostItemList>
-          <PostItem
-            modalOpen={modalOpen}
-            postInfo={postInfo}
-            authorInfo={authorInfo}
-          />
-        </PostItemList>
-      ) : (
-        <GridItemList>
-          {postInfo.map(item => (
-            <PostGridImg
-              key={item.id}
-              onClick={() => {
-                moveDetail(item.id);
-              }}
-              hasImage={item.image === ""}
+          <PostListDiv>
+            <PostListBtn
+              type="button"
+              onClick={() => handleViewModeChange("list")}
             >
-              {item.image !== "" && <img src={item.image} alt="grid 이미지" />}
-            </PostGridImg>
-          ))}
-        </GridItemList>
+              <img
+                src={viewMode === "list" ? IconListOn : IconListOff}
+                alt="리스트형 아이콘"
+              />
+            </PostListBtn>
+            <PostListBtn
+              type="button"
+              onClick={() => handleViewModeChange("album")}
+            >
+              <img
+                src={viewMode === "album" ? IconAlbumOn : IconAlbumOff}
+                alt="앨범형 아이콘"
+              />
+            </PostListBtn>
+          </PostListDiv>
+          {viewMode === "list" ? (
+            <PostItemList>
+              <PostItem
+                modalOpen={modalOpen}
+                postInfo={postInfo}
+                authorInfo={authorInfo}
+              />
+            </PostItemList>
+          ) : (
+            <GridItemList>
+              {postInfo.map(item => (
+                <PostGridImg
+                  key={item.id}
+                  onClick={() => {
+                    moveDetail(item.id);
+                  }}
+                  hasImage={item.image === ""}
+                >
+                  {item.image !== "" && (
+                    <img src={item.image} alt="grid 이미지" />
+                  )}
+                </PostGridImg>
+              ))}
+            </GridItemList>
+          )}
+        </>
       )}
     </>
   );

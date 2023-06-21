@@ -38,12 +38,7 @@ const RecommendListImg = styled.img`
 
 const RecommendTextDiv = styled.div`
   padding: 13px;
-`;
-
-const RecommendCommonText = css`
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 7px;
+  position: relative;
 `;
 
 const RecommendNameP = styled.p`
@@ -51,10 +46,11 @@ const RecommendNameP = styled.p`
   margin-bottom: 13px;
   font-weight: 600;
   display: inline-block;
+  width: 240px;
+  line-height: 20px;
 `;
 
 const RecommendScoreSpan = styled.span`
-  /* ${RecommendCommonText} */
   display: inline-block;
   color: #000;
   position: relative;
@@ -80,12 +76,13 @@ const RecommendScoreSpan = styled.span`
 const RecommendLocationP = styled.p`
   font-size: 15px;
   margin-bottom: 27px;
+  line-height: 17px;
 `;
 
 const RecommendMoreBtn = styled.button`
   position: absolute;
-  top: 64.5%;
-  left: 91%;
+  top: 7%;
+  right: 1%;
 `;
 
 const RecommendCloseBtn = styled.button`
@@ -141,8 +138,10 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
       <RecommendCardDiv>
         <RecommendListImg src={recommendInfo.itemImage} alt="" />
         <RecommendTextDiv>
-          <RecommendNameP>{recommendInfo.itemName}</RecommendNameP>
-          <RecommendScoreSpan>{recommendInfo.price}.0</RecommendScoreSpan>
+          <RecommendNameP>
+            {recommendInfo.itemName}
+            <RecommendScoreSpan>{recommendInfo.price}.0</RecommendScoreSpan>
+          </RecommendNameP>
           <RecommendLocationP>{recommendInfo.link}</RecommendLocationP>
           <RecommendMoreBtn type="button" onClick={modalOpen}>
             <img src={IconMoreVertical} alt="더보기 아이콘" />

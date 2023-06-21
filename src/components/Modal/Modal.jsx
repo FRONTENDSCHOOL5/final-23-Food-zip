@@ -51,6 +51,8 @@ const ModalTextBtn = styled.button`
   font-size: 14px;
   background-color: transparent;
   border: 0;
+  width: 100%;
+  text-align: left;
 `;
 
 export default function Modal({
