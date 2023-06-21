@@ -39,6 +39,13 @@ const StyledInput = styled.input`
   margin: 0 auto 36px auto;
   outline: none;
   background: transparent;
+  &::placeholder {
+    color: #dbdbdb;
+  }
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid #286140;
+  }
 `;
 
 const StyledError = styled.small`
@@ -156,6 +163,7 @@ const SignUpForm = ({ onSubmit }) => {
           id="email"
           type="text"
           autoComplete="off"
+          placeholder="이메일을 입력하세요"
           {...register("email", {
             required: "이메일은 필수 입력입니다.",
             pattern: {
@@ -176,6 +184,7 @@ const SignUpForm = ({ onSubmit }) => {
         <StyledInput
           id="password"
           type="password"
+          placeholder="이메일을 입력하세요"
           {...register("password", {
             required: "비밀번호는 필수 입력입니다.",
             pattern: {

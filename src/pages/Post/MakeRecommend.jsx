@@ -6,6 +6,7 @@ import StarRating from "../../components/Post/StarRating/StarRating";
 import Header from "../../components/common/Header/Header";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const RecommendWrapper = styled.div`
   padding: 78px 36px;
@@ -39,6 +40,8 @@ export default function MakeRecommend() {
   const [address, setAddress] = useState("");
   const token = localStorage.getItem("token");
   const [rating, setRating] = useState(0);
+  const [isValid, setIsValid] = useState(false);
+
   const navigate = useNavigate();
 
   const handleRatingChange = rate => {
@@ -94,19 +97,43 @@ export default function MakeRecommend() {
   };
 
   const handleUpload = () => {
-    uploadPost(imgUrl, restaurantname, rating, address);
+    if (isValid) {
+      uploadPost(imgUrl, restaurantname, rating, address);
+    } else {
+      alert("입력이 안된 부분이 있습니다.");
+    }
   };
 
+  const checkContent = () => {
+    if (
+      restaurantname.trim().length === 0 ||
+      address.trim().length === 0 ||
+      !imgFile
+    ) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
+  };
+  useEffect(() => {
+    checkContent();
+  }, [restaurantname, rating, address]);
   const onChangeName = event => {
     setRestaurantname(event.target.value);
+    checkContent();
   };
 
   const onChangeAddress = event => {
     setAddress(event.target.value);
+    checkContent();
   };
   return (
     <>
-      <Header type="upload" active={true} uploadHandler={handleUpload} />
+      <Header
+        type="upload"
+        handleUploadBtn={isValid}
+        uploadHandler={handleUpload}
+      />
       <RecommendWrapper>
         <form>
           <RecommendImgPrev onRecommendImageUrlChange={handleImageUrlChange} />
