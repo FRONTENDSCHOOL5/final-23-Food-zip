@@ -38,7 +38,7 @@ export default function Routers() {
           <Route index element={<Profile type="my" />} />
           <Route path="edit" element={<ProfileEdit />} />
         </Route>
-        <Route path="/yourprofile">
+        <Route path="/profile/:accountname">
           <Route index element={<Profile type="your" />} />
         </Route>
         <Route

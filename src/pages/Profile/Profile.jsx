@@ -21,7 +21,6 @@ export default function Profile({ type }) {
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState("setting");
   const [selectedId, setSelectedId] = useState(null);
-  const [cardShow, setCardShow] = useState(false);
 
   function modalClose(e) {
     if (e.target === e.currentTarget) {
@@ -34,6 +33,18 @@ export default function Profile({ type }) {
     setModalType(type);
   }
 
+  const [alertShow, setAlertShow] = useState(false);
+  function alertClose(e) {
+    if (e.target === e.currentTarget) {
+      setAlertShow(false);
+    }
+  }
+
+  function alertOpen() {
+    setAlertShow(true);
+  }
+
+  const [cardShow, setCardShow] = useState(false);
   function cardClose(e) {
     if (e.target === e.currentTarget) {
       setCardShow(false);
@@ -50,10 +61,11 @@ export default function Profile({ type }) {
       <Header type="profile" modalOpen={() => modalOpen("setting")} />
       <ProfileInformation type={type} />
       <RecommendList cardOpen={cardOpen} />
-      <PostList modalOpen={() => modalOpen("modification")} />
+      <PostList post={post} modalOpen={() => modalOpen("modification")} />
       {modalShow && (
-        <Modal type={modalType} modalClose={modalClose} modalOpen={modalOpen} />
+        <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
       )}
+      {alertShow && <Alert type="logout" alertClose={alertClose} />}
       {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
       <Navigation />
     </Container>

@@ -31,40 +31,28 @@ const StyledPost = styled.textarea`
 `;
 
 export default function MakePost() {
-  const [imgFile, setImgFile] = useState(null);
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgFile, setImgFile] = useState([]);
+  const [imgUrl, setImgUrl] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
   const [content, setContent] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const handleImageUrlChange = (file, url) => {
-    setImgFile(file);
-    // const fileUrl = URL.createObjectURL(file);
-    setImgUrl(url);
-  };
-  console.log(imgFile);
-  const uploadPost = async (url, content) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", imgFile);
-      const uploadResponse = await axios.post(
-        "https://api.mandarin.weniv.co.kr/image/uploadfile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
-      console.log("1 : " + uploadResponse.data);
-      const imageUrl =
-        "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
 
+  const handleImageUrlChange = (file, url) => {
+    setImgFile(prevFiles => [...prevFiles, file]);
+    setImgUrl(prevUrls => [...prevUrls, url]);
+  };
+
+  const uploadPost = async () => {
+    try {
+      const joinedUrls = imageUrls.join(",");
+      console.log(joinedUrls);
       const postResponse = await axios.post(
         "https://api.mandarin.weniv.co.kr/post",
         {
           post: {
             content: content,
-            image: imageUrl,
+            image: joinedUrls,
           },
         },
         {
@@ -75,7 +63,7 @@ export default function MakePost() {
         },
       );
 
-      console.log(postResponse);
+      console.log("이봐", postResponse);
       navigate("/myprofile");
     } catch (error) {
       console.error(error);
@@ -83,7 +71,7 @@ export default function MakePost() {
   };
 
   const handleUpload = () => {
-    uploadPost(imgUrl, content);
+    uploadPost();
   };
 
   const onChangeInput = event => {
@@ -94,7 +82,10 @@ export default function MakePost() {
     <div>
       <Header type="upload" active={true} uploadHandler={handleUpload} />
       <StyledContainer className="post-wrapper">
-        <PostImgPrev onImageUrlChange={handleImageUrlChange} />
+        <PostImgPrev
+          onImageUrlChange={handleImageUrlChange}
+          setImageUrls={setImageUrls}
+        />
         <form className="post-section">
           <StyledPost
             rows="28"
