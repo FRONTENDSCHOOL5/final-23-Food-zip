@@ -35,7 +35,6 @@ export default function FollowItem({ username, intro, image }) {
   const UnFollowBtn = () => {
     setFollow(!follow);
   };
-  console.log(username);
   return (
     <Container>
       <FollowerImgTest src={image} alt="프로필 이미지" />

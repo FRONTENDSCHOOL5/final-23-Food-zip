@@ -183,7 +183,12 @@ export default function ProfileInformation({ type, modalOpen }) {
           <FollowerCntP>followers</FollowerCntP>
         </Link>
         <ProfileImg src={userInfo.image} alt="프로필 이미지" />
-        <Link to="/followinglist">
+        <Link
+          to="/followinglist"
+          state={{
+            accountname: userInfo.accountname,
+          }}
+        >
           <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
           <FollowingCntP>followings</FollowingCntP>
         </Link>
