@@ -50,10 +50,17 @@ export default function RecommendImgPrev({ onRecommendImageUrlChange }) {
   const [imgUrl, setImgUrl] = useState("");
   const fileInputRef = useRef(null);
   // useRef를 사용하여 파일 입력(input) 요소에 대한 참조 생성
-
+  const maxSize = 10 * 1024 * 1024;
   const handleUploadImg = () => {
     if (fileInputRef.current && fileInputRef.current.files.length > 0) {
       const file = fileInputRef.current.files[0];
+      if (file.size > maxSize) {
+        alert("파일 사이즈는 10MB 이하만 가능합니다");
+        return;
+      } else if (!/^(image\/jpeg|image\/png|image\/jpg)$/.test(file.type)) {
+        alert("파일 포맷은 */jpeg,*/png,*/jpg 만 가능합니다");
+        return;
+      }
       const fileUrl = URL.createObjectURL(file); // 파일 객체에 대한 URL 생성
       console.log(fileUrl); // 파일 URL 출력
 
