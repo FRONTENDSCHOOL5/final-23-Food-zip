@@ -35,7 +35,7 @@ const WriteComment = styled.input`
 `;
 
 const BtnDisplay = styled.button`
-  color: #c4c4c4;
+  color: ${({ hasText }) => (hasText ? "#286140" : "#C4C4C4")};
 `;
 
 const PostUserImg = styled.img`
@@ -55,6 +55,11 @@ const CommentSection = styled.div`
 export default function DetailPost() {
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState("modification");
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputChange = event => {
+    setInputValue(event.target.value);
+  };
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -103,8 +108,15 @@ export default function DetailPost() {
             src={require("../../assets/images/basic-profile-sm.svg").default}
             alt="사용자 이미지"
           />
-          <WriteComment type="text" placeholder="댓글 입력하기" />
-          <BtnDisplay>게시</BtnDisplay>
+          <WriteComment
+            type="text"
+            placeholder="댓글 입력하기"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+          <BtnDisplay hasText={inputValue.trim().length > 0}>
+            게시
+          </BtnDisplay>
         </WriteCommentSection>
       </DetailPostWrapper>
       {modalShow && (

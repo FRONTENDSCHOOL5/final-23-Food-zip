@@ -4,6 +4,8 @@ import ListImg from "../../assets/images/list-example.png";
 import RecommendCard from "../Modal/RecommendCard";
 import ImgStar from "../../assets/images/star.svg";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+
 const RecommendWrapDiv = styled.div`
   width: 100%;
   padding: 20px 16px 2px;
@@ -49,7 +51,6 @@ const RecommendListImg = styled.img`
 const RecommendNameP = styled.p`
   font-size: 14px;
   margin: 6px 0 2px;
-  /* font-weight: 600; */
 `;
 
 const RecommendScoreSpan = styled.span`
@@ -65,35 +66,42 @@ const RecommendStarImg = styled.img`
   display: inline-block;
   width: 15px;
   vertical-align: top;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 `;
 
 export default function RecommendList({ cardOpen, cardClose }) {
   const [recommendInfo, setRecommendInfo] = useState([]);
+  const location = useLocation();
   useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [location]);
+
   const getUserInfo = async () => {
+    const { accountname } = location.state || {};
     const token = localStorage.getItem("token");
-    const accountname = localStorage.getItem("accountname");
-    console.log(token);
-    const res = await axios.get(
-      `https://api.mandarin.weniv.co.kr/product/${accountname}`,
-      {
+    try {
+      let apiUrl = `https://api.mandarin.weniv.co.kr/product/${accountname}`;
+
+      if (!accountname) {
+        const loggedInAccountname = localStorage.getItem("accountname");
+        apiUrl = `https://api.mandarin.weniv.co.kr/product/${loggedInAccountname}`;
+      }
+
+      const res = await axios.get(apiUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-type": "application/json",
         },
-      },
-    );
-    // console.log(res.data);
-    // console.log(res.data.product);
-    // console.log(res.data.product[0].id);
-    const products = res.data.product;
-    setRecommendInfo(products);
+      });
+
+      const products = res.data.product;
+      setRecommendInfo(products);
+    } catch (error) {
+      console.log("error");
+      // <ErrorPage />; 되나?
+    }
   };
-  // console.log("여기");
-  // console.log(recommendInfo[0].id);
+
   return (
     <RecommendWrapDiv>
       <RecommendTitleP>추천 맛집</RecommendTitleP>
@@ -106,9 +114,6 @@ export default function RecommendList({ cardOpen, cardClose }) {
             <RecommendLiBtn type="button">
               <RecommendListImg src={recommendation.itemImage} alt="" />
               <RecommendNameP>{recommendation.itemName}</RecommendNameP>
-              {/* <RecommendScoreSpan>
-                {recommendation.price} / 5점
-              </RecommendScoreSpan> */}
               <RecommendStarImg src={ImgStar} alt="" />
               <RecommendScoreSpan>{recommendation.price}.0</RecommendScoreSpan>
             </RecommendLiBtn>

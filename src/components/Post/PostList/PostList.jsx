@@ -6,6 +6,7 @@ import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 import DetailPost from "../../../pages/Post/DetailPost";
 
 const PostListDiv = styled.div`
@@ -68,6 +69,7 @@ const PostGridImg = styled.a`
 
 export default function PostList({ post, modalOpen }) {
   const [viewMode, setViewMode] = useState("list");
+  const location = useLocation();
 
   const handleViewModeChange = mode => {
     setViewMode(mode);
@@ -78,20 +80,23 @@ export default function PostList({ post, modalOpen }) {
 
   useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [location]);
   const getUserInfo = async () => {
+    const { accountname } = location.state || {};
     const token = localStorage.getItem("token");
-    const accountname = localStorage.getItem("accountname");
-    console.log(token);
-    const res = await axios.get(
-      `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`,
-      {
+    try {
+      let apiUrl = `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`;
+
+      if (!accountname) {
+        const loggedInAccountname = localStorage.getItem("accountname");
+        apiUrl = `https://api.mandarin.weniv.co.kr/post/${loggedInAccountname}/userpost`;
+      }
+      const res = await axios.get(apiUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-type": "application/json",
         },
-      },
-    );
+      });
 
     // 이미지 3장 기능
     // const { username, image } = res.data.post.author;
@@ -108,15 +113,20 @@ export default function PostList({ post, modalOpen }) {
 
     const posts = res.data.post;
 
-    if (posts.length === 0) {
-      setAuthorInfo([]);
-      setPostInfo([]);
-    } else {
-      const authors = res.data.post[0].author;
-      setPostInfo(posts);
-      setAuthorInfo(authors);
+      if (posts.length === 0) {
+        setAuthorInfo([]);
+        setPostInfo([]);
+      } else {
+        const authors = res.data.post[0].author;
+        setPostInfo(posts);
+        setAuthorInfo(authors);
+      }
+    } catch (error) {
+      console.log("error");
+      // <ErrorPage />; 되나?
     }
   };
+  
   return (
     <>
       <PostListDiv>
