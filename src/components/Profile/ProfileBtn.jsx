@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -37,8 +38,10 @@ const AddBtn = styled(ButtonStyle)`
   margin-left: 12px;
 `;
 
-export default function ProfileBtn({ type }) {
+export default function ProfileBtn({ type, yourAccountname }) {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
   function moveProfileEdit() {
     console.log(true);
     navigate("/myprofile/edit");
@@ -53,13 +56,37 @@ export default function ProfileBtn({ type }) {
   }
 
   const [follow, setFollow] = useState(true);
-  const Follow = () => {
-    setFollow(!follow);
+  const Follow = async () => {
+    try {
+      console.log("일단 여기");
+      const tokenValid = await axios.get(
+        `https://api.mandarin.weniv.co.kr/user/checktoken`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      // const res = await axios.post(
+      //   `https://api.mandarin.weniv.co.kr/profile/${yourAccountname}/follow`,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //       // "Content-type": "application/json",
+      //     },
+      //   },
+      // );
+      // console.log("팔로우한 상대계정 정보 : ", res);
+      setFollow(!follow);
+      console.log("token:", tokenValid);
+    } catch (err) {
+      console.error("에러!", err);
+    }
   };
   const UnFollow = () => {
     setFollow(!follow);
   };
-
   const UI = {
     your: (
       <>

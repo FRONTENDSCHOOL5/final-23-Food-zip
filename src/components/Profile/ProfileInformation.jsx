@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import ProfileBtn from "./ProfileBtn";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const InformationTopDiv = styled.div`
   display: flex;
@@ -80,49 +81,95 @@ export default function ProfileInformation({ type, modalOpen }) {
     isfollow: "",
     intro: "",
   });
-  const myAccountname = localStorage.getItem("accountname");
+  const location = useLocation();
 
+  // { accountname } = useParams();
+  // console.log("profile:", yourAccountname);
   useEffect(() => {
+    const yourAccountname = location.state;
+    const myAccountname = localStorage.getItem("accountname");
+    console.log("profile:", yourAccountname);
     const getUserInfo = async () => {
       const token = localStorage.getItem("token");
-
       let apiUrl = "";
       if (type === "my") {
         apiUrl = "https://api.mandarin.weniv.co.kr/user/myinfo";
-      } else if (type === "your") {
-        if (myAccountname) {
-          apiUrl = `https://api.mandarin.weniv.co.kr/profile/${myAccountname}`;
-        }
+      } else if (type === "your" && yourAccountname) {
+        apiUrl = `https://api.mandarin.weniv.co.kr/profile/${yourAccountname.accountname}`;
       }
       const res = await axios.get(apiUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
+          // "Content-type": "application/json",
         },
       });
-      const {
-        accountname,
-        username,
-        followingCount,
-        followerCount,
-        image,
-        isfollow,
-        intro,
-      } = res.data.user;
-      setUserInfo({
-        accountname,
-        username,
-        followingCount,
-        followerCount,
-        image,
-        isfollow,
-        intro,
-      });
+      console.log("resData", res);
+      if (type === "your") {
+        const {
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        } = res.data.profile;
+        setUserInfo({
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        });
+      } else if (type === "my" && myAccountname) {
+        console.log("resData", res);
+        const {
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        } = res.data.user;
+        setUserInfo({
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        });
+      }
     };
 
-    if (type === "your" && myAccountname) {
+    if (type === "your" && yourAccountname) {
+      setUserInfo({
+        image: "",
+        accountname: "",
+        username: "",
+        followerCount: "",
+        followingCount: "",
+        isfollow: "",
+        intro: "",
+      });
+      getUserInfo();
+    } else if (type === "my" && myAccountname) {
+      setUserInfo({
+        image: "",
+        accountname: "",
+        username: "",
+        followerCount: "",
+        followingCount: "",
+        isfollow: "",
+        intro: "",
+      });
       getUserInfo();
     }
-  }, [myAccountname, type]);
+  }, [location]);
 
   return (
     <>
@@ -142,7 +189,7 @@ export default function ProfileInformation({ type, modalOpen }) {
         <InfoIdP>@ {userInfo.accountname}</InfoIdP>
         <InfoTextP>{userInfo.intro}</InfoTextP>
       </InformationDiv>
-      <ProfileBtn type={type} />
+      <ProfileBtn type={type} yourAccountname={userInfo.accountname} />
     </>
   );
 }

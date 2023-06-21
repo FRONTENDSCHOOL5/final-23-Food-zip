@@ -89,7 +89,6 @@ export default function PostItem({ postInfo, authorInfo }) {
     navigate("/detailpost");
   }
   console.log(postInfo, authorInfo);
-
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -102,6 +101,16 @@ export default function PostItem({ postInfo, authorInfo }) {
   function modalOpen(id) {
     setSelectedId(id);
     setModalShow(true);
+  }
+
+  function formatDate(dateString) {
+    const dateObj = new Date(dateString);
+    const year = dateObj.getFullYear();
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    // const hours = dateObj.getHours();
+    // const minutes = dateObj.getMinutes();
+    return `${year}년 ${month}월 ${day}일`;
   }
   return (
     <>
@@ -119,10 +128,10 @@ export default function PostItem({ postInfo, authorInfo }) {
             {/* {item.image.map((url, index) => (
               <PostImg key={index} src={url} alt="포스트 이미지" />
             ))} */}
-            {item.image.split(",").map((imageUrl, index) => (
+            {/* {item.image.split(",").map((imageUrl, index) => (
               <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
-            ))}
-            {/* <PostImg src={item.image} alt="포스트 이미지" /> */}
+            ))} */}
+            <PostImg src={item.image} alt="포스트 이미지" />
             <PostInfoBox>
               <PostBtnBox>
                 <BtnLike>
@@ -145,7 +154,7 @@ export default function PostItem({ postInfo, authorInfo }) {
                   12
                 </BtnComment>
               </PostBtnBox>
-              <PostDate>{item.updatedAt}</PostDate>
+              <PostDate>{formatDate(item.updatedAt)}</PostDate>
             </PostInfoBox>
           </PostContent>
           <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>

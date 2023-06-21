@@ -50,11 +50,18 @@ const UserID = styled.p`
 
 export default function SearchList({ searchKeyword }) {
   const navigate = useNavigate();
+
   function handleClick(accountname) {
-    navigate(`/profile/${accountname}`);
+    console.log(accountname);
+    navigate(`/profile/${accountname}`, {
+      state: {
+        accountname: accountname,
+      },
+    });
   }
+
   const [searchListData, setSearchListData] = useState([]);
-  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500); // 500ms 디바운스 적용
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +70,6 @@ export default function SearchList({ searchKeyword }) {
       } else {
         try {
           const token = localStorage.getItem("token");
-          console.log(debouncedSearchKeyword);
           const response = await axios.get(
             `https://api.mandarin.weniv.co.kr/user/searchuser/?keyword=${debouncedSearchKeyword}`,
             {
@@ -84,12 +90,13 @@ export default function SearchList({ searchKeyword }) {
     fetchData();
   }, [debouncedSearchKeyword]);
 
-  console.log(searchListData);
-
   return (
     <SearchWrapper>
-      {searchListData.map((searchItem, i) => (
-        <List key={i} onClick={handleClick}>
+      {searchListData.map(searchItem => (
+        <List
+          key={searchItem.accountname}
+          onClick={() => handleClick(searchItem.accountname)} // Pass the accountname as an argument
+        >
           <ProfileImg src={searchItem.image} alt="프로필 이미지" />
           <TextWrap>
             <UserName>{searchItem.username}</UserName>
