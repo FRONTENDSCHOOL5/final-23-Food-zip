@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import UserImg from "../../../assets/images/basic-profile-sm.svg";
-import PostTestImg from "../../../assets/images/post-test.png";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import Modal from "../../Modal/Modal";
 
 const Container = styled.li`
   position: relative;
@@ -85,54 +83,38 @@ const BtnMore = styled.button`
   top: 7px;
   right: 0;
 `;
-export default function PostItem({ modalOpen, postInfo, authorInfo }) {
+export default function PostItem({ postInfo, authorInfo }) {
   const navigate = useNavigate();
   function moveDetail() {
     navigate("/detailpost");
   }
+  console.log(postInfo, authorInfo);
+  const [modalShow, setModalShow] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
-  const [postInfo, setPostInfo] = useState([]);
-  const [authorInfo, setAuthorInfo] = useState([]);
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-  const getUserInfo = async () => {
-    const token = localStorage.getItem("token");
-    const accountname = localStorage.getItem("accountname");
-    console.log(token);
-    const res = await axios.get(
-      `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-type": "application/json",
-        },
-      },
-    );
-    // console.log("여기");
-    // console.log("여기", res.data.post[0].author);
-    // const { username, image } = res.data.post.author;
-    // setUserInfo({
-    //   username,
-    //   image,
-    // });
-    const posts = res.data.post;
-    if (posts.length === 0) {
-      setAuthorInfo([]);
-      setPostInfo([]);
-    } else {
-      const authors = res.data.post[0].author;
-      setPostInfo(posts);
-      setAuthorInfo(authors);
+  function modalClose(e) {
+    if (e.target === e.currentTarget) {
+      setModalShow(false);
     }
-  };
-  console.log(postInfo);
-  console.log(authorInfo);
+  }
 
+  function modalOpen(id) {
+    setSelectedId(id);
+    setModalShow(true);
+  }
+
+  function formatDate(dateString) {
+    const dateObj = new Date(dateString);
+    const year = dateObj.getFullYear();
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    // const hours = dateObj.getHours();
+    // const minutes = dateObj.getMinutes();
+    return `${year}년 ${month}월 ${day}일`;
+  }
   return (
     <>
-      {postInfo.map(item => (
+      {postInfo?.map(item => (
         <Container key={item.id}>
           <PostUser>
             <PostUserImg src={authorInfo.image} alt="사용자 이미지" />
@@ -143,6 +125,12 @@ export default function PostItem({ modalOpen, postInfo, authorInfo }) {
           </PostUser>
           <PostContent>
             <p>{item.content}</p>
+            {/* {item.image.map((url, index) => (
+              <PostImg key={index} src={url} alt="포스트 이미지" />
+            ))} */}
+            {/* {item.image.split(",").map((imageUrl, index) => (
+              <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
+            ))} */}
             <PostImg src={item.image} alt="포스트 이미지" />
             <PostInfoBox>
               <PostBtnBox>
@@ -166,10 +154,17 @@ export default function PostItem({ modalOpen, postInfo, authorInfo }) {
                   12
                 </BtnComment>
               </PostBtnBox>
-              <PostDate>{item.updatedAt}</PostDate>
+              <PostDate>{formatDate(item.updatedAt)}</PostDate>
             </PostInfoBox>
           </PostContent>
-          <BtnMore onClick={modalOpen}></BtnMore>
+          <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>
+          {modalShow && (
+            <Modal
+              type="modification"
+              modalClose={modalClose}
+              postId={selectedId}
+            />
+          )}
         </Container>
       ))}
     </>

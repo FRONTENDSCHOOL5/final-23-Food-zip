@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import ProfileBtn from "./ProfileBtn";
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const InformationTopDiv = styled.div`
   display: flex;
@@ -62,6 +61,7 @@ const InfoTextP = styled.p`
   font-size: 14px;
   color: #767676;
 `;
+
 const ProfileImg = styled.img`
   width: 110px;
   height: 110px;
@@ -70,6 +70,7 @@ const ProfileImg = styled.img`
   border: 1px solid #dbdbdb;
   object-fit: cover;
 `;
+
 export default function ProfileInformation({ type, modalOpen }) {
   const [userInfo, setUserInfo] = useState({
     image: "",
@@ -80,43 +81,98 @@ export default function ProfileInformation({ type, modalOpen }) {
     isfollow: "",
     intro: "",
   });
+  const location = useLocation();
+
+  // { accountname } = useParams();
+  // console.log("profile:", yourAccountname);
   useEffect(() => {
-    getUserInfo();
-  }, []);
-  const getUserInfo = async () => {
-    const token = localStorage.getItem("token");
-    // console.log(token);
-    const res = await axios.get(
-      "https://api.mandarin.weniv.co.kr/user/myinfo",
-      {
+    const yourAccountname = location.state;
+    const myAccountname = localStorage.getItem("accountname");
+    console.log("profile:", yourAccountname);
+    const getUserInfo = async () => {
+      const token = localStorage.getItem("token");
+      let apiUrl = "";
+      if (type === "my") {
+        apiUrl = "https://api.mandarin.weniv.co.kr/user/myinfo";
+      } else if (type === "your" && yourAccountname) {
+        apiUrl = `https://api.mandarin.weniv.co.kr/profile/${yourAccountname.accountname}`;
+      }
+      const res = await axios.get(apiUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
+          // "Content-type": "application/json",
         },
-      },
-    );
-    const {
-      accountname,
-      username,
-      followingCount,
-      followerCount,
-      image,
-      isfollow,
-      intro,
-    } = res.data.user;
-    setUserInfo({
-      accountname,
-      username,
-      followingCount,
-      followerCount,
-      image,
-      isfollow,
-      intro,
-    });
-  };
-  // console.log(userInfo);
+      });
+      console.log("resData", res);
+      if (type === "your") {
+        const {
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        } = res.data.profile;
+        setUserInfo({
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        });
+      } else if (type === "my" && myAccountname) {
+        console.log("resData", res);
+        const {
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        } = res.data.user;
+        setUserInfo({
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        });
+      }
+    };
+
+    if (type === "your" && yourAccountname) {
+      setUserInfo({
+        image: "",
+        accountname: "",
+        username: "",
+        followerCount: "",
+        followingCount: "",
+        isfollow: "",
+        intro: "",
+      });
+      getUserInfo();
+    } else if (type === "my" && myAccountname) {
+      setUserInfo({
+        image: "",
+        accountname: "",
+        username: "",
+        followerCount: "",
+        followingCount: "",
+        isfollow: "",
+        intro: "",
+      });
+      getUserInfo();
+    }
+  }, [location]);
+
   return (
     <>
-      {/* <ProfileInfoWrapDiv> */}
       <InformationTopDiv>
         <Link to="/followerlist">
           <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
@@ -133,8 +189,7 @@ export default function ProfileInformation({ type, modalOpen }) {
         <InfoIdP>@ {userInfo.accountname}</InfoIdP>
         <InfoTextP>{userInfo.intro}</InfoTextP>
       </InformationDiv>
-      <ProfileBtn type={type} />
-      {/* </ProfileInfoWrapDiv> */}
+      <ProfileBtn type={type} yourAccountname={userInfo.accountname} />
     </>
   );
 }
