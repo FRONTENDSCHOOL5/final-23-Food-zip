@@ -10,6 +10,7 @@ import { useState } from "react";
 import post from "../../dummy/dummyapi";
 import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   max-width: 390px;

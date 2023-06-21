@@ -42,7 +42,7 @@ export default function FollowItem({ username, intro, image }) {
         <FollowerName>{username}</FollowerName>
         <FollowerIntro>{intro}</FollowerIntro>
       </FollowerInfo>
-      {follow ? (
+      {!follow ? (
         <Button
           type="button"
           content="팔로우"

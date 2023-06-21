@@ -79,7 +79,9 @@ const LoginForm = ({ onSubmit }) => {
       console.log(res.status);
       const token = res.data.user["token"];
       const accountname = res.data.user["accountname"];
+      const _id = res.data.user["_id"];
       localStorage.setItem("token", token);
+      localStorage.setItem("_id", _id);
       localStorage.setItem("accountname", accountname);
 
       if (res.status === 200) {

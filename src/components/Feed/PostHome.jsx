@@ -5,13 +5,10 @@ const List = styled.section`
   background-color: white;
   padding: 57px 24px 69px 24px;
 `;
-export default function PostHome() {
+export default function PostHome({ myFeed }) {
   return (
     <List>
-      <PostItem />
-      {/* <PostItem />
-      <PostItem />
-      <PostItem /> */}
+      <PostItem myFeed={myFeed} />
     </List>
   );
 }

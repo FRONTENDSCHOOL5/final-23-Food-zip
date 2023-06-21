@@ -41,6 +41,7 @@ export default function FollowerList({ type, followType }) {
         },
       );
       setFollowerList(res.data);
+      console.log("followers", res.data);
     } catch (err) {
       console.error("에러!!", err);
     }
@@ -81,6 +82,8 @@ export default function FollowerList({ type, followType }) {
         <Navigation />
       </>
     ),
+    // 팔로잉 리스트에서 내가 팔로우하지 않는 사람이라면 팔로우버튼 활성화
+    // 팔로우 했다면 취소 버튼 활성화
     followingList: (
       <>
         <Header type={type} />

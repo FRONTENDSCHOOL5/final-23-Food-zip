@@ -173,6 +173,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
             },
           },
         );
+        localStorage.setItem("_id", formData._id);
         localStorage.setItem("accountname", formData.accountname);
         console.log(JSON.stringify(res.data));
         navigate("/myprofile");
