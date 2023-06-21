@@ -128,8 +128,6 @@ export default function PostList({ post, modalOpen }) {
     }
   };
 
-  console.log("postInfo:", postInfo);
-
   const navigate = useNavigate();
 
   function moveDetail(id) {
