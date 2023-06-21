@@ -65,7 +65,7 @@ const RecommendStarImg = styled.img`
   display: inline-block;
   width: 15px;
   vertical-align: top;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 `;
 
 export default function RecommendList({ cardOpen, cardClose }) {

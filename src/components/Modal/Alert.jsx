@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AlertDiv = styled.div`
   position: fixed;
@@ -48,7 +49,7 @@ const AlertCommonBtn = css`
   border-radius: 0 0 10px 10px;
 `;
 
-const AlertDeleteBtn = styled.button`
+const AlertCancelBtn = styled.button`
   ${AlertCommonBtn}
 `;
 
@@ -64,18 +65,62 @@ const AlertLineSpan = styled.span`
   background-color: #dbdbdb;
 `;
 
-export default function Alert({ type, alertClose }) {
+export default function Alert({
+  type,
+  alertClose,
+  postId,
+  modalClose,
+  productId,
+}) {
   const navigate = useNavigate();
   const onClickLogout = () => {
     localStorage.removeItem("token");
     navigate("/welcome");
   };
+
+  const handleDeletePost = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(`https://api.mandarin.weniv.co.kr/post/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-type": "application/json",
+        },
+      });
+      alertClose("post");
+      modalClose("modification");
+      window.location.reload();
+    } catch (error) {
+      console.error("Delete request failed", error);
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `https://api.mandarin.weniv.co.kr/product/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      alertClose("post");
+      modalClose("modification");
+      window.location.reload();
+    } catch (error) {
+      console.error("Delete request failed", error);
+    }
+  };
+
   const UI = {
     logout: (
       <AlertWrapDiv>
         <AlertTextP>로그아웃하시겠어요?</AlertTextP>
         <AlertBottomDiv>
-          <AlertDeleteBtn onClick={alertClose}>취소</AlertDeleteBtn>
+          <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
           <AlertLineSpan></AlertLineSpan>
           <AlertMainBtn onClick={onClickLogout}>로그아웃</AlertMainBtn>
         </AlertBottomDiv>
@@ -85,9 +130,9 @@ export default function Alert({ type, alertClose }) {
       <AlertWrapDiv>
         <AlertTextP>게시글을 삭제할까요?</AlertTextP>
         <AlertBottomDiv>
-          <AlertDeleteBtn onClick={alertClose}>취소</AlertDeleteBtn>
+          <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
           <AlertLineSpan></AlertLineSpan>
-          <AlertMainBtn>삭제</AlertMainBtn>
+          <AlertMainBtn onClick={handleDeletePost}>삭제</AlertMainBtn>
         </AlertBottomDiv>
       </AlertWrapDiv>
     ),
@@ -95,9 +140,9 @@ export default function Alert({ type, alertClose }) {
       <AlertWrapDiv>
         <AlertTextP>상품을 삭제할까요?</AlertTextP>
         <AlertBottomDiv>
-          <AlertDeleteBtn onClick={alertClose}>취소</AlertDeleteBtn>
+          <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
           <AlertLineSpan></AlertLineSpan>
-          <AlertMainBtn>삭제</AlertMainBtn>
+          <AlertMainBtn onClick={handleDeleteProduct}>삭제</AlertMainBtn>
         </AlertBottomDiv>
       </AlertWrapDiv>
     ),

@@ -53,7 +53,13 @@ const ModalTextBtn = styled.button`
   border: 0;
 `;
 
-export default function Modal({ type, modalClose, alertOpen }) {
+export default function Modal({
+  type,
+  modalClose,
+  alertOpen,
+  postId,
+  productId,
+}) {
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
   const [alertType, setAlertType] = useState("logout");
@@ -68,6 +74,7 @@ export default function Modal({ type, modalClose, alertOpen }) {
     setAlertShow(true);
     setAlertType(type);
   }
+
   const UI = {
     setting: (
       <ModalWrapDiv>
@@ -117,7 +124,15 @@ export default function Modal({ type, modalClose, alertOpen }) {
   return (
     <>
       <ModalDiv onClick={modalClose}>{UI[type]}</ModalDiv>;
-      {alertShow && <Alert type={alertType} alertClose={alertClose} />}
+      {alertShow && (
+        <Alert
+          type={alertType}
+          modalClose={modalClose}
+          alertClose={alertClose}
+          postId={postId}
+          productId={productId}
+        />
+      )}
     </>
   );
 }
