@@ -75,6 +75,7 @@ export default function Alert({
   const navigate = useNavigate();
   const onClickLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("accountname");
     navigate("/welcome");
   };
 

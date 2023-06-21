@@ -88,9 +88,17 @@ const BtnMore = styled.button`
 `;
 export default function PostItem({ postInfo, authorInfo }) {
   const navigate = useNavigate();
-  function moveDetail() {
-    navigate("/detailpost");
+
+  function moveDetail(id) {
+    navigate("/detailpost", {
+      state: {
+        id: id,
+        postInfo: postInfo,
+        authorInfo: authorInfo,
+      },
+    });
   }
+
   console.log(postInfo, authorInfo);
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -111,8 +119,6 @@ export default function PostItem({ postInfo, authorInfo }) {
     const year = dateObj.getFullYear();
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
-    // const hours = dateObj.getHours();
-    // const minutes = dateObj.getMinutes();
     return `${year}년 ${month}월 ${day}일`;
   }
   return (
@@ -148,7 +154,11 @@ export default function PostItem({ postInfo, authorInfo }) {
                   />
                   58
                 </BtnLike>
-                <BtnComment onClick={moveDetail}>
+                <BtnComment
+                  onClick={() => {
+                    moveDetail(item.id);
+                  }}
+                >
                   <BtnImg
                     src={
                       require("../../../assets/images/icon-message-circle-1.svg")

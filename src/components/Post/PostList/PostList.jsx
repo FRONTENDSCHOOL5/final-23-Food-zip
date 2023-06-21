@@ -6,6 +6,7 @@ import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import axios from "axios";
+import DetailPost from "../../../pages/Post/DetailPost";
 
 const PostListDiv = styled.div`
   display: flex;
@@ -92,6 +93,7 @@ export default function PostList({ post, modalOpen }) {
       },
     );
 
+    // 이미지 3장 기능
     // const { username, image } = res.data.post.author;
     // setUserInfo({
     //   username,
@@ -105,7 +107,6 @@ export default function PostList({ post, modalOpen }) {
     // setPostInfo(combinedInfo);
 
     const posts = res.data.post;
-    console.log("postitem:", posts);
 
     if (posts.length === 0) {
       setAuthorInfo([]);
