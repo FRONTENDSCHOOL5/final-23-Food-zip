@@ -75,7 +75,7 @@ export default function PostList({ post, modalOpen }) {
 
   const [postInfo, setPostInfo] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
-  console.log("여기 작동?");
+
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -93,6 +93,19 @@ export default function PostList({ post, modalOpen }) {
       },
     );
 
+    // 이미지 3장 기능
+    // const { username, image } = res.data.post.author;
+    // setUserInfo({
+    //   username,
+    //   image,
+    // });
+    // const postImages = posts.map(item => item.image.split(","));
+    // const combinedInfo = posts.map((item, index) => ({
+    //   ...item,
+    //   images: postImages[index],
+    // }));
+    // setPostInfo(combinedInfo);
+
     const posts = res.data.post;
 
     if (posts.length === 0) {
@@ -104,8 +117,6 @@ export default function PostList({ post, modalOpen }) {
       setAuthorInfo(authors);
     }
   };
-  console.log("여기", postInfo[0]);
-  console.log(authorInfo);
   return (
     <>
       <PostListDiv>

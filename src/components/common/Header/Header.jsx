@@ -79,12 +79,13 @@ export default function Header({
   searchKeyword,
   handleSearchKeyword,
   handleSaveBtn,
+  handleUploadBtn,
 }) {
   const navigate = useNavigate();
   function handleClick() {
     navigate("/search");
   }
-
+  console.log(handleUploadBtn);
   const UI = {
     home: (
       <HeaderLayoutDiv>
@@ -186,7 +187,8 @@ export default function Header({
           content="업로드"
           size="ms"
           width="ms"
-          bgColor="inactive"
+          bgColor={handleUploadBtn ? "active" : "inactive"}
+          disabled={!handleUploadBtn}
           onClick={uploadHandler}
         ></Button>
       </HeaderLayoutDiv>

@@ -44,18 +44,26 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [imgFile, setImgFile] = useState([]);
   const fileInputRef = useRef(null);
-
+  const maxSize = 10 * 1024 * 1024;
   const handleUploadImg = async () => {
     try {
       if (fileInputRef.current && fileInputRef.current.files.length > 0) {
         const files = Array.from(fileInputRef.current.files);
         console.log("Files:", files);
+        console.log("Files:", files[0].size);
 
         const nowImgFileList = [...imgFile];
         const nowImgUrlList = [...imgUrl];
 
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
+          if (file.size > maxSize) {
+            alert("파일 사이즈는 10MB 이하만 가능합니다");
+            return;
+          } else if (!/^(image\/jpeg|image\/png|image\/jpg)$/.test(file.type)) {
+            alert("파일 포맷은 */jpeg,*/png,*/jpg 만 가능합니다");
+            return;
+          }
           const fileUrl = URL.createObjectURL(file);
           nowImgFileList.push(file);
           nowImgUrlList.push(fileUrl);
