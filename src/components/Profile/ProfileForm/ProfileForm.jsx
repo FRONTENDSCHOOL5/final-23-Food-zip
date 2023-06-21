@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import BasicProfileInput from "../../../assets/images/basic-profile-lg.svg";
-import BasicProfile from "../../../assets/images/basic-profile-lg.png";
 import ImgButton from "../../../assets/images/upload-file.svg";
 import styled from "styled-components";
 import { ButtonStyle } from "../../common/Button/Button";
@@ -102,19 +101,10 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     }
   }, [location.pathname, userInfo]);
 
-  // const [selectedImage, setSelectedImage] = useState(null);
-  // const [imgFile, setImgFile] = useState(BasicProfile);
+  const defaultImg = "https://api.mandarin.weniv.co.kr/1687267818879.png";
   const [profileImg, setProfileImg] = useState(null);
   const fileInputRef = useRef(null);
   const data = location.state;
-  useEffect(() => {
-    console.log("프로필 이미지:", profileImg);
-  }, [profileImg]);
-  const convertURLToFile = async (url, filename) => {
-    const response = await fetch(url);
-    const data = await response.blob();
-    return new File([data], filename, { type: data.type });
-  };
 
   const handleImageChange = async event => {
     const formData = new FormData();
@@ -136,8 +126,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
   };
 
   const navigate = useNavigate();
-  // 사진을 변경하지 않으면 handleImageChange함수가 실행되지 않아서 푸짐이가 업로드 되지않아서 원래 기본이미지가 프로필 이미지로 저장됨
-  // 사진을 변경하지 않는 경우 폼 제출 버튼을 눌러서 푸짐이 이미지가 업로드되고 푸짐이 이미지로 유저정보에 저장되도록 해야함
   const handleFormSubmit = async formData => {
     if (location.pathname === "/signup/profile") {
       try {
@@ -174,7 +162,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
               password: data.password,
               accountname: formData.accountname,
               intro: formData.intro,
-              image: profileImg,
+              image: profileImg || defaultImg,
             },
           },
           {
