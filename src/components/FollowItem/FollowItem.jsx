@@ -27,7 +27,7 @@ const FollowerIntro = styled.p`
   color: #767676;
 `;
 
-export default function FollowItem() {
+export default function FollowItem({ username, intro, image }) {
   const [follow, setFollow] = useState(true);
   const FollowBtn = () => {
     setFollow(!follow);
@@ -35,13 +35,13 @@ export default function FollowItem() {
   const UnFollowBtn = () => {
     setFollow(!follow);
   };
-
+  console.log(username);
   return (
     <Container>
-      <FollowerImgTest src={ProfileImg} alt="프로필 이미지" />
+      <FollowerImgTest src={image} alt="프로필 이미지" />
       <FollowerInfo>
-        <FollowerName>애월읍 한라봉 최고 맛집</FollowerName>
-        <FollowerIntro>정성을 다해 농사짓는 한라봉</FollowerIntro>
+        <FollowerName>{username}</FollowerName>
+        <FollowerIntro>{intro}</FollowerIntro>
       </FollowerInfo>
       {follow ? (
         <Button

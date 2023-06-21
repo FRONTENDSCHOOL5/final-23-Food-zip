@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import IconMessage from "../../assets/images/icon-message-circle.svg";
@@ -38,7 +39,12 @@ const AddBtn = styled(ButtonStyle)`
   margin-left: 12px;
 `;
 
-export default function ProfileBtn({ type, yourAccountname }) {
+export default function ProfileBtn({
+  type,
+  yourAccountname,
+  setFollow,
+  follow,
+}) {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -55,7 +61,6 @@ export default function ProfileBtn({ type, yourAccountname }) {
     console.log("move");
   }
 
-  const [follow, setFollow] = useState(true);
   const Follow = async () => {
     try {
       console.log("일단 여기");

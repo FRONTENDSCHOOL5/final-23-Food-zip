@@ -82,9 +82,8 @@ export default function ProfileInformation({ type, modalOpen }) {
     intro: "",
   });
   const location = useLocation();
+  const [follow, setFollow] = useState(true);
 
-  // { accountname } = useParams();
-  // console.log("profile:", yourAccountname);
   useEffect(() => {
     const yourAccountname = location.state;
     const myAccountname = localStorage.getItem("accountname");
@@ -124,7 +123,6 @@ export default function ProfileInformation({ type, modalOpen }) {
           intro,
         });
       } else if (type === "my" && myAccountname) {
-        console.log("resData", res);
         const {
           accountname,
           username,
@@ -169,12 +167,18 @@ export default function ProfileInformation({ type, modalOpen }) {
       });
       getUserInfo();
     }
-  }, [location]);
-
+  }, [location, follow]);
+  console.log(userInfo.accountname);
   return (
     <>
       <InformationTopDiv>
-        <Link to="/followerlist">
+        <Link
+          to="/followerlist"
+          state={{
+            accountname: userInfo.accountname,
+          }}
+        >
+          {" "}
           <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
           <FollowerCntP>followers</FollowerCntP>
         </Link>
@@ -189,7 +193,12 @@ export default function ProfileInformation({ type, modalOpen }) {
         <InfoIdP>@ {userInfo.accountname}</InfoIdP>
         <InfoTextP>{userInfo.intro}</InfoTextP>
       </InformationDiv>
-      <ProfileBtn type={type} yourAccountname={userInfo.accountname} />
+      <ProfileBtn
+        type={type}
+        yourAccountname={userInfo.accountname}
+        setFollow={setFollow}
+        follow={follow}
+      />
     </>
   );
 }
