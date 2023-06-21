@@ -6,8 +6,7 @@ import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-import DetailPost from "../../../pages/Post/DetailPost";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 const PostListDiv = styled.div`
   display: flex;
@@ -56,14 +55,16 @@ const GridItemList = styled.div`
   background-color: white;
 `;
 
-const PostGridImg = styled.a`
+const PostGridImg = styled.button`
   position: relative;
   width: 114px;
   height: 114px;
   cursor: pointer;
+  display: ${props => (props.hasImage ? "none" : "block")};
   & img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 `;
 
@@ -98,20 +99,20 @@ export default function PostList({ post, modalOpen }) {
         },
       });
 
-    // 이미지 3장 기능
-    // const { username, image } = res.data.post.author;
-    // setUserInfo({
-    //   username,
-    //   image,
-    // });
-    // const postImages = posts.map(item => item.image.split(","));
-    // const combinedInfo = posts.map((item, index) => ({
-    //   ...item,
-    //   images: postImages[index],
-    // }));
-    // setPostInfo(combinedInfo);
+      // 이미지 3장 기능
+      // const { username, image } = res.data.post.author;
+      // setUserInfo({
+      //   username,
+      //   image,
+      // });
+      // const postImages = posts.map(item => item.image.split(","));
+      // const combinedInfo = posts.map((item, index) => ({
+      //   ...item,
+      //   images: postImages[index],
+      // }));
+      // setPostInfo(combinedInfo);
 
-    const posts = res.data.post;
+      const posts = res.data.post;
 
       if (posts.length === 0) {
         setAuthorInfo([]);
@@ -126,7 +127,21 @@ export default function PostList({ post, modalOpen }) {
       // <ErrorPage />; 되나?
     }
   };
-  
+
+  console.log("postInfo:", postInfo);
+
+  const navigate = useNavigate();
+
+  function moveDetail(id) {
+    navigate(`/detailpost`, {
+      state: {
+        id: id,
+        postInfo: postInfo,
+        authorInfo: authorInfo,
+      },
+    });
+  }
+
   return (
     <>
       <PostListDiv>
@@ -157,8 +172,14 @@ export default function PostList({ post, modalOpen }) {
       ) : (
         <GridItemList>
           {postInfo.map(item => (
-            <PostGridImg key={item.id}>
-              <img src={item.image} alt="grid" />
+            <PostGridImg
+              key={item.id}
+              onClick={() => {
+                moveDetail(item.id);
+              }}
+              hasImage={item.image === ""}
+            >
+              {item.image !== "" && <img src={item.image} alt="grid 이미지" />}
             </PostGridImg>
           ))}
         </GridItemList>
