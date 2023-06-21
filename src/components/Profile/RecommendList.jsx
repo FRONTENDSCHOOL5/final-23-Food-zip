@@ -72,7 +72,6 @@ const RecommendStarImg = styled.img`
 export default function RecommendList({ cardOpen, cardClose }) {
   const [recommendInfo, setRecommendInfo] = useState([]);
   const location = useLocation();
-
   useEffect(() => {
     getUserInfo();
   }, [location]);
@@ -98,7 +97,8 @@ export default function RecommendList({ cardOpen, cardClose }) {
       const products = res.data.product;
       setRecommendInfo(products);
     } catch (error) {
-      console.log("Error:", error);
+      console.log("error");
+      // <ErrorPage />; 되나?
     }
   };
 
