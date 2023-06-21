@@ -114,9 +114,7 @@ export default function DetailPost() {
             value={inputValue}
             onChange={handleInputChange}
           />
-          <BtnDisplay hasText={inputValue.trim().length > 0}>
-            게시
-          </BtnDisplay>
+          <BtnDisplay hasText={inputValue.trim().length > 0}>게시</BtnDisplay>
         </WriteCommentSection>
       </DetailPostWrapper>
       {modalShow && (
