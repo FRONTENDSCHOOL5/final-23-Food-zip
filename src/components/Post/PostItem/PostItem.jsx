@@ -35,11 +35,14 @@ const PostContent = styled.div`
   font-size: 14px;
   line-height: 17px;
 `;
+const PostText = styled.p`
+  margin-bottom: 17px;
+`;
 const PostImg = styled.img`
   display: block;
   width: 100%;
   height: 228px;
-  margin: 17px 0 12px;
+  margin-bottom: 12px;
   border: 0.5px solid #dbdbdb;
   border-radius: 10px;
 `;
@@ -124,14 +127,16 @@ export default function PostItem({ postInfo, authorInfo }) {
             </PostUserBox>
           </PostUser>
           <PostContent>
-            <p>{item.content}</p>
+            <PostText>{item.content}</PostText>
             {/* {item.image.map((url, index) => (
               <PostImg key={index} src={url} alt="포스트 이미지" />
             ))} */}
             {/* {item.image.split(",").map((imageUrl, index) => (
               <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
             ))} */}
-            <PostImg src={item.image} alt="포스트 이미지" />
+            {item.image !== "" && (
+              <PostImg src={item.image} alt="포스트 이미지" />
+            )}
             <PostInfoBox>
               <PostBtnBox>
                 <BtnLike>
