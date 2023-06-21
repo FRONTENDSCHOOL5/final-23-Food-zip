@@ -68,16 +68,17 @@ export default function ProfileBtn({ type, yourAccountname }) {
           },
         },
       );
-      // const res = await axios.post(
-      //   `https://api.mandarin.weniv.co.kr/profile/${yourAccountname}/follow`,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //       // "Content-type": "application/json",
-      //     },
-      //   },
-      // );
-      // console.log("팔로우한 상대계정 정보 : ", res);
+      const res = await axios.post(
+        `https://api.mandarin.weniv.co.kr/profile/${yourAccountname}/follow`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // "Content-type": "application/json",
+          },
+        },
+      );
+      console.log("팔로우한 상대계정 정보 : ", res);
       setFollow(!follow);
       console.log("token:", tokenValid);
     } catch (err) {

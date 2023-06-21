@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import PostItem from "../../components/Post/PostItem/PostItem";
 import Comment from "../../components/Comment/Comment";
 import styled from "styled-components";
 import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal";
 import Alert from "../../components/Modal/Alert";
+import axios from "axios";
 const DetailPostWrapper = styled.div`
   background: #fff;
   width: 100%;
@@ -79,6 +81,9 @@ export default function DetailPost() {
   function alertOpen() {
     setAlertShow(true);
   }
+  const location = useLocation();
+  const data = location.state;
+  const { id, postInfo, authorInfo } = data;
   return (
     <>
       <Header
@@ -86,14 +91,19 @@ export default function DetailPost() {
         active={true}
         modalOpen={() => modalOpen("setting")}
       />
-      <DetailPostWrapper class="l-wrapper">
-        <PostItemSection>
-          <PostItem modalOpen={() => modalOpen("modification")} />
-        </PostItemSection>
+      <DetailPostWrapper>
+        {postInfo?.map(
+          item =>
+            item.id === id && (
+              <PostItemSection key={item.id}>
+                <PostItem postInfo={[item]} authorInfo={authorInfo} />
+              </PostItemSection>
+            ),
+        )}
         <CommentSection>
           <Comment modalOpen={() => modalOpen("report")} />
         </CommentSection>
-        <WriteCommentSection class="make-replay">
+        <WriteCommentSection>
           <PostUserImg
             src={require("../../assets/images/basic-profile-sm.svg").default}
             alt="사용자 이미지"
@@ -104,7 +114,7 @@ export default function DetailPost() {
             value={inputValue}
             onChange={handleInputChange}
           />
-          <BtnDisplay class="display" hasText={inputValue.trim().length > 0}>
+          <BtnDisplay hasText={inputValue.trim().length > 0}>
             게시
           </BtnDisplay>
         </WriteCommentSection>

@@ -7,6 +7,7 @@ import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import DetailPost from "../../../pages/Post/DetailPost";
 
 const PostListDiv = styled.div`
   display: flex;
@@ -76,6 +77,7 @@ export default function PostList({ post, modalOpen }) {
 
   const [postInfo, setPostInfo] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
+
   useEffect(() => {
     getUserInfo();
   }, [location]);
@@ -96,7 +98,20 @@ export default function PostList({ post, modalOpen }) {
         },
       });
 
-      const posts = res.data.post;
+    // 이미지 3장 기능
+    // const { username, image } = res.data.post.author;
+    // setUserInfo({
+    //   username,
+    //   image,
+    // });
+    // const postImages = posts.map(item => item.image.split(","));
+    // const combinedInfo = posts.map((item, index) => ({
+    //   ...item,
+    //   images: postImages[index],
+    // }));
+    // setPostInfo(combinedInfo);
+
+    const posts = res.data.post;
 
       if (posts.length === 0) {
         setAuthorInfo([]);
@@ -111,7 +126,7 @@ export default function PostList({ post, modalOpen }) {
       // <ErrorPage />; 되나?
     }
   };
-
+  
   return (
     <>
       <PostListDiv>

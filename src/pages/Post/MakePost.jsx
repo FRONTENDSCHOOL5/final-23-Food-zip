@@ -4,6 +4,7 @@ import PostImgPrev from "../../components/Post/ImgPrev/PostImgPrev";
 import Header from "../../components/common/Header/Header";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -35,6 +36,7 @@ export default function MakePost() {
   const [imgUrl, setImgUrl] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   const [content, setContent] = useState("");
+  const [isValid, setIsValid] = useState(false);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -47,6 +49,7 @@ export default function MakePost() {
     try {
       const joinedUrls = imageUrls.join(",");
       console.log(joinedUrls);
+
       const postResponse = await axios.post(
         "https://api.mandarin.weniv.co.kr/post",
         {
@@ -62,8 +65,6 @@ export default function MakePost() {
           },
         },
       );
-
-      console.log("이봐", postResponse);
       navigate("/myprofile");
     } catch (error) {
       console.error(error);
@@ -71,16 +72,34 @@ export default function MakePost() {
   };
 
   const handleUpload = () => {
-    uploadPost();
+    if (isValid) {
+      uploadPost();
+    } else {
+      alert("게시글이 작성되지 않았습니다.");
+    }
+  };
+  const checkContent = () => {
+    if (!content || content.trim().length === 0) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
   };
 
+  useEffect(() => {
+    checkContent();
+  }, [content]);
   const onChangeInput = event => {
     setContent(event.target.value);
+    checkContent();
   };
-
   return (
     <div>
-      <Header type="upload" active={true} uploadHandler={handleUpload} />
+      <Header
+        type="upload"
+        handleUploadBtn={isValid}
+        uploadHandler={handleUpload}
+      />
       <StyledContainer className="post-wrapper">
         <PostImgPrev
           onImageUrlChange={handleImageUrlChange}

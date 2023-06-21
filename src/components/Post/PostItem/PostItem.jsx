@@ -35,11 +35,14 @@ const PostContent = styled.div`
   font-size: 14px;
   line-height: 17px;
 `;
+const PostText = styled.p`
+  margin-bottom: 17px;
+`;
 const PostImg = styled.img`
   display: block;
   width: 100%;
   height: 228px;
-  margin: 17px 0 12px;
+  margin-bottom: 12px;
   border: 0.5px solid #dbdbdb;
   border-radius: 10px;
 `;
@@ -85,9 +88,17 @@ const BtnMore = styled.button`
 `;
 export default function PostItem({ postInfo, authorInfo }) {
   const navigate = useNavigate();
-  function moveDetail() {
-    navigate("/detailpost");
+
+  function moveDetail(id) {
+    navigate("/detailpost", {
+      state: {
+        id: id,
+        postInfo: postInfo,
+        authorInfo: authorInfo,
+      },
+    });
   }
+
   console.log(postInfo, authorInfo);
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -108,8 +119,6 @@ export default function PostItem({ postInfo, authorInfo }) {
     const year = dateObj.getFullYear();
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
-    // const hours = dateObj.getHours();
-    // const minutes = dateObj.getMinutes();
     return `${year}년 ${month}월 ${day}일`;
   }
   return (
@@ -124,14 +133,16 @@ export default function PostItem({ postInfo, authorInfo }) {
             </PostUserBox>
           </PostUser>
           <PostContent>
-            <p>{item.content}</p>
+            <PostText>{item.content}</PostText>
             {/* {item.image.map((url, index) => (
               <PostImg key={index} src={url} alt="포스트 이미지" />
             ))} */}
             {/* {item.image.split(",").map((imageUrl, index) => (
               <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
             ))} */}
-            <PostImg src={item.image} alt="포스트 이미지" />
+            {item.image !== "" && (
+              <PostImg src={item.image} alt="포스트 이미지" />
+            )}
             <PostInfoBox>
               <PostBtnBox>
                 <BtnLike>
@@ -143,7 +154,11 @@ export default function PostItem({ postInfo, authorInfo }) {
                   />
                   58
                 </BtnLike>
-                <BtnComment onClick={moveDetail}>
+                <BtnComment
+                  onClick={() => {
+                    moveDetail(item.id);
+                  }}
+                >
                   <BtnImg
                     src={
                       require("../../../assets/images/icon-message-circle-1.svg")
