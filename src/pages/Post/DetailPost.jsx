@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal";
 import Alert from "../../components/Modal/Alert";
-import axios from "axios";
+
 const DetailPostWrapper = styled.div`
   background: #fff;
   width: 100%;
