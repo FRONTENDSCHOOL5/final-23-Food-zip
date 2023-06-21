@@ -83,7 +83,8 @@ export default function ProfileInformation({ type, modalOpen }) {
   });
   const location = useLocation();
   const [follow, setFollow] = useState(true);
-
+  const [followerInfo, setFollowerInfo] = useState([]);
+  const myId = localStorage.getItem("_id");
   useEffect(() => {
     const yourAccountname = location.state;
     const myAccountname = localStorage.getItem("accountname");
@@ -102,7 +103,12 @@ export default function ProfileInformation({ type, modalOpen }) {
           // "Content-type": "application/json",
         },
       });
-      console.log("resData", res);
+      console.log("***resData", res.data.user);
+      if (type === "my") {
+        setFollowerInfo(res.data.user.follower);
+      } else if (type === "your" && yourAccountname) {
+        setFollowerInfo(res.data.profile.follower);
+      }
       if (type === "your") {
         const {
           accountname,
@@ -168,7 +174,13 @@ export default function ProfileInformation({ type, modalOpen }) {
       getUserInfo();
     }
   }, [location, follow]);
-  console.log(userInfo.accountname);
+
+  useEffect(() => {
+    const following = followerInfo.some(x => x === myId);
+    setFollow(!following);
+    console.log("팔로우된 상태면 false가 나와야함 결과는?", follow);
+  }, []);
+
   return (
     <>
       <InformationTopDiv>
@@ -178,12 +190,16 @@ export default function ProfileInformation({ type, modalOpen }) {
             accountname: userInfo.accountname,
           }}
         >
-          {" "}
           <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
           <FollowerCntP>followers</FollowerCntP>
         </Link>
         <ProfileImg src={userInfo.image} alt="프로필 이미지" />
-        <Link to="/followinglist">
+        <Link
+          to="/followinglist"
+          state={{
+            accountname: userInfo.accountname,
+          }}
+        >
           <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
           <FollowingCntP>followings</FollowingCntP>
         </Link>

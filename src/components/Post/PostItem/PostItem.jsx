@@ -86,7 +86,7 @@ const BtnMore = styled.button`
   top: 7px;
   right: 0;
 `;
-export default function PostItem({ postInfo, authorInfo }) {
+export default function PostItem({ postInfo, authorInfo, myFeed }) {
   const navigate = useNavigate();
 
   function moveDetail(id) {
@@ -123,65 +123,127 @@ export default function PostItem({ postInfo, authorInfo }) {
   }
   return (
     <>
-      {postInfo?.map(item => (
-        <Container key={item.id}>
-          <PostUser>
-            <PostUserImg src={authorInfo.image} alt="사용자 이미지" />
-            <PostUserBox>
-              <PostUserName>{authorInfo.username}</PostUserName>
-              <PostUserId>@ {authorInfo.accountname}</PostUserId>
-            </PostUserBox>
-          </PostUser>
-          <PostContent>
-            <PostText>{item.content}</PostText>
-            {/* {item.image.map((url, index) => (
+      {postInfo
+        ? postInfo?.map(item => (
+            <Container key={item.id}>
+              <PostUser>
+                <PostUserImg src={authorInfo.image} alt="사용자 이미지" />
+                <PostUserBox>
+                  <PostUserName>{authorInfo.username}</PostUserName>
+                  <PostUserId>@ {authorInfo.accountname}</PostUserId>
+                </PostUserBox>
+              </PostUser>
+              <PostContent>
+                <PostText>{item.content}</PostText>
+                {/* {item.image.map((url, index) => (
               <PostImg key={index} src={url} alt="포스트 이미지" />
             ))} */}
-            {/* {item.image.split(",").map((imageUrl, index) => (
+                {/* {item.image.split(",").map((imageUrl, index) => (
               <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
             ))} */}
-            {item.image !== "" && (
-              <PostImg src={item.image} alt="포스트 이미지" />
-            )}
-            <PostInfoBox>
-              <PostBtnBox>
-                <BtnLike>
-                  <BtnImg
-                    src={
-                      require("../../../assets/images/icon-heart.svg").default
-                    }
-                    alt="게시글 좋아요"
-                  />
-                  58
-                </BtnLike>
-                <BtnComment
-                  onClick={() => {
-                    moveDetail(item.id);
-                  }}
-                >
-                  <BtnImg
-                    src={
-                      require("../../../assets/images/icon-message-circle-1.svg")
-                        .default
-                    }
-                    alt="게시글 댓글"
-                  />
-                  12
-                </BtnComment>
-              </PostBtnBox>
-              <PostDate>{formatDate(item.updatedAt)}</PostDate>
-            </PostInfoBox>
-          </PostContent>
-          <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>
-          {modalShow && (
-            <Modal
-              type="modification"
-              modalClose={modalClose}
-              postId={selectedId}
-            />
-          )}
-        </Container>
-      ))}
+                {item.image !== "" && (
+                  <PostImg src={item.image} alt="포스트 이미지" />
+                )}
+                <PostInfoBox>
+                  <PostBtnBox>
+                    <BtnLike>
+                      <BtnImg
+                        src={
+                          require("../../../assets/images/icon-heart.svg")
+                            .default
+                        }
+                        alt="게시글 좋아요"
+                      />
+                      58
+                    </BtnLike>
+                    <BtnComment
+                      onClick={() => {
+                        moveDetail(item.id);
+                      }}
+                    >
+                      <BtnImg
+                        src={
+                          require("../../../assets/images/icon-message-circle-1.svg")
+                            .default
+                        }
+                        alt="게시글 댓글"
+                      />
+                      12
+                    </BtnComment>
+                  </PostBtnBox>
+                  <PostDate>{formatDate(item.updatedAt)}</PostDate>
+                </PostInfoBox>
+              </PostContent>
+              <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>
+              {modalShow && (
+                <Modal
+                  type="modification"
+                  modalClose={modalClose}
+                  postId={selectedId}
+                />
+              )}
+            </Container>
+          ))
+        : myFeed?.map(item => (
+            <Container key={item.id}>
+              <PostUser>
+                <PostUserImg src={item.author.image} alt="사용자 이미지" />
+                <PostUserBox>
+                  <PostUserName>{item.author.username}</PostUserName>
+                  <PostUserId>@ {item.author.accountname}</PostUserId>
+                </PostUserBox>
+              </PostUser>
+              <PostContent>
+                <PostText>{item.content}</PostText>
+                {/* {item.image.map((url, index) => (
+              <PostImg key={index} src={url} alt="포스트 이미지" />
+            ))} */}
+                {/* {item.image.split(",").map((imageUrl, index) => (
+              <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
+            ))} */}
+                {item.image !== "" && (
+                  <PostImg src={item.image} alt="포스트 이미지" />
+                )}
+                <PostInfoBox>
+                  <PostBtnBox>
+                    <BtnLike>
+                      <BtnImg
+                        src={
+                          require("../../../assets/images/icon-heart.svg")
+                            .default
+                        }
+                        alt="게시글 좋아요"
+                      />
+                      58
+                    </BtnLike>
+                    <BtnComment
+                      onClick={() => {
+                        moveDetail(item.id);
+                      }}
+                    >
+                      <BtnImg
+                        src={
+                          require("../../../assets/images/icon-message-circle-1.svg")
+                            .default
+                        }
+                        alt="게시글 댓글"
+                      />
+                      12
+                    </BtnComment>
+                  </PostBtnBox>
+                  <PostDate>{formatDate(item.updatedAt)}</PostDate>
+                </PostInfoBox>
+              </PostContent>
+              <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>
+              {modalShow && (
+                <Modal
+                  type="modification"
+                  modalClose={modalClose}
+                  postId={selectedId}
+                />
+              )}
+            </Container>
+          ))}
     </>
   );
 }

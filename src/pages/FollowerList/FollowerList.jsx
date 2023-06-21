@@ -18,14 +18,15 @@ const FollowListItem = styled.li`
   margin-bottom: 12px;
 `;
 
-export default function FollowerList({ type }) {
+export default function FollowerList({ type, followType }) {
   const location = useLocation();
   const token = localStorage.getItem("token");
   const accountname = location.state.accountname;
   const [followerList, setFollowerList] = useState([]);
+  const [followingList, setFollowingList] = useState([]);
 
   useEffect(() => {
-    getFollowerList();
+    type === "followers" ? getFollowerList() : getFollowingList();
   }, []);
 
   const getFollowerList = async () => {
@@ -39,30 +40,69 @@ export default function FollowerList({ type }) {
           },
         },
       );
-      console.log(res.data);
       setFollowerList(res.data);
+      console.log("followers", res.data);
     } catch (err) {
       console.error("에러!!", err);
     }
   };
-
-  return (
-    <>
-      <Header type={type} />
-      <FollowList>
-        {followerList.map((follower, index) => {
-          return (
-            <FollowListItem key={index}>
-              <FollowItem
-                username={follower.username}
-                intro={follower.intro}
-                image={follower.image}
-              />
-            </FollowListItem>
-          );
-        })}
-      </FollowList>
-      <Navigation />
-    </>
-  );
+  const getFollowingList = async () => {
+    try {
+      const res = await axios.get(
+        `https://api.mandarin.weniv.co.kr/profile/${accountname}/following`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      setFollowingList(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const followTypeUI = {
+    followerList: (
+      <>
+        <Header type={type} />
+        <FollowList>
+          {followerList.map((follower, index) => {
+            return (
+              <FollowListItem key={index}>
+                <FollowItem
+                  username={follower.username}
+                  intro={follower.intro}
+                  image={follower.image}
+                />
+              </FollowListItem>
+            );
+          })}
+        </FollowList>
+        <Navigation />
+      </>
+    ),
+    // 팔로잉 리스트에서 내가 팔로우하지 않는 사람이라면 팔로우버튼 활성화
+    // 팔로우 했다면 취소 버튼 활성화
+    followingList: (
+      <>
+        <Header type={type} />
+        <FollowList>
+          {followingList.map((following, index) => {
+            return (
+              <FollowListItem key={index}>
+                <FollowItem
+                  username={following.username}
+                  intro={following.intro}
+                  image={following.image}
+                />
+              </FollowListItem>
+            );
+          })}
+        </FollowList>
+        <Navigation />
+      </>
+    ),
+  };
+  return <>{followTypeUI[followType]}</>;
 }

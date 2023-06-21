@@ -63,7 +63,6 @@ export default function ProfileBtn({
 
   const Follow = async () => {
     try {
-      console.log("일단 여기");
       const tokenValid = await axios.get(
         `https://api.mandarin.weniv.co.kr/user/checktoken`,
         {
@@ -79,19 +78,34 @@ export default function ProfileBtn({
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            // "Content-type": "application/json",
+            "Content-type": "application/json",
           },
         },
       );
-      console.log("팔로우한 상대계정 정보 : ", res);
+      console.log("팔로우한 상대계정 정보 : ", res.data.profile);
       setFollow(!follow);
       console.log("token:", tokenValid);
     } catch (err) {
       console.error("에러!", err);
     }
   };
-  const UnFollow = () => {
-    setFollow(!follow);
+
+  const UnFollow = async () => {
+    try {
+      const res = await axios.delete(
+        `https://api.mandarin.weniv.co.kr/profile/${yourAccountname}/unfollow`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      console.log("언팔로우한 상대계정 정보 : ", res.data.profile);
+      setFollow(!follow);
+    } catch (err) {
+      console.error("에러!", err);
+    }
   };
   const UI = {
     your: (

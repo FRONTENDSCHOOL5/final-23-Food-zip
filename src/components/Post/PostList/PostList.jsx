@@ -112,6 +112,7 @@ export default function PostList({ post, modalOpen }) {
       //   images: postImages[index],
       // }));
       // setPostInfo(combinedInfo);
+
       const posts = res.data.post;
 
       if (posts.length === 0) {
