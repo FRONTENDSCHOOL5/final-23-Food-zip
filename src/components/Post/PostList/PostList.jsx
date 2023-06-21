@@ -77,10 +77,11 @@ export default function PostList({ post, modalOpen }) {
 
   const [postInfo, setPostInfo] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
-
+  const [hasPosts, setHasPosts] = useState(false); // 없을 때 렌더링 안되게 하게 만들었음
   useEffect(() => {
     getUserInfo();
   }, [location]);
+
   const getUserInfo = async () => {
     const { accountname } = location.state || {};
     const token = localStorage.getItem("token");
@@ -98,26 +99,15 @@ export default function PostList({ post, modalOpen }) {
         },
       });
 
-    // 이미지 3장 기능
-    // const { username, image } = res.data.post.author;
-    // setUserInfo({
-    //   username,
-    //   image,
-    // });
-    // const postImages = posts.map(item => item.image.split(","));
-    // const combinedInfo = posts.map((item, index) => ({
-    //   ...item,
-    //   images: postImages[index],
-    // }));
-    // setPostInfo(combinedInfo);
-
-    const posts = res.data.post;
+      const posts = res.data.post;
 
       if (posts.length === 0) {
+        setHasPosts(false);
         setAuthorInfo([]);
         setPostInfo([]);
       } else {
         const authors = res.data.post[0].author;
+        setHasPosts(true);
         setPostInfo(posts);
         setAuthorInfo(authors);
       }
@@ -126,42 +116,49 @@ export default function PostList({ post, modalOpen }) {
       // <ErrorPage />; 되나?
     }
   };
-  
+
   return (
     <>
-      <PostListDiv>
-        <PostListBtn type="button" onClick={() => handleViewModeChange("list")}>
-          <img
-            src={viewMode === "list" ? IconListOn : IconListOff}
-            alt="리스트형 아이콘"
-          />
-        </PostListBtn>
-        <PostListBtn
-          type="button"
-          onClick={() => handleViewModeChange("album")}
-        >
-          <img
-            src={viewMode === "album" ? IconAlbumOn : IconAlbumOff}
-            alt="앨범형 아이콘"
-          />
-        </PostListBtn>
-      </PostListDiv>
-      {viewMode === "list" ? (
-        <PostItemList>
-          <PostItem
-            modalOpen={modalOpen}
-            postInfo={postInfo}
-            authorInfo={authorInfo}
-          />
-        </PostItemList>
-      ) : (
-        <GridItemList>
-          {postInfo.map(item => (
-            <PostGridImg key={item.id}>
-              <img src={item.image} alt="grid" />
-            </PostGridImg>
-          ))}
-        </GridItemList>
+      {hasPosts && (
+        <>
+          <PostListDiv>
+            <PostListBtn
+              type="button"
+              onClick={() => handleViewModeChange("list")}
+            >
+              <img
+                src={viewMode === "list" ? IconListOn : IconListOff}
+                alt="리스트형 아이콘"
+              />
+            </PostListBtn>
+            <PostListBtn
+              type="button"
+              onClick={() => handleViewModeChange("album")}
+            >
+              <img
+                src={viewMode === "album" ? IconAlbumOn : IconAlbumOff}
+                alt="앨범형 아이콘"
+              />
+            </PostListBtn>
+          </PostListDiv>
+          {viewMode === "list" ? (
+            <PostItemList>
+              <PostItem
+                modalOpen={modalOpen}
+                postInfo={postInfo}
+                authorInfo={authorInfo}
+              />
+            </PostItemList>
+          ) : (
+            <GridItemList>
+              {postInfo.map(item => (
+                <PostGridImg key={item.id}>
+                  <img src={item.image} alt="grid" />
+                </PostGridImg>
+              ))}
+            </GridItemList>
+          )}
+        </>
       )}
     </>
   );

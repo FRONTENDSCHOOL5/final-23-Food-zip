@@ -102,6 +102,10 @@ export default function RecommendList({ cardOpen, cardClose }) {
     }
   };
 
+  if (recommendInfo.length === 0) {
+    return null; // recommendInfo가 비어있을 때는 null을 반환하여 아무것도 렌더링하지 않습니다.
+  }
+
   return (
     <RecommendWrapDiv>
       <RecommendTitleP>추천 맛집</RecommendTitleP>
