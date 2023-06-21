@@ -129,30 +129,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
   const handleFormSubmit = async formData => {
     if (location.pathname === "/signup/profile") {
       try {
-        if (!profileImg) {
-          console.log("프로필 이미지 설정안해서 푸짐이가 프사임");
-          // 기본 이미지 URL에서 파일 객체 생성
-          const defaultImageToUpload = await convertURLToFile(
-            BasicProfile,
-            "basic-profile-lg.png",
-          );
-          const imgformData = new FormData();
-          imgformData.append("image", defaultImageToUpload);
-          const imgUploadRes = await axios.post(
-            "https://api.mandarin.weniv.co.kr/image/uploadfile",
-            imgformData,
-            {
-              headers: {
-                "Content-type": "multipart/form-data",
-              },
-            },
-          );
-          const basicProfile =
-            "https://api.mandarin.weniv.co.kr/" + imgUploadRes.data.filename;
-          console.log("기본이미지로 서버에 올라감!!! 주소: ", basicProfile);
-          setProfileImg(basicProfile);
-          console.log("프로필 이미지:", profileImg);
-        }
         const res = await axios.post(
           "https://api.mandarin.weniv.co.kr/user/",
           {
