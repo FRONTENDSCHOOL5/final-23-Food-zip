@@ -91,6 +91,7 @@ export default function Alert({
       alertClose("post");
       modalClose("modification");
       window.location.reload();
+      navigate("/myprofile");
     } catch (error) {
       console.error("Delete request failed", error);
     }
@@ -111,6 +112,7 @@ export default function Alert({
       alertClose("post");
       modalClose("modification");
       window.location.reload();
+      navigate("/myprofile");
     } catch (error) {
       console.error("Delete request failed", error);
     }

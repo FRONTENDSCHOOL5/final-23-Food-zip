@@ -39,6 +39,13 @@ const StyledInput = styled.input`
   margin: 0 auto 36px auto;
   outline: none;
   background: transparent;
+  &::placeholder {
+    color: #dbdbdb;
+  }
+  &:focus {
+    /* outline: none; */
+    border-bottom: 1px solid #286140;
+  }
 `;
 
 const StyledError = styled.small`

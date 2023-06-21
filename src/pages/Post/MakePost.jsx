@@ -78,9 +78,14 @@ export default function MakePost() {
       alert("게시글이 작성되지 않았습니다.");
     }
   };
+  console.log("postUrl:", imageUrls);
   const checkContent = () => {
     if (!content || content.trim().length === 0) {
-      setIsValid(false);
+      if (imageUrls.length > 0) {
+        setIsValid(true);
+      } else {
+        setIsValid(false);
+      }
     } else {
       setIsValid(true);
     }
@@ -88,7 +93,7 @@ export default function MakePost() {
 
   useEffect(() => {
     checkContent();
-  }, [content]);
+  }, [content, imageUrls]);
   const onChangeInput = event => {
     setContent(event.target.value);
     checkContent();

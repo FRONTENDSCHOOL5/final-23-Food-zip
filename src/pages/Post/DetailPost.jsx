@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal";
 import Alert from "../../components/Modal/Alert";
-import axios from "axios";
+
 const DetailPostWrapper = styled.div`
   background: #fff;
   width: 100%;
@@ -114,9 +114,7 @@ export default function DetailPost() {
             value={inputValue}
             onChange={handleInputChange}
           />
-          <BtnDisplay hasText={inputValue.trim().length > 0}>
-            게시
-          </BtnDisplay>
+          <BtnDisplay hasText={inputValue.trim().length > 0}>게시</BtnDisplay>
         </WriteCommentSection>
       </DetailPostWrapper>
       {modalShow && (
