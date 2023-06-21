@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import BasicProfileInput from "../../../assets/images/basic-profile-lg.svg";
+
 import ImgButton from "../../../assets/images/upload-file.svg";
 import styled from "styled-components";
 import { ButtonStyle } from "../../common/Button/Button";
@@ -84,17 +85,11 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
   } = useForm({
     mode: "onChange",
   });
-  const [accountname, setAccountname] = useState(null);
-  useEffect(() => {
-    setAccountname(localStorage.getItem("accountname"));
-  }, []);
-  // console.log(accountname);
   const token = localStorage.getItem("token");
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/myprofile/edit") {
-      // console.log(userInfo);
       setValue("image", userInfo?.image || BasicProfileInput); // Set a default value for image
       setValue("username", userInfo?.username || null); // Set a default value for username
       setValue("accountname", userInfo?.accountname || null); // Set a default value for accountname
@@ -107,16 +102,19 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     }
   }, [location.pathname, userInfo]);
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const defaultImg = "https://api.mandarin.weniv.co.kr/1687267818879.png";
   const [profileImg, setProfileImg] = useState(null);
   const fileInputRef = useRef(null);
   const data = location.state;
-
+  // useEffect(() => {
+  //   console.log("프로필 이미지:", profileImg);
+  // }, [profileImg]);
   const handleImageChange = async event => {
     const formData = new FormData();
     const file = event.target.files[0];
-    let imgUrl = "";
+
     formData.append("image", file);
+
     const res = await axios.post(
       "https://api.mandarin.weniv.co.kr/image/uploadfile",
       formData,
@@ -126,23 +124,11 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         },
       },
     );
-    // 화면에 선택한 이미지 파일 보여줌
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-    imgUrl = "https://api.mandarin.weniv.co.kr/" + res.data.filename;
+    const imgUrl = "https://api.mandarin.weniv.co.kr/" + res.data.filename;
     setProfileImg(imgUrl);
   };
 
-  const handleButtonClick = () => {
-    fileInputRef.current.click();
-  };
   const navigate = useNavigate();
-
   const handleFormSubmit = async formData => {
     if (location.pathname === "/signup/profile") {
       try {
@@ -155,7 +141,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
               password: data.password,
               accountname: formData.accountname,
               intro: formData.intro,
-              image: profileImg,
+              image: profileImg || defaultImg,
             },
           },
           {
@@ -211,14 +197,12 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
           />
         </label>
 
-        <ProfileInputImgButton type="button" onClick={handleButtonClick}>
+        <ProfileInputImgButton
+          type="button"
+          onClick={() => fileInputRef.current.click()}
+        >
           <ProfileImg
-            src={
-              selectedImage ||
-              (location.pathname === "/myprofile/edit"
-                ? userInfo?.image || BasicProfileInput
-                : BasicProfileInput)
-            }
+            src={profileImg || userInfo?.image || BasicProfileInput}
             alt="기본 프로필"
           />
         </ProfileInputImgButton>
