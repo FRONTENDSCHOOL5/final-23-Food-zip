@@ -6,6 +6,7 @@ import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import axios from "axios";
+import DetailPost from "../../../pages/Post/DetailPost";
 
 const PostListDiv = styled.div`
   display: flex;
@@ -92,22 +93,7 @@ export default function PostList({ post, modalOpen }) {
       },
     );
 
-    // console.log("여기");
-    // console.log("여기", res.data.post[0].author);
-    // const { username, image } = res.data.post.author;
-    // setUserInfo({
-    //   username,
-    //   image,
-    // });
     const posts = res.data.post;
-    // const postImages = posts.map(item => item.image.split(","));
-    // console.log("아마: ", postImages);
-    // const combinedInfo = posts.map((item, index) => ({
-    //   ...item,
-    //   images: postImages[index],
-    // }));
-    // setPostInfo(combinedInfo);
-    // console.log("혹시: ", postInfo);
 
     if (posts.length === 0) {
       setAuthorInfo([]);

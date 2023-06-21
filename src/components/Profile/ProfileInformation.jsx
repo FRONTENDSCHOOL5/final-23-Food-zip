@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import ProfileBtn from "./ProfileBtn";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const InformationTopDiv = styled.div`
   display: flex;
