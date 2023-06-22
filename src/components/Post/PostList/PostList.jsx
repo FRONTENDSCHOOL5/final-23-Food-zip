@@ -114,7 +114,6 @@ export default function PostList({ post, modalOpen }) {
       // setPostInfo(combinedInfo);
 
       const posts = res.data.post;
-
       if (posts.length === 0) {
         setHasPosts(false);
         setAuthorInfo([]);
@@ -157,7 +156,7 @@ export default function PostList({ post, modalOpen }) {
     setSelectedId(id);
     setModalShow(true);
   }
-
+  console.log("Post", postInfo);
   return (
     <>
       {hasPosts && (

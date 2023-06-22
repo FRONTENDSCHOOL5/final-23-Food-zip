@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../Modal/Modal";
-
+import axios from "axios";
 const Container = styled.li`
   position: relative;
   width: 100%;
@@ -51,7 +51,7 @@ const PostImg = styled.img`
 const PostInfoBox = styled.div`
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
+  /* cursor: pointer; */
 `;
 const PostBtnBox = styled.div`
   display: flex;
@@ -91,8 +91,11 @@ const BtnMore = styled.button`
 `;
 export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
   const navigate = useNavigate();
+  const [hearted, setHearted] = useState(false);
+  const [heartIcon, setHeartIcon] = useState("");
+  const [heartCount, setHeartCount] = useState(0);
   const location = useLocation();
-  console.log("****", location.pathname);
+  
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -102,7 +105,68 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
       },
     });
   }
+  const postLike = async postId => {
+    await apiLike(postId);
+  };
 
+  const apiLike = async postId => {
+    // Add `async` here to make the function asynchronous
+    console.log("like");
+    const token = localStorage.getItem("token");
+    try {
+      const post = postInfo.find(post => post.id === postId);
+      if (!post) {
+        console.error("Post not found");
+        return false;
+      }
+      console.log(post);
+      const res = await axios.post(
+        `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      console.log(res.data.post.heartCount);
+      setHearted(res.data.post.hearted);
+      setHeartCount(res.data.post.heartCount);
+      return res;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+  console.log(hearted);
+  useEffect(() => {
+    if (hearted) {
+      setHearted(hearted);
+    }
+    localStorage.setItem("hearted", !hearted ? "false" : "true");
+    localStorage.setItem("heartCount", heartCount);
+  }, [hearted, heartCount]);
+  // const isPostHearted = postId => {
+  //   const post =
+  //     postInfo.find(post => post.id === postId) ||
+  //     myFeed.find(post => post.id === postId);
+  //   return post ? post.hearted : false;
+  // };
+
+  // // Helper function to get the heart count of a post
+  // const getHeartCount = postId => {
+  //   const post =
+  //     postInfo.find(post => post.id === postId) ||
+  //     myFeed.find(post => post.id === postId);
+  //   return post ? post.heartCount : 0;
+  // };
+  useEffect(() => {
+    const savedHearted = localStorage.getItem("hearted");
+    setHearted(savedHearted === "false");
+    const savedHeartCount = localStorage.getItem("heartCount");
+    setHeartCount(parseInt(savedHeartCount, 10));
+  }, []);
   function moveProfile(accountname) {
     if (location.pathname !== "/myprofile") {
       navigate(`/profile/${accountname}`, {
@@ -144,15 +208,25 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
                 )}
                 <PostInfoBox>
                   <PostBtnBox>
-                    <BtnLike>
-                      <BtnImg
-                        src={
-                          require("../../../assets/images/icon-heart.svg")
-                            .default
-                        }
-                        alt="게시글 좋아요"
-                      />
-                      58
+                    <BtnLike onClick={() => postLike(item.id)}>
+                      {item.id ? (
+                        <BtnImg
+                          src={
+                            require("../../../assets/images/icon-heart-fill.svg")
+                              .default
+                          }
+                          alt="게시글 좋아요"
+                        />
+                      ) : (
+                        <BtnImg
+                          src={
+                            require("../../../assets/images/icon-heart.svg")
+                              .default
+                          }
+                          alt="게시글 좋아요"
+                        />
+                      )}
+                      {item.heartCount}
                     </BtnLike>
                     <BtnComment
                       onClick={() => {
@@ -197,15 +271,25 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
                 )}
                 <PostInfoBox>
                   <PostBtnBox>
-                    <BtnLike>
-                      <BtnImg
-                        src={
-                          require("../../../assets/images/icon-heart.svg")
-                            .default
-                        }
-                        alt="게시글 좋아요"
-                      />
-                      58
+                    <BtnLike onClick={() => postLike(item.id)}>
+                      {item.hearted ? (
+                        <BtnImg
+                          src={
+                            require("../../../assets/images/icon-heart-fill.svg")
+                              .default
+                          }
+                          alt="게시글 좋아요"
+                        />
+                      ) : (
+                        <BtnImg
+                          src={
+                            require("../../../assets/images/icon-heart.svg")
+                              .default
+                          }
+                          alt="게시글 좋아요"
+                        />
+                      )}
+                      {item.heartCount}
                     </BtnLike>
                     <BtnComment
                       onClick={() => {
