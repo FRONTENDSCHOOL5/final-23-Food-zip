@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../Modal/Modal";
 
 const Container = styled.li`
@@ -91,6 +91,8 @@ const BtnMore = styled.button`
 `;
 export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("****", location.pathname);
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -102,11 +104,13 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
   }
 
   function moveProfile(accountname) {
-    navigate(`/profile/${accountname}`, {
-      state: {
-        accountname: accountname,
-      },
-    });
+    if (location.pathname !== "/myprofile") {
+      navigate(`/profile/${accountname}`, {
+        state: {
+          accountname: accountname,
+        },
+      });
+    }
   }
   function formatDate(dateString) {
     const dateObj = new Date(dateString);
