@@ -3,6 +3,7 @@ import ProfileImg from "../../assets/images/list-example.png";
 import styled from "styled-components";
 import Button from "../common/Button/Button";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 358px;
@@ -31,7 +32,7 @@ const FollowerIntro = styled.p`
 export default function FollowItem({ username, intro, image, accountname }) {
   const [follow, setFollow] = useState(true);
   const token = localStorage.getItem("token");
-
+  const navigate = useNavigate();
   const Follow = async () => {
     try {
       const tokenValid = await axios.get(
@@ -53,11 +54,10 @@ export default function FollowItem({ username, intro, image, accountname }) {
           },
         },
       );
-      console.log("팔로우한 상대계정 정보 : ", res.data.profile);
       setFollow(!follow);
-      console.log("token:", tokenValid);
     } catch (err) {
       console.error("에러!", err);
+      navigate("/error");
     }
   };
 
@@ -72,10 +72,10 @@ export default function FollowItem({ username, intro, image, accountname }) {
           },
         },
       );
-      console.log("언팔로우한 상대계정 정보 : ", res.data.profile);
       setFollow(!follow);
     } catch (err) {
       console.error("에러!", err);
+      navigate("/error");
     }
   };
 

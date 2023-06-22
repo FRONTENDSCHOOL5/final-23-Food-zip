@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../../components/common/Header/Header";
 import ProfileForm from "../../../components/Profile/ProfileForm/ProfileForm";
@@ -14,6 +15,7 @@ const Container = styled.div`
 `;
 export default function ProfileEdit() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     image: "",
     username: "",
@@ -39,6 +41,7 @@ export default function ProfileEdit() {
       setUserInfo({ image, username, accountname, intro });
     } catch (error) {
       console.error(error);
+      navigate("/error");
       return false;
     }
   };

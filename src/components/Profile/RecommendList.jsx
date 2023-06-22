@@ -4,7 +4,7 @@ import ListImg from "../../assets/images/list-example.png";
 import RecommendCard from "../Modal/RecommendCard";
 import ImgStar from "../../assets/images/star.svg";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const RecommendWrapDiv = styled.div`
   width: 100%;
@@ -73,6 +73,7 @@ const RecommendStarImg = styled.img`
 export default function RecommendList({ cardOpen, cardClose }) {
   const [recommendInfo, setRecommendInfo] = useState([]);
   const location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
     getUserInfo();
   }, [location]);
@@ -99,7 +100,7 @@ export default function RecommendList({ cardOpen, cardClose }) {
       setRecommendInfo(products);
     } catch (error) {
       console.log("error");
-      // <ErrorPage />; 되나?
+      navigate("/error");
     }
   };
 

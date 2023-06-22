@@ -93,6 +93,7 @@ export default function MakeRecommend() {
       navigate("/myprofile");
     } catch (error) {
       console.error(error);
+      navigate("/error");
     }
   };
 

@@ -94,6 +94,7 @@ export default function Alert({
       navigate("/myprofile");
     } catch (error) {
       console.error("Delete request failed", error);
+      navigate("/error");
     }
   };
 
@@ -115,6 +116,7 @@ export default function Alert({
       navigate("/myprofile");
     } catch (error) {
       console.error("Delete request failed", error);
+      navigate("/error");
     }
   };
 

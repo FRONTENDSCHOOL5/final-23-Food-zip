@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import uploadPhoto from "../../../assets/images/camera-btn.svg";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UploadContainer = styled.div`
   width: 100%;
@@ -44,6 +45,7 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [imgFile, setImgFile] = useState([]);
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
   const maxSize = 10 * 1024 * 1024;
   const handleUploadImg = async () => {
     try {
@@ -104,6 +106,7 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
       }
     } catch (error) {
       console.error(error);
+      navigate("/error");
     }
   };
 

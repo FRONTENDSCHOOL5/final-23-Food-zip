@@ -54,6 +54,7 @@ export default function FollowerList({ type, followType }) {
       console.log("followers", res.data);
     } catch (err) {
       console.error("에러!!", err);
+      navigate("/error");
     }
   };
   const getFollowingList = async () => {
@@ -70,6 +71,7 @@ export default function FollowerList({ type, followType }) {
       setFollowingList(res.data);
     } catch (err) {
       console.error(err);
+      navigate("/error");
     }
   };
 
