@@ -76,6 +76,8 @@ export default function Alert({
   const onClickLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("accountname");
+    localStorage.removeItem("_id");
+    localStorage.removeItem("follow");
     navigate("/welcome");
   };
 
