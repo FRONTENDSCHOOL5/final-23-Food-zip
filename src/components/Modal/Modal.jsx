@@ -70,6 +70,7 @@ export default function Modal({
     if (e.target === e.currentTarget) {
       setAlertShow(false);
     }
+    navigate("/myprofile");
   }
 
   function alertOpen(type) {

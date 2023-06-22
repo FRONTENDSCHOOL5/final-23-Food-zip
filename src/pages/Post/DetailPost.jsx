@@ -54,8 +54,8 @@ const CommentSection = styled.div`
 
 export default function DetailPost() {
   const [modalShow, setModalShow] = useState(false);
-  const [modalType, setModalType] = useState("modification");
   const [inputValue, setInputValue] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
 
   const handleInputChange = event => {
     setInputValue(event.target.value);
@@ -66,9 +66,9 @@ export default function DetailPost() {
     }
   }
 
-  function modalOpen(type) {
+  function modalOpen(id) {
     setModalShow(true);
-    setModalType(type);
+    setSelectedId(id);
   }
 
   const [alertShow, setAlertShow] = useState(false);
@@ -97,9 +97,9 @@ export default function DetailPost() {
             item.id === id && (
               <PostItemSection key={item.id}>
                 <PostItem
+                  modalOpen={modalOpen}
                   postInfo={[item]}
                   authorInfo={authorInfo}
-                  modalOpen={() => modalOpen("modification")}
                 />
               </PostItemSection>
             ),
@@ -122,9 +122,16 @@ export default function DetailPost() {
         </WriteCommentSection>
       </DetailPostWrapper>
       {modalShow && (
-        <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
+        <Modal
+          type="modification"
+          modalClose={modalClose}
+          alertOpen={alertOpen}
+          postId={selectedId}
+        />
       )}
-      {alertShow && <Alert type="logout" alertClose={alertClose} />}
+      {alertShow && (
+        <Alert type="logout" alertClose={alertClose} postId={selectedId} />
+      )}
     </>
   );
 }
