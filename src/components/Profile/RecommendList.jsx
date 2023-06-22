@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const RecommendWrapDiv = styled.div`
   width: 100%;
-  padding: 20px 16px 2px;
+  padding: 20px 16px 8px;
   overflow: auto;
   box-sizing: border-box;
   background-color: white;
@@ -52,6 +52,11 @@ const RecommendListImg = styled.img`
 const RecommendNameP = styled.p`
   font-size: 14px;
   margin: 6px 0 2px;
+  display: block;
+  width: 140px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const RecommendScoreSpan = styled.span`

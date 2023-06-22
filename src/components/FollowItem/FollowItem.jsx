@@ -33,6 +33,15 @@ export default function FollowItem({ username, intro, image, accountname }) {
   const [follow, setFollow] = useState(true);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+
+  function moveProfile(accountname) {
+    navigate(`/profile/${accountname}`, {
+      state: {
+        accountname: accountname,
+      },
+    });
+  }
+
   const Follow = async () => {
     try {
       const tokenValid = await axios.get(
@@ -81,8 +90,12 @@ export default function FollowItem({ username, intro, image, accountname }) {
 
   return (
     <Container>
-      <FollowerImgTest src={image} alt="프로필 이미지" />
-      <FollowerInfo>
+      <FollowerImgTest
+        src={image}
+        alt="프로필 이미지"
+        onClick={() => moveProfile(accountname)}
+      />
+      <FollowerInfo onClick={() => moveProfile(accountname)}>
         <FollowerName>{username}</FollowerName>
         <FollowerIntro>{intro}</FollowerIntro>
       </FollowerInfo>
