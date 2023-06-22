@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import PostItem from "../Post/PostItem/PostItem";
 import styled from "styled-components";
 import Modal from "../Modal/Modal";
+import { useLocation, useNavigate } from "react-router-dom";
+
 const List = styled.section`
   background-color: white;
   padding: 57px 24px 69px 24px;
@@ -22,7 +24,17 @@ export default function PostHome({ myFeed, modalOpen }) {
   }
   return (
     <List>
-      <PostItem myFeed={myFeed} modalOpen={modalOpen} />
+      {/* <PostItem myFeed={myFeed} modalOpen={modalOpen} /> */}
+      {/* {postInfo?.map(item => (
+        <div key={item.id}>
+          <PostItem
+            myFeed={myFeed}
+            modalOpen={modalOpen}
+            postInfo={[item]}
+            authorInfo={authorInfo}
+          />
+        </div>
+      ))} */}
       {modalShow && (
         <Modal
           type="modification"
