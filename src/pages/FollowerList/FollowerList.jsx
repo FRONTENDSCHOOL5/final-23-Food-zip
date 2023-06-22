@@ -23,6 +23,7 @@ const FollowListItem = styled.li`
 export default function FollowerList({ type, followType }) {
   const location = useLocation();
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const accountname = location.state.accountname;
   const [followerList, setFollowerList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
