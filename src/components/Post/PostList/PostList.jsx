@@ -208,7 +208,11 @@ export default function PostList({ post, modalOpen, type }) {
         </>
       )}
       {modalShow && (
-        <Modal type="report" modalClose={modalClose} postId={selectedId} />
+        <Modal
+          type="modification"
+          modalClose={modalClose}
+          postId={selectedId}
+        />
       )}
     </>
   );
