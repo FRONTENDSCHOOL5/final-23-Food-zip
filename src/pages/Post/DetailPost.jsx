@@ -85,8 +85,9 @@ export default function DetailPost() {
   }
   const location = useLocation();
   const data = location.state;
-  console.log(data);
-  const { id, postInfo, authorInfo, accountname } = data;
+  const { id, postInfo, authorInfo } = data;
+  const where = localStorage.getItem("accountname");
+
   return (
     <>
       <Header
@@ -101,7 +102,12 @@ export default function DetailPost() {
               <PostItemSection key={item.id}>
                 <PostItem
                   modalOpen={() =>
-                    modalOpen(!accountname ? "modification" : "report", item.id)
+                    modalOpen(
+                      where === authorInfo.accountname
+                        ? "modification"
+                        : "report",
+                      item.id,
+                    )
                   }
                   postInfo={[item]}
                   authorInfo={authorInfo}
