@@ -105,7 +105,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
   const [profileImg, setProfileImg] = useState(null);
   const fileInputRef = useRef(null);
   const data = location.state;
-
   const handleImageChange = async event => {
     const formData = new FormData();
     const file = event.target.files[0];
