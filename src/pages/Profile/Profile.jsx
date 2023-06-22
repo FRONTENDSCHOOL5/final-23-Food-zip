@@ -10,7 +10,6 @@ import { useState } from "react";
 import post from "../../dummy/dummyapi";
 import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard";
-import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   max-width: 390px;
@@ -62,7 +61,7 @@ export default function Profile({ type }) {
       <Header type="profile" modalOpen={() => modalOpen("setting")} />
       <ProfileInformation type={type} />
       <RecommendList cardOpen={cardOpen} />
-      <PostList post={post} modalOpen={() => modalOpen("modification")} />
+      <PostList post={post} />
       {modalShow && (
         <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
       )}

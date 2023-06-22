@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
 import { useNavigate } from "react-router-dom";
-import Modal from "../../Modal/Modal";
 
 const Container = styled.li`
   position: relative;
@@ -86,7 +85,7 @@ const BtnMore = styled.button`
   top: 7px;
   right: 0;
 `;
-export default function PostItem({ postInfo, authorInfo, myFeed }) {
+export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
   const navigate = useNavigate();
 
   function moveDetail(id) {
@@ -97,21 +96,6 @@ export default function PostItem({ postInfo, authorInfo, myFeed }) {
         authorInfo: authorInfo,
       },
     });
-  }
-
-  console.log(postInfo, authorInfo);
-  const [modalShow, setModalShow] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
-
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
-
-  function modalOpen(id) {
-    setSelectedId(id);
-    setModalShow(true);
   }
 
   function formatDate(dateString) {
@@ -175,13 +159,6 @@ export default function PostItem({ postInfo, authorInfo, myFeed }) {
                 </PostInfoBox>
               </PostContent>
               <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>
-              {modalShow && (
-                <Modal
-                  type="modification"
-                  modalClose={modalClose}
-                  postId={selectedId}
-                />
-              )}
             </Container>
           ))
         : myFeed?.map(item => (
@@ -235,13 +212,6 @@ export default function PostItem({ postInfo, authorInfo, myFeed }) {
                 </PostInfoBox>
               </PostContent>
               <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>
-              {modalShow && (
-                <Modal
-                  type="report"
-                  modalClose={modalClose}
-                  postId={selectedId}
-                />
-              )}
             </Container>
           ))}
     </>
