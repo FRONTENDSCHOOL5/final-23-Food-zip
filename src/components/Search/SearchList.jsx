@@ -80,7 +80,11 @@ export default function SearchList({ searchKeyword }) {
             },
           );
           console.log("서치", response);
-          setSearchListData(response.data);
+
+          const filteredData = response.data.filter(
+            item => !item.image.startsWith("https://mandarin.api.weniv"),
+          );
+          setSearchListData(filteredData);
         } catch (error) {
           navigate("/error");
         }
