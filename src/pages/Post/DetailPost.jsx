@@ -101,9 +101,8 @@ export default function DetailPost() {
               <PostItemSection key={item.id}>
                 <PostItem
                   modalOpen={() =>
-                    modalOpen(!accountname ? "modification" : "report")
+                    modalOpen(!accountname ? "modification" : "report", item.id)
                   }
-                  // type={!accountname ? "modification" : "report"}
                   postInfo={[item]}
                   authorInfo={authorInfo}
                 />
