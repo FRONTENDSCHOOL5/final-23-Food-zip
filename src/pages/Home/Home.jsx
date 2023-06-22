@@ -47,8 +47,7 @@ export default function Home() {
   return (
     <Container>
       <Header type="home" />
-      {/* <EmptyHome /> */}
-      <PostHome myFeed={myFeed} postInfo={myFeed} authorInfo={authorInfo} />
+      {myFeed.length > 1 ? <PostHome myFeed={myFeed} postInfo={myFeed} authorInfo={authorInfo} /> : <EmptyHome />}
       <Navigation />
     </Container>
   );
