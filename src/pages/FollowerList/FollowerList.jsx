@@ -26,15 +26,14 @@ export default function FollowerList({ type, followType }) {
   const accountname = location.state.accountname;
   const [followerList, setFollowerList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
-  const navigate = useNavigate();
 
-  function moveProfile(accountname) {
-    navigate(`/profile/${accountname}`, {
-      state: {
-        accountname: accountname,
-      },
-    });
-  }
+  // function moveProfile(accountname) {
+  //   navigate(`/profile/${accountname}`, {
+  //     state: {
+  //       accountname: accountname,
+  //     },
+  //   });
+  // }
   useEffect(() => {
     type === "followers" ? getFollowerList() : getFollowingList();
   }, []);
@@ -80,14 +79,12 @@ export default function FollowerList({ type, followType }) {
         <FollowList>
           {followerList.map((follower, index) => {
             return (
-              <FollowListItem
-                key={index}
-                onClick={() => moveProfile(follower.accountname)}
-              >
+              <FollowListItem key={index}>
                 <FollowItem
                   username={follower.username}
                   intro={follower.intro}
                   image={follower.image}
+                  accountname={follower.accountname}
                 />
               </FollowListItem>
             );
@@ -103,10 +100,7 @@ export default function FollowerList({ type, followType }) {
         <FollowList>
           {followingList.map((following, index) => {
             return (
-              <FollowListItem
-                key={index}
-                onClick={() => moveProfile(following.accountname)}
-              >
+              <FollowListItem key={index}>
                 <FollowItem
                   username={following.username}
                   intro={following.intro}
