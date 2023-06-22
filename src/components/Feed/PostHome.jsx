@@ -8,7 +8,7 @@ const List = styled.section`
   background-color: white;
   padding: 57px 24px 69px 24px;
 `;
-export default function PostHome({ myFeed, modalOpen }) {
+export default function PostHome({ myFeed, modalOpen, authorInfo }) {
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -22,10 +22,11 @@ export default function PostHome({ myFeed, modalOpen }) {
     setSelectedId(id);
     setModalShow(true);
   }
+
+  console.log("myFeed", myFeed);
   return (
     <List>
-      {/* <PostItem myFeed={myFeed} modalOpen={modalOpen} /> */}
-      {/* {postInfo?.map(item => (
+      {myFeed?.map(item => (
         <div key={item.id}>
           <PostItem
             myFeed={myFeed}
@@ -34,13 +35,9 @@ export default function PostHome({ myFeed, modalOpen }) {
             authorInfo={authorInfo}
           />
         </div>
-      ))} */}
+      ))}
       {modalShow && (
-        <Modal
-          type="modification"
-          modalClose={modalClose}
-          postId={selectedId}
-        />
+        <Modal type="report" modalClose={modalClose} postId={selectedId} />
       )}
     </List>
   );

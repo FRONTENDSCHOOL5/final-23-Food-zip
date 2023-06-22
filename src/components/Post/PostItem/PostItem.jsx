@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
 import { useNavigate } from "react-router-dom";
+import Modal from "../../Modal/Modal";
 
 const Container = styled.li`
   position: relative;
