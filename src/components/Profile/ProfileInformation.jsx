@@ -85,30 +85,36 @@ export default function ProfileInformation({ type, modalOpen }) {
   const [follow, setFollow] = useState(true);
   const [followerInfo, setFollowerInfo] = useState([]);
   const myId = localStorage.getItem("_id");
+
   useEffect(() => {
     const yourAccountname = location.state;
     const myAccountname = localStorage.getItem("accountname");
     console.log("profile:", yourAccountname);
+
     const getUserInfo = async () => {
       const token = localStorage.getItem("token");
       let apiUrl = "";
+
       if (type === "my") {
         apiUrl = "https://api.mandarin.weniv.co.kr/user/myinfo";
       } else if (type === "your" && yourAccountname) {
         apiUrl = `https://api.mandarin.weniv.co.kr/profile/${yourAccountname.accountname}`;
       }
+
       const res = await axios.get(apiUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
-          // "Content-type": "application/json",
         },
       });
+
       console.log("***resData", res.data.user);
+
       if (type === "my") {
         setFollowerInfo(res.data.user.follower);
       } else if (type === "your" && yourAccountname) {
         setFollowerInfo(res.data.profile.follower);
       }
+
       if (type === "your") {
         const {
           accountname,
@@ -119,6 +125,7 @@ export default function ProfileInformation({ type, modalOpen }) {
           isfollow,
           intro,
         } = res.data.profile;
+
         setUserInfo({
           accountname,
           username,
@@ -138,6 +145,7 @@ export default function ProfileInformation({ type, modalOpen }) {
           isfollow,
           intro,
         } = res.data.user;
+
         setUserInfo({
           accountname,
           username,
@@ -179,6 +187,12 @@ export default function ProfileInformation({ type, modalOpen }) {
     const following = followerInfo.some(x => x === myId);
     setFollow(!following);
     console.log("팔로우된 상태면 false가 나와야함 결과는?", follow);
+    localStorage.setItem("follow", !following ? "false" : "true");
+  }, [followerInfo]);
+
+  useEffect(() => {
+    const savedFollow = localStorage.getItem("follow");
+    setFollow(savedFollow === "false");
   }, []);
 
   return (
