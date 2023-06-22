@@ -96,7 +96,11 @@ export default function DetailPost() {
           item =>
             item.id === id && (
               <PostItemSection key={item.id}>
-                <PostItem postInfo={[item]} authorInfo={authorInfo} />
+                <PostItem
+                  postInfo={[item]}
+                  authorInfo={authorInfo}
+                  modalOpen={() => modalOpen("modification")}
+                />
               </PostItemSection>
             ),
         )}
