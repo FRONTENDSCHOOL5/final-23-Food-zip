@@ -5,7 +5,7 @@ import IconMoreVertical from "../../assets/images/icon-more-vertical.svg";
 import ImgStar from "../../assets/images/star.svg";
 import Alert from "./Alert";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const RecommendDiv = styled.div`
   position: fixed;
   bottom: 0;
@@ -92,11 +92,14 @@ const RecommendCloseBtn = styled.button`
 `;
 
 export default function RecommendCard({ cardClose, id, modalOpen }) {
+  const location = useLocation();
+  const { accountname } = location.state || {};
   const [recommendInfo, setRecommendInfo] = useState({
     postimage: "",
     restaurantname: "",
     price: "",
     address: "",
+    // author: "",
   });
   const navigation = useNavigate();
   useEffect(() => {
@@ -123,7 +126,6 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
         price,
       });
     } catch (err) {
-      console.error(err);
       navigation("/error");
     }
   };
@@ -159,7 +161,11 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
         </RecommendTextDiv>
       </RecommendCardDiv>
       {modalShow && (
-        <Modal type="product" modalClose={modalClose} productId={id} />
+        <Modal
+          type={!accountname ? "product" : "yourproduct"}
+          modalClose={modalClose}
+          productId={id}
+        />
       )}
     </RecommendDiv>
   );

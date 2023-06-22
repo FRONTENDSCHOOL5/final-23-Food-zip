@@ -95,7 +95,7 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
   const [heartIcon, setHeartIcon] = useState("");
   const [heartCount, setHeartCount] = useState(0);
   const location = useLocation();
-  
+
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
