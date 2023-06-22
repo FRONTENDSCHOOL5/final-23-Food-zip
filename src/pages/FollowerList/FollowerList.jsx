@@ -111,6 +111,7 @@ export default function FollowerList({ type, followType }) {
                   username={following.username}
                   intro={following.intro}
                   image={following.image}
+                  accountname={following.accountname}
                 />
               </FollowListItem>
             );
