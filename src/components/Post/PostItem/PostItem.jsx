@@ -237,7 +237,7 @@ export default function PostItem({ postInfo, authorInfo, myFeed }) {
               <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>
               {modalShow && (
                 <Modal
-                  type="modification"
+                  type="report"
                   modalClose={modalClose}
                   postId={selectedId}
                 />

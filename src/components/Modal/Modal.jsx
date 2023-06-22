@@ -125,7 +125,7 @@ export default function Modal({
 
   return (
     <>
-      <ModalDiv onClick={modalClose}>{UI[type]}</ModalDiv>;
+      <ModalDiv onClick={modalClose}>{UI[type]}</ModalDiv>
       {alertShow && (
         <Alert
           type={alertType}
