@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import PostItem from "../Post/PostItem/PostItem";
 import styled from "styled-components";
 import Modal from "../Modal/Modal";
+import { useLocation, useNavigate } from "react-router-dom";
+
 const List = styled.section`
   background-color: white;
   padding: 57px 24px 69px 24px;
 `;
-export default function PostHome({ myFeed, modalOpen }) {
+export default function PostHome({ myFeed, modalOpen, authorInfo }) {
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -20,15 +22,22 @@ export default function PostHome({ myFeed, modalOpen }) {
     setSelectedId(id);
     setModalShow(true);
   }
+
+  console.log("myFeed", myFeed);
   return (
     <List>
-      <PostItem myFeed={myFeed} modalOpen={modalOpen} />
+      {myFeed?.map(item => (
+        <div key={item.id}>
+          <PostItem
+            myFeed={myFeed}
+            modalOpen={modalOpen}
+            postInfo={[item]}
+            authorInfo={authorInfo}
+          />
+        </div>
+      ))}
       {modalShow && (
-        <Modal
-          type="modification"
-          modalClose={modalClose}
-          postId={selectedId}
-        />
+        <Modal type="report" modalClose={modalClose} postId={selectedId} />
       )}
     </List>
   );

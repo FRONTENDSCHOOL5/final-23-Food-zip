@@ -16,6 +16,8 @@ const Container = styled.div`
 `;
 export default function Home() {
   const [myFeed, setMyFeed] = useState([]);
+  const [authorInfo, setAuthorInfo] = useState([]);
+
   useEffect(() => {
     const getFeed = async () => {
       const token = localStorage.getItem("token");
@@ -29,19 +31,23 @@ export default function Home() {
             },
           },
         );
-        console.log(res.data);
+        console.log("데이터", res.data);
         setMyFeed(res.data.posts);
+        const authors = res.data.posts[0].author;
+        setAuthorInfo(authors);
       } catch (err) {
         console.error(err);
       }
     };
     getFeed();
   }, []);
-  console.log(myFeed);
+
+  console.log("myfeed", myFeed);
+  console.log("authorInfo", authorInfo);
   return (
     <Container>
       <Header type="home" />
-      {myFeed.length > 1 ? <PostHome myFeed={myFeed} /> : <EmptyHome />}
+      {myFeed.length > 1 ? <PostHome myFeed={myFeed} postInfo={myFeed} authorInfo={authorInfo} /> : <EmptyHome />}
       <Navigation />
     </Container>
   );

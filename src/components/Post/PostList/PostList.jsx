@@ -68,7 +68,7 @@ const PostGridImg = styled.button`
   }
 `;
 
-export default function PostList({ post, modalOpen }) {
+export default function PostList({ post, modalOpen, type }) {
   const [viewMode, setViewMode] = useState("list");
   const location = useLocation();
 
@@ -112,7 +112,6 @@ export default function PostList({ post, modalOpen }) {
       //   images: postImages[index],
       // }));
       // setPostInfo(combinedInfo);
-
       const posts = res.data.post;
 
       if (posts.length === 0) {
