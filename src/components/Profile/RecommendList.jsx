@@ -13,7 +13,6 @@ const RecommendWrapDiv = styled.div`
   box-sizing: border-box;
   background-color: white;
   border-bottom: 1px solid #dbdbdb;
-
   &::-webkit-scrollbar {
     height: 12px;
   }

@@ -117,7 +117,7 @@ export default function MakeRecommend() {
   };
   useEffect(() => {
     checkContent();
-  }, [restaurantname, rating, address]);
+  }, [restaurantname, rating, address, imgFile]);
   const onChangeName = event => {
     setRestaurantname(event.target.value);
     checkContent();

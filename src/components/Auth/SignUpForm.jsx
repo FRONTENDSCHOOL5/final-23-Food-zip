@@ -4,19 +4,16 @@ import { useForm } from "react-hook-form";
 import { ButtonStyle } from "../common/Button/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import debounce from "lodash/debounce";
+import _ from "lodash";
 const StyledForm = styled.form`
   margin-top: 40px;
 `;
-
 const StyledButton = styled(ButtonStyle)`
   margin: 100px auto 20px auto;
 `;
-
 const StyledInputContainer = styled.div`
   position: relative;
 `;
-
 const StyledLabel = styled.label`
   display: block;
   text-align: left;
@@ -25,7 +22,6 @@ const StyledLabel = styled.label`
   color: #767676;
   pointer-events: none;
 `;
-
 const StyledInput = styled.input`
   display: block;
   width: 322px;
@@ -60,12 +56,9 @@ const SignUpForm = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
-    setError,
     clearErrors,
-    watch,
-    setValue,
-    trigger,
-    formState: { errors },
+    setError,
+    formState: { errors, isValid }, // Added isValid from formState
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -73,22 +66,34 @@ const SignUpForm = ({ onSubmit }) => {
       password: null,
     },
   });
-  const watchFields = watch(["email", "password"]);
-  const isValid = Object.values(watchFields).every(value => value !== null);
-
-  const onValid = data => console.log(data, "onvalid");
-  const onInvalid = data => console.log(data, "onInvalid");
-
+  const [email, setEmail] = useState("");
+  const [emailValid, setEmailValid] = useState(false);
   const navigate = useNavigate();
-  const [abledBtn, setAbledBtn] = useState(false);
-  const checkEmailValid = async formData => {
-    // formData.preventDefault();
+  const [abledBtn, setAbledBtn] = useState(true);
+
+  const handleFormSubmit = async data => {
+    const isValidEmail = await checkEmailValid(data.email);
+    console.log("check", isValidEmail);
+    if (isValidEmail) {
+      navigate("/signup/profile", {
+        state: {
+          email: data.email,
+          password: data.password,
+        },
+      });
+    } else {
+      // Handle invalid email case
+      console.log("Invalid email");
+    }
+  };
+
+  const checkEmailValid = async email => {
     try {
       const res = await axios.post(
         "https://api.mandarin.weniv.co.kr/user/emailvalid",
         {
           user: {
-            email: formData,
+            email: email,
           },
         },
         {
@@ -97,15 +102,17 @@ const SignUpForm = ({ onSubmit }) => {
           },
         },
       );
-      // const json = await res.json();
-      console.log(res);
-
       const reqMsg = res.data.message;
-      console.log(reqMsg === "이미 가입된 이메일 주소 입니다.", reqMsg);
-
+      console.log(reqMsg === "이미 가입된 이메일 주소 입니다.");
+      clearErrors("email");
       if (reqMsg === "이미 가입된 이메일 주소 입니다.") {
+        setError("email", {
+          type: "manual",
+          message: "이미 가입된 이메일 주소 입니다.",
+        });
         return false;
       } else {
+        clearErrors("email");
         return true;
       }
     } catch (error) {
@@ -113,50 +120,17 @@ const SignUpForm = ({ onSubmit }) => {
       return false;
     }
   };
-  //useCallback , useEffect, useMemo
-  const handleEmailBlur = useCallback(
-    debounce(async e => {
-      e.preventDefault();
-      const email = e.target.value;
-      const isEmailValid = await checkEmailValid(email);
-      console.log("이게" + isEmailValid);
-      clearErrors("email"); // 이메일 필드의 에러 초기화
-      setValue("email", email); // 이메일 값 업데이트
-      trigger("email");
-      // clearErrors("email");
-      if (!isEmailValid) {
-        // 이메일이 이미 가입된 경우 에러 메시지 표시
-        console.log("이게 출력되야 함");
-        setError("email", {
-          type: "manual",
-          message: "이미 가입된 이메일 주소입니다.",
-        });
-        console.log(errors.email);
-      } else {
-        clearErrors("email"); // 이메일이 유효한 경우 에러 메시지 제거
-      }
-      // console.log("1 : " + isValid, isEmailValid);
-      if (isValid && isEmailValid) {
-        console.log("2 : " + isValid, isEmailValid);
-        setAbledBtn(true);
-      } else {
-        console.log("3 : " + isValid, isEmailValid);
-        setAbledBtn(false);
-      }
-      console.log("btn:" + abledBtn);
-    }, 1000), // debounce 함수의 시간을 1000ms로 설정
-    [setAbledBtn, checkEmailValid, setError, clearErrors, setValue, trigger],
-  );
-  const handleFormSubmit = data => {
-    navigate("/signup/profile", {
-      state: {
-        email: data.email,
-        password: data.password,
-      },
-    });
+  useEffect(() => {
+    // Check if form is valid and set abledBtn state accordingly
+    setAbledBtn(isValid);
+  }, [isValid, setAbledBtn]);
+
+  const handleEmailChange = e => {
+    setEmail(e.target.value);
   };
+
   return (
-    <StyledForm onSubmit={handleSubmit(handleFormSubmit, onValid, onInvalid)}>
+    <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
       <StyledInputContainer>
         <StyledLabel htmlFor="email">이메일</StyledLabel>
         <StyledInput
@@ -167,12 +141,11 @@ const SignUpForm = ({ onSubmit }) => {
           {...register("email", {
             required: "이메일은 필수 입력입니다.",
             pattern: {
-              value:
-                /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-              message: "이메일 형식에 맞지 않습니다.",
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "유효한 이메일 주소를 입력하세요.",
             },
           })}
-          onChange={handleEmailBlur}
+          // onChange={handleEmailChange}
         />
         {errors.email && (
           <StyledError role="alert">{errors.email.message}</StyledError>
@@ -184,7 +157,7 @@ const SignUpForm = ({ onSubmit }) => {
         <StyledInput
           id="password"
           type="password"
-          placeholder="이메일을 입력하세요"
+          placeholder="비밀번호를 입력하세요"
           {...register("password", {
             required: "비밀번호는 필수 입력입니다.",
             pattern: {
@@ -203,7 +176,6 @@ const SignUpForm = ({ onSubmit }) => {
         className="btn-login"
         bgColor={abledBtn ? "active" : "inactive"}
         disabled={!abledBtn}
-        // onClick={handleBtn}
       >
         다음
       </StyledButton>
