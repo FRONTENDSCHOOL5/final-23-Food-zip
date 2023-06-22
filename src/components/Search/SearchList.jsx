@@ -61,7 +61,7 @@ export default function SearchList({ searchKeyword }) {
   }
 
   const [searchListData, setSearchListData] = useState([]);
-  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 300);
 
   useEffect(() => {
     const fetchData = async () => {
