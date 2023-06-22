@@ -68,9 +68,10 @@ const PostGridImg = styled.button`
   }
 `;
 
-export default function PostList({ post, modalOpen, type }) {
+export default function PostList({ post, modalOpen }) {
   const [viewMode, setViewMode] = useState("list");
   const location = useLocation();
+  const { accountname } = location.state || {};
 
   const handleViewModeChange = mode => {
     setViewMode(mode);
@@ -84,7 +85,6 @@ export default function PostList({ post, modalOpen, type }) {
   }, [location]);
 
   const getUserInfo = async () => {
-    const { accountname } = location.state || {};
     const token = localStorage.getItem("token");
     try {
       let apiUrl = `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`;
@@ -112,6 +112,7 @@ export default function PostList({ post, modalOpen, type }) {
       //   images: postImages[index],
       // }));
       // setPostInfo(combinedInfo);
+
       const posts = res.data.post;
       if (posts.length === 0) {
         setHasPosts(false);
@@ -125,7 +126,7 @@ export default function PostList({ post, modalOpen, type }) {
       }
     } catch (error) {
       console.log("error");
-      navigate("/error");
+      // <ErrorPage />; 되나?
     }
   };
 
@@ -137,6 +138,7 @@ export default function PostList({ post, modalOpen, type }) {
         id: id,
         postInfo: postInfo,
         authorInfo: authorInfo,
+        accountname: accountname,
       },
     });
   }
@@ -208,7 +210,7 @@ export default function PostList({ post, modalOpen, type }) {
       )}
       {modalShow && (
         <Modal
-          type="modification"
+          type={!accountname ? "modification" : "report"}
           modalClose={modalClose}
           postId={selectedId}
         />

@@ -54,6 +54,7 @@ const CommentSection = styled.div`
 
 export default function DetailPost() {
   const [modalShow, setModalShow] = useState(false);
+  const [modalType, setModalType] = useState("setting");
   const [inputValue, setInputValue] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
@@ -66,8 +67,9 @@ export default function DetailPost() {
     }
   }
 
-  function modalOpen(id) {
+  function modalOpen(type, id) {
     setModalShow(true);
+    setModalType(type);
     setSelectedId(id);
   }
 
@@ -83,7 +85,8 @@ export default function DetailPost() {
   }
   const location = useLocation();
   const data = location.state;
-  const { id, postInfo, authorInfo } = data;
+  console.log(data);
+  const { id, postInfo, authorInfo, accountname } = data;
   return (
     <>
       <Header
@@ -97,7 +100,9 @@ export default function DetailPost() {
             item.id === id && (
               <PostItemSection key={item.id}>
                 <PostItem
-                  modalOpen={modalOpen}
+                  modalOpen={() =>
+                    modalOpen(!accountname ? "modification" : "report", item.id)
+                  }
                   postInfo={[item]}
                   authorInfo={authorInfo}
                 />
@@ -123,7 +128,7 @@ export default function DetailPost() {
       </DetailPostWrapper>
       {modalShow && (
         <Modal
-          type="modification"
+          type={modalType}
           modalClose={modalClose}
           alertOpen={alertOpen}
           postId={selectedId}

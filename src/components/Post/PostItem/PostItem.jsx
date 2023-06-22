@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../Modal/Modal";
 import axios from "axios";
 const Container = styled.li`
@@ -94,6 +94,8 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
   const [hearted, setHearted] = useState(false);
   const [heartIcon, setHeartIcon] = useState("");
   const [heartCount, setHeartCount] = useState(0);
+  const location = useLocation();
+  
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -166,11 +168,13 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
     setHeartCount(parseInt(savedHeartCount, 10));
   }, []);
   function moveProfile(accountname) {
-    navigate(`/profile/${accountname}`, {
-      state: {
-        accountname: accountname,
-      },
-    });
+    if (location.pathname !== "/myprofile") {
+      navigate(`/profile/${accountname}`, {
+        state: {
+          accountname: accountname,
+        },
+      });
+    }
   }
   function formatDate(dateString) {
     const dateObj = new Date(dateString);
