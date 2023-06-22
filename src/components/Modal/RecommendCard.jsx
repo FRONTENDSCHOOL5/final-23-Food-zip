@@ -5,6 +5,7 @@ import IconMoreVertical from "../../assets/images/icon-more-vertical.svg";
 import ImgStar from "../../assets/images/star.svg";
 import Alert from "./Alert";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const RecommendDiv = styled.div`
   position: fixed;
   bottom: 0;
@@ -97,28 +98,34 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
     price: "",
     address: "",
   });
+  const navigation = useNavigate();
   useEffect(() => {
     getUserInfo();
   }, [id]);
 
   const getUserInfo = async () => {
     const token = localStorage.getItem("token");
-    const res = await axios.get(
-      `https://api.mandarin.weniv.co.kr/product/detail/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-type": "application/json",
+    try {
+      const res = await axios.get(
+        `https://api.mandarin.weniv.co.kr/product/detail/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
         },
-      },
-    );
-    const { itemImage, itemName, link, price } = res.data.product;
-    setRecommendInfo({
-      itemImage,
-      itemName,
-      link,
-      price,
-    });
+      );
+      const { itemImage, itemName, link, price } = res.data.product;
+      setRecommendInfo({
+        itemImage,
+        itemName,
+        link,
+        price,
+      });
+    } catch (err) {
+      console.error(err);
+      navigation("/error");
+    }
   };
 
   const [modalShow, setModalShow] = useState(false);

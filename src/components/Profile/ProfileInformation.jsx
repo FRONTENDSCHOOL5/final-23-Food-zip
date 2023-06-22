@@ -107,8 +107,6 @@ export default function ProfileInformation({ type, modalOpen }) {
         },
       });
 
-      console.log("***resData", res.data.user);
-
       if (type === "my") {
         setFollowerInfo(res.data.user.follower);
       } else if (type === "your" && yourAccountname) {

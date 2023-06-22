@@ -82,11 +82,10 @@ export default function ProfileBtn({
           },
         },
       );
-      console.log("팔로우한 상대계정 정보 : ", res.data.profile);
       setFollow(!follow);
-      console.log("token:", tokenValid);
     } catch (err) {
       console.error("에러!", err);
+      navigate("/error");
     }
   };
 
@@ -101,10 +100,10 @@ export default function ProfileBtn({
           },
         },
       );
-      console.log("언팔로우한 상대계정 정보 : ", res.data.profile);
       setFollow(!follow);
     } catch (err) {
       console.error("에러!", err);
+      navigate("/error");
     }
   };
   const UI = {

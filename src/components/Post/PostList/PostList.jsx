@@ -126,7 +126,7 @@ export default function PostList({ post, modalOpen, type }) {
       }
     } catch (error) {
       console.log("error");
-      // <ErrorPage />; 되나?
+      navigate("/error");
     }
   };
 

@@ -68,6 +68,7 @@ export default function MakePost() {
       navigate("/myprofile");
     } catch (error) {
       console.error(error);
+      navigate("/error");
     }
   };
 

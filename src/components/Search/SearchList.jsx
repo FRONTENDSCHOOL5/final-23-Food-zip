@@ -82,7 +82,7 @@ export default function SearchList({ searchKeyword }) {
           console.log("서치", response);
           setSearchListData(response.data);
         } catch (error) {
-          <ErrorPage />;
+          navigate("/error");
         }
       }
     };
