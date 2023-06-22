@@ -18,14 +18,20 @@ const SplashImg = styled.img`
 
 export default function Splash() {
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    const timer = setTimeout(() => {
-      // 3초 후에 다른 페이지로 이동
-      navigate("/welcome");
-    }, 1500);
+    if (token) {
+      setTimeout(() => {
+        navigate("/home");
+      }, 3000);
+    } else {
+      const timer = setTimeout(() => {
+        // 3초 후에 다른 페이지로 이동
+        navigate("/welcome");
+      }, 1500);
 
-    return () => clearTimeout(timer); // 컴포넌트가 언마운트될 때 타이머를 정리(clean-up)
+      return () => clearTimeout(timer);
+    } // 컴포넌트가 언마운트될 때 타이머를 정리(clean-up)
   }, [navigate]);
 
   const [paddingTop, setPaddingTop] = useState("65%");

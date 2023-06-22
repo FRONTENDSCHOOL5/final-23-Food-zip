@@ -6,7 +6,8 @@ import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import axios from "axios";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Modal from "../../Modal/Modal";
 
 const PostListDiv = styled.div`
   display: flex;
@@ -15,7 +16,6 @@ const PostListDiv = styled.div`
   height: 44px;
   box-sizing: border-box;
   background-color: white;
-  /* border-top: 1px solid #dbdbdb; */
   border-bottom: 1px solid #dbdbdb;
 `;
 
@@ -143,6 +143,20 @@ export default function PostList({ post, modalOpen }) {
     });
   }
 
+  const [modalShow, setModalShow] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+
+  function modalClose(e) {
+    if (e.target === e.currentTarget) {
+      setModalShow(false);
+    }
+  }
+
+  function modalOpen(id) {
+    setSelectedId(id);
+    setModalShow(true);
+  }
+
   return (
     <>
       {hasPosts && (
@@ -193,6 +207,9 @@ export default function PostList({ post, modalOpen }) {
             </GridItemList>
           )}
         </>
+      )}
+      {modalShow && (
+        <Modal type="report" modalClose={modalClose} postId={selectedId} />
       )}
     </>
   );

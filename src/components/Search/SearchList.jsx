@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ErrorPage from "../../pages/Error/ErrorPage";
 
 const SearchWrapper = styled.ul`
-  padding: 0;
+  padding: 0 0 60px 0;
 `;
 
 const List = styled.li`
@@ -61,7 +61,7 @@ export default function SearchList({ searchKeyword }) {
   }
 
   const [searchListData, setSearchListData] = useState([]);
-  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 300);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,7 +95,7 @@ export default function SearchList({ searchKeyword }) {
       {searchListData.map(searchItem => (
         <List
           key={searchItem.accountname}
-          onClick={() => handleClick(searchItem.accountname)} // Pass the accountname as an argument
+          onClick={() => handleClick(searchItem.accountname)}
         >
           <ProfileImg src={searchItem.image} alt="프로필 이미지" />
           <TextWrap>

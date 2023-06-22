@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 
 const RecommendWrapDiv = styled.div`
   width: 100%;
-  padding: 20px 16px 8px;
+  padding: 20px 16px 2px;
   overflow: auto;
   box-sizing: border-box;
   background-color: white;
@@ -52,11 +52,6 @@ const RecommendListImg = styled.img`
 const RecommendNameP = styled.p`
   font-size: 14px;
   margin: 6px 0 2px;
-  display: block;
-  width: 140px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 `;
 
 const RecommendScoreSpan = styled.span`
@@ -109,7 +104,7 @@ export default function RecommendList({ cardOpen, cardClose }) {
   };
 
   if (recommendInfo.length === 0) {
-    return null; // recommendInfo가 비어있을 때는 null을 반환하여 아무것도 렌더링하지 않습니다.
+    return null;
   }
 
   return (

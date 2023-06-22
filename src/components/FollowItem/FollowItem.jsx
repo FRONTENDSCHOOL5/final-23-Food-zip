@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ProfileImg from "../../assets/images/list-example.png";
 import styled from "styled-components";
 import Button from "../common/Button/Button";
+import axios from "axios";
 
 const Container = styled.div`
   width: 358px;
@@ -27,14 +28,57 @@ const FollowerIntro = styled.p`
   color: #767676;
 `;
 
-export default function FollowItem({ username, intro, image }) {
+export default function FollowItem({ username, intro, image, accountname }) {
   const [follow, setFollow] = useState(true);
-  const FollowBtn = () => {
-    setFollow(!follow);
+  const token = localStorage.getItem("token");
+
+  const Follow = async () => {
+    try {
+      const tokenValid = await axios.get(
+        `https://api.mandarin.weniv.co.kr/user/checktoken`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      const res = await axios.post(
+        `https://api.mandarin.weniv.co.kr/profile/${accountname}/follow`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      console.log("팔로우한 상대계정 정보 : ", res.data.profile);
+      setFollow(!follow);
+      console.log("token:", tokenValid);
+    } catch (err) {
+      console.error("에러!", err);
+    }
   };
-  const UnFollowBtn = () => {
-    setFollow(!follow);
+
+  const UnFollow = async () => {
+    try {
+      const res = await axios.delete(
+        `https://api.mandarin.weniv.co.kr/profile/${accountname}/unfollow`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      console.log("언팔로우한 상대계정 정보 : ", res.data.profile);
+      setFollow(!follow);
+    } catch (err) {
+      console.error("에러!", err);
+    }
   };
+
   return (
     <Container>
       <FollowerImgTest src={image} alt="프로필 이미지" />
@@ -49,7 +93,7 @@ export default function FollowItem({ username, intro, image }) {
           width="s"
           size="s"
           bgColor="active"
-          onClick={FollowBtn}
+          onClick={Follow}
         />
       ) : (
         <Button
@@ -59,7 +103,7 @@ export default function FollowItem({ username, intro, image }) {
           size="s"
           border="active"
           color="active"
-          onClick={UnFollowBtn}
+          onClick={UnFollow}
         />
       )}
     </Container>
