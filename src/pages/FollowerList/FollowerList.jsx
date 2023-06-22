@@ -6,6 +6,7 @@ import Navigation from "../../components/common/Nav/Navigation";
 import axios from "axios";
 import post from "../../dummy/dummyapi";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const FollowList = styled.ul`
@@ -16,6 +17,7 @@ const FollowList = styled.ul`
 
 const FollowListItem = styled.li`
   margin-bottom: 12px;
+  cursor: pointer;
 `;
 
 export default function FollowerList({ type, followType }) {
@@ -24,7 +26,15 @@ export default function FollowerList({ type, followType }) {
   const accountname = location.state.accountname;
   const [followerList, setFollowerList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
+  const navigate = useNavigate();
 
+  function moveProfile(accountname) {
+    navigate(`/profile/${accountname}`, {
+      state: {
+        accountname: accountname,
+      },
+    });
+  }
   useEffect(() => {
     type === "followers" ? getFollowerList() : getFollowingList();
   }, []);
@@ -70,7 +80,10 @@ export default function FollowerList({ type, followType }) {
         <FollowList>
           {followerList.map((follower, index) => {
             return (
-              <FollowListItem key={index}>
+              <FollowListItem
+                key={index}
+                onClick={() => moveProfile(follower.accountname)}
+              >
                 <FollowItem
                   username={follower.username}
                   intro={follower.intro}
@@ -90,7 +103,10 @@ export default function FollowerList({ type, followType }) {
         <FollowList>
           {followingList.map((following, index) => {
             return (
-              <FollowListItem key={index}>
+              <FollowListItem
+                key={index}
+                onClick={() => moveProfile(following.accountname)}
+              >
                 <FollowItem
                   username={following.username}
                   intro={following.intro}

@@ -16,9 +16,11 @@ const PostUserImg = styled.img`
   width: 42px;
   height: 42px;
   border-radius: 50%;
+  cursor: pointer;
 `;
-const PostUserBox = styled.a`
+const PostUserBox = styled.div`
   align-self: center;
+  cursor: pointer;
 `;
 const PostUserName = styled.p`
   font-size: 14px;
@@ -48,6 +50,7 @@ const PostImg = styled.img`
 const PostInfoBox = styled.div`
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 `;
 const PostBtnBox = styled.div`
   display: flex;
@@ -87,7 +90,6 @@ const BtnMore = styled.button`
 `;
 export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
   const navigate = useNavigate();
-
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -98,6 +100,13 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
     });
   }
 
+  function moveProfile(accountname) {
+    navigate(`/profile/${accountname}`, {
+      state: {
+        accountname: accountname,
+      },
+    });
+  }
   function formatDate(dateString) {
     const dateObj = new Date(dateString);
     const year = dateObj.getFullYear();
@@ -111,20 +120,20 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
         ? postInfo?.map(item => (
             <Container key={item.id}>
               <PostUser>
-                <PostUserImg src={authorInfo.image} alt="사용자 이미지" />
-                <PostUserBox>
+                <PostUserImg
+                  src={authorInfo.image}
+                  alt="사용자 이미지"
+                  onClick={() => moveProfile(authorInfo.accountname)}
+                />
+                <PostUserBox
+                  onClick={() => moveProfile(authorInfo.accountname)}
+                >
                   <PostUserName>{authorInfo.username}</PostUserName>
                   <PostUserId>@ {authorInfo.accountname}</PostUserId>
                 </PostUserBox>
               </PostUser>
               <PostContent>
                 <PostText>{item.content}</PostText>
-                {/* {item.image.map((url, index) => (
-              <PostImg key={index} src={url} alt="포스트 이미지" />
-            ))} */}
-                {/* {item.image.split(",").map((imageUrl, index) => (
-              <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
-            ))} */}
                 {item.image !== "" && (
                   <PostImg src={item.image} alt="포스트 이미지" />
                 )}
@@ -164,20 +173,20 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
         : myFeed?.map(item => (
             <Container key={item.id}>
               <PostUser>
-                <PostUserImg src={item.author.image} alt="사용자 이미지" />
-                <PostUserBox>
+                <PostUserImg
+                  src={item.author.image}
+                  alt="사용자 이미지"
+                  onClick={() => moveProfile(item.author.accountname)}
+                />
+                <PostUserBox
+                  onClick={() => moveProfile(item.author.accountname)}
+                >
                   <PostUserName>{item.author.username}</PostUserName>
                   <PostUserId>@ {item.author.accountname}</PostUserId>
                 </PostUserBox>
               </PostUser>
               <PostContent>
                 <PostText>{item.content}</PostText>
-                {/* {item.image.map((url, index) => (
-              <PostImg key={index} src={url} alt="포스트 이미지" />
-            ))} */}
-                {/* {item.image.split(",").map((imageUrl, index) => (
-              <PostImg key={index} src={imageUrl} alt="포스트 이미지" />
-            ))} */}
                 {item.image !== "" && (
                   <PostImg src={item.image} alt="포스트 이미지" />
                 )}
