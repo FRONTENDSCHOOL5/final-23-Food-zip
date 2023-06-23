@@ -57,9 +57,12 @@ export default function MakePost() {
           },
         },
       );
-      const imageUrl =
-        "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
-
+      let imageUrl = "";
+      if (uploadResponse.data.filename) {
+        imageUrl =
+          "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
+      }
+      console.log("upload:", content, imageUrl);
       const postResponse = await axios.post(
         "https://api.mandarin.weniv.co.kr/post",
         {
@@ -84,7 +87,7 @@ export default function MakePost() {
 
   const handleUpload = () => {
     if (isValid) {
-      uploadPost();
+      uploadPost(imgUrl, content);
     } else {
       alert("게시글이 작성되지 않았습니다.");
     }
@@ -105,6 +108,7 @@ export default function MakePost() {
   useEffect(() => {
     checkContent();
   }, [content, imgUrl]);
+
   const onChangeInput = event => {
     setContent(event.target.value);
     checkContent();
@@ -116,12 +120,11 @@ export default function MakePost() {
         handleUploadBtn={isValid}
         uploadHandler={handleUpload}
       />
-      <StyledContainer className="post-wrapper">
+      <StyledContainer>
         <PostImgPrev onImageUrlChange={handleImageUrlChange} />
-        <form className="post-section">
+        <form>
           <StyledPost
             rows="28"
-            className="input-content"
             placeholder="게시글 입력하기"
             value={content}
             onChange={onChangeInput}
