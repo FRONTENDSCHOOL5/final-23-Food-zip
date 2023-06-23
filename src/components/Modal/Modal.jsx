@@ -61,6 +61,7 @@ export default function Modal({
   alertOpen,
   postId,
   productId,
+  commentId,
 }) {
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
@@ -70,7 +71,6 @@ export default function Modal({
     if (e.target === e.currentTarget) {
       setAlertShow(false);
     }
-    navigate("/myprofile");
   }
 
   function alertOpen(type) {
@@ -120,7 +120,7 @@ export default function Modal({
     delete: (
       <ModalWrapDiv>
         <ModalLineSpan />
-        <ModalTextBtn>삭제</ModalTextBtn>
+        <ModalTextBtn onClick={() => alertOpen("comment")}>삭제</ModalTextBtn>
       </ModalWrapDiv>
     ),
     chat: (
@@ -141,6 +141,7 @@ export default function Modal({
           alertClose={alertClose}
           postId={postId}
           productId={productId}
+          commentId={commentId}
         />
       )}
     </>

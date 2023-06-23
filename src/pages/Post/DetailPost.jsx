@@ -9,11 +9,10 @@ import Alert from "../../components/Modal/Alert";
 import axios from "axios";
 
 const DetailPostWrapper = styled.div`
-  background: #fff;
+  /* background: #fff; */
   width: 100%;
   height: 100vh;
-  padding: 68px 0 0 0;
-  overflow: hidden;
+  padding: 68px 0 0px 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -34,7 +33,7 @@ const WriteCommentSection = styled.div`
   width: 100%;
   max-width: 390px;
   box-sizing: border-box;
-  /* height: 287px; */
+  border-top: 1px solid #dbdbdb;
 `;
 
 const WriteComment = styled.input`
@@ -47,18 +46,18 @@ const BtnDisplay = styled.button`
 `;
 
 const PostUserImg = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
 `;
 const CommentSection = styled.div`
   width: 100%;
   padding: 5px 15px 0;
   box-sizing: border-box;
   border-top: 1px solid #dbdbdb;
-  border-bottom: 1px solid #dbdbdb;
   flex-grow: 1;
   flex-shrink: 0;
-  overflow: auto;
+  height: 100vh;
+  background-color: #fff;
 `;
 
 export default function DetailPost() {
@@ -98,17 +97,15 @@ export default function DetailPost() {
   const location = useLocation();
   const data = location.state;
 
-  const postId = data.id;
-  const { id, postInfo, authorInfo, accountname, otherInfo } = data;
+  const { id, postInfo, authorInfo, otherInfo } = data;
   const infoToIterate = postInfo || otherInfo;
-  console.log("who", infoToIterate[0].author);
-
+  console.log("detailpost", id);
   const where = localStorage.getItem("accountname");
   const token = localStorage.getItem("token");
   const uploadComment = async () => {
     try {
       const res = await axios.post(
-        `https://api.mandarin.weniv.co.kr/post/${postId}/comments`,
+        `https://api.mandarin.weniv.co.kr/post/${id}/comments`,
         {
           comment: {
             content: inputValue,
@@ -126,14 +123,13 @@ export default function DetailPost() {
       setInputValue("");
     } catch (err) {
       console.error(err);
-      navigate("/error");
     }
   };
 
   const loadcommentList = async () => {
     try {
       const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/${postId}/comments`,
+        `https://api.mandarin.weniv.co.kr/post/${id}/comments`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -180,10 +176,7 @@ export default function DetailPost() {
             ),
         )}
         <CommentSection>
-          <Comment
-            commentList={commentList}
-            modalOpen={() => modalOpen("report")}
-          />
+          <Comment commentList={commentList} postId={id} />
         </CommentSection>
         <WriteCommentSection>
           <PostUserImg
