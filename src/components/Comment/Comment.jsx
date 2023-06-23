@@ -1,3 +1,4 @@
+import { getValue } from "@testing-library/user-event/dist/utils";
 import React, { useState } from "react";
 import styled from "styled-components";
 import MoreIcon from "../../assets/images/icon-more-vertical.svg";
@@ -64,23 +65,46 @@ const CommentContent = styled.p`
 
 export default function Comment({ commentList, postId }) {
   const where = localStorage.getItem("accountname");
-  console.log(commentList);
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState("delete");
   const [selectedId, setSelectedId] = useState(null);
+
+  // 댓글 달린 시간 계산
+  const elapsedTime = commentDate => {
+    const now = new Date();
+    const commentTime = new Date(commentDate);
+    const elapsedSeconds = Math.floor((now - commentTime) / 1000);
+
+    const times = [
+      { name: "년", seconds: 60 * 60 * 24 * 365 },
+      { name: "개월", seconds: 60 * 60 * 24 * 30 },
+      { name: "일", seconds: 60 * 60 * 24 },
+      { name: "시간", seconds: 60 * 60 },
+      { name: "분", seconds: 60 },
+    ];
+
+    for (const value of times) {
+      const elapsed = Math.floor(elapsedSeconds / value.seconds);
+
+      if (elapsed > 0) {
+        return `${elapsed}${value.name} 전`;
+      }
+    }
+    return "방금 전";
+  };
+
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
     }
   }
+
   function modalOpen(type, id) {
     console.log("type", type);
     setModalShow(true);
     setModalType(type);
     setSelectedId(id);
   }
-  console.log(commentList);
-  console.log("commentId", selectedId);
 
   const [alertShow, setAlertShow] = useState(false);
   function alertClose(e) {
@@ -105,7 +129,7 @@ export default function Comment({ commentList, postId }) {
             <StyledCommentContent>
               <StyledCommentUserInfo>
                 <h3>{comment.author.username}</h3>
-                <p>몇분전</p>
+                <p>{elapsedTime(comment.createdAt)}</p>
               </StyledCommentUserInfo>
               <CommentContent>{comment.content}</CommentContent>
             </StyledCommentContent>
