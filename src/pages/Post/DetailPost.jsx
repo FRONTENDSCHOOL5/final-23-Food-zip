@@ -86,10 +86,14 @@ export default function DetailPost() {
   }
   const location = useLocation();
   const data = location.state;
+
   console.log("data", data);
   const { id, postInfo, authorInfo, accountname, otherInfo } = data;
   const infoToIterate = postInfo || otherInfo;
   console.log("who", infoToIterate[0].author);
+
+  const where = localStorage.getItem("accountname");
+
   return (
     <>
       <Header
@@ -105,7 +109,11 @@ export default function DetailPost() {
                 <PostItem
                   modalOpen={() =>
                     modalOpen(
-                      !authorInfo.accountname ? "modification" : "report",
+
+                      where === authorInfo.accountname
+                        ? "modification"
+                        : "report",
+
                       item.id,
                     )
                   }
