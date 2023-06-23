@@ -71,6 +71,7 @@ export default function Alert({
   postId,
   modalClose,
   productId,
+  commentId,
 }) {
   const navigate = useNavigate();
   const onClickLogout = () => {
@@ -81,8 +82,11 @@ export default function Alert({
     navigate("/welcome");
   };
 
+  console.log("commentId", commentId);
+
   const handleDeletePost = async () => {
     const token = localStorage.getItem("token");
+    console.log("post", postId);
     try {
       await axios.delete(`https://api.mandarin.weniv.co.kr/post/${postId}`, {
         headers: {
@@ -91,15 +95,15 @@ export default function Alert({
         },
       });
       alertClose("post");
+      navigate("/myprofile");
       modalClose("modification");
       window.location.reload();
-      navigate("/myprofile");
     } catch (error) {
       console.error("Delete request failed", error);
       navigate("/error");
     }
   };
-
+  console.log("post", postId);
   const handleDeleteProduct = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -114,11 +118,33 @@ export default function Alert({
       );
       alertClose("post");
       modalClose("modification");
-      window.location.reload();
       navigate("/myprofile");
+      window.location.reload();
     } catch (error) {
       console.error("Delete request failed", error);
       navigate("/error");
+    }
+  };
+
+  const handleDeleteComment = async () => {
+    const token = localStorage.getItem("token");
+    console.log(postId);
+    console.log("댓글삭제됨");
+    try {
+      await axios.delete(
+        `https://api.mandarin.weniv.co.kr/post/${postId}/comments/${commentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      alertClose("comment");
+      modalClose("delete");
+      window.location.reload();
+    } catch (error) {
+      console.error("Delete request failed", error);
     }
   };
 
@@ -150,6 +176,16 @@ export default function Alert({
           <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
           <AlertLineSpan></AlertLineSpan>
           <AlertMainBtn onClick={handleDeleteProduct}>삭제</AlertMainBtn>
+        </AlertBottomDiv>
+      </AlertWrapDiv>
+    ),
+    comment: (
+      <AlertWrapDiv>
+        <AlertTextP>댓글을 삭제할까요?</AlertTextP>
+        <AlertBottomDiv>
+          <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
+          <AlertLineSpan></AlertLineSpan>
+          <AlertMainBtn onClick={handleDeleteComment}>삭제</AlertMainBtn>
         </AlertBottomDiv>
       </AlertWrapDiv>
     ),

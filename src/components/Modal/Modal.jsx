@@ -61,6 +61,7 @@ export default function Modal({
   alertOpen,
   postId,
   productId,
+  commentId,
   restaurantName,
 }) {
   const navigate = useNavigate();
@@ -71,7 +72,6 @@ export default function Modal({
     if (e.target === e.currentTarget) {
       setAlertShow(false);
     }
-    navigate("/myprofile");
   }
   console.log("console", restaurantName);
 
@@ -135,7 +135,7 @@ export default function Modal({
     delete: (
       <ModalWrapDiv>
         <ModalLineSpan />
-        <ModalTextBtn>삭제</ModalTextBtn>
+        <ModalTextBtn onClick={() => alertOpen("comment")}>삭제</ModalTextBtn>
       </ModalWrapDiv>
     ),
     chat: (
@@ -156,6 +156,7 @@ export default function Modal({
           alertClose={alertClose}
           postId={postId}
           productId={productId}
+          commentId={commentId}
         />
       )}
     </>
