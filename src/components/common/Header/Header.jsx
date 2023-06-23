@@ -210,6 +210,23 @@ export default function Header({
         </HeaderRightBtn>
       </HeaderLayoutDiv>
     ),
+    map: (
+      <HeaderLayoutDiv>
+        <HeaderSpan>
+          <HeaderLeftBtn type="button">
+            <img
+              src={IconArrowLeft}
+              alt="뒤로가기 아이콘"
+              onClick={() => navigate(-1)}
+            />
+          </HeaderLeftBtn>
+          <HeaderTextP>카카오지도</HeaderTextP>
+        </HeaderSpan>
+        <HeaderRightBtn type="button" onClick={modalOpen}>
+          <img src={IconMoreVertical} alt="더보기 아이콘" />
+        </HeaderRightBtn>
+      </HeaderLayoutDiv>
+    ),
   };
 
   return <HeaderWrap>{UI[type]}</HeaderWrap>;

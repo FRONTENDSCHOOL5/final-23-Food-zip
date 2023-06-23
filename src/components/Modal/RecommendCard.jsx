@@ -139,6 +139,7 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
   }
 
   function modalOpen() {
+    console.log("modal", recommendInfo.itemName);
     setModalShow(true);
   }
 
@@ -165,6 +166,7 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
           type={!accountname ? "product" : "yourproduct"}
           modalClose={modalClose}
           productId={id}
+          restaurantName={recommendInfo.itemName}
         />
       )}
     </RecommendDiv>

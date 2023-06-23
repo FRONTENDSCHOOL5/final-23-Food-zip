@@ -16,7 +16,7 @@ import ProfileEdit from "../pages/Profile/ProfileEdit/ProfileEdit";
 import DetailPost from "../pages/Post/DetailPost";
 import FollowerList from "../pages/FollowerList/FollowerList";
 import MakeRecommend from "../pages/Post/MakeRecommend";
-
+import Map from "../pages/Map/Map";
 export default function Routers() {
   return (
     <BrowserRouter>
@@ -53,6 +53,7 @@ export default function Routers() {
         />
         <Route path="/detailpost" element={<DetailPost />} />
         <Route path="/makerecommend" element={<MakeRecommend />} />
+        <Route path="/map" element={<Map />} />
       </Routes>
     </BrowserRouter>
   );

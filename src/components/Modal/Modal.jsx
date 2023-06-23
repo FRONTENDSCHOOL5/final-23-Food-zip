@@ -61,6 +61,7 @@ export default function Modal({
   alertOpen,
   postId,
   productId,
+  restaurantName,
 }) {
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
@@ -72,12 +73,22 @@ export default function Modal({
     }
     navigate("/myprofile");
   }
+  console.log("console", restaurantName);
 
   function alertOpen(type) {
     setAlertShow(true);
     setAlertType(type);
   }
 
+  function handlerOpenMap() {
+    console.log("console", restaurantName);
+    navigate("/map", {
+      state: {
+        restaurantname: restaurantName,
+      },
+    });
+  }
+  console.log("product:", productId);
   const UI = {
     setting: (
       <ModalWrapDiv>
@@ -100,14 +111,18 @@ export default function Modal({
         <ModalLineSpan />
         <ModalTextBtn onClick={() => alertOpen("product")}>삭제</ModalTextBtn>
         <ModalTextBtn>수정</ModalTextBtn>
-        <ModalTextBtn>카카오맵으로 이동하기</ModalTextBtn>
+        <ModalTextBtn onClick={handlerOpenMap}>
+          카카오맵으로 이동하기
+        </ModalTextBtn>
         <ModalTextBtn>SNS 공유하기</ModalTextBtn>
       </ModalWrapDiv>
     ),
     yourproduct: (
       <ModalWrapDiv>
         <ModalLineSpan />
-        <ModalTextBtn>카카오맵으로 이동하기</ModalTextBtn>
+        <ModalTextBtn onClick={handlerOpenMap}>
+          카카오맵으로 이동하기
+        </ModalTextBtn>
         <ModalTextBtn>SNS 공유하기</ModalTextBtn>
       </ModalWrapDiv>
     ),
