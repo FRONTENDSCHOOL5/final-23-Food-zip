@@ -63,7 +63,6 @@ export default function DetailPost() {
   const [selectedId, setSelectedId] = useState(null);
   const [comment, setComment] = useState([]);
   const [commentList, setCommentList] = useState([]);
-  const navigate = useNavigate();
   const handleInputChange = event => {
     setInputValue(event.target.value);
     console.log("댓글 입력창 :", inputValue);
@@ -95,7 +94,6 @@ export default function DetailPost() {
 
   const { id, postInfo, authorInfo, otherInfo } = data;
   const infoToIterate = postInfo || otherInfo;
-  console.log("detailpost", id);
   const where = localStorage.getItem("accountname");
   const token = localStorage.getItem("token");
   const uploadComment = async () => {
@@ -134,7 +132,6 @@ export default function DetailPost() {
         },
       );
       setCommentList(res.data.comments);
-      console.log("댓글리스트", res.data.comments);
     } catch (err) {
       console.error(err);
     }
