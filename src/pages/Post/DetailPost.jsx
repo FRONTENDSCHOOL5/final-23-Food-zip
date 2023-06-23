@@ -9,7 +9,6 @@ import Alert from "../../components/Modal/Alert";
 import axios from "axios";
 
 const DetailPostWrapper = styled.div`
-  /* background: #fff; */
   width: 100%;
   height: 100vh;
   padding: 68px 0 0px 0;
@@ -51,12 +50,9 @@ const PostUserImg = styled.img`
 `;
 const CommentSection = styled.div`
   width: 100%;
-  padding: 5px 15px 0;
+  padding: 5px 15px 65px;
   box-sizing: border-box;
   border-top: 1px solid #dbdbdb;
-  flex-grow: 1;
-  flex-shrink: 0;
-  height: 100vh;
   background-color: #fff;
 `;
 

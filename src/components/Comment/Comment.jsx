@@ -5,7 +5,7 @@ import Alert from "../Modal/Alert";
 import Modal from "../Modal/Modal";
 
 const StyledCommentWrapper = styled.ul`
-  max-height: 287px;
+  /* max-height: 287px; */
 `;
 const StyledComment = styled.li`
   position: relative;
