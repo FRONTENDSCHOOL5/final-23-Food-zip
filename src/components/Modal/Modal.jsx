@@ -104,6 +104,13 @@ export default function Modal({
         <ModalTextBtn>SNS 공유하기</ModalTextBtn>
       </ModalWrapDiv>
     ),
+    yourproduct: (
+      <ModalWrapDiv>
+        <ModalLineSpan />
+        <ModalTextBtn>카카오맵으로 이동하기</ModalTextBtn>
+        <ModalTextBtn>SNS 공유하기</ModalTextBtn>
+      </ModalWrapDiv>
+    ),
     report: (
       <ModalWrapDiv>
         <ModalLineSpan />
