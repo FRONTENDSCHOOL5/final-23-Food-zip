@@ -187,6 +187,7 @@ export default function PostList({ post, modalOpen }) {
                 modalOpen={modalOpen}
                 postInfo={postInfo}
                 authorInfo={authorInfo}
+                getUserInfo={getUserInfo}
               />
             </PostItemList>
           ) : (
