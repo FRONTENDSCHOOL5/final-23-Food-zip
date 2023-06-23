@@ -66,7 +66,6 @@ export default function DetailPost() {
       setModalShow(false);
     }
   }
-
   function modalOpen(type, id) {
     console.log("type", type);
     setModalShow(true);
@@ -109,7 +108,6 @@ export default function DetailPost() {
                 <PostItem
                   modalOpen={() =>
                     modalOpen(
-
                       where === authorInfo.accountname
                         ? "modification"
                         : "report",

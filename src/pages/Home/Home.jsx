@@ -8,6 +8,7 @@ import Navigation from "../../components/common/Nav/Navigation";
 import PostHome from "../../components/Feed/PostHome";
 import { useEffect } from "react";
 import axios from "axios";
+import Loading from "../Loading/Loading";
 
 const Container = styled.div`
   max-width: 390px;
@@ -17,9 +18,11 @@ const Container = styled.div`
 export default function Home() {
   const [myFeed, setMyFeed] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getFeed = async () => {
+      setLoading(true);
       const token = localStorage.getItem("token");
       try {
         const res = await axios.get(
@@ -35,18 +38,17 @@ export default function Home() {
         setMyFeed(res.data.posts);
         const authors = res.data.posts[0].author;
         setAuthorInfo(authors);
+        setLoading(false);
       } catch (err) {
         console.error(err);
       }
     };
     getFeed();
   }, []);
-  console.log("home:", myFeed);
-  console.log("myfeed", myFeed);
-  console.log("authorInfo", authorInfo);
   return (
     <Container>
       <Header type="home" />
+      {loading ? <Loading /> : null}
       {myFeed.length > 1 ? (
         <PostHome myFeed={myFeed} postInfo={myFeed} authorInfo={authorInfo} />
       ) : (
