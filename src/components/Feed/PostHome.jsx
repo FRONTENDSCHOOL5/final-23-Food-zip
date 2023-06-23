@@ -23,7 +23,7 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
     setModalShow(true);
   }
 
-  console.log("myFeed", myFeed);
+  console.log("myFeed", myFeed[0]);
   return (
     <List>
       {myFeed?.map(item => (
@@ -31,7 +31,7 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
           <PostItem
             myFeed={myFeed}
             modalOpen={modalOpen}
-            postInfo={[item]}
+            otherInfo={[item]}
             authorInfo={authorInfo}
           />
         </div>

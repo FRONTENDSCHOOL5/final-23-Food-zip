@@ -41,7 +41,7 @@ export default function Home() {
     };
     getFeed();
   }, []);
-
+  console.log("home:", myFeed);
   console.log("myfeed", myFeed);
   console.log("authorInfo", authorInfo);
   return (

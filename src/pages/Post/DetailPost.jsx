@@ -68,6 +68,7 @@ export default function DetailPost() {
   }
 
   function modalOpen(type, id) {
+    console.log("type", type);
     setModalShow(true);
     setModalType(type);
     setSelectedId(id);
@@ -85,8 +86,10 @@ export default function DetailPost() {
   }
   const location = useLocation();
   const data = location.state;
-  console.log(data);
-  const { id, postInfo, authorInfo, accountname } = data;
+  console.log("data", data);
+  const { id, postInfo, authorInfo, accountname, otherInfo } = data;
+  const infoToIterate = postInfo || otherInfo;
+  console.log("who", infoToIterate[0].author);
   return (
     <>
       <Header
@@ -95,16 +98,19 @@ export default function DetailPost() {
         modalOpen={() => modalOpen("setting")}
       />
       <DetailPostWrapper>
-        {postInfo?.map(
+        {infoToIterate?.map(
           item =>
             item.id === id && (
               <PostItemSection key={item.id}>
                 <PostItem
                   modalOpen={() =>
-                    modalOpen(!accountname ? "modification" : "report", item.id)
+                    modalOpen(
+                      !authorInfo.accountname ? "modification" : "report",
+                      item.id,
+                    )
                   }
                   postInfo={[item]}
-                  authorInfo={authorInfo}
+                  authorInfo={item.author}
                 />
               </PostItemSection>
             ),

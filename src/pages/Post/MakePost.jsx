@@ -32,30 +32,40 @@ const StyledPost = styled.textarea`
 `;
 
 export default function MakePost() {
-  const [imgFile, setImgFile] = useState([]);
-  const [imgUrl, setImgUrl] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imgFile, setImgFile] = useState(null);
+  const [imgUrl, setImgUrl] = useState("");
+  // const [imageUrls, setImageUrls] = useState("");
   const [content, setContent] = useState("");
   const [isValid, setIsValid] = useState(false);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-
   const handleImageUrlChange = (file, url) => {
-    setImgFile(prevFiles => [...prevFiles, file]);
-    setImgUrl(prevUrls => [...prevUrls, url]);
+    setImgFile(file);
+    setImgUrl(url);
   };
-
-  const uploadPost = async () => {
+  console.log(imgFile);
+  const uploadPost = async (url, content) => {
     try {
-      const joinedUrls = imageUrls.join(",");
-      console.log(joinedUrls);
+      const formData = new FormData();
+      formData.append("image", imgFile);
+      const uploadResponse = await axios.post(
+        "https://api.mandarin.weniv.co.kr/image/uploadfile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+      const imageUrl =
+        "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
 
       const postResponse = await axios.post(
         "https://api.mandarin.weniv.co.kr/post",
         {
           post: {
             content: content,
-            image: joinedUrls,
+            image: imageUrl,
           },
         },
         {
@@ -79,10 +89,10 @@ export default function MakePost() {
       alert("게시글이 작성되지 않았습니다.");
     }
   };
-  console.log("postUrl:", imageUrls);
+  // console.log("postUrl:", imageUrls);
   const checkContent = () => {
     if (!content || content.trim().length === 0) {
-      if (imageUrls.length > 0) {
+      if (imgUrl) {
         setIsValid(true);
       } else {
         setIsValid(false);
@@ -94,7 +104,7 @@ export default function MakePost() {
 
   useEffect(() => {
     checkContent();
-  }, [content, imageUrls]);
+  }, [content, imgUrl]);
   const onChangeInput = event => {
     setContent(event.target.value);
     checkContent();
@@ -107,10 +117,7 @@ export default function MakePost() {
         uploadHandler={handleUpload}
       />
       <StyledContainer className="post-wrapper">
-        <PostImgPrev
-          onImageUrlChange={handleImageUrlChange}
-          setImageUrls={setImageUrls}
-        />
+        <PostImgPrev onImageUrlChange={handleImageUrlChange} />
         <form className="post-section">
           <StyledPost
             rows="28"

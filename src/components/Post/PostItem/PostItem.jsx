@@ -89,18 +89,25 @@ const BtnMore = styled.button`
   top: 7px;
   right: 0;
 `;
-export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
+export default function PostItem({
+  postInfo,
+  authorInfo,
+  myFeed,
+  modalOpen,
+  otherInfo,
+}) {
   const navigate = useNavigate();
   const [hearted, setHearted] = useState(false);
   const [heartIcon, setHeartIcon] = useState("");
   const [heartCount, setHeartCount] = useState(0);
   const location = useLocation();
-  
+
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
         id: id,
         postInfo: postInfo,
+        otherInfo: otherInfo,
         authorInfo: authorInfo,
       },
     });
@@ -140,6 +147,7 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
     }
   };
   console.log(hearted);
+
   useEffect(() => {
     if (hearted) {
       setHearted(hearted);
@@ -167,14 +175,34 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
     const savedHeartCount = localStorage.getItem("heartCount");
     setHeartCount(parseInt(savedHeartCount, 10));
   }, []);
+
+  console.log("정보:", authorInfo);
   function moveProfile(accountname) {
-    if (location.pathname !== "/myprofile") {
+    // postInfo가 있는 경우
+    const where = localStorage.getItem("accountname");
+    if (accountname === where) {
+      navigate("/myprofile", {
+        state: {
+          accountname: accountname,
+        },
+      });
+    } else {
       navigate(`/profile/${accountname}`, {
         state: {
           accountname: accountname,
         },
       });
     }
+  }
+
+  // otherInfo가 있는 경우
+  function moveOtherProfile(accountname) {
+    console.log("Go", accountname);
+    navigate(`/profile/${accountname}`, {
+      state: {
+        accountname: accountname,
+      },
+    });
   }
   function formatDate(dateString) {
     const dateObj = new Date(dateString);
@@ -183,6 +211,8 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
     const day = dateObj.getDate();
     return `${year}년 ${month}월 ${day}일`;
   }
+
+  console.log(myFeed);
   return (
     <>
       {postInfo
@@ -249,16 +279,16 @@ export default function PostItem({ postInfo, authorInfo, myFeed, modalOpen }) {
               <BtnMore onClick={() => modalOpen(item.id)}></BtnMore>
             </Container>
           ))
-        : myFeed?.map(item => (
-            <Container key={item.id}>
+        : otherInfo?.map(item => (
+            <Container key={item._id}>
               <PostUser>
                 <PostUserImg
                   src={item.author.image}
-                  alt="사용자 이미지"
-                  onClick={() => moveProfile(item.author.accountname)}
+                  alt="다른사용자 이미지"
+                  onClick={() => moveOtherProfile(item.author.accountname)}
                 />
                 <PostUserBox
-                  onClick={() => moveProfile(item.author.accountname)}
+                  onClick={() => moveOtherProfile(item.author.accountname)}
                 >
                   <PostUserName>{item.author.username}</PostUserName>
                   <PostUserId>@ {item.author.accountname}</PostUserId>
