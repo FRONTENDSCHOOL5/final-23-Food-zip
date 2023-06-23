@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal";
 import Alert from "../../components/Modal/Alert";
+import axios from "axios";
 
 const DetailPostWrapper = styled.div`
   background: #fff;
@@ -23,10 +24,17 @@ const PostItemSection = styled.div`
   box-sizing: border-box;
 `;
 const WriteCommentSection = styled.div`
+  position: fixed;
+  bottom: 0;
   display: flex;
   gap: 18px;
   padding: 12.5px 16px;
   justify-content: baseline;
+  background-color: #fff;
+  width: 100%;
+  max-width: 390px;
+  box-sizing: border-box;
+  /* height: 287px; */
 `;
 
 const WriteComment = styled.input`
@@ -44,12 +52,13 @@ const PostUserImg = styled.img`
 `;
 const CommentSection = styled.div`
   width: 100%;
-  padding: 0 20px;
+  padding: 5px 15px 0;
   box-sizing: border-box;
   border-top: 1px solid #dbdbdb;
   border-bottom: 1px solid #dbdbdb;
   flex-grow: 1;
   flex-shrink: 0;
+  overflow: auto;
 `;
 
 export default function DetailPost() {
@@ -57,9 +66,12 @@ export default function DetailPost() {
   const [modalType, setModalType] = useState("setting");
   const [inputValue, setInputValue] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-
+  const [comment, setComment] = useState([]);
+  const [commentList, setCommentList] = useState([]);
+  const navigate = useNavigate();
   const handleInputChange = event => {
     setInputValue(event.target.value);
+    console.log("댓글 입력창 :", inputValue);
   };
   function modalClose(e) {
     if (e.target === e.currentTarget) {
@@ -87,13 +99,59 @@ export default function DetailPost() {
   const location = useLocation();
   const data = location.state;
 
-  console.log("data", data);
+  const postId = data.id;
   const { id, postInfo, authorInfo, accountname, otherInfo } = data;
   const infoToIterate = postInfo || otherInfo;
   console.log("who", infoToIterate[0].author);
 
   const where = localStorage.getItem("accountname");
+  const token = localStorage.getItem("token");
+  const uploadComment = async () => {
+    try {
+      const res = await axios.post(
+        `https://api.mandarin.weniv.co.kr/post/${postId}/comments`,
+        {
+          comment: {
+            content: inputValue,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      setComment(res.data.comment);
+      console.log("댓글 입력됨 ", res.data.comment);
+      setInputValue("");
+    } catch (err) {
+      console.error(err);
+      navigate("/error");
+    }
+  };
 
+  const loadcommentList = async () => {
+    try {
+      const res = await axios.get(
+        `https://api.mandarin.weniv.co.kr/post/${postId}/comments`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      setCommentList(res.data.comments);
+      console.log("댓글리스트", res.data.comments);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    loadcommentList();
+  }, [comment]);
   return (
     <>
       <Header
@@ -109,7 +167,6 @@ export default function DetailPost() {
                 <PostItem
                   modalOpen={() =>
                     modalOpen(
-
                       where === authorInfo.accountname
                         ? "modification"
                         : "report",
@@ -124,7 +181,10 @@ export default function DetailPost() {
             ),
         )}
         <CommentSection>
-          <Comment modalOpen={() => modalOpen("report")} />
+          <Comment
+            commentList={commentList}
+            modalOpen={() => modalOpen("report")}
+          />
         </CommentSection>
         <WriteCommentSection>
           <PostUserImg
@@ -137,7 +197,13 @@ export default function DetailPost() {
             value={inputValue}
             onChange={handleInputChange}
           />
-          <BtnDisplay hasText={inputValue.trim().length > 0}>게시</BtnDisplay>
+          <BtnDisplay
+            type="submit"
+            onClick={uploadComment}
+            hasText={inputValue.trim().length > 0}
+          >
+            게시
+          </BtnDisplay>
         </WriteCommentSection>
       </DetailPostWrapper>
       {modalShow && (

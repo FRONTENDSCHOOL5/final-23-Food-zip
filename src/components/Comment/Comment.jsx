@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import MoreIcon from "../../assets/images/icon-more-vertical.svg";
-const StyledCommentWrapper = styled.section``;
-const StyledComment = styled.div`
+const StyledCommentWrapper = styled.ul`
+  height: 287px;
+`;
+const StyledComment = styled.li`
   position: relative;
   display: flex;
   gap: 12px;
-  padding: 20px 0 16px 0;
+  padding: 10px 0 0;
 `;
 const CommentBtnMore = styled.button`
   width: 20px;
@@ -18,13 +20,15 @@ const CommentBtnMore = styled.button`
 `;
 
 const CommentUserProfile = styled.img`
-  margin-top: -45px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
 `;
 const StyledCommentUserInfo = styled.div`
   flex-grow: 1;
   display: flex;
   gap: 6px;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
   h3 {
     font-size: 14px;
     font-weight: 700;
@@ -42,12 +46,6 @@ const StyledCommentUserInfo = styled.div`
   }
 `;
 
-// .user-info-replay,
-// .show-more-replay {
-//   margin-top: -40px;
-// }
-
-//
 const StyledCommentContent = styled.div`
   flex-grow: 1;
 `;
@@ -58,31 +56,36 @@ const CommentContent = styled.p`
   line-height: 18px;
   letter-spacing: 0em;
   text-align: left;
-  margin: 16px 0;
+  margin: 10px 0;
 `;
 
-export default function Comment({ modalOpen }) {
+export default function Comment({ commentList, modalOpen }) {
+  console.log("댓글정보 !", commentList);
   return (
-    <>
-      <StyledCommentWrapper className="comment-section">
-        <StyledComment className="comment">
-          <CommentUserProfile
-            className="user-info-comment"
-            src={require("../../assets/images/basic-profile-sm.svg").default}
-            alt="유저의 프로필"
-          />
-          <StyledCommentContent className="comment-main">
-            <StyledCommentUserInfo className="comment-user-info">
-              <h3>서귀포시 무슨 농장</h3>
-              <p>몇분전</p>
-            </StyledCommentUserInfo>
-            <CommentContent className="comment-content">
-              게시들 답글~~!! 최고최고
-            </CommentContent>
-          </StyledCommentContent>
-          <CommentBtnMore type="button" onClick={modalOpen}></CommentBtnMore>
-        </StyledComment>
-      </StyledCommentWrapper>
-    </>
+    <StyledCommentWrapper>
+      {commentList?.map(comment => {
+        return (
+          <>
+            <StyledComment key={comment.id}>
+              <CommentUserProfile
+                src={comment.author.image}
+                alt="유저의 프로필"
+              />
+              <StyledCommentContent>
+                <StyledCommentUserInfo>
+                  <h3>{comment.author.username}</h3>
+                  <p>몇분전</p>
+                </StyledCommentUserInfo>
+                <CommentContent>{comment.content}</CommentContent>
+              </StyledCommentContent>
+              <CommentBtnMore
+                type="button"
+                onClick={modalOpen}
+              ></CommentBtnMore>
+            </StyledComment>
+          </>
+        );
+      })}
+    </StyledCommentWrapper>
   );
 }
