@@ -4,6 +4,7 @@ import ProfileBtn from "./ProfileBtn";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Loading from "../../pages/Loading/Loading";
 
 const InformationTopDiv = styled.div`
   display: flex;
@@ -85,6 +86,7 @@ export default function ProfileInformation({ type, modalOpen }) {
   const [follow, setFollow] = useState(true);
   const [followerInfo, setFollowerInfo] = useState([]);
   const myId = localStorage.getItem("_id");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const yourAccountname = location.state;
@@ -92,6 +94,7 @@ export default function ProfileInformation({ type, modalOpen }) {
     console.log("profile:", yourAccountname);
 
     const getUserInfo = async () => {
+      setLoading(true);
       const token = localStorage.getItem("token");
       let apiUrl = "";
 
@@ -154,6 +157,7 @@ export default function ProfileInformation({ type, modalOpen }) {
           intro,
         });
       }
+      setLoading(false);
     };
 
     if (type === "your" && yourAccountname) {
@@ -195,6 +199,7 @@ export default function ProfileInformation({ type, modalOpen }) {
 
   return (
     <>
+      {loading ? <Loading /> : null}
       <InformationTopDiv>
         <Link
           to="/followerlist"

@@ -174,7 +174,7 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
           type="file"
           id="file-input"
           // multiple="multiple"
-          accept="image/jpeg,image/jpg,image/png"
+          accept="image/jpeg,image/jpg,image/png,image/gif"
           onChange={handleUploadImg}
           ref={fileInputRef}
         />
