@@ -126,7 +126,9 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
     if (file.size > maxSize) {
       alert("파일 사이즈는 10MB 이하만 가능합니다");
       return;
-    } else if (!/^(image\/jpeg|image\/png|image\/jpg)$/.test(file.type)) {
+    } else if (
+      !/^(image\/jpeg|image\/png|image\/jpg|image\/gif)$/.test(file.type)
+    ) {
       alert("파일 포맷은 */jpeg,*/png,*/jpg 만 가능합니다");
       return;
     }
