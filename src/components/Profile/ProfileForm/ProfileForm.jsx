@@ -151,7 +151,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
       } catch (err) {
         alert(err.response.data.message);
         console.log(err.response.data.message);
-        navigate("/error");
       }
     } else if (location.pathname === "/myprofile/edit") {
       try {
