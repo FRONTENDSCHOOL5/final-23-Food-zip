@@ -96,13 +96,16 @@ export default function PostItem({
   myFeed,
   modalOpen,
   otherInfo,
+  getUserInfo,
 }) {
   const navigate = useNavigate();
-  const [hearted, setHearted] = useState(false);
-  const [heartIcon, setHeartIcon] = useState("");
-  const [heartCount, setHeartCount] = useState(0);
+  const infoToIterate = postInfo || otherInfo;
+  // const [isHearted, setIsHearted] = useState(infoToIterate.hearted);
+  // const [heartCount, setHeartCount] = useState(infoToIterate.heartCount);
+  // // const [isMyHearted, setIsMyHearted] = useState(postInfo.hearted);
+  // const [myHeartCount, setMyHeartCount] = useState(0);
   const location = useLocation();
-
+  console.log("좋아요!!!", postInfo);
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -113,12 +116,8 @@ export default function PostItem({
       },
     });
   }
-  const postLike = async postId => {
-    await apiLike(postId);
-  };
 
-  const apiLike = async postId => {
-    // Add `async` here to make the function asynchronous
+  const postLike = async postId => {
     console.log("like");
     const token = localStorage.getItem("token");
     try {
@@ -127,7 +126,7 @@ export default function PostItem({
         console.error("Post not found");
         return false;
       }
-      console.log(post);
+      console.log("check", post);
       const res = await axios.post(
         `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
         {},
@@ -138,46 +137,18 @@ export default function PostItem({
           },
         },
       );
-      console.log(res.data.post.heartCount);
-      setHearted(res.data.post.hearted);
-      setHeartCount(res.data.post.heartCount);
-      return res;
+      console.log("좋아요", res.data.post.heartCount);
+      getUserInfo();
+      // await setIsMyHearted(res.data.post.hearted);
+      // await setMyHeartCount(res.data.post.heartCount);
+      // window.location.reload();
     } catch (error) {
       console.error(error);
       return false;
     }
   };
-  console.log(hearted);
-
-  useEffect(() => {
-    if (hearted) {
-      setHearted(hearted);
-    }
-    localStorage.setItem("hearted", !hearted ? "false" : "true");
-    localStorage.setItem("heartCount", heartCount);
-  }, [hearted, heartCount]);
-  // const isPostHearted = postId => {
-  //   const post =
-  //     postInfo.find(post => post.id === postId) ||
-  //     myFeed.find(post => post.id === postId);
-  //   return post ? post.hearted : false;
-  // };
-
-  // // Helper function to get the heart count of a post
-  // const getHeartCount = postId => {
-  //   const post =
-  //     postInfo.find(post => post.id === postId) ||
-  //     myFeed.find(post => post.id === postId);
-  //   return post ? post.heartCount : 0;
-  // };
-  useEffect(() => {
-    const savedHearted = localStorage.getItem("hearted");
-    setHearted(savedHearted === "false");
-    const savedHeartCount = localStorage.getItem("heartCount");
-    setHeartCount(parseInt(savedHeartCount, 10));
-  }, []);
-
-  console.log("정보:", authorInfo);
+  // useEffect(() => {}, [isMyHearted, myHeartCount]);
+  // console.log("정보:", isMyHearted, myHeartCount);
   function moveProfile(accountname) {
     // postInfo가 있는 경우
     const where = localStorage.getItem("accountname");
@@ -240,7 +211,7 @@ export default function PostItem({
                 <PostInfoBox>
                   <PostBtnBox>
                     <BtnLike onClick={() => postLike(item.id)}>
-                      {item.id ? (
+                      {item.hearted ? (
                         <BtnImg
                           src={
                             require("../../../assets/images/icon-heart-fill.svg")

@@ -19,14 +19,26 @@ export default function Home() {
   const [myFeed, setMyFeed] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    console.log("스크롤 이벤트 발생");
+
+    if (scrollTop + clientHeight >= scrollHeight) {
+      console.log("페이지 끝에 스크롤이 닿았음");
+      setPage(prev => prev + 1);
+    }
+  };
   useEffect(() => {
     const getFeed = async () => {
       setLoading(true);
       const token = localStorage.getItem("token");
       try {
         const res = await axios.get(
-          "https://api.mandarin.weniv.co.kr/post/feed",
+          `https://api.mandarin.weniv.co.kr/post/feed/?limit=Number&skip=Number`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -35,7 +47,7 @@ export default function Home() {
           },
         );
         console.log("데이터", res.data);
-        setMyFeed(res.data.posts);
+        setMyFeed(prev => [...prev, ...res.data.posts]);
         const authors = res.data.posts[0].author;
         setAuthorInfo(authors);
         setLoading(false);
@@ -44,12 +56,19 @@ export default function Home() {
       }
     };
     getFeed();
+  }, [page]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
   return (
     <Container>
       <Header type="home" />
       {loading ? <Loading /> : null}
-      {myFeed.length > 1 ? (
+
+      {myFeed.length > 0 ? (
         <PostHome myFeed={myFeed} postInfo={myFeed} authorInfo={authorInfo} />
       ) : (
         <EmptyHome />
