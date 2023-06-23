@@ -68,6 +68,7 @@ export default function DetailPost() {
   }
 
   function modalOpen(type, id) {
+    console.log("type", type);
     setModalShow(true);
     setModalType(type);
     setSelectedId(id);
@@ -85,7 +86,12 @@ export default function DetailPost() {
   }
   const location = useLocation();
   const data = location.state;
-  const { id, postInfo, authorInfo } = data;
+
+  console.log("data", data);
+  const { id, postInfo, authorInfo, accountname, otherInfo } = data;
+  const infoToIterate = postInfo || otherInfo;
+  console.log("who", infoToIterate[0].author);
+
   const where = localStorage.getItem("accountname");
 
   return (
@@ -96,21 +102,23 @@ export default function DetailPost() {
         modalOpen={() => modalOpen("setting")}
       />
       <DetailPostWrapper>
-        {postInfo?.map(
+        {infoToIterate?.map(
           item =>
             item.id === id && (
               <PostItemSection key={item.id}>
                 <PostItem
                   modalOpen={() =>
                     modalOpen(
+
                       where === authorInfo.accountname
                         ? "modification"
                         : "report",
+
                       item.id,
                     )
                   }
                   postInfo={[item]}
-                  authorInfo={authorInfo}
+                  authorInfo={item.author}
                 />
               </PostItemSection>
             ),

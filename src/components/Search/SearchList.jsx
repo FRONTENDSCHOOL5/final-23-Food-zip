@@ -52,12 +52,21 @@ export default function SearchList({ searchKeyword }) {
   const navigate = useNavigate();
 
   function handleClick(accountname) {
+    const where = localStorage.getItem("accountname");
     console.log(accountname);
-    navigate(`/profile/${accountname}`, {
-      state: {
-        accountname: accountname,
-      },
-    });
+    if (accountname === where) {
+      navigate("/myprofile", {
+        state: {
+          accountname: accountname,
+        },
+      });
+    } else {
+      navigate(`/profile/${accountname}`, {
+        state: {
+          accountname: accountname,
+        },
+      });
+    }
   }
 
   const [searchListData, setSearchListData] = useState([]);
