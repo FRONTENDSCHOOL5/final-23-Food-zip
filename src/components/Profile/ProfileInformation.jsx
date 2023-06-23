@@ -199,7 +199,7 @@ export default function ProfileInformation({ type, modalOpen }) {
 
   return (
     <>
-      {loading ? <Loading /> : null}
+      {loading && <Loading />}
       <InformationTopDiv>
         <Link
           to="/followerlist"

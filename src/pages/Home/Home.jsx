@@ -48,7 +48,7 @@ export default function Home() {
   return (
     <Container>
       <Header type="home" />
-      {loading ? <Loading /> : null}
+      {loading && <Loading />}
       {myFeed.length > 1 ? (
         <PostHome myFeed={myFeed} postInfo={myFeed} authorInfo={authorInfo} />
       ) : (
