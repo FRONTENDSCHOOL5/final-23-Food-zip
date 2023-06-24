@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import foodzim from "../../assets/images/basic-profile-lg.svg";
-import bear from "../../assets/images/chattest.jpg";
+import forkfoodzim from "../../assets/images/fork-profile-lg.svg";
+import likelion from "../../assets/images/likelion.svg";
 import { useNavigate } from "react-router-dom";
 
 const ChatWrapper = styled.ul`
@@ -68,23 +69,23 @@ export default function ChatListItem() {
     {
       id: 1,
       profileImg: foodzim,
-      username: "푸짐가게",
-      chatContent: "안됩니다",
-      date: "2023.06.09",
+      username: "푸짐이",
+      chatContent: "다음에 기회 되면 푸짐님도 같이 가요!",
+      date: "2023.06.28",
     },
     {
       id: 2,
-      profileImg: foodzim,
-      username: "채팅",
-      chatContent: "너 채팅칠 줄 알아?",
-      date: "2023.06.13",
+      profileImg: forkfoodzim,
+      username: "포크푸짐이",
+      chatContent: "밥 먹자 ㅠㅠ 배고파",
+      date: "2023.06.28",
     },
     {
       id: 3,
-      profileImg: bear,
-      username: "곰돌",
-      chatContent: "나는 곰돌이다",
-      date: "2023.06.14",
+      profileImg: likelion,
+      username: "멋쟁이사자처럼",
+      chatContent: "선릉역에 맛집 추천해 주세요!",
+      date: "2023.06.27",
     },
   ];
   const navigate = useNavigate();

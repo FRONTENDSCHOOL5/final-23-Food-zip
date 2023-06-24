@@ -67,7 +67,7 @@ const HeaderSpan = styled.span`
 
 const HeaderTextP = styled.p`
   display: inline-block;
-  margin-left: 8px;
+  /* margin-left: 8px; */
   font-size: 14px;
   font-weight: 600;
 `;
@@ -203,7 +203,7 @@ export default function Header({
               onClick={() => navigate(-1)}
             />
           </HeaderLeftBtn>
-          <HeaderTextP>푸짐가게</HeaderTextP>
+          <HeaderTextP>푸짐이</HeaderTextP>
         </HeaderSpan>
         <HeaderRightBtn type="button" onClick={modalOpen}>
           <img src={IconMoreVertical} alt="더보기 아이콘" />
@@ -220,7 +220,7 @@ export default function Header({
               onClick={() => navigate(-1)}
             />
           </HeaderLeftBtn>
-          <HeaderTextP>카카오지도</HeaderTextP>
+          <HeaderTextP>카카오맵</HeaderTextP>
         </HeaderSpan>
         <HeaderRightBtn type="button" onClick={modalOpen}>
           <img src={IconMoreVertical} alt="더보기 아이콘" />
