@@ -60,7 +60,7 @@ const CommentSection = styled.div`
   background-color: #fff;
 `;
 
-export default function DetailPost(props) {
+export default function DetailPost() {
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState("setting");
   const [inputValue, setInputValue] = useState("");
@@ -68,7 +68,13 @@ export default function DetailPost(props) {
   const [comment, setComment] = useState([]);
   const [commentList, setCommentList] = useState([]);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
-  const { getUserInfo } = props;
+  const location = useLocation();
+  const data = location.state;
+  const { id, postInfo, authorInfo, otherInfo } = data;
+  const infoToIterate = postInfo || otherInfo;
+  const [myPostInfo, setMyPostInfo] = useState([infoToIterate]);
+  console.log("detailpost", id);
+  console.log("mypost", myPostInfo);
   const navigate = useNavigate();
   const handleInputChange = event => {
     setInputValue(event.target.value);
@@ -93,34 +99,28 @@ export default function DetailPost(props) {
     }
   }
 
-  // const fetchPostInfo = async () => {
-  //   // console.log("현재", selectedId);
-  //   try {
-  //     const response = await axios.get(
-  //       `https://api.mandarin.weniv.co.kr/post/${selectedId}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       },
-  //     );
-  //     const post = response.data.post;
-  //     // setPostInfo(post);
-  //     console.log("게시글 정보", post);
-  //   } catch (error) {
-  //     console.error(error);
-  //     navigate("/error");
-  //   }
-  // };
+  const fetchPostInfo = async () => {
+    // console.log("현재", selectedId);
+    try {
+      const response = await axios.get(
+        `https://api.mandarin.weniv.co.kr/post/${selectedId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const post = response.data.post;
+      setMyPostInfo(post);
+      console.log("게시글 정보", post);
+    } catch (error) {
+      console.error(error);
+      navigate("/error");
+    }
+  };
   function alertOpen() {
     setAlertShow(true);
   }
-  const location = useLocation();
-  const data = location.state;
-
-  const { id, postInfo, authorInfo, otherInfo } = data;
-  const infoToIterate = postInfo || otherInfo;
-  console.log("detailpost", id);
   const where = localStorage.getItem("accountname");
   const token = localStorage.getItem("token");
   const uploadComment = async () => {
@@ -171,7 +171,7 @@ export default function DetailPost(props) {
 
   const closePostEditModal = () => {
     setPostEditModalOpen(false);
-    // fetchPostInfo();
+    fetchPostInfo();
   };
 
   useEffect(() => {
@@ -185,7 +185,7 @@ export default function DetailPost(props) {
         modalOpen={() => modalOpen("setting")}
       />
       <DetailPostWrapper>
-        {infoToIterate?.map(
+        {myPostInfo?.map(
           item =>
             item.id === id && (
               <PostItemSection key={item.id}>

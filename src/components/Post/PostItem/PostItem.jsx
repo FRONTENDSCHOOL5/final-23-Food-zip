@@ -112,7 +112,6 @@ export default function PostItem({
         postInfo: postInfo,
         otherInfo: otherInfo,
         authorInfo: authorInfo,
-        getUserInfo: getUserInfo,
       },
     });
   }
