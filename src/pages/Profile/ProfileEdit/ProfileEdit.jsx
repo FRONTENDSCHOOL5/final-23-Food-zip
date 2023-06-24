@@ -42,7 +42,6 @@ export default function ProfileEdit() {
     } catch (error) {
       console.error(error);
       navigate("/error");
-      return false;
     }
   };
 

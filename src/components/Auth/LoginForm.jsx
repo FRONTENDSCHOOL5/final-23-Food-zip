@@ -105,7 +105,6 @@ const LoginForm = ({ onSubmit }) => {
         err.response?.data?.message ||
         "이메일 또는 비밀번호가 일치하지 않습니다.";
       alert(errorMessage);
-      navigate("/error");
     }
   };
   useEffect(() => {

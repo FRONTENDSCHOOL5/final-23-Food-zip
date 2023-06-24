@@ -105,7 +105,6 @@ export default function PostItem({
   // // const [isMyHearted, setIsMyHearted] = useState(postInfo.hearted);
   // const [myHeartCount, setMyHeartCount] = useState(0);
   const location = useLocation();
-  console.log("좋아요!!!", postInfo);
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -184,7 +183,7 @@ export default function PostItem({
     return `${year}년 ${month}월 ${day}일`;
   }
 
-  console.log(myFeed);
+  // console.log(myFeed);
   return (
     <>
       {postInfo
@@ -242,7 +241,7 @@ export default function PostItem({
                         }
                         alt="게시글 댓글"
                       />
-                      12
+                      {item.comments.length}
                     </BtnComment>
                   </PostBtnBox>
                   <PostDate>{formatDate(item.updatedAt)}</PostDate>
@@ -305,7 +304,7 @@ export default function PostItem({
                         }
                         alt="게시글 댓글"
                       />
-                      12
+                      {item.comments.length}
                     </BtnComment>
                   </PostBtnBox>
                   <PostDate>{formatDate(item.updatedAt)}</PostDate>
