@@ -198,39 +198,44 @@ export default function ProfileInformation({ type, modalOpen }) {
 
   return (
     <>
-      {loading && <Loading />}
-      <InformationTopDiv>
-        <Link
-          to="/followerlist"
-          state={{
-            accountname: userInfo.accountname,
-          }}
-        >
-          <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
-          <FollowerCntP>followers</FollowerCntP>
-        </Link>
-        <ProfileImg src={userInfo.image} alt="프로필 이미지" />
-        <Link
-          to="/followinglist"
-          state={{
-            accountname: userInfo.accountname,
-          }}
-        >
-          <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
-          <FollowingCntP>followings</FollowingCntP>
-        </Link>
-      </InformationTopDiv>
-      <InformationDiv>
-        <InfoNameP>{userInfo.username}</InfoNameP>
-        <InfoIdP>@ {userInfo.accountname}</InfoIdP>
-        <InfoTextP>{userInfo.intro}</InfoTextP>
-      </InformationDiv>
-      <ProfileBtn
-        type={type}
-        yourAccountname={userInfo.accountname}
-        setFollow={setFollow}
-        follow={follow}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <InformationTopDiv>
+            <Link
+              to="/followerlist"
+              state={{
+                accountname: userInfo.accountname,
+              }}
+            >
+              <FollowerCntSpan>{userInfo.followerCount}</FollowerCntSpan>
+              <FollowerCntP>followers</FollowerCntP>
+            </Link>
+            <ProfileImg src={userInfo.image} alt="프로필 이미지" />
+            <Link
+              to="/followinglist"
+              state={{
+                accountname: userInfo.accountname,
+              }}
+            >
+              <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
+              <FollowingCntP>followings</FollowingCntP>
+            </Link>
+          </InformationTopDiv>
+          <InformationDiv>
+            <InfoNameP>{userInfo.username}</InfoNameP>
+            <InfoIdP>@ {userInfo.accountname}</InfoIdP>
+            <InfoTextP>{userInfo.intro}</InfoTextP>
+          </InformationDiv>
+          <ProfileBtn
+            type={type}
+            yourAccountname={userInfo.accountname}
+            setFollow={setFollow}
+            follow={follow}
+          />
+        </>
+      )}
     </>
   );
 }

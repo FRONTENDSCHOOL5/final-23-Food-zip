@@ -74,6 +74,8 @@ export default function DetailPost() {
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   const location = useLocation();
   const data = location.state;
+  const token = localStorage.getItem("token");
+  const where = localStorage.getItem("accountname");
   const { id, postInfo, authorInfo, otherInfo } = data;
   const infoToIterate = postInfo || otherInfo;
   const [commentCnt, setCommentCnt] = useState(0);
