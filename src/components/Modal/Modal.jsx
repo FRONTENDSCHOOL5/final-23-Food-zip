@@ -63,6 +63,7 @@ export default function Modal({
   productId,
   commentId,
   restaurantName,
+  handlerPostEdit,
 }) {
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
@@ -88,6 +89,7 @@ export default function Modal({
       },
     });
   }
+
   console.log("product:", productId);
   const UI = {
     setting: (
@@ -103,7 +105,7 @@ export default function Modal({
       <ModalWrapDiv>
         <ModalLineSpan />
         <ModalTextBtn onClick={() => alertOpen("post")}>삭제</ModalTextBtn>
-        <ModalTextBtn>수정</ModalTextBtn>
+        <ModalTextBtn onClick={handlerPostEdit}>수정</ModalTextBtn>
       </ModalWrapDiv>
     ),
     product: (
