@@ -78,7 +78,7 @@ export default function DetailPost() {
   const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
   const navigate = useNavigate();
-  
+
   const handleInputChange = event => {
     setInputValue(event.target.value);
     console.log("댓글 입력창 :", inputValue);
@@ -126,8 +126,6 @@ export default function DetailPost() {
   function alertOpen() {
     setAlertShow(true);
   }
-  const where = localStorage.getItem("accountname");
-  const token = localStorage.getItem("token");
   const uploadComment = async () => {
     try {
       const res = await axios.post(

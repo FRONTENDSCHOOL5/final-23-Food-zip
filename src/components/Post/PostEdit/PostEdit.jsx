@@ -17,7 +17,9 @@ const ModalOverlay = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const EditContainer = styled.form``;
+const EditContainer = styled.form`
+  width: 300px;
+`;
 const HeaderLayoutDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -40,19 +42,24 @@ const ModalContent = styled.div`
   border-radius: 5px;
 `;
 const PostImage = styled.img`
-  width: 400px;
+  display: block;
+  width: 100%;
+  /* width: 250px; */
   border-radius: 10px;
 `;
 const PostContent = styled.textarea`
   box-sizing: border-box;
-  font-size: 20px;
+  font-size: 15px;
   font-family: "SUIT-Regular";
-  padding-left: 10px;
   border: none;
   resize: none;
   &:focus {
     outline: none;
   }
+  width: 100%;
+  margin-top: ${props => (props.hasImage ? "10px" : "")};
+  line-height: 20px;
+  padding: 0;
 `;
 export default function PostEdit({ closeModal, postId, Info }) {
   console.log("edit", postId);
@@ -142,10 +149,14 @@ export default function PostEdit({ closeModal, postId, Info }) {
               // onClick={closeModal}
             ></Button>
           </HeaderLayoutDiv>
-          <PostImage src={postInfo.image} alt="게시물 사진" />
+          {postInfo.image !== "" && (
+            <PostImage src={postInfo.image} alt="게시물 사진" />
+          )}
           <PostContent
             rows="10"
+            columns="60"
             value={postInfo.content}
+            hasImage={postInfo.image !== ""}
             onChange={e =>
               setPostInfo({ ...postInfo, content: e.target.value })
             }
