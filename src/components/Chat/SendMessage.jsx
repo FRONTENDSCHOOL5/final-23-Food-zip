@@ -1,6 +1,7 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-const MessageWrap = styled.li`
+export const MessageWrap = styled.li`
   list-style: none;
   display: flex;
   padding: 8px 16px;
@@ -8,7 +9,7 @@ const MessageWrap = styled.li`
   align-items: flex-start;
 `;
 
-const MessageText = styled.div`
+export const MessageText = styled.div`
   max-width: 240px;
   padding: 12px;
   border-radius: 10px 0 10px 10px;
@@ -20,7 +21,7 @@ const MessageText = styled.div`
   margin: 0 16px 0 auto;
 `;
 
-const TimeStamp = styled.span`
+export const TimeStamp = styled.span`
   font-size: 10px;
   color: #767676;
   position: absolute;
