@@ -72,7 +72,6 @@ export default function DetailPost() {
   const where = localStorage.getItem("accountname");
   const token = localStorage.getItem("token");
   const [commentCnt, setCommentCnt] = useState(otherInfo[0].comments.length);
-  console.log(commentCnt);
   const handleInputChange = event => {
     setInputValue(event.target.value);
   };
@@ -159,7 +158,7 @@ export default function DetailPost() {
 
   useEffect(() => {
     loadcommentList();
-  }, [comment, commentCnt]);
+  }, [comment]);
 
   useEffect(() => {
     getUserInfo();
