@@ -7,7 +7,7 @@ import BookMark from "../../assets/images/bookmark-solid.svg";
 import Marker from "../../assets/images/location.svg";
 import MarkerBlack from "../../assets/images/location-black.svg";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import "./MapStyle.css";
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;
@@ -19,7 +19,7 @@ const MapWrapper = styled.div`
 
 const Map = styled.div`
   width: 100%;
-  height: 610px;
+  height: 100%;
 `;
 
 const InfoWrapper = styled.div`
@@ -80,6 +80,7 @@ const NowLoactionBtn = styled.button`
 const NowLoaction = styled.img`
   width: 50%;
 `;
+
 const { kakao } = window;
 
 const MapTest = () => {
@@ -98,45 +99,9 @@ const MapTest = () => {
     setMap(kakaoMap);
   }, []);
 
-  let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-  function findLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        let lat = position.coords.latitude, // 위도
-          lon = position.coords.longitude; // 경도
-
-        let locPosition = new kakao.maps.LatLng(lat, lon), //
-          message = '<div style="padding:5px;">여기에 계신가요?!</div>'; //
-        console.log("now", locPosition);
-        displayMarker2(locPosition);
-      });
-    }
-  }
-  function displayMarker2(place) {
-    const imageSize = new kakao.maps.Size(45, 45);
-    const imageSrc = MarkerBlack;
-    // const imageOption = { offset: new kakao.maps.Point(27, 69) };
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-    let marker = new kakao.maps.Marker({
-      map: map,
-      position: place,
-      image: markerImage,
-    });
-    setPlace(place.road_address_name);
-    let iwContent = "현위치";
-    // 인포윈도우에 표시할 내용
-    let iwRemoveable = true;
-    let infowindow = new kakao.maps.InfoWindow({
-      content: iwContent,
-      removable: iwRemoveable,
-    });
-    infowindow.open(map, marker);
-    map.setCenter(place);
-  }
-
   useEffect(() => {
     if (map && recommendName) {
-      let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+      // let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
       const ps = new kakao.maps.services.Places();
       ps.keywordSearch(recommendName, placesSearchCB);
@@ -157,25 +122,36 @@ const MapTest = () => {
       function displayMarker(place) {
         const imageSize = new kakao.maps.Size(45, 45);
         const imageSrc = Marker;
-        // const imageOption = { offset: new kakao.maps.Point(27, 69) };
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
         let marker = new kakao.maps.Marker({
           map: map,
           position: new kakao.maps.LatLng(place.y, place.x),
           image: markerImage,
         });
+        let content =
+          '<div class="customoverlay">' +
+          '<a href="https://map.kakao.com/link/search/' +
+          encodeURIComponent(place.place_name) +
+          "?itemId=" +
+          place.itemId +
+          '" target="_blank">' +
+          '<span class="title">' +
+          place.place_name +
+          "</span>" +
+          "</a></div>";
         console.log("location:", place.place_name, place.road_address_name);
         setPlace(place.road_address_name);
         // 마커에 클릭 이벤트를 등록합니다
-        kakao.maps.event.addListener(marker, "click", function () {
-          // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-          infowindow.setContent(
-            '<div style="padding:5px;font-size:12px;">' +
-              place.place_name +
-              "</div>",
-          );
+        let customOverlay = new kakao.maps.CustomOverlay({
+          position: new kakao.maps.LatLng(place.y, place.x),
+          content: content,
+          yAnchor: 1,
+        });
 
-          infowindow.open(map, marker);
+        // 마커에 클릭 이벤트를 등록
+        kakao.maps.event.addListener(marker, "click", function () {
+          // 오버레이를 지도에 표시
+          customOverlay.setMap(map);
         });
       }
     }
@@ -208,9 +184,6 @@ const MapTest = () => {
             </MapLi>
           </BtnList>
         </InfoWrapper>
-        <NowLoactionBtn onClick={findLocation}>
-          <NowLoaction src={MarkerBlack} alt="현재 위치 마크" />
-        </NowLoactionBtn>
       </MapWrapper>
     </>
   );

@@ -155,7 +155,7 @@ export default function DetailPost() {
   const loadcommentList = async () => {
     try {
       const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/${id}/comments`,
+        `https://api.mandarin.weniv.co.kr/post/${id}/comments/?limit=Number&skip=Number`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

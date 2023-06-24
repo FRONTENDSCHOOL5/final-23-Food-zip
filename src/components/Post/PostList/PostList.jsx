@@ -93,7 +93,7 @@ export default function PostList({ post, modalOpen }) {
 
       if (!accountname) {
         const loggedInAccountname = localStorage.getItem("accountname");
-        apiUrl = `https://api.mandarin.weniv.co.kr/post/${loggedInAccountname}/userpost`;
+        apiUrl = `https://api.mandarin.weniv.co.kr/post/${loggedInAccountname}/userpost/?limit=Number&skip=Number`;
       }
       const res = await axios.get(apiUrl, {
         headers: {
