@@ -241,7 +241,7 @@ export default function PostItem({
                         }
                         alt="게시글 댓글"
                       />
-                      {commentCnt}
+                      {commentCnt || item.comments.length}
                     </BtnComment>
                   </PostBtnBox>
                   <PostDate>{formatDate(item.updatedAt)}</PostDate>

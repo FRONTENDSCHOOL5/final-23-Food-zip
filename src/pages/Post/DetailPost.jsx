@@ -71,7 +71,7 @@ export default function DetailPost() {
   const infoToIterate = postInfo || otherInfo;
   const where = localStorage.getItem("accountname");
   const token = localStorage.getItem("token");
-  const [commentCnt, setCommentCnt] = useState(otherInfo[0].comments.length);
+  const [commentCnt, setCommentCnt] = useState(0);
   const handleInputChange = event => {
     setInputValue(event.target.value);
   };
