@@ -7,8 +7,9 @@ import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal";
 import Alert from "../../components/Modal/Alert";
 import axios from "axios";
-import defaultImg from "../../assets/images/basic-profile-sm.svg";
+import PostEdit from "../../components/Post/PostEdit/PostEdit";
 const DetailPostWrapper = styled.div`
+  /* background: #fff; */
   width: 100%;
   height: 100vh;
   padding: 68px 0 0px 0;
@@ -47,13 +48,15 @@ const BtnDisplay = styled.button`
 const PostUserImg = styled.img`
   width: 36px;
   height: 36px;
-  border-radius: 50%;
 `;
 const CommentSection = styled.div`
   width: 100%;
-  padding: 5px 15px 65px;
+  padding: 5px 15px 0;
   box-sizing: border-box;
   border-top: 1px solid #dbdbdb;
+  flex-grow: 1;
+  flex-shrink: 0;
+  height: 100vh;
   background-color: #fff;
 `;
 
@@ -64,7 +67,7 @@ export default function DetailPost() {
   const [selectedId, setSelectedId] = useState(null);
   const [comment, setComment] = useState([]);
   const [commentList, setCommentList] = useState([]);
-  const [userInfo, setUserInfo] = useState([]);
+  const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   const location = useLocation();
   const data = location.state;
   const { id, postInfo, authorInfo, otherInfo } = data;
@@ -72,10 +75,14 @@ export default function DetailPost() {
   const where = localStorage.getItem("accountname");
   const token = localStorage.getItem("token");
   const [commentCnt, setCommentCnt] = useState(0);
+  const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
+  const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
+  const navigate = useNavigate();
+  
   const handleInputChange = event => {
     setInputValue(event.target.value);
+    console.log("댓글 입력창 :", inputValue);
   };
-
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -95,10 +102,32 @@ export default function DetailPost() {
     }
   }
 
+  const fetchPostInfo = async () => {
+    // console.log("현재", selectedId);
+    try {
+      const response = await axios.get(
+        `https://api.mandarin.weniv.co.kr/post/${selectedId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const post = response.data.post;
+      setMyPostInfo([post]);
+      setShouldFetchPostInfo(false);
+      console.log("새 게시글 정보", post);
+      console.log("페치 성공?", shouldFetchPostInfo);
+    } catch (error) {
+      console.error(error);
+      navigate("/error");
+    }
+  };
   function alertOpen() {
     setAlertShow(true);
   }
-
+  const where = localStorage.getItem("accountname");
+  const token = localStorage.getItem("token");
   const uploadComment = async () => {
     try {
       const res = await axios.post(
@@ -116,7 +145,6 @@ export default function DetailPost() {
         },
       );
       setComment(res.data.comment);
-
       setInputValue("");
     } catch (err) {
       console.error(err);
@@ -140,30 +168,23 @@ export default function DetailPost() {
       console.error(err);
     }
   };
-  const getUserInfo = async () => {
-    try {
-      const res = await axios.get(
-        "https://api.mandarin.weniv.co.kr/user/myinfo",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      setUserInfo(res.data.user);
-    } catch (error) {
-      console.error(error);
-    }
+
+  const openPostEditModal = () => {
+    setPostEditModalOpen(true);
+  };
+
+  const closePostEditModal = () => {
+    setPostEditModalOpen(false);
+    setShouldFetchPostInfo(true);
+    setModalShow(false);
   };
 
   useEffect(() => {
     loadcommentList();
-  }, [comment]);
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
+    if (shouldFetchPostInfo) {
+      fetchPostInfo();
+    }
+  }, [comment, shouldFetchPostInfo]);
   return (
     <>
       <Header
@@ -172,7 +193,7 @@ export default function DetailPost() {
         modalOpen={() => modalOpen("setting")}
       />
       <DetailPostWrapper>
-        {infoToIterate?.map(
+        {myPostInfo?.map(
           item =>
             item.id === id && (
               <PostItemSection key={item.id}>
@@ -197,7 +218,10 @@ export default function DetailPost() {
           <Comment commentList={commentList} postId={id} />
         </CommentSection>
         <WriteCommentSection>
-          <PostUserImg src={userInfo.image || defaultImg} alt="사용자 이미지" />
+          <PostUserImg
+            src={require("../../assets/images/basic-profile-sm.svg").default}
+            alt="사용자 이미지"
+          />
           <WriteComment
             type="text"
             placeholder="댓글 입력하기"
@@ -219,10 +243,18 @@ export default function DetailPost() {
           modalClose={modalClose}
           alertOpen={alertOpen}
           postId={selectedId}
+          handlerPostEdit={openPostEditModal}
         />
       )}
       {alertShow && (
         <Alert type="logout" alertClose={alertClose} postId={selectedId} />
+      )}
+      {postEditModalOpen && (
+        <PostEdit
+          closeModal={closePostEditModal}
+          postId={selectedId}
+          postInfo={postInfo}
+        />
       )}
     </>
   );
