@@ -19,6 +19,7 @@ const PostUserImg = styled.img`
   height: 42px;
   border-radius: 50%;
   cursor: pointer;
+  object-fit: cover;
 `;
 const PostUserBox = styled.div`
   align-self: center;

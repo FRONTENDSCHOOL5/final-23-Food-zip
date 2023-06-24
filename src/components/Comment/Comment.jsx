@@ -27,6 +27,7 @@ const CommentUserProfile = styled.img`
   border-radius: 50%;
   width: 36px;
   height: 36px;
+  object-fit: cover;
 `;
 const StyledCommentUserInfo = styled.div`
   flex-grow: 1;

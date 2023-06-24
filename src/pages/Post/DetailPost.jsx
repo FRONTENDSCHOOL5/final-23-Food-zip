@@ -48,6 +48,7 @@ const BtnDisplay = styled.button`
 const PostUserImg = styled.img`
   width: 36px;
   height: 36px;
+  object-fit: cover;
 `;
 const CommentSection = styled.div`
   width: 100%;

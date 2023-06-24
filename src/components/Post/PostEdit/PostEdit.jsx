@@ -57,7 +57,7 @@ const PostContent = styled.textarea`
     outline: none;
   }
   width: 100%;
-  margin-top: ${props => (props.hasImage ? "10px" : "")};
+  margin-top: ${props => (props.hasImage ? "17px" : "")};
   line-height: 20px;
   padding: 0;
 `;
