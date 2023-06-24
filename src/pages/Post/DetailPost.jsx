@@ -8,6 +8,8 @@ import Modal from "../../components/Modal/Modal";
 import Alert from "../../components/Modal/Alert";
 import axios from "axios";
 import PostEdit from "../../components/Post/PostEdit/PostEdit";
+import BasicProfile from "../../assets/images/basic-profile-lg.svg";
+
 const DetailPostWrapper = styled.div`
   /* background: #fff; */
   width: 100%;
@@ -48,6 +50,7 @@ const BtnDisplay = styled.button`
 const PostUserImg = styled.img`
   width: 36px;
   height: 36px;
+  border-radius: 50%;
 `;
 const CommentSection = styled.div`
   width: 100%;
@@ -72,13 +75,12 @@ export default function DetailPost() {
   const data = location.state;
   const { id, postInfo, authorInfo, otherInfo } = data;
   const infoToIterate = postInfo || otherInfo;
-  const where = localStorage.getItem("accountname");
-  const token = localStorage.getItem("token");
   const [commentCnt, setCommentCnt] = useState(0);
   const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
+  const [myImg, setMyImg] = useState("");
   const navigate = useNavigate();
-  
+
   const handleInputChange = event => {
     setInputValue(event.target.value);
     console.log("댓글 입력창 :", inputValue);
@@ -168,7 +170,23 @@ export default function DetailPost() {
       console.error(err);
     }
   };
-
+  const getUserInfo = async () => {
+    try {
+      const res = await axios.get(
+        "https://api.mandarin.weniv.co.kr/user/myinfo",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const image = res.data.user;
+      setMyImg(image);
+    } catch (error) {
+      console.error(error);
+      navigate("/error");
+    }
+  };
   const openPostEditModal = () => {
     setPostEditModalOpen(true);
   };
@@ -185,6 +203,9 @@ export default function DetailPost() {
       fetchPostInfo();
     }
   }, [comment, shouldFetchPostInfo]);
+  useEffect(() => {
+    getUserInfo();
+  }, []);
   return (
     <>
       <Header
@@ -218,10 +239,7 @@ export default function DetailPost() {
           <Comment commentList={commentList} postId={id} />
         </CommentSection>
         <WriteCommentSection>
-          <PostUserImg
-            src={require("../../assets/images/basic-profile-sm.svg").default}
-            alt="사용자 이미지"
-          />
+          <PostUserImg src={myImg.image || BasicProfile} alt="사용자 이미지" />
           <WriteComment
             type="text"
             placeholder="댓글 입력하기"

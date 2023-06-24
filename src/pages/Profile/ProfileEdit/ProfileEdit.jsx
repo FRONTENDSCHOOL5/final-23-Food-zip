@@ -47,7 +47,7 @@ export default function ProfileEdit() {
 
   return (
     <Container>
-      <Header type="save" />
+      <Header type="default" />
       <ProfileForm userInfo={userInfo} setUserInfo={setUserInfo} />
     </Container>
   );
