@@ -72,11 +72,13 @@ export default function DetailPost() {
   const data = location.state;
   const { id, postInfo, authorInfo, otherInfo } = data;
   const infoToIterate = postInfo || otherInfo;
+  const where = localStorage.getItem("accountname");
+  const token = localStorage.getItem("token");
+  const [commentCnt, setCommentCnt] = useState(0);
   const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
-  console.log("detailpost", infoToIterate);
-  console.log("mypost", myPostInfo);
   const navigate = useNavigate();
+  
   const handleInputChange = event => {
     setInputValue(event.target.value);
     console.log("댓글 입력창 :", inputValue);
@@ -143,7 +145,6 @@ export default function DetailPost() {
         },
       );
       setComment(res.data.comment);
-      console.log("댓글 입력됨 ", res.data.comment);
       setInputValue("");
     } catch (err) {
       console.error(err);
@@ -162,7 +163,7 @@ export default function DetailPost() {
         },
       );
       setCommentList(res.data.comments);
-      console.log("댓글리스트", res.data.comments);
+      setCommentCnt(res.data.comments.length);
     } catch (err) {
       console.error(err);
     }
@@ -208,6 +209,7 @@ export default function DetailPost() {
                   }
                   postInfo={[item]}
                   authorInfo={item.author}
+                  commentCnt={commentCnt}
                 />
               </PostItemSection>
             ),

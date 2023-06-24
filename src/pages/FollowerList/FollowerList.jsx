@@ -38,7 +38,6 @@ export default function FollowerList({ type, followType }) {
   useEffect(() => {
     type === "followers" ? getFollowerList() : getFollowingList();
   }, []);
-
   const getFollowerList = async () => {
     try {
       const res = await axios.get(
@@ -88,6 +87,7 @@ export default function FollowerList({ type, followType }) {
                   intro={follower.intro}
                   image={follower.image}
                   accountname={follower.accountname}
+                  isfollow={follower.isfollow}
                 />
               </FollowListItem>
             );
@@ -109,6 +109,9 @@ export default function FollowerList({ type, followType }) {
                   intro={following.intro}
                   image={following.image}
                   accountname={following.accountname}
+                  isfollow={following.isfollow}
+                  getFollowerList={getFollowerList}
+                  getFollowingList={getFollowingList}
                 />
               </FollowListItem>
             );

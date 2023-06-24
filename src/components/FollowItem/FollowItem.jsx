@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ProfileImg from "../../assets/images/list-example.png";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../common/Button/Button";
 import axios from "axios";
@@ -29,8 +28,14 @@ const FollowerIntro = styled.p`
   color: #767676;
 `;
 
-export default function FollowItem({ username, intro, image, accountname }) {
-  const [follow, setFollow] = useState(true);
+export default function FollowItem({
+  username,
+  intro,
+  image,
+  accountname,
+  isfollow,
+}) {
+  const [follow, setFollow] = useState(isfollow);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -41,46 +46,34 @@ export default function FollowItem({ username, intro, image, accountname }) {
       },
     });
   }
+  useEffect(() => {}, [follow, setFollow]);
 
-  const Follow = async () => {
+  const toggleFollow = async () => {
     try {
-      const tokenValid = await axios.get(
-        `https://api.mandarin.weniv.co.kr/user/checktoken`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
+      // 팔로우 상태에 따라 API 요청을 다르게 수행
+      if (!follow) {
+        await axios.post(
+          `https://api.mandarin.weniv.co.kr/profile/${accountname}/follow`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
           },
-        },
-      );
-      const res = await axios.post(
-        `https://api.mandarin.weniv.co.kr/profile/${accountname}/follow`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
+        );
+      } else {
+        await axios.delete(
+          `https://api.mandarin.weniv.co.kr/profile/${accountname}/unfollow`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
           },
-        },
-      );
-      setFollow(!follow);
-    } catch (err) {
-      console.error("에러!", err);
-      navigate("/error");
-    }
-  };
+        );
+      }
 
-  const UnFollow = async () => {
-    try {
-      const res = await axios.delete(
-        `https://api.mandarin.weniv.co.kr/profile/${accountname}/unfollow`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
       setFollow(!follow);
     } catch (err) {
       console.error("에러!", err);
@@ -99,26 +92,16 @@ export default function FollowItem({ username, intro, image, accountname }) {
         <FollowerName>{username}</FollowerName>
         <FollowerIntro>{intro}</FollowerIntro>
       </FollowerInfo>
-      {!follow ? (
-        <Button
-          type="button"
-          content="팔로우"
-          width="s"
-          size="s"
-          bgColor="active"
-          onClick={Follow}
-        />
-      ) : (
-        <Button
-          type="button"
-          content="취소"
-          width="s"
-          size="s"
-          border="active"
-          color="active"
-          onClick={UnFollow}
-        />
-      )}
+      <Button
+        type="button"
+        content={follow ? "취소" : "팔로우"}
+        width="s"
+        size="s"
+        bgColor={!follow ? "active" : ""}
+        border={follow ? "active" : ""}
+        color={follow ? "active" : ""}
+        onClick={toggleFollow}
+      />
     </Container>
   );
 }
