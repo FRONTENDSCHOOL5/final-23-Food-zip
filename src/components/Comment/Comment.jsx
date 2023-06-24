@@ -6,7 +6,8 @@ import Alert from "../Modal/Alert";
 import Modal from "../Modal/Modal";
 
 const StyledCommentWrapper = styled.ul`
-  /* max-height: 287px; */
+  display: flex;
+  flex-direction: column-reverse;
 `;
 const StyledComment = styled.li`
   position: relative;
