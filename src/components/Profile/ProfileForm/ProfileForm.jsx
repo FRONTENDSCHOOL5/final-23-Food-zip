@@ -86,6 +86,11 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
   });
   const token = localStorage.getItem("token");
   const location = useLocation();
+  const navigate = useNavigate();
+  const defaultImg = "https://api.mandarin.weniv.co.kr/1687267818879.png";
+  const [profileImg, setProfileImg] = useState(null);
+  const fileInputRef = useRef(null);
+  const data = location.state;
 
   useEffect(() => {
     if (location.pathname === "/myprofile/edit") {
@@ -101,16 +106,10 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     }
   }, [location.pathname, userInfo]);
 
-  const defaultImg = "https://api.mandarin.weniv.co.kr/1687267818879.png";
-  const [profileImg, setProfileImg] = useState(null);
-  const fileInputRef = useRef(null);
-  const data = location.state;
   const handleImageChange = async event => {
     const formData = new FormData();
     const file = event.target.files[0];
-
     formData.append("image", file);
-
     const res = await axios.post(
       "https://api.mandarin.weniv.co.kr/image/uploadfile",
       formData,
@@ -124,7 +123,27 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     setProfileImg(imgUrl);
   };
 
-  const navigate = useNavigate();
+  const accountValid = async accountname => {
+    try {
+      const res = await axios.post(
+        `https://api.mandarin.weniv.co.kr/user/accountnamevalid`,
+        { user: { accountname: accountname } },
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        },
+      );
+      if (res.data.message === "사용 가능한 계정ID 입니다.") {
+        return true;
+      } else if (res.data.message === "이미 가입된 계정ID 입니다.") {
+        return "이미 가입된 계정ID 입니다.";
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleFormSubmit = async formData => {
     if (location.pathname === "/signup/profile") {
       try {
@@ -174,11 +193,9 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         );
         localStorage.setItem("_id", formData._id);
         localStorage.setItem("accountname", formData.accountname);
-        console.log(JSON.stringify(res.data));
         navigate("/myprofile");
       } catch (err) {
-        console.error(err);
-        navigate("/error");
+        console.error("프로필 수정 에러", err);
       }
     }
   };
@@ -241,6 +258,12 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
             pattern: {
               value: /^[0-9a-zA-Z._]+$/,
               message: "영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.",
+            },
+            validate: {
+              uniqueAccount: async value => {
+                const result = await accountValid(value);
+                return result === true || result;
+              },
             },
           })}
         />
