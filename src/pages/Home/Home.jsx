@@ -22,17 +22,6 @@ export default function Home() {
   const [isEmptyFeed, setIsEmptyFeed] = useState(false); // 새로운 상태 변수
   const [page, setPage] = useState(1);
 
-  // const handleScroll = () => {
-  //   const scrollHeight = document.documentElement.scrollHeight;
-  //   const scrollTop = document.documentElement.scrollTop;
-  //   const clientHeight = document.documentElement.clientHeight;
-  //   console.log("스크롤 이벤트 발생");
-
-  //   if (scrollTop + clientHeight >= scrollHeight) {
-  //     console.log("페이지 끝에 스크롤이 닿았음");
-  //     setPage(prev => prev + 1);
-  //   }
-  // };
   useEffect(() => {
     const getFeed = async () => {
       setLoading(true);
@@ -65,12 +54,7 @@ export default function Home() {
     };
     getFeed();
   }, [page]);
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
+
   return (
     <Container>
       <Header type="home" />

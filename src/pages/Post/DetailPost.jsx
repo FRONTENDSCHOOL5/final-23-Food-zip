@@ -50,6 +50,7 @@ const BtnDisplay = styled.button`
 const PostUserImg = styled.img`
   width: 36px;
   height: 36px;
+  object-fit: cover;
   border-radius: 50%;
 `;
 const CommentSection = styled.div`
@@ -128,8 +129,6 @@ export default function DetailPost() {
   function alertOpen() {
     setAlertShow(true);
   }
-  const where = localStorage.getItem("accountname");
-  const token = localStorage.getItem("token");
   const uploadComment = async () => {
     try {
       const res = await axios.post(

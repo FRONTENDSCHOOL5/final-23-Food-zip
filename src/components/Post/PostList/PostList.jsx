@@ -8,6 +8,7 @@ import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../Modal/Modal";
+import PostEdit from "../PostEdit/PostEdit";
 
 const PostListDiv = styled.div`
   display: flex;
@@ -80,6 +81,7 @@ export default function PostList({ post, modalOpen }) {
   const [postInfo, setPostInfo] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
   const [hasPosts, setHasPosts] = useState(false); // 없을 때 렌더링 안되게 하게 만들었음
+  const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   useEffect(() => {
     getUserInfo();
   }, [location]);
@@ -157,6 +159,17 @@ export default function PostList({ post, modalOpen }) {
     setModalShow(true);
   }
   console.log("Post", postInfo);
+
+  const openPostEditModal = () => {
+    setPostEditModalOpen(true);
+  };
+
+  const closePostEditModal = () => {
+    setPostEditModalOpen(false);
+    // setShouldFetchPostInfo(true);
+    setModalShow(false);
+    getUserInfo();
+  };
   return (
     <>
       {hasPosts && (
@@ -214,6 +227,14 @@ export default function PostList({ post, modalOpen }) {
           type={!accountname ? "modification" : "report"}
           modalClose={modalClose}
           postId={selectedId}
+          handlerPostEdit={openPostEditModal}
+        />
+      )}
+      {postEditModalOpen && (
+        <PostEdit
+          closeModal={closePostEditModal}
+          postId={selectedId}
+          postInfo={postInfo}
         />
       )}
     </>
