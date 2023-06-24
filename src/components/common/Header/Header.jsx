@@ -227,6 +227,19 @@ export default function Header({
         </HeaderRightBtn>
       </HeaderLayoutDiv>
     ),
+    default: (
+      <HeaderLayoutDiv>
+        <HeaderSpan>
+          <HeaderLeftBtn type="button">
+            <img
+              src={IconArrowLeft}
+              alt="뒤로가기 아이콘"
+              onClick={() => navigate(-1)}
+            />
+          </HeaderLeftBtn>
+        </HeaderSpan>
+      </HeaderLayoutDiv>
+    ),
   };
 
   return <HeaderWrap>{UI[type]}</HeaderWrap>;
