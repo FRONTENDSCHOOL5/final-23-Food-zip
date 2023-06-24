@@ -48,6 +48,7 @@ const BtnDisplay = styled.button`
 const PostUserImg = styled.img`
   width: 36px;
   height: 36px;
+  border-radius: 50%;
 `;
 const CommentSection = styled.div`
   width: 100%;
@@ -78,7 +79,7 @@ export default function DetailPost() {
   const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
   const navigate = useNavigate();
-  
+
   const handleInputChange = event => {
     setInputValue(event.target.value);
     console.log("댓글 입력창 :", inputValue);
@@ -126,8 +127,6 @@ export default function DetailPost() {
   function alertOpen() {
     setAlertShow(true);
   }
-  const where = localStorage.getItem("accountname");
-  const token = localStorage.getItem("token");
   const uploadComment = async () => {
     try {
       const res = await axios.post(
@@ -154,7 +153,7 @@ export default function DetailPost() {
   const loadcommentList = async () => {
     try {
       const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/${id}/comments`,
+        `https://api.mandarin.weniv.co.kr/post/${id}/comments/?limit=Number&skip=Number`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -218,10 +217,7 @@ export default function DetailPost() {
           <Comment commentList={commentList} postId={id} />
         </CommentSection>
         <WriteCommentSection>
-          <PostUserImg
-            src={require("../../assets/images/basic-profile-sm.svg").default}
-            alt="사용자 이미지"
-          />
+          <PostUserImg src={authorInfo.image} alt="사용자 이미지" />
           <WriteComment
             type="text"
             placeholder="댓글 입력하기"

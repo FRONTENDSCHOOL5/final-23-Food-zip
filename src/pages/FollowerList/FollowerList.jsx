@@ -41,7 +41,7 @@ export default function FollowerList({ type, followType }) {
   const getFollowerList = async () => {
     try {
       const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/profile/${accountname}/follower`,
+        `https://api.mandarin.weniv.co.kr/profile/${accountname}/follower/?limit=Number&skip=Number`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -59,7 +59,7 @@ export default function FollowerList({ type, followType }) {
   const getFollowingList = async () => {
     try {
       const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/profile/${accountname}/following`,
+        `https://api.mandarin.weniv.co.kr/profile/${accountname}/following/?limit=Number&skip=Number`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
