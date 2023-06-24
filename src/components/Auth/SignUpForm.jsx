@@ -9,7 +9,7 @@ const StyledForm = styled.form`
   margin-top: 40px;
 `;
 const StyledButton = styled(ButtonStyle)`
-  margin: 100px auto 20px auto;
+  margin: 0px auto 20px;
 `;
 const StyledInputContainer = styled.div`
   position: relative;
