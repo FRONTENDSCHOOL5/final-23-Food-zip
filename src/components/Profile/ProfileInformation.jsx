@@ -188,7 +188,6 @@ export default function ProfileInformation({ type, modalOpen }) {
   useEffect(() => {
     const following = followerInfo.some(x => x === myId);
     setFollow(!following);
-    console.log("팔로우된 상태면 false가 나와야함 결과는?", follow);
     localStorage.setItem("follow", !following ? "false" : "true");
   }, [followerInfo]);
 
