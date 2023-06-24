@@ -37,13 +37,11 @@ const SendBtn = styled.button`
   cursor: pointer;
 `;
 
-export default function ChatNavigation() {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleInputChange = event => {
-    setInputValue(event.target.value);
-  };
-
+export default function ChatNavigation({
+  inputValue,
+  handleInputChange,
+  handleButtonClicked,
+}) {
   return (
     <ChatNavBar>
       <ImageIcon src={imageIcon} alt="사진 선택하기" />
@@ -53,7 +51,12 @@ export default function ChatNavigation() {
         value={inputValue}
         onChange={handleInputChange}
       />
-      <SendBtn hasText={inputValue.trim().length > 0}>전송</SendBtn>
+      <SendBtn
+        hasText={inputValue.trim().length > 0}
+        onClick={handleButtonClicked}
+      >
+        전송
+      </SendBtn>
     </ChatNavBar>
   );
 }

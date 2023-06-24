@@ -10,7 +10,6 @@ const ChatWrapper = styled.ul`
 
 const List = styled.li`
   list-style: none;
-
   display: flex;
   padding: 8px 16px;
   gap: 12px;
