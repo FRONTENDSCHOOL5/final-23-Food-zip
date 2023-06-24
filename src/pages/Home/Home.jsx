@@ -19,6 +19,7 @@ export default function Home() {
   const [myFeed, setMyFeed] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isEmptyFeed, setIsEmptyFeed] = useState(false); // 새로운 상태 변수
   const [page, setPage] = useState(1);
 
   const handleScroll = () => {
@@ -47,9 +48,16 @@ export default function Home() {
           },
         );
         console.log("데이터", res.data);
-        setMyFeed(prev => [...prev, ...res.data.posts]);
-        const authors = res.data.posts[0].author;
-        setAuthorInfo(authors);
+
+        // 포스트가 비어있는 경우 isEmptyFeed를 true로 설정
+        if (res.data.posts.length === 0) {
+          setIsEmptyFeed(true);
+        } else {
+          setMyFeed(prev => [...prev, ...res.data.posts]);
+          const authors = res.data.posts[0].author;
+          setAuthorInfo(authors);
+        }
+
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -67,7 +75,9 @@ export default function Home() {
     <Container>
       <Header type="home" />
       {loading && <Loading />}
-      {myFeed.length > 1 ? (
+      {loading ? (
+        <Loading />
+      ) : myFeed.length > 1 ? (
         <PostHome myFeed={myFeed} postInfo={myFeed} authorInfo={authorInfo} />
       ) : (
         <EmptyHome />
