@@ -123,11 +123,14 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     setProfileImg(imgUrl);
   };
 
-  const accountValid = async accountname => {
+  const accountValid = async (newAccountName, currentAccountName) => {
+    if (newAccountName === currentAccountName) {
+      return true;
+    }
     try {
       const res = await axios.post(
         `https://api.mandarin.weniv.co.kr/user/accountnamevalid`,
-        { user: { accountname: accountname } },
+        { user: { accountname: newAccountName } },
         {
           headers: {
             "Content-type": "application/json",
@@ -261,7 +264,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
             },
             validate: {
               uniqueAccount: async value => {
-                const result = await accountValid(value);
+                const result = await accountValid(value, userInfo?.accountname);
                 return result === true || result;
               },
             },
