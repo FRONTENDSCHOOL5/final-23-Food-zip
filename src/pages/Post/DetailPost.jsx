@@ -72,8 +72,9 @@ export default function DetailPost() {
   const data = location.state;
   const { id, postInfo, authorInfo, otherInfo } = data;
   const infoToIterate = postInfo || otherInfo;
-  const [myPostInfo, setMyPostInfo] = useState([infoToIterate]);
-  console.log("detailpost", id);
+  const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
+  const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
+  console.log("detailpost", infoToIterate);
   console.log("mypost", myPostInfo);
   const navigate = useNavigate();
   const handleInputChange = event => {
@@ -111,8 +112,10 @@ export default function DetailPost() {
         },
       );
       const post = response.data.post;
-      setMyPostInfo(post);
-      console.log("게시글 정보", post);
+      setMyPostInfo([post]);
+      setShouldFetchPostInfo(false);
+      console.log("새 게시글 정보", post);
+      console.log("페치 성공?", shouldFetchPostInfo);
     } catch (error) {
       console.error(error);
       navigate("/error");
@@ -171,12 +174,16 @@ export default function DetailPost() {
 
   const closePostEditModal = () => {
     setPostEditModalOpen(false);
-    fetchPostInfo();
+    setShouldFetchPostInfo(true);
+    setModalShow(false);
   };
 
   useEffect(() => {
     loadcommentList();
-  }, [comment]);
+    if (shouldFetchPostInfo) {
+      fetchPostInfo();
+    }
+  }, [comment, shouldFetchPostInfo]);
   return (
     <>
       <Header

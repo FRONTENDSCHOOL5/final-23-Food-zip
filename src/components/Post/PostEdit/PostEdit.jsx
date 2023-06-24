@@ -77,25 +77,25 @@ export default function PostEdit({ closeModal, postId, Info }) {
       );
       const post = response.data.post;
       setPostInfo(post);
-      console.log("게시글 정보", post);
+      console.log("기존 게시글 정보", post);
     } catch (error) {
       console.error(error);
       navigate("/error");
     }
   };
 
-  const postEditUpload = async event => {
+  const postEditUpload = async () => {
     // event.preventDefault();
 
     console.log("게시물 아이디", postId);
-    console.log("게시물정보", Info);
+    console.log("새 게시물정보", postInfo);
     try {
       const res = await axios.put(
         `https://api.mandarin.weniv.co.kr/post/${postId}`,
         {
           post: {
-            content: event.content,
-            image: event.image,
+            content: postInfo.content,
+            image: postInfo.image,
           },
         },
         {
