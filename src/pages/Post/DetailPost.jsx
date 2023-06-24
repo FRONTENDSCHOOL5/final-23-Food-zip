@@ -71,7 +71,8 @@ export default function DetailPost() {
   const infoToIterate = postInfo || otherInfo;
   const where = localStorage.getItem("accountname");
   const token = localStorage.getItem("token");
-
+  const [commentCnt, setCommentCnt] = useState(otherInfo[0].comments.length);
+  console.log(commentCnt);
   const handleInputChange = event => {
     setInputValue(event.target.value);
   };
@@ -116,6 +117,7 @@ export default function DetailPost() {
         },
       );
       setComment(res.data.comment);
+
       setInputValue("");
     } catch (err) {
       console.error(err);
@@ -134,6 +136,7 @@ export default function DetailPost() {
         },
       );
       setCommentList(res.data.comments);
+      setCommentCnt(res.data.comments.length);
     } catch (err) {
       console.error(err);
     }
@@ -156,7 +159,7 @@ export default function DetailPost() {
 
   useEffect(() => {
     loadcommentList();
-  }, [comment]);
+  }, [comment, commentCnt]);
 
   useEffect(() => {
     getUserInfo();
@@ -186,6 +189,7 @@ export default function DetailPost() {
                   }
                   postInfo={[item]}
                   authorInfo={item.author}
+                  commentCnt={commentCnt}
                 />
               </PostItemSection>
             ),

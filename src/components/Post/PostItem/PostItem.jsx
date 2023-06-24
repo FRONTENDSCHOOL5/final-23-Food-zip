@@ -97,6 +97,7 @@ export default function PostItem({
   modalOpen,
   otherInfo,
   getUserInfo,
+  commentCnt,
 }) {
   const navigate = useNavigate();
   const infoToIterate = postInfo || otherInfo;
@@ -183,7 +184,6 @@ export default function PostItem({
     return `${year}년 ${month}월 ${day}일`;
   }
 
-  // console.log(myFeed);
   return (
     <>
       {postInfo
@@ -241,7 +241,7 @@ export default function PostItem({
                         }
                         alt="게시글 댓글"
                       />
-                      {item.comments.length}
+                      {commentCnt}
                     </BtnComment>
                   </PostBtnBox>
                   <PostDate>{formatDate(item.updatedAt)}</PostDate>
