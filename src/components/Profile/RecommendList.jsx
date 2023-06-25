@@ -92,11 +92,11 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
     const { accountname } = location.state || {};
     const token = localStorage.getItem("token");
     try {
-      let apiUrl = `https://api.mandarin.weniv.co.kr/product/${accountname}`;
+      let apiUrl = `https://api.mandarin.weniv.co.kr/product/${accountname}/?limit=Number&skip=Number`;
 
       if (!accountname) {
         const loggedInAccountname = localStorage.getItem("accountname");
-        apiUrl = `https://api.mandarin.weniv.co.kr/product/${loggedInAccountname}`;
+        apiUrl = `https://api.mandarin.weniv.co.kr/product/${loggedInAccountname}/?limit=Number&skip=Number`;
       }
 
       const res = await axios.get(apiUrl, {

@@ -122,19 +122,34 @@ export default function PostItem({
         console.error("Post not found");
         return false;
       }
-      console.log("check", post);
-      const res = await axios.post(
-        `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
+      if (post.hearted) {
+        const res = await axios.delete(
+          `https://api.mandarin.weniv.co.kr/post/${post.id}/unheart`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
           },
-        },
-      );
-      console.log("좋아요", res.data.post.heartCount);
-      getUserInfo();
+        );
+        console.log("좋아요 취소");
+      } else {
+        const res = await axios.post(
+          `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
+          },
+        );
+        console.log("좋아요", res.data.post.heartCount);
+      }
+      if (getUserInfo) getUserInfo();
+      if (fetchPostInfo) fetchPostInfo();
+
+      console.log(postInfo, "좋아요 요청후 응답");
     } catch (error) {
       console.error(error);
       return false;
@@ -149,18 +164,34 @@ export default function PostItem({
         return false;
       }
       console.log("check", post);
-      const res = await axios.post(
-        `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
+      if (post.hearted) {
+        const res = await axios.delete(
+          `https://api.mandarin.weniv.co.kr/post/${post.id}/unheart`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
           },
-        },
-      );
-      console.log("상대방 좋아요", res);
+        );
+        console.log("좋아요 취소");
+      } else {
+        const res = await axios.post(
+          `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
+          },
+        );
+        console.log("좋아요", res.data.post.heartCount);
+      }
       getOtherInfo();
+      // shouldFetchPostInfo();
+      fetchPostInfo();
+      console.log(postInfo, "좋아요 요청후 응답");
     } catch (error) {
       console.error(error);
       return false;
