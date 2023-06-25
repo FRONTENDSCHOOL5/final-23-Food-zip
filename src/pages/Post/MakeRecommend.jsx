@@ -15,19 +15,25 @@ const RecommendWrapper = styled.div`
   overflow: hidden;
   box-sizing: border-box;
 `;
+
+const RecommendLabel = styled.label`
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 900;
+  color: #186738;
+`;
 const RecommendInfo = styled.input`
   display: block;
-  width: 322px;
+  width: 318px;
   box-sizing: border-box;
   border: none;
-  box-shadow: 0 1px 0 0 #677880;
-  height: 48px;
-  border-radius: 4px 4px 0 0;
-  padding: 0 px;
-  font-size: 16px;
-  margin: 0 auto 36px auto;
+  box-shadow: 0 1px 0 0 #dedede;
+  height: 42px;
+  font-size: 14px;
+  margin: 0 auto 30px auto;
   outline: none;
   background: transparent;
+  padding: 6px 0 0;
   &:focus {
     border-bottom: #629678;
   }
@@ -138,7 +144,7 @@ export default function MakeRecommend() {
       <RecommendWrapper>
         <form>
           <RecommendImgPrev onRecommendImageUrlChange={handleImageUrlChange} />
-          <label htmlFor="restaurantName">음식점</label>
+          <RecommendLabel htmlFor="restaurantName">음식점</RecommendLabel>
           <RecommendInfo
             id="restaurantName"
             type="text"
@@ -146,7 +152,7 @@ export default function MakeRecommend() {
             onChange={onChangeName}
           />
           <StarRating onRatingChange={handleRatingChange} />
-          <label htmlFor="address">주소</label>
+          <RecommendLabel htmlFor="address">주소</RecommendLabel>
           <RecommendInfo
             id="address"
             type="text"

@@ -2,6 +2,7 @@ import React from "react";
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import uploadPhoto from "../../../assets/images/camera-color.svg";
+import imgbg from "../../../assets/images/img-bg.svg";
 
 const RecommendImgInput = styled.input`
   display: none;
@@ -14,11 +15,11 @@ const RecommendImg = styled.img`
   border-radius: 10px;
 `;
 const EmptyBox = styled.div`
-  background: #dbdbdb;
   margin-top: 5px;
   width: 100%;
   height: 204px;
   border-radius: 10px;
+  background: url(${imgbg});
 `;
 const RecommendImgWrapper = styled.div`
   width: 100%;

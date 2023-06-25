@@ -4,10 +4,13 @@ import { Rating } from "react-simple-star-rating";
 import { useEffect } from "react";
 
 const RatingWrapper = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 `;
 const RatingP = styled.p`
-  margin-bottom: 10px;
+  margin-bottom: 14px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #186738;
 `;
 export default function StarRating({ onRatingChange }) {
   const [rating, setRating] = useState(0);
@@ -30,6 +33,7 @@ export default function StarRating({ onRatingChange }) {
           onPointerEnter={onPointerEnter}
           onPointerLeave={onPointerLeave}
           onPointerMove={onPointerMove}
+          // size={30}
           /* Available Props */
         />
       </RatingWrapper>
