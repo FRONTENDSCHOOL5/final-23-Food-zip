@@ -166,7 +166,6 @@ export default function PostList({ post, modalOpen }) {
 
   const closePostEditModal = () => {
     setPostEditModalOpen(false);
-    // setShouldFetchPostInfo(true);
     setModalShow(false);
     getUserInfo();
   };

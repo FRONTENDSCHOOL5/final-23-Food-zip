@@ -8,6 +8,8 @@ import Marker from "../../assets/images/location.svg";
 import MarkerBlack from "../../assets/images/location-black.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./MapStyle.css";
+import Modal from "../../components/Modal/Modal";
+import Alert from "../../components/Modal/Alert";
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;
@@ -157,9 +159,35 @@ const MapTest = () => {
     }
   }, [recommendName, map]);
 
+  const [modalShow, setModalShow] = useState(false);
+  const [modalType, setModalType] = useState("setting");
+  const [selectedId, setSelectedId] = useState(null);
+
+  function modalClose(e) {
+    if (e.target === e.currentTarget) {
+      setModalShow(false);
+    }
+  }
+
+  function modalOpen(type) {
+    setModalShow(true);
+    setModalType(type);
+  }
+
+  const [alertShow, setAlertShow] = useState(false);
+  function alertClose(e) {
+    if (e.target === e.currentTarget) {
+      setAlertShow(false);
+    }
+  }
+
+  function alertOpen() {
+    setAlertShow(true);
+  }
+
   return (
     <>
-      <Header type="map" />
+      <Header type="map" modalOpen={() => modalOpen("setting")} />
       <MapWrapper>
         <Map id="map"></Map>
         <InfoWrapper>
@@ -185,6 +213,10 @@ const MapTest = () => {
           </BtnList>
         </InfoWrapper>
       </MapWrapper>
+      {modalShow && (
+        <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
+      )}
+      {alertShow && <Alert type="logout" alertClose={alertClose} />}
     </>
   );
 };

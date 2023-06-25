@@ -33,8 +33,8 @@ export default function SendMessage() {
   return (
     <MessageWrap>
       <MessageText>
-        안됩니다
-        <TimeStamp>13.50</TimeStamp>
+        네~ 좋아요
+        <TimeStamp>13.58</TimeStamp>
       </MessageText>
     </MessageWrap>
   );

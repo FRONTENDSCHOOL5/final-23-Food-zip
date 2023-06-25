@@ -58,7 +58,6 @@ export default function Home() {
   return (
     <Container>
       <Header type="home" />
-      {loading && <Loading />}
       {loading ? (
         <Loading />
       ) : myFeed.length > 1 ? (

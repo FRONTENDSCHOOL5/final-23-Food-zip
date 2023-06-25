@@ -38,6 +38,7 @@ const PostContent = styled.div`
   margin: 17px 0;
   font-size: 14px;
   line-height: 17px;
+  word-break: break-all;
 `;
 const PostText = styled.p`
   margin-bottom: 17px;

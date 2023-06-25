@@ -38,18 +38,18 @@ export default function ReceiveMessage() {
   const messageList = [
     {
       id: 1,
-      messageText:
-        "대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다. 모든 국민은 학문과 예술의 자유를 가진다. 이 헌법시행 당시의 법령과 조약은 이 헌법에 위배되지 아니하는 한 그 효력을 지속한다.",
+      messageText: "푸짐님~! 항상 피드 잘 보고 있어요",
       time: "12.39",
     },
     {
       id: 2,
-      messageText: "집 가고 싶다",
+      messageText:
+        "저는 저번 주말에 오제제 강남점을 갔는데, 분위기도 좋고 음식도 맛있었어요",
       time: "13.45",
     },
     {
       id: 3,
-      messageText: "밥 먹으러 가도 되나요?",
+      messageText: "다음에 기회 되면 푸짐님도 같이 가요!",
       time: "13.45",
     },
   ];
