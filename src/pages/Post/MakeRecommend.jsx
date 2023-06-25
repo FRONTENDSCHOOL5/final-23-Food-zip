@@ -16,7 +16,7 @@ const RecommendWrapper = styled.div`
   box-sizing: border-box;
 `;
 
-const RecommendLabel = styled.label`
+export const RecommendLabel = styled.label`
   display: inline-block;
   font-size: 15px;
   font-weight: 900;
