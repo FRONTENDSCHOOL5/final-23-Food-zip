@@ -10,7 +10,8 @@ import { useState } from "react";
 import post from "../../dummy/dummyapi";
 import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   max-width: 390px;
   margin: 0 auto;
@@ -21,7 +22,7 @@ export default function Profile({ type }) {
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState("setting");
   const [selectedId, setSelectedId] = useState(null);
-
+  const [cardClosed, setCardClosed] = useState(false);
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -48,6 +49,7 @@ export default function Profile({ type }) {
   function cardClose(e) {
     if (e.target === e.currentTarget) {
       setCardShow(false);
+      setCardClosed(true);
     }
   }
 
@@ -60,7 +62,7 @@ export default function Profile({ type }) {
     <Container>
       <Header type="profile" modalOpen={() => modalOpen("setting")} />
       <ProfileInformation type={type} />
-      <RecommendList cardOpen={cardOpen} />
+      <RecommendList cardOpen={cardOpen} cardClosed={cardClosed} />
       <PostList post={post} />
       {modalShow && (
         <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
