@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Rating } from "react-simple-star-rating";
+import { useEffect } from "react";
 
 const RatingWrapper = styled.div`
   margin-bottom: 30px;
@@ -25,6 +26,7 @@ export default function StarRating({ onRatingChange }) {
         <RatingP>평점</RatingP>
         <Rating
           onClick={handleRating}
+          ratingValue={rating}
           onPointerEnter={onPointerEnter}
           onPointerLeave={onPointerLeave}
           onPointerMove={onPointerMove}

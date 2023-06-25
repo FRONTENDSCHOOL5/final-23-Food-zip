@@ -193,6 +193,29 @@ export default function DetailPost() {
     setShouldFetchPostInfo(true);
     setModalShow(false);
   };
+  const getOtherInfo = async () => {
+    console.log("이건 좋아요");
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get(
+        `https://api.mandarin.weniv.co.kr/post/feed/?limit=Number&skip=Number`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      console.log("데이터 포스트 홈", res.data.posts);
+      res.data.posts.map(item => {
+        if (selectedId === item.id) {
+          return item;
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     loadcommentList();

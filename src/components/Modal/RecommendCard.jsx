@@ -6,6 +6,7 @@ import ImgStar from "../../assets/images/star.svg";
 import Alert from "./Alert";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import RecommendEdit from "../Post/PostEdit/RecommendEdit";
 const RecommendDiv = styled.div`
   position: fixed;
   bottom: 0;
@@ -102,6 +103,8 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
     // author: "",
   });
   const navigation = useNavigate();
+  const [recommendEditModalOpen, setRecommendEditModalOpen] = useState(false);
+  const [shouldFetchProductInfo, setShouldFetchProductInfo] = useState(false);
   useEffect(() => {
     getUserInfo();
   }, [id]);
@@ -119,19 +122,20 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
         },
       );
       const { itemImage, itemName, link, price } = res.data.product;
+      console.log("현재 상품", res);
       setRecommendInfo({
         itemImage,
         itemName,
         link,
         price,
       });
+      setShouldFetchProductInfo(false);
     } catch (err) {
       navigation("/error");
     }
   };
 
   const [modalShow, setModalShow] = useState(false);
-
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -142,7 +146,21 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
     console.log("modal", recommendInfo.itemName);
     setModalShow(true);
   }
-
+  const openRecommendEditModal = () => {
+    setRecommendEditModalOpen(true);
+  };
+  const closeRecommendEditModal = () => {
+    setRecommendEditModalOpen(false);
+    setShouldFetchProductInfo(true);
+    setModalShow(false);
+    getUserInfo();
+  };
+  useEffect(() => {
+    if (shouldFetchProductInfo) {
+      console.log("상품 페치");
+      getUserInfo();
+    }
+  }, [shouldFetchProductInfo]);
   return (
     <RecommendDiv>
       <RecommendCardDiv>
@@ -167,6 +185,14 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
           modalClose={modalClose}
           productId={id}
           restaurantName={recommendInfo.itemName}
+          handlerRecommendEdit={openRecommendEditModal}
+        />
+      )}
+      {recommendEditModalOpen && (
+        <RecommendEdit
+          closeModal={closeRecommendEditModal}
+          // recommendInfo={recommendInfo}
+          productId={id}
         />
       )}
     </RecommendDiv>

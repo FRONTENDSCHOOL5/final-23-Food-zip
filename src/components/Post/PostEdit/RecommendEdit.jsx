@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
 import Button from "../../common/Button/Button";
+import StarRating from "../StarRating/StarRating";
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -19,6 +20,13 @@ const ModalOverlay = styled.div`
 `;
 const EditContainer = styled.form`
   width: 300px;
+`;
+const ProductImage = styled.img`
+  display: block;
+  width: 100%;
+  /* width: 250px; */
+  border-radius: 10px;
+  margin-bottom: 10px;
 `;
 const HeaderLayoutDiv = styled.div`
   display: flex;
@@ -41,41 +49,37 @@ const ModalContent = styled.div`
   padding: 0 20px 20px 20px;
   border-radius: 5px;
 `;
-const PostImage = styled.img`
+
+const RecommendInfo = styled.input`
   display: block;
-  width: 100%;
-  /* width: 250px; */
-  border-radius: 10px;
-`;
-const PostContent = styled.textarea`
+  width: 322px;
   box-sizing: border-box;
-  font-size: 15px;
-  font-family: "SUIT-Regular";
   border: none;
-  resize: none;
+  box-shadow: 0 1px 0 0 #677880;
+  height: 48px;
+  border-radius: 4px 4px 0 0;
+  padding: 0 px;
+  font-size: 16px;
+  margin: 0 auto 36px auto;
+  outline: none;
+  background: transparent;
   &:focus {
-    outline: none;
+    border-bottom: #629678;
   }
-  width: 100%;
-  margin-top: ${props => (props.hasImage ? "17px" : "")};
-  line-height: 20px;
-  padding: 0;
 `;
-export default function PostEdit({ closeModal, postId, Info }) {
-  console.log("edit", postId);
+export default function RecommendEdit({ closeModal, productId }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const [postInfo, setPostInfo] = useState({});
-
+  const [productInfo, setProductInfo] = useState({});
   useEffect(() => {
     // 컴포넌트가 마운트될 때 게시물 정보 가져오기
-    fetchPostInfo();
+    fetchProductInfo();
   }, []);
 
-  const fetchPostInfo = async () => {
+  const fetchProductInfo = async () => {
     try {
       const response = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/${postId}`,
+        `https://api.mandarin.weniv.co.kr/product/detail/${productId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -83,27 +87,28 @@ export default function PostEdit({ closeModal, postId, Info }) {
           },
         },
       );
-      const post = response.data.post;
-      setPostInfo(post);
-      console.log("기존 게시글 정보", post);
+      const product = response.data.product;
+      console.log("이 상품은", product);
+      setProductInfo(product);
+      console.log("기존 게시글 정보", product);
     } catch (error) {
       console.error(error);
       navigate("/error");
     }
   };
-
-  const postEditUpload = async () => {
+  console.log(productInfo);
+  const recommendEditUpload = async () => {
+    console.log();
     // event.preventDefault();
-
-    console.log("게시물 아이디", postId);
-    console.log("새 게시물정보", postInfo);
     try {
       const res = await axios.put(
-        `https://api.mandarin.weniv.co.kr/post/${postId}`,
+        `https://api.mandarin.weniv.co.kr/product/${productId}`,
         {
-          post: {
-            content: postInfo.content,
-            image: postInfo.image,
+          product: {
+            itemName: productInfo.itemName,
+            price: productInfo.price,
+            link: productInfo.link,
+            itemImage: productInfo.itemImage,
           },
         },
         {
@@ -113,9 +118,9 @@ export default function PostEdit({ closeModal, postId, Info }) {
           },
         },
       );
-      const updatedPost = res.data.post;
-      setPostInfo(updatedPost);
-      console.log("새 게시물", postInfo);
+      const updatedProduct = res.data.product;
+      setProductInfo(updatedProduct);
+      console.log("새 게시물", productInfo);
       closeModal();
     } catch (error) {
       console.error(error);
@@ -124,9 +129,13 @@ export default function PostEdit({ closeModal, postId, Info }) {
     }
   };
 
-  console.log(postInfo.author);
   function handleUpload() {
-    postEditUpload(postInfo.image, postInfo.content);
+    recommendEditUpload(
+      productInfo.itemName,
+      productInfo.price,
+      productInfo.link,
+      productInfo.itemImage,
+    );
   }
   return (
     <ModalOverlay onClick={closeModal}>
@@ -150,16 +159,39 @@ export default function PostEdit({ closeModal, postId, Info }) {
               // onClick={closeModal}
             ></Button>
           </HeaderLayoutDiv>
-          {postInfo.image !== "" && (
-            <PostImage src={postInfo.image} alt="게시물 사진" />
+          {productInfo.itemImage !== "" && (
+            <ProductImage src={productInfo.itemImage} alt="게시물 사진" />
           )}
-          <PostContent
-            rows="10"
-            columns="60"
-            value={postInfo.content}
-            hasImage={postInfo.image !== ""}
+          <label htmlFor="restaurantName">음식점</label>
+          <RecommendInfo
+            id="restaurantName"
+            type="text"
+            value={productInfo.itemName}
             onChange={e =>
-              setPostInfo({ ...postInfo, content: e.target.value })
+              setProductInfo({
+                ...productInfo,
+                itemName: e.target.value,
+              })
+            }
+          />
+          <StarRating
+            onRatingChange={rate =>
+              setProductInfo({
+                ...productInfo,
+                price: rate,
+              })
+            }
+          />
+          <label htmlFor="address">주소</label>
+          <RecommendInfo
+            id="address"
+            type="text"
+            value={productInfo.link}
+            onChange={e =>
+              setProductInfo({
+                ...productInfo,
+                link: e.target.value,
+              })
             }
           />
         </EditContainer>
