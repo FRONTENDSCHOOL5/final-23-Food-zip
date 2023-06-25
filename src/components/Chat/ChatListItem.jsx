@@ -90,7 +90,7 @@ export default function ChatListItem() {
   ];
   const navigate = useNavigate();
   function handleClick() {
-    navigate("/chatroom");
+    navigate("/chatroom/example");
   }
   return (
     <ChatWrapper>

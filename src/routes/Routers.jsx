@@ -31,7 +31,7 @@ export default function Routers() {
         <Route path="/home" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/chat" element={<ChatList />} />
-        <Route path="/chatroom" element={<ChatRoom />} />
+        <Route path="/chatroom/:accountname" element={<ChatRoom />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/makepost" element={<MakePost />} />
         <Route path="/myprofile">

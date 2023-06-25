@@ -80,6 +80,7 @@ export default function Header({
   handleSearchKeyword,
   handleSaveBtn,
   handleUploadBtn,
+  yourAccountname,
 }) {
   const navigate = useNavigate();
   function handleClick() {
@@ -203,7 +204,7 @@ export default function Header({
               onClick={() => navigate(-1)}
             />
           </HeaderLeftBtn>
-          <HeaderTextP>푸짐이</HeaderTextP>
+          <HeaderTextP>@ {yourAccountname}</HeaderTextP>
         </HeaderSpan>
         <HeaderRightBtn type="button" onClick={modalOpen}>
           <img src={IconMoreVertical} alt="더보기 아이콘" />

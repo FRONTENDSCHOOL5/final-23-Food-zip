@@ -8,6 +8,7 @@ import Modal from "../../components/Modal/Modal";
 import { MessageWrap } from "../../components/Chat/SendMessage";
 import { MessageText } from "../../components/Chat/SendMessage";
 import { TimeStamp } from "../../components/Chat/SendMessage";
+import { useLocation } from "react-router-dom";
 
 const List = styled.section`
   padding: 48px 0 60px 0;
@@ -19,10 +20,11 @@ const List = styled.section`
 `;
 
 export default function ChatRoom() {
+  const location = useLocation();
   const [modalShow, setModalShow] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [chatValue, setChatValue] = useState([]);
-
+  const yourAccountname = location?.state?.yourAccountname || "foodzim";
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -46,7 +48,11 @@ export default function ChatRoom() {
 
   return (
     <>
-      <Header type="chat" modalOpen={modalOpen} />
+      <Header
+        type="chat"
+        modalOpen={modalOpen}
+        yourAccountname={yourAccountname}
+      />
       <List>
         <ReceiveMessage />
         <SendMessage />
