@@ -6,7 +6,7 @@ import RecommendList from "../../components/Profile/RecommendList";
 import Modal from "../../components/Modal/Modal";
 import Navigation from "../../components/common/Nav/Navigation";
 import Alert from "../../components/Modal/Alert";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import post from "../../dummy/dummyapi";
 import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard";
@@ -49,15 +49,21 @@ export default function Profile({ type }) {
   function cardClose(e) {
     if (e.target === e.currentTarget) {
       setCardShow(false);
-      setCardClosed(true);
     }
+    setCardClosed(true);
+    console.log("프로필", cardClosed);
   }
 
   function cardOpen(id) {
     setSelectedId(id);
     setCardShow(true);
   }
-
+  useEffect(() => {
+    if (cardClosed) {
+      // cardClosed 값이 true일 때 초기화 코드를 실행
+      setCardClosed(false);
+    }
+  }, [cardClosed]);
   return (
     <Container>
       <Header type="profile" modalOpen={() => modalOpen("setting")} />

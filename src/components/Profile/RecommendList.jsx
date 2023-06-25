@@ -79,8 +79,13 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
   const [recommendInfo, setRecommendInfo] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const [uploadList, setUploadList] = useState(cardClosed);
   useEffect(() => {
     getUserInfo();
+    if (cardClosed) {
+      console.log("여기 지나감");
+      getUserInfo();
+    }
   }, [location, cardClosed]);
 
   const getUserInfo = async () => {
@@ -102,7 +107,9 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
       });
 
       const products = res.data.product;
+      console.log("tkdvna", products);
       setRecommendInfo(products);
+      setUploadList(!cardClosed);
     } catch (error) {
       console.log("error");
       navigate("/error");

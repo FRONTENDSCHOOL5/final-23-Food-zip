@@ -166,7 +166,7 @@ export default function RecommendEdit({ closeModal, productId }) {
           <RecommendInfo
             id="restaurantName"
             type="text"
-            value={productInfo.itemName}
+            value={productInfo.itemName || ""}
             onChange={e =>
               setProductInfo({
                 ...productInfo,
@@ -186,7 +186,7 @@ export default function RecommendEdit({ closeModal, productId }) {
           <RecommendInfo
             id="address"
             type="text"
-            value={productInfo.link}
+            value={productInfo.link || ""}
             onChange={e =>
               setProductInfo({
                 ...productInfo,
