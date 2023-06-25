@@ -88,7 +88,6 @@ const { kakao } = window;
 const MapTest = () => {
   const [place, setPlace] = useState("");
   const [map, setMap] = useState(null);
-  const [nowLocation, setNowLocation] = useState("");
   const location = useLocation();
   const data = location.state;
   console.log("map-data", data);
@@ -124,7 +123,7 @@ const MapTest = () => {
       function displayMarker(place) {
         const imageSize = new kakao.maps.Size(45, 45);
         const imageSrc = Marker;
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
         let marker = new kakao.maps.Marker({
           map: map,
           position: new kakao.maps.LatLng(place.y, place.x),

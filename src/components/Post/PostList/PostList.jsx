@@ -89,7 +89,7 @@ export default function PostList({ post, modalOpen }) {
   const getUserInfo = async () => {
     const token = localStorage.getItem("token");
     try {
-      let apiUrl = `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`;
+      let apiUrl = `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost/?limit=Number&skip=Number`;
 
       if (!accountname) {
         const loggedInAccountname = localStorage.getItem("accountname");

@@ -64,6 +64,7 @@ export default function Modal({
   commentId,
   restaurantName,
   handlerPostEdit,
+  handlerRecommendEdit,
 }) {
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
@@ -112,7 +113,7 @@ export default function Modal({
       <ModalWrapDiv>
         <ModalLineSpan />
         <ModalTextBtn onClick={() => alertOpen("product")}>삭제</ModalTextBtn>
-        <ModalTextBtn>수정</ModalTextBtn>
+        <ModalTextBtn onClick={handlerRecommendEdit}>수정</ModalTextBtn>
         <ModalTextBtn onClick={handlerOpenMap}>
           카카오맵으로 이동하기
         </ModalTextBtn>

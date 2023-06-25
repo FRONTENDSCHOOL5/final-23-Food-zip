@@ -158,5 +158,3 @@ export default function MakeRecommend() {
     </>
   );
 }
-
-//지도 API 연결 (추후)
