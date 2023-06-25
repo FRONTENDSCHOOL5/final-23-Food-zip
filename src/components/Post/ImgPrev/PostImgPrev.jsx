@@ -43,10 +43,11 @@ const UploadImg = styled.img`
   max-height: 90px;
   object-fit: contain;
   border-radius: 10px;
-  border: 1px solid #bdbdbd;
+  border: 1px solid #eee;
+  box-sizing: border-box;
 `;
 const CloseImgBtn = styled.button`
-  background: url(${closeBtn}) no-repeat center center;
+  background: url(${closeBtn}) center center / 18px 18px no-repeat;
   width: 18px;
   height: 18px;
   position: absolute;
