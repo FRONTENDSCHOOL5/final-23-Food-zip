@@ -15,6 +15,7 @@ const Container = styled.div`
 `;
 const LogoImg = styled.img`
   /* margin: 187px 135px; */
+  width: 130px;
   position: absolute;
   top: 30%;
   left: 50%;

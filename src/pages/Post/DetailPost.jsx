@@ -80,8 +80,6 @@ export default function DetailPost() {
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
   const [myImg, setMyImg] = useState("");
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const where = localStorage.getItem("accountname");
   const handleInputChange = event => {
     setInputValue(event.target.value);
     console.log("댓글 입력창 :", inputValue);

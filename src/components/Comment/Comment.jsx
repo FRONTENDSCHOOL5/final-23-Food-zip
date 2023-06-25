@@ -63,6 +63,7 @@ const CommentContent = styled.p`
   letter-spacing: 0em;
   text-align: left;
   margin: 10px 0;
+  word-break: break-all;
 `;
 
 export default function Comment({ commentList, postId }) {

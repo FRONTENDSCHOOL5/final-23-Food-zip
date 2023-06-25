@@ -291,7 +291,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         </StartButton>
       )} */}
       <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
-        FOOD ZIP 시작하기
+        변경사항 저장하기
       </StartButton>
     </ProfileInputForm>
   );
