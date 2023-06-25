@@ -26,6 +26,7 @@ const Map = styled.div`
 
 const InfoWrapper = styled.div`
   padding: 20px;
+  border-top: 1px solid #ebebeb;
 `;
 
 const ResName = styled.h2`

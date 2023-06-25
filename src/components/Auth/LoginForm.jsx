@@ -32,10 +32,10 @@ const StyledInput = styled.input`
   box-sizing: border-box;
   border: none;
   box-shadow: 0 1px 0 0 #677880;
-  height: 48px;
+  height: 46px;
   border-radius: 4px 4px 0 0;
-  padding: 0 px;
-  font-size: 16px;
+  padding-top: 8px;
+  font-size: 14px;
   margin: 0 auto 36px auto;
   outline: none;
   background: transparent;
