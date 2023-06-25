@@ -39,6 +39,7 @@ const ProfileImg = styled.img`
   height: 110px;
   border-radius: 50%;
   margin: 30px 0;
+  object-fit: cover;
 `;
 
 const ProfileInput = styled.input`

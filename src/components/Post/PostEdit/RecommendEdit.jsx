@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
 import Button from "../../common/Button/Button";
 import StarRating from "../StarRating/StarRating";
+import { RecommendLabel } from "../../../pages/Post/MakeRecommend";
+
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -24,9 +26,10 @@ const EditContainer = styled.form`
 const ProductImage = styled.img`
   display: block;
   width: 100%;
+  height: 180px;
   /* width: 250px; */
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 `;
 const HeaderLayoutDiv = styled.div`
   display: flex;
@@ -35,7 +38,7 @@ const HeaderLayoutDiv = styled.div`
   height: 48px;
   border-bottom: 1px solid #dbdbdb;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   background-color: white;
 `;
 const HeaderLeftBtn = styled.button`
@@ -46,23 +49,22 @@ const HeaderLeftBtn = styled.button`
 `;
 const ModalContent = styled.div`
   background-color: #fff;
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 10px 20px;
   border-radius: 5px;
 `;
 
 const RecommendInfo = styled.input`
   display: block;
-  width: 322px;
+  width: 300px;
   box-sizing: border-box;
   border: none;
-  box-shadow: 0 1px 0 0 #677880;
-  height: 48px;
-  border-radius: 4px 4px 0 0;
-  padding: 0 px;
-  font-size: 16px;
-  margin: 0 auto 36px auto;
+  box-shadow: 0 1px 0 0 #dedede;
+  height: 42px;
+  font-size: 14px;
+  margin: 0 auto 30px auto;
   outline: none;
   background: transparent;
+  padding: 6px 0 0;
   &:focus {
     border-bottom: #629678;
   }
@@ -162,7 +164,7 @@ export default function RecommendEdit({ closeModal, productId }) {
           {productInfo.itemImage !== "" && (
             <ProductImage src={productInfo.itemImage} alt="게시물 사진" />
           )}
-          <label htmlFor="restaurantName">음식점</label>
+          <RecommendLabel htmlFor="restaurantName">음식점</RecommendLabel>
           <RecommendInfo
             id="restaurantName"
             type="text"
@@ -182,7 +184,7 @@ export default function RecommendEdit({ closeModal, productId }) {
               })
             }
           />
-          <label htmlFor="address">주소</label>
+          <RecommendLabel htmlFor="address">주소</RecommendLabel>
           <RecommendInfo
             id="address"
             type="text"
