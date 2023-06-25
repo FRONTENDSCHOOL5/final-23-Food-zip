@@ -66,7 +66,6 @@ export default function DetailPost() {
   const [modalType, setModalType] = useState("setting");
   const [inputValue, setInputValue] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  // const [comment, setComment] = useState([]);
   const [commentList, setCommentList] = useState([]);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   const location = useLocation();
@@ -102,7 +101,6 @@ export default function DetailPost() {
       setAlertShow(false);
     }
   }
-
   const fetchPostInfo = async () => {
     // console.log("현재", selectedId);
     try {
@@ -143,13 +141,12 @@ export default function DetailPost() {
           },
         },
       );
-      // setComment(res.data.comment);
       setInputValue("");
+      loadcommentList();
     } catch (err) {
       console.error(err);
     }
   };
-
   const loadcommentList = async () => {
     try {
       const res = await axios.get(
@@ -216,15 +213,15 @@ export default function DetailPost() {
       console.error(err);
     }
   };
-
   useEffect(() => {
-    loadcommentList();
     if (shouldFetchPostInfo) {
       fetchPostInfo();
     }
-  }, [commentList, shouldFetchPostInfo]);
+  }, [shouldFetchPostInfo]);
+
   useEffect(() => {
     getUserInfo();
+    loadcommentList();
   }, []);
   return (
     <>

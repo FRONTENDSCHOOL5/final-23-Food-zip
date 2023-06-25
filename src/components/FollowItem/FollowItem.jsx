@@ -36,6 +36,7 @@ export default function FollowItem({
   isfollow,
 }) {
   const [follow, setFollow] = useState(isfollow);
+  const myaccountname = localStorage.getItem("accountname");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -46,7 +47,7 @@ export default function FollowItem({
       },
     });
   }
-  useEffect(() => {}, [follow, setFollow]);
+  // useEffect(() => {}, [follow, setFollow]);
 
   const toggleFollow = async () => {
     try {
@@ -92,16 +93,18 @@ export default function FollowItem({
         <FollowerName>{username}</FollowerName>
         <FollowerIntro>{intro}</FollowerIntro>
       </FollowerInfo>
-      <Button
-        type="button"
-        content={follow ? "취소" : "팔로우"}
-        width="s"
-        size="s"
-        bgColor={!follow ? "active" : ""}
-        border={follow ? "active" : ""}
-        color={follow ? "active" : ""}
-        onClick={toggleFollow}
-      />
+      {accountname !== myaccountname && (
+        <Button
+          type="button"
+          content={follow ? "취소" : "팔로우"}
+          width="s"
+          size="s"
+          bgColor={!follow ? "active" : ""}
+          border={follow ? "active" : ""}
+          color={follow ? "active" : ""}
+          onClick={toggleFollow}
+        />
+      )}
     </Container>
   );
 }
