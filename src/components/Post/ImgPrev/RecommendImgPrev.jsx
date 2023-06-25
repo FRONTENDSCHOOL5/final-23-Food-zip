@@ -37,13 +37,11 @@ const RecommendIconWrapper = styled.label`
   display: inline-block;
   cursor: pointer;
   position: absolute;
-  bottom: 40px;
-  right: 0px;
-  /* background: #c4c4c4; */
+  bottom: 44px;
+  right: -4px;
 `;
 const RecommendImgIcon = styled.img`
-  width: 80%;
-  height: 80%;
+  width: 75%;
   object-fit: contain;
   border-radius: 10px;
 `;
