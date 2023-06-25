@@ -64,73 +64,6 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const maxSize = 10 * 1024 * 1024;
-  // const options = {
-  //   maxSizeMB: 0.2, // 이미지 최대 용량
-  //   maxWidthOrHeight: 230, // 최대 넓이(혹은 높이)
-  //   useWebWorker: true,
-  // };
-  // const handleUploadImg = async () => {
-  //   try {
-  //     if (fileInputRef.current && fileInputRef.current.files.length > 0) {
-  //       const files = Array.from(fileInputRef.current.files);
-  //       console.log("Files:", files);
-  //       console.log("Files:", files[0].size);
-
-  //       const nowImgFileList = [...imgFile];
-  //       const nowImgUrlList = [...imgUrl];
-
-  //       for (let i = 0; i < files.length; i++) {
-  //         const file = files[i];
-  //         if (file.size > maxSize) {
-  //           alert("파일 사이즈는 10MB 이하만 가능합니다");
-  //           return;
-  //         } else if (!/^(image\/jpeg|image\/png|image\/jpg)$/.test(file.type)) {
-  //           alert("파일 포맷은 */jpeg,*/png,*/jpg 만 가능합니다");
-  //           return;
-  //         }
-  //         const fileUrl = URL.createObjectURL(file);
-  //         nowImgFileList.push(file);
-  //         nowImgUrlList.push(fileUrl);
-
-  //         const reader = new FileReader();
-  //         reader.onload = e => {
-  //           const imageUrl = e.target.result;
-  //           onImageUrlChange(nowImgFileList[i], imageUrl);
-  //         };
-
-  //         reader.readAsDataURL(file);
-  //       }
-
-  //       setImgFile(nowImgFileList);
-  //       setImgUrl(nowImgUrlList);
-
-  //       const formData = new FormData();
-  //       files.forEach(file => {
-  //         formData.append("image", file);
-  //       });
-
-  //       console.log("FormData:", formData);
-
-  //       const uploadResponse = await axios.post(
-  //         "https://api.mandarin.weniv.co.kr/image/uploadfiles",
-  //         formData,
-  //       );
-
-  //       console.log("Upload Response:", uploadResponse);
-
-  //       const imageUrls = uploadResponse.data.map(file => {
-  //         const filename = file.filename;
-  //         console.log("Filename:", filename);
-  //         return `https://api.mandarin.weniv.co.kr/${filename}`;
-  //       });
-  //       setImageUrls(imageUrls);
-  //       console.log("Image URLs:", imageUrls);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     navigate("/error");
-  //   }
-  // };
 
   const handleUploadImg = async e => {
     let file = e.target?.files[0];
@@ -145,7 +78,7 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
       return;
     }
     const options = {
-      maxSizeMB: 0.2, // 이미지 최대 용량
+      maxSizeMB: 0.5, // 이미지 최대 용량
       maxWidthOrHeight: 230, // 최대 넓이(혹은 높이)
       useWebWorker: true,
     };
