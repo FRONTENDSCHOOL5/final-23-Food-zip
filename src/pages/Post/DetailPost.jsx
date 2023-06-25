@@ -69,6 +69,8 @@ export default function DetailPost() {
   const [commentList, setCommentList] = useState([]);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   const location = useLocation();
+  const [comment, setComment] = useState([]);
+
   const data = location.state;
   const token = localStorage.getItem("token");
   const where = localStorage.getItem("accountname");
@@ -77,8 +79,11 @@ export default function DetailPost() {
   const [commentCnt, setCommentCnt] = useState(0);
   const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
+  const [fetchInfo, setFetchInfo] = useState(postInfo);
+
   const [myImg, setMyImg] = useState("");
   const navigate = useNavigate();
+
   const handleInputChange = event => {
     setInputValue(event.target.value);
     console.log("댓글 입력창 :", inputValue);
@@ -105,7 +110,7 @@ export default function DetailPost() {
     // console.log("현재", selectedId);
     try {
       const response = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/${selectedId}`,
+        `https://api.mandarin.weniv.co.kr/post/${selectedId ?? id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -143,6 +148,8 @@ export default function DetailPost() {
       );
       setInputValue("");
       loadcommentList();
+      setComment(res.data.comment);
+      setInputValue("");
     } catch (err) {
       console.error(err);
     }
@@ -190,38 +197,15 @@ export default function DetailPost() {
     setShouldFetchPostInfo(true);
     setModalShow(false);
   };
-  const getOtherInfo = async () => {
-    console.log("이건 좋아요");
-    const token = localStorage.getItem("token");
-    try {
-      const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/feed/?limit=Number&skip=Number`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
-      console.log("데이터 포스트 홈", res.data.posts);
-      res.data.posts.map(item => {
-        if (selectedId === item.id) {
-          return item;
-        }
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
   useEffect(() => {
+    loadcommentList();
     if (shouldFetchPostInfo) {
       fetchPostInfo();
     }
-  }, [shouldFetchPostInfo]);
+  }, [comment, shouldFetchPostInfo]);
 
   useEffect(() => {
     getUserInfo();
-    loadcommentList();
   }, []);
   return (
     <>
@@ -248,6 +232,7 @@ export default function DetailPost() {
                   postInfo={[item]}
                   authorInfo={item.author}
                   commentCnt={commentCnt}
+                  getUserInfo={fetchPostInfo}
                 />
               </PostItemSection>
             ),
