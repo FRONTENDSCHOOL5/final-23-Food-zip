@@ -75,13 +75,13 @@ const RecommendStarImg = styled.img`
   margin-bottom: 8px;
 `;
 
-export default function RecommendList({ cardOpen, cardClose }) {
+export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
   const [recommendInfo, setRecommendInfo] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
     getUserInfo();
-  }, [location]);
+  }, [location, cardClosed]);
 
   const getUserInfo = async () => {
     const { accountname } = location.state || {};
