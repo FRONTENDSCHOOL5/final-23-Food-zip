@@ -55,12 +55,9 @@ const PostUserImg = styled.img`
 `;
 const CommentSection = styled.div`
   width: 100%;
-  padding: 5px 15px 0;
+  padding: 5px 15px 65px;
   box-sizing: border-box;
   border-top: 1px solid #dbdbdb;
-  flex-grow: 1;
-  flex-shrink: 0;
-  height: 100vh;
   background-color: #fff;
 `;
 
@@ -81,7 +78,8 @@ export default function DetailPost() {
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
   const [myImg, setMyImg] = useState("");
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("token");
+  const where = localStorage.getItem("accountname");
   const handleInputChange = event => {
     setInputValue(event.target.value);
     console.log("댓글 입력창 :", inputValue);

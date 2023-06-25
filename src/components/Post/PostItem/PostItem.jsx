@@ -94,19 +94,14 @@ const BtnMore = styled.button`
 export default function PostItem({
   postInfo,
   authorInfo,
-  myFeed,
   modalOpen,
   otherInfo,
   getUserInfo,
   commentCnt,
+  getOtherInfo,
+  myFeed,
 }) {
   const navigate = useNavigate();
-  const infoToIterate = postInfo || otherInfo;
-  // const [isHearted, setIsHearted] = useState(infoToIterate.hearted);
-  // const [heartCount, setHeartCount] = useState(infoToIterate.heartCount);
-  // // const [isMyHearted, setIsMyHearted] = useState(postInfo.hearted);
-  // const [myHeartCount, setMyHeartCount] = useState(0);
-  const location = useLocation();
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -117,9 +112,8 @@ export default function PostItem({
       },
     });
   }
-
+  console.log("이 정보", otherInfo);
   const postLike = async postId => {
-    console.log("like");
     const token = localStorage.getItem("token");
     try {
       const post = postInfo.find(post => post.id === postId);
@@ -140,16 +134,38 @@ export default function PostItem({
       );
       console.log("좋아요", res.data.post.heartCount);
       getUserInfo();
-      // await setIsMyHearted(res.data.post.hearted);
-      // await setMyHeartCount(res.data.post.heartCount);
-      // window.location.reload();
     } catch (error) {
       console.error(error);
       return false;
     }
   };
-  // useEffect(() => {}, [isMyHearted, myHeartCount]);
-  // console.log("정보:", isMyHearted, myHeartCount);
+  const postOtherLike = async postId => {
+    const token = localStorage.getItem("token");
+    try {
+      const post = otherInfo.find(post => post.id === postId);
+      if (!post) {
+        console.error("Post not found");
+        return false;
+      }
+      console.log("check", post);
+      const res = await axios.post(
+        `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      console.log("상대방 좋아요", res);
+      getOtherInfo();
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
   function moveProfile(accountname) {
     // postInfo가 있는 경우
     const where = localStorage.getItem("accountname");
@@ -184,7 +200,6 @@ export default function PostItem({
     const day = dateObj.getDate();
     return `${year}년 ${month}월 ${day}일`;
   }
-
   return (
     <>
       {postInfo
@@ -273,7 +288,7 @@ export default function PostItem({
                 )}
                 <PostInfoBox>
                   <PostBtnBox>
-                    <BtnLike onClick={() => postLike(item.id)}>
+                    <BtnLike onClick={() => postOtherLike(item.id)}>
                       {item.hearted ? (
                         <BtnImg
                           src={
