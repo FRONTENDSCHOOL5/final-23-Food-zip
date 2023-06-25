@@ -14,6 +14,7 @@ const FollowerImgTest = styled.img`
   height: 50px;
   border-radius: 50%;
   margin-right: 12px;
+  object-fit: cover;
 `;
 const FollowerInfo = styled.div`
   padding: 5px 0;

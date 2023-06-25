@@ -1,5 +1,6 @@
 import { getValue } from "@testing-library/user-event/dist/utils";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MoreIcon from "../../assets/images/icon-more-vertical.svg";
 import Alert from "../Modal/Alert";
@@ -29,6 +30,7 @@ const CommentUserProfile = styled.img`
   width: 36px;
   height: 36px;
   object-fit: cover;
+  cursor: pointer;
 `;
 const StyledCommentUserInfo = styled.div`
   flex-grow: 1;
@@ -71,7 +73,7 @@ export default function Comment({ commentList, postId }) {
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState("delete");
   const [selectedId, setSelectedId] = useState(null);
-
+  const navigate = useNavigate();
   // 댓글 달린 시간 계산
   const elapsedTime = commentDate => {
     const now = new Date();
@@ -95,7 +97,17 @@ export default function Comment({ commentList, postId }) {
     }
     return "방금 전";
   };
-
+  function moveProfile(accountname) {
+    if (accountname === where) {
+      navigate("/myprofile");
+    } else {
+      navigate(`/profile/${accountname}`, {
+        state: {
+          accountname: accountname,
+        },
+      });
+    }
+  }
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -119,7 +131,7 @@ export default function Comment({ commentList, postId }) {
   function alertOpen() {
     setAlertShow(true);
   }
-
+  console.log("commentList", commentList);
   return (
     <StyledCommentWrapper>
       {commentList?.map(comment => {
@@ -128,6 +140,9 @@ export default function Comment({ commentList, postId }) {
             <CommentUserProfile
               src={comment.author.image}
               alt="유저의 프로필"
+              onClick={() => {
+                moveProfile(comment.author.accountname);
+              }}
             />
             <StyledCommentContent>
               <StyledCommentUserInfo>
@@ -136,6 +151,7 @@ export default function Comment({ commentList, postId }) {
               </StyledCommentUserInfo>
               <CommentContent>{comment.content}</CommentContent>
             </StyledCommentContent>
+
             <CommentBtnMore
               type="button"
               onClick={() => {
