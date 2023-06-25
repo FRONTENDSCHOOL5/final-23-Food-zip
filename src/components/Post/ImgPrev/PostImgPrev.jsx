@@ -4,6 +4,7 @@ import uploadPhoto from "../../../assets/images/camera-btn.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
+import closeBtn from "../../../assets/images/close-btn.svg";
 
 const UploadContainer = styled.div`
   width: 100%;
@@ -34,14 +35,25 @@ const UploadImgIcon = styled.img`
   object-fit: cover;
   border-radius: 10px;
 `;
-
+const UploadImgDiv = styled.div`
+  position: relative;
+`;
 const UploadImg = styled.img`
   max-width: 90px;
   max-height: 90px;
   object-fit: contain;
   border-radius: 10px;
+  border: 1px solid #eee;
+  box-sizing: border-box;
 `;
-
+const CloseImgBtn = styled.button`
+  background: url(${closeBtn}) center center / 18px 18px no-repeat;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+`;
 export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [imgFile, setImgFile] = useState([]);
@@ -169,6 +181,11 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
     const file = new File([blob], "image.jpg", { type: "image/jpeg" });
     return file;
   };
+  const removeImg = () => {
+    setUploadPreview("");
+    onImageUrlChange(null, null);
+    setImgUrl("");
+  };
   return (
     <UploadContainer>
       <UploadImgWrapper htmlFor="file-input">
@@ -183,9 +200,10 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
         <UploadImgIcon src={uploadPhoto} alt="사진을 올리는 버튼 이미지" />
       </UploadImgWrapper>
       {uploadPreview.length > 0 && (
-        <div>
+        <UploadImgDiv>
+          <CloseImgBtn onClick={removeImg}></CloseImgBtn>
           <UploadImg src={uploadPreview} alt="업로드된 이미지" />
-        </div>
+        </UploadImgDiv>
       )}
       {/* {imgUrl.map((url, index) => (
         <div key={index}>

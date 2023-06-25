@@ -66,7 +66,7 @@ export default function DetailPost() {
   const [modalType, setModalType] = useState("setting");
   const [inputValue, setInputValue] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [comment, setComment] = useState([]);
+  // const [comment, setComment] = useState([]);
   const [commentList, setCommentList] = useState([]);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   const location = useLocation();
@@ -145,7 +145,7 @@ export default function DetailPost() {
           },
         },
       );
-      setComment(res.data.comment);
+      // setComment(res.data.comment);
       setInputValue("");
     } catch (err) {
       console.error(err);
@@ -201,7 +201,7 @@ export default function DetailPost() {
     if (shouldFetchPostInfo) {
       fetchPostInfo();
     }
-  }, [comment, shouldFetchPostInfo]);
+  }, [commentList, shouldFetchPostInfo]);
   useEffect(() => {
     getUserInfo();
   }, []);

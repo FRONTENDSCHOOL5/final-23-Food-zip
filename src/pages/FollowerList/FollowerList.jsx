@@ -10,9 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const FollowList = styled.ul`
-  padding: 60px 16px 24px;
+  padding: 60px 16px 64px;
   background-color: #fff;
-  height: 100vh;
 `;
 
 const FollowListItem = styled.li`
