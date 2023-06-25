@@ -286,14 +286,15 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
         />
       </ProfileFormLabel>
 
-      {/* {location.pathname === "/signup/profile" && (
+      {location.pathname === "/signup/profile" ? (
         <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
           FOOD ZIP 시작하기
         </StartButton>
-      )} */}
-      <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
-        변경사항 저장하기
-      </StartButton>
+      ) : (
+        <StartButton type="submit" bgColor={isValid ? "active" : "inactive"}>
+          변경사항 저장하기
+        </StartButton>
+      )}
     </ProfileInputForm>
   );
 }
