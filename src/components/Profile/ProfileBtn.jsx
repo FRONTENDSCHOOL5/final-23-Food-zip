@@ -56,9 +56,13 @@ export default function ProfileBtn({
     console.log(true);
     navigate("/makerecommend");
   }
-  function moveChat() {
-    navigate("/chatroom");
-    console.log("move");
+  function moveChat(yourAccountname) {
+    console.log(yourAccountname);
+    navigate(`/chatroom/${yourAccountname}`, {
+      state: {
+        yourAccountname: yourAccountname,
+      },
+    });
   }
 
   const Follow = async () => {
@@ -110,7 +114,7 @@ export default function ProfileBtn({
     your: (
       <>
         <InformationBottomDiv>
-          <ImgCircleBtn type="button" onClick={moveChat}>
+          <ImgCircleBtn type="button" onClick={() => moveChat(yourAccountname)}>
             <img src={IconMessage} alt="메시지 아이콘" />
           </ImgCircleBtn>
           {follow ? (

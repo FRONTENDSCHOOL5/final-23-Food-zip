@@ -101,6 +101,7 @@ export default function PostItem({
   commentCnt,
   getOtherInfo,
   myFeed,
+  fetchPostInfo,
 }) {
   const navigate = useNavigate();
   function moveDetail(id) {
@@ -299,7 +300,7 @@ export default function PostItem({
             </Container>
           ))
         : otherInfo?.map(item => (
-            <Container key={item._id}>
+            <Container key={item.id}>
               <PostUser>
                 <PostUserImg
                   src={item.author.image}
