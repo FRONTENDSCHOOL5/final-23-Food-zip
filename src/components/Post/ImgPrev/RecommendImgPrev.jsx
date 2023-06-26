@@ -64,7 +64,7 @@ export default function RecommendImgPrev({
   const fileInputRef = useRef(null);
   const [boardImage, setBoardImage] = useState(null);
   const [uploadPreview, setUploadPreview] = useState([]);
-  // useRef를 사용하여 파일 입력(input) 요소에 대한 참조 생성
+
   const maxSize = 10 * 1024 * 1024;
   useEffect(() => {
     if (hasImage && initialImage) {
@@ -84,8 +84,8 @@ export default function RecommendImgPrev({
       return;
     }
     const options = {
-      maxSizeMB: 2, // 이미지 최대 용량
-      maxWidthOrHeight: 1024, // 최대 넓이(혹은 높이)
+      maxSizeMB: 2,
+      maxWidthOrHeight: 700,
       useWebWorker: true,
     };
     try {
@@ -95,13 +95,11 @@ export default function RecommendImgPrev({
       promise.then(result => {
         setUploadPreview(result);
       });
-      console.log("compress", compressedFile);
-      // FileReader
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
       reader.onloadend = () => {
         const base64data = reader.result;
-        const imageUrl = formDataHandler(base64data); // 이 함수는 밑에서 설명
+        const imageUrl = formDataHandler(base64data);
         onRecommendImageUrlChange(file, base64data);
         setImgUrl(imageUrl);
       };

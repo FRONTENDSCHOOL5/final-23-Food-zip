@@ -5,8 +5,7 @@ import arrow from "../../assets/images/arrow.svg";
 import Car from "../../assets/images/car-solid.svg";
 import BookMark from "../../assets/images/bookmark-solid.svg";
 import Marker from "../../assets/images/location.svg";
-import MarkerBlack from "../../assets/images/location-black.svg";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "./MapStyle.css";
 import Modal from "../../components/Modal/Modal";
 import Alert from "../../components/Modal/Alert";
@@ -70,20 +69,6 @@ const MapImg = styled.img`
   margin: auto;
   display: block;
 `;
-const NowLoactionBtn = styled.button`
-  position: absolute;
-  right: 20px;
-  top: 68px;
-  z-index: 100;
-  width: 30px;
-  height: 30px;
-  border: 2px solid #606367;
-  background: #fff;
-`;
-const NowLoaction = styled.img`
-  width: 50%;
-`;
-
 const { kakao } = window;
 
 const MapTest = () => {
@@ -91,9 +76,8 @@ const MapTest = () => {
   const [map, setMap] = useState(null);
   const location = useLocation();
   const data = location.state;
-  console.log("map-data", data);
   const recommendName = data.restaurantname;
-  console.log("map-data", recommendName);
+
   useEffect(() => {
     let container = document.getElementById("map");
     let options = { center: new kakao.maps.LatLng(37.5045, 127.049) };
@@ -103,8 +87,6 @@ const MapTest = () => {
 
   useEffect(() => {
     if (map && recommendName) {
-      // let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-
       const ps = new kakao.maps.services.Places();
       ps.keywordSearch(recommendName, placesSearchCB);
 
@@ -141,18 +123,14 @@ const MapTest = () => {
           place.place_name +
           "</span>" +
           "</a></div>";
-        console.log("location:", place.place_name, place.road_address_name);
         setPlace(place.road_address_name);
-        // 마커에 클릭 이벤트를 등록합니다
         let customOverlay = new kakao.maps.CustomOverlay({
           position: new kakao.maps.LatLng(place.y, place.x),
           content: content,
           yAnchor: 1,
         });
 
-        // 마커에 클릭 이벤트를 등록
         kakao.maps.event.addListener(marker, "click", function () {
-          // 오버레이를 지도에 표시
           customOverlay.setMap(map);
         });
       }
@@ -161,7 +139,6 @@ const MapTest = () => {
 
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState("setting");
-  const [selectedId, setSelectedId] = useState(null);
 
   function modalClose(e) {
     if (e.target === e.currentTarget) {

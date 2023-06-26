@@ -1,8 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import uploadPhoto from "../../../assets/images/camera-btn.svg";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import closeBtn from "../../../assets/images/close-btn.svg";
 
@@ -54,15 +52,12 @@ const CloseImgBtn = styled.button`
   top: 4px;
   right: 4px;
 `;
-export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
+export default function PostImgPrev({ onImageUrlChange }) {
   const [imgUrl, setImgUrl] = useState([]);
-  const [imgFile, setImgFile] = useState([]);
   const [boardImage, setBoardImage] = useState(null);
-  // 이미지 미리보기 state
   const [uploadPreview, setUploadPreview] = useState([]);
 
   const fileInputRef = useRef(null);
-  const navigate = useNavigate();
   const maxSize = 10 * 1024 * 1024;
 
   const handleUploadImg = async e => {
@@ -78,8 +73,8 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
       return;
     }
     const options = {
-      maxSizeMB: 0.5, // 이미지 최대 용량
-      maxWidthOrHeight: 230, // 최대 넓이(혹은 높이)
+      maxSizeMB: 0.7,
+      maxWidthOrHeight: 500,
       useWebWorker: true,
     };
     try {
@@ -89,13 +84,11 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
       promise.then(result => {
         setUploadPreview(result);
       });
-      console.log("compress", compressedFile);
-      // FileReader
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
       reader.onloadend = () => {
         const base64data = reader.result;
-        const imageUrl = formDataHandler(base64data); // 이 함수는 밑에서 설명
+        const imageUrl = formDataHandler(base64data);
         onImageUrlChange(file, imageUrl);
         setImgUrl(imageUrl);
       };
@@ -125,7 +118,6 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
         <UploadImgInput
           type="file"
           id="file-input"
-          // multiple="multiple"
           accept="image/jpeg,image/jpg,image/png,image/gif"
           onChange={handleUploadImg}
           ref={fileInputRef}
@@ -138,11 +130,6 @@ export default function PostImgPrev({ onImageUrlChange, setImageUrls }) {
           <UploadImg src={uploadPreview} alt="업로드된 이미지" />
         </UploadImgDiv>
       )}
-      {/* {imgUrl.map((url, index) => (
-        <div key={index}>
-          <UploadImg src={url} alt="업로드된 이미지" />
-        </div>
-      ))} */}
     </UploadContainer>
   );
 }

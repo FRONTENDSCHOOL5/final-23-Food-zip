@@ -82,8 +82,6 @@ const LoginForm = ({ onSubmit }) => {
           },
         },
       );
-      console.log(res.data, "제이손입니다");
-      console.log(res.status);
       const token = res.data.user["token"];
       const accountname = res.data.user["accountname"];
       const _id = res.data.user["_id"];
@@ -93,7 +91,6 @@ const LoginForm = ({ onSubmit }) => {
 
       if (res.status === 200) {
         setLoginSuccess(true);
-        console.log(loginSuccess);
       } else {
         setLoginSuccess(false);
         alert(

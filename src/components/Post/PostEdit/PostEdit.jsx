@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Header from "../../common/Header/Header";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
@@ -42,12 +41,6 @@ const ModalContent = styled.div`
   padding: 0 20px 20px 20px;
   border-radius: 5px;
 `;
-const PostImage = styled.img`
-  display: block;
-  width: 100%;
-  /* width: 250px; */
-  border-radius: 10px;
-`;
 const PostContent = styled.textarea`
   box-sizing: border-box;
   font-size: 15px;
@@ -87,7 +80,6 @@ export default function PostEdit({ closeModal, postId, Info }) {
       );
       const post = response.data.post;
       setPostInfo(post);
-      console.log("기존 게시글 정보", post);
     } catch (error) {
       console.error(error);
       navigate("/error");
@@ -97,7 +89,6 @@ export default function PostEdit({ closeModal, postId, Info }) {
   const postEditUpload = async () => {
     try {
       let imageUrl = "";
-      console.log("이미지", postInfo.image);
       if (postInfo.image) {
         const file = await convertBase64ToBlob(postInfo.image);
         const formData = new FormData();
@@ -112,7 +103,6 @@ export default function PostEdit({ closeModal, postId, Info }) {
             },
           },
         );
-        console.log("새이미지", uploadResponse);
         if (uploadResponse.data.filename) {
           imageUrl =
             "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
@@ -136,7 +126,6 @@ export default function PostEdit({ closeModal, postId, Info }) {
 
       const updatedPost = res.data.post;
       setPostInfo(updatedPost);
-      console.log("새 게시물", postInfo);
       closeModal();
     } catch (error) {
       console.error(error);
@@ -178,7 +167,7 @@ export default function PostEdit({ closeModal, postId, Info }) {
             <PostImage src={postInfo.image} alt="게시물 사진" />
           )} */}
           <RecommendImgPrev
-            onRecommendImageUrlChange={(file, imageUrl) =>
+            onRecommendImageUrlChange={imageUrl =>
               setPostInfo({ ...postInfo, image: imageUrl })
             }
             hasImage={postInfo.image !== ""}

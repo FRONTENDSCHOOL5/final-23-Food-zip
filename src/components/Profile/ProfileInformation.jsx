@@ -91,7 +91,6 @@ export default function ProfileInformation({ type, modalOpen }) {
   useEffect(() => {
     const yourAccountname = location.state;
     const myAccountname = localStorage.getItem("accountname");
-    console.log("profile:", yourAccountname);
 
     const getUserInfo = async () => {
       setLoading(true);
