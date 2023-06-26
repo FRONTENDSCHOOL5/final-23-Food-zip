@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { ButtonStyle } from "../../components/common/Button/Button";
 import ProfileForm from "../../components/Profile/ProfileForm/ProfileForm";
 const Container = styled.div`
   display: flex;

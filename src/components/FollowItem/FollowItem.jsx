@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../common/Button/Button";
 import axios from "axios";
@@ -48,11 +48,9 @@ export default function FollowItem({
       },
     });
   }
-  // useEffect(() => {}, [follow, setFollow]);
 
   const toggleFollow = async () => {
     try {
-      // 팔로우 상태에 따라 API 요청을 다르게 수행
       if (!follow) {
         await axios.post(
           `https://api.mandarin.weniv.co.kr/profile/${accountname}/follow`,
@@ -75,10 +73,8 @@ export default function FollowItem({
           },
         );
       }
-
       setFollow(!follow);
     } catch (err) {
-      console.error("에러!", err);
       navigate("/error");
     }
   };

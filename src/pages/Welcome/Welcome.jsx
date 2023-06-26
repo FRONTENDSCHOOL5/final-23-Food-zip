@@ -14,7 +14,6 @@ const Container = styled.div`
   position: relative;
 `;
 const LogoImg = styled.img`
-  /* margin: 187px 135px; */
   width: 130px;
   position: absolute;
   top: 30%;
@@ -41,7 +40,6 @@ const KakaoLogin = styled.button`
   border-radius: 44px;
   padding: 13px 87px;
   background: url(${KakaoLogo}) no-repeat 12px 9px;
-  /* white-space: nowrap; */
 `;
 const GoogleLogin = styled.button`
   width: 322px;
@@ -60,7 +58,6 @@ const FacebookLogin = styled.button`
   border-radius: 44px;
   padding: 13px 87px;
   background: url(${FacebookLogo}) no-repeat 12px 9px;
-  /* white-space: nowrap; */
 `;
 const LoginJoinBox = styled.div`
   display: flex;

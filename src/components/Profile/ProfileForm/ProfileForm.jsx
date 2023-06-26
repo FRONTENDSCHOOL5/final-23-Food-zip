@@ -95,15 +95,15 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
 
   useEffect(() => {
     if (location.pathname === "/myprofile/edit") {
-      setValue("image", userInfo?.image || BasicProfileInput); // Set a default value for image
-      setValue("username", userInfo?.username || null); // Set a default value for username
-      setValue("accountname", userInfo?.accountname || null); // Set a default value for accountname
-      setValue("intro", userInfo?.intro || null); // Set a default value for intro
+      setValue("image", userInfo?.image || BasicProfileInput);
+      setValue("username", userInfo?.username || null);
+      setValue("accountname", userInfo?.accountname || null);
+      setValue("intro", userInfo?.intro || null);
     } else if (location.pathname === "/signup/profile") {
-      setValue("image", BasicProfileInput); // Set a default value for image
-      setValue("username", null); // Set a default value for username
-      setValue("accountname", null); // Set a default value for accountname
-      setValue("intro", null); // Set a default value for intro
+      setValue("image", BasicProfileInput);
+      setValue("username", null);
+      setValue("accountname", null);
+      setValue("intro", null);
     }
   }, [location.pathname, userInfo]);
 
@@ -169,7 +169,6 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
             },
           },
         );
-        console.log(JSON.stringify(res.data));
         navigate("/login");
       } catch (err) {
         alert(err.response.data.message);
@@ -195,7 +194,7 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
             },
           },
         );
-        localStorage.setItem("_id", formData._id);
+        localStorage.setItem("_id", res.data.user._id);
         localStorage.setItem("accountname", formData.accountname);
         navigate("/myprofile");
       } catch (err) {

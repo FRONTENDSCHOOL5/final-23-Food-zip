@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import IconMessage from "../../assets/images/icon-message-circle.svg";
@@ -49,13 +48,13 @@ export default function ProfileBtn({
   const token = localStorage.getItem("token");
 
   function moveProfileEdit() {
-    console.log(true);
     navigate("/myprofile/edit");
   }
+
   function moveRecommend() {
-    console.log(true);
     navigate("/makerecommend");
   }
+
   function moveChat(yourAccountname) {
     console.log(yourAccountname);
     navigate(`/chatroom/${yourAccountname}`, {
@@ -67,15 +66,6 @@ export default function ProfileBtn({
 
   const Follow = async () => {
     try {
-      const tokenValid = await axios.get(
-        `https://api.mandarin.weniv.co.kr/user/checktoken`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
       const res = await axios.post(
         `https://api.mandarin.weniv.co.kr/profile/${yourAccountname}/follow`,
         {},
@@ -110,6 +100,7 @@ export default function ProfileBtn({
       navigate("/error");
     }
   };
+
   const UI = {
     your: (
       <>
