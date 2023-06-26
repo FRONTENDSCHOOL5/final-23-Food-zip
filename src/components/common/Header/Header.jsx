@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import IconSearch from "../../../assets/images/icon-search.svg";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";

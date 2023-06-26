@@ -4,7 +4,6 @@ import FollowItem from "../../components/FollowItem/FollowItem";
 import Header from "../../components/common/Header/Header";
 import Navigation from "../../components/common/Nav/Navigation";
 import axios from "axios";
-import post from "../../dummy/dummyapi";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";

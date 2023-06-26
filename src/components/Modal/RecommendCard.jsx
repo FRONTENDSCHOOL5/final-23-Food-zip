@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Modal from "./Modal";
 import IconMoreVertical from "../../assets/images/icon-more-vertical.svg";
 import ImgStar from "../../assets/images/star.svg";
-import Alert from "./Alert";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import RecommendEdit from "../Post/PostEdit/RecommendEdit";
@@ -21,7 +20,6 @@ const RecommendDiv = styled.div`
 
 const RecommendCardDiv = styled.div`
   width: 304px;
-  /* height: 320px; */
   background-color: white;
   border-radius: 10px;
   box-sizing: border-box;
@@ -122,7 +120,6 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
         },
       );
       const { itemImage, itemName, link, price } = res.data.product;
-      console.log("현재 상품", res);
       setRecommendInfo({
         itemImage,
         itemName,
@@ -157,7 +154,6 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
   };
   useEffect(() => {
     if (shouldFetchProductInfo) {
-      console.log("상품 페치");
       getUserInfo();
     }
   }, [shouldFetchProductInfo]);
@@ -189,11 +185,7 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
         />
       )}
       {recommendEditModalOpen && (
-        <RecommendEdit
-          closeModal={closeRecommendEditModal}
-          // recommendInfo={recommendInfo}
-          productId={id}
-        />
+        <RecommendEdit closeModal={closeRecommendEditModal} productId={id} />
       )}
     </RecommendDiv>
   );

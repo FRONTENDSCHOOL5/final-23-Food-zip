@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
-import { useLocation, useNavigate } from "react-router-dom";
-import Modal from "../../Modal/Modal";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Container = styled.li`
@@ -54,7 +53,6 @@ const PostImg = styled.img`
 const PostInfoBox = styled.div`
   display: flex;
   justify-content: space-between;
-  /* cursor: pointer; */
 `;
 const PostBtnBox = styled.div`
   display: flex;
@@ -65,7 +63,6 @@ const PostDate = styled.p`
   color: #767676;
 `;
 const BtnLike = styled.button`
-  /* width: 100%; */
   height: 20px;
   display: flex;
   align-items: center;
@@ -114,13 +111,11 @@ export default function PostItem({
       },
     });
   }
-  console.log("이 정보", otherInfo);
   const postLike = async postId => {
     const token = localStorage.getItem("token");
     try {
       const post = postInfo.find(post => post.id === postId);
       if (!post) {
-        console.error("Post not found");
         return false;
       }
       if (post.hearted) {
@@ -133,7 +128,6 @@ export default function PostItem({
             },
           },
         );
-        console.log("좋아요 취소");
       } else {
         const res = await axios.post(
           `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
@@ -145,12 +139,9 @@ export default function PostItem({
             },
           },
         );
-        console.log("좋아요", res.data.post.heartCount);
       }
       if (getUserInfo) getUserInfo();
       if (fetchPostInfo) fetchPostInfo();
-
-      console.log(postInfo, "좋아요 요청후 응답");
     } catch (error) {
       console.error(error);
       return false;
@@ -164,7 +155,6 @@ export default function PostItem({
         console.error("Post not found");
         return false;
       }
-      console.log("check", post);
       if (post.hearted) {
         const res = await axios.delete(
           `https://api.mandarin.weniv.co.kr/post/${post.id}/unheart`,
@@ -175,7 +165,6 @@ export default function PostItem({
             },
           },
         );
-        console.log("좋아요 취소");
       } else {
         const res = await axios.post(
           `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
@@ -187,12 +176,9 @@ export default function PostItem({
             },
           },
         );
-        console.log("좋아요", res.data.post.heartCount);
       }
       getOtherInfo();
-      // shouldFetchPostInfo();
       fetchPostInfo();
-      console.log(postInfo, "좋아요 요청후 응답");
     } catch (error) {
       console.error(error);
       return false;
@@ -200,7 +186,6 @@ export default function PostItem({
   };
 
   function moveProfile(accountname) {
-    // postInfo가 있는 경우
     const where = localStorage.getItem("accountname");
     if (accountname === where) {
       navigate("/myprofile", {
@@ -217,9 +202,7 @@ export default function PostItem({
     }
   }
 
-  // otherInfo가 있는 경우
   function moveOtherProfile(accountname) {
-    console.log("Go", accountname);
     navigate(`/profile/${accountname}`, {
       state: {
         accountname: accountname,

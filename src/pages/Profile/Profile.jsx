@@ -7,12 +7,8 @@ import Modal from "../../components/Modal/Modal";
 import Navigation from "../../components/common/Nav/Navigation";
 import Alert from "../../components/Modal/Alert";
 import { useState, useEffect } from "react";
-import post from "../../dummy/dummyapi";
 import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import RandomRecommend from "../../components/RandomRecommend/RandomRecommend";
 
 const Container = styled.div`
   max-width: 390px;
@@ -62,7 +58,6 @@ export default function Profile({ type }) {
   }
   useEffect(() => {
     if (cardClosed) {
-      // cardClosed 값이 true일 때 초기화 코드를 실행
       setCardClosed(false);
     }
   }, [cardClosed]);
@@ -70,10 +65,9 @@ export default function Profile({ type }) {
   return (
     <Container>
       <Header type="profile" modalOpen={() => modalOpen("setting")} />
-      {/* btn-> 페이지 -> 모달 -> alert */}
       <ProfileInformation type={type} />
       <RecommendList cardOpen={cardOpen} cardClosed={cardClosed} />
-      <PostList post={post} />
+      <PostList />
       {modalShow && (
         <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
       )}

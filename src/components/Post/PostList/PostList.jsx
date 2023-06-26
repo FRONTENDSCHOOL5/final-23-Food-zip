@@ -80,7 +80,7 @@ export default function PostList({ post, modalOpen }) {
 
   const [postInfo, setPostInfo] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
-  const [hasPosts, setHasPosts] = useState(false); // 없을 때 렌더링 안되게 하게 만들었음
+  const [hasPosts, setHasPosts] = useState(false);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   useEffect(() => {
     getUserInfo();
@@ -128,7 +128,6 @@ export default function PostList({ post, modalOpen }) {
       }
     } catch (error) {
       console.log("error");
-      // <ErrorPage />; 되나?
     }
   };
 
@@ -158,7 +157,6 @@ export default function PostList({ post, modalOpen }) {
     setSelectedId(id);
     setModalShow(true);
   }
-  console.log("Post", postInfo);
 
   const openPostEditModal = () => {
     setPostEditModalOpen(true);

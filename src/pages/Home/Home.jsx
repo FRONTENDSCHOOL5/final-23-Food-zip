@@ -36,7 +36,6 @@ export default function Home() {
           },
         );
 
-        // 포스트가 비어있는 경우 isEmptyFeed를 true로 설정
         if (res.data.posts.length === 0) {
           setIsEmptyFeed(true);
         } else {

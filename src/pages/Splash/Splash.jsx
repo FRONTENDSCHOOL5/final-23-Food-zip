@@ -26,12 +26,11 @@ export default function Splash() {
       }, 3000);
     } else {
       const timer = setTimeout(() => {
-        // 3초 후에 다른 페이지로 이동
         navigate("/welcome");
-      }, 1500);
+      }, 2000);
 
       return () => clearTimeout(timer);
-    } // 컴포넌트가 언마운트될 때 타이머를 정리(clean-up)
+    }
   }, [navigate]);
 
   const [paddingTop, setPaddingTop] = useState("65%");

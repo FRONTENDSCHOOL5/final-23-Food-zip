@@ -82,11 +82,8 @@ export default function Alert({
     navigate("/welcome");
   };
 
-  console.log("commentId", commentId);
-
   const handleDeletePost = async () => {
     const token = localStorage.getItem("token");
-    console.log("post", postId);
     try {
       await axios.delete(`https://api.mandarin.weniv.co.kr/post/${postId}`, {
         headers: {
@@ -103,7 +100,6 @@ export default function Alert({
       navigate("/error");
     }
   };
-  console.log("post", postId);
   const handleDeleteProduct = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -128,8 +124,6 @@ export default function Alert({
 
   const handleDeleteComment = async () => {
     const token = localStorage.getItem("token");
-    console.log(postId);
-    console.log("댓글삭제됨");
     try {
       await axios.delete(
         `https://api.mandarin.weniv.co.kr/post/${postId}/comments/${commentId}`,
@@ -160,7 +154,6 @@ export default function Alert({
           },
         },
       );
-      console.log(report);
       alertClose("report");
       modalClose("report");
       alert("해당 댓글을 신고하였습니다.");
@@ -181,7 +174,6 @@ export default function Alert({
           },
         },
       );
-      console.log(report);
       alertClose("report");
       modalClose("report");
       alert("해당 게시글을 신고하였습니다.");

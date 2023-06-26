@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import ListImg from "../../assets/images/list-example.png";
-import RecommendCard from "../Modal/RecommendCard";
 import ImgStar from "../../assets/images/star.svg";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";

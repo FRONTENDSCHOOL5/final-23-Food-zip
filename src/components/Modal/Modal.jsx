@@ -75,7 +75,6 @@ export default function Modal({
       setAlertShow(false);
     }
   }
-  console.log("console", restaurantName);
 
   function alertOpen(customType) {
     setAlertShow(true);
@@ -83,15 +82,13 @@ export default function Modal({
   }
 
   function handlerOpenMap() {
-    console.log("console", restaurantName);
     navigate("/map", {
       state: {
         restaurantname: restaurantName,
       },
     });
   }
-  console.log("정보", postId, commentId);
-  console.log("product:", productId);
+
   const UI = {
     setting: (
       <ModalWrapDiv>
