@@ -147,7 +147,27 @@ export default function Alert({
       console.error("Delete request failed", error);
     }
   };
-
+  const handleReportComment = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const report = await axios.post(
+        `https://api.mandarin.weniv.co.kr/post/${postId}/comments/${commentId}/report`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        },
+      );
+      console.log(report);
+      alertClose("report");
+      modalClose("report");
+      alert("해당 게시글을 신고하였습니다.");
+    } catch (error) {
+      console.error("Delete request failed", error);
+    }
+  };
   const UI = {
     logout: (
       <AlertWrapDiv>
@@ -186,6 +206,16 @@ export default function Alert({
           <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
           <AlertLineSpan></AlertLineSpan>
           <AlertMainBtn onClick={handleDeleteComment}>삭제</AlertMainBtn>
+        </AlertBottomDiv>
+      </AlertWrapDiv>
+    ),
+    report: (
+      <AlertWrapDiv>
+        <AlertTextP>댓글을 신고할까요?</AlertTextP>
+        <AlertBottomDiv>
+          <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
+          <AlertLineSpan></AlertLineSpan>
+          <AlertMainBtn onClick={handleReportComment}>확인</AlertMainBtn>
         </AlertBottomDiv>
       </AlertWrapDiv>
     ),

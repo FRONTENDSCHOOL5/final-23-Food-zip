@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import imageIcon from "../../../assets/images/img-button.svg";
 import styled from "styled-components";
 

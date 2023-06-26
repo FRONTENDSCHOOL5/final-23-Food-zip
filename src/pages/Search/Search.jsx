@@ -20,7 +20,6 @@ export default function Search() {
   function handleSearchKeyword(event) {
     setSearchKeyword(event.target.value);
   }
-  console.log(searchKeyword);
   return (
     <Container>
       <Header

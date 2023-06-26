@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import uploadPhoto from "../../../assets/images/camera-color.svg";
 import imgbg from "../../../assets/images/img-bg.svg";
@@ -33,27 +33,44 @@ const ImgWrapper = styled.div`
   width: 100%;
   height: 204px;
 `;
+const defaultIconPosition = `
+  bottom: 44px;
+  right: -4px;
+`;
 const RecommendIconWrapper = styled.label`
   display: inline-block;
   cursor: pointer;
   position: absolute;
-  bottom: 44px;
-  right: -4px;
+  ${props => props.wrapperStyle || defaultIconPosition}
+`;
+const defaultIconStyle = `
+  width: 75%;
+  height: 75%;
 `;
 const RecommendImgIcon = styled.img`
-  width: 75%;
   object-fit: contain;
   border-radius: 10px;
+  ${props => props.iconStyle || defaultIconStyle}
 `;
 
-export default function RecommendImgPrev({ onRecommendImageUrlChange }) {
+export default function RecommendImgPrev({
+  onRecommendImageUrlChange,
+  hasImage,
+  initialImage,
+  iconStyle,
+  wrapperStyle,
+}) {
   const [imgUrl, setImgUrl] = useState("");
   const fileInputRef = useRef(null);
   const [boardImage, setBoardImage] = useState(null);
   const [uploadPreview, setUploadPreview] = useState([]);
   // useRef를 사용하여 파일 입력(input) 요소에 대한 참조 생성
   const maxSize = 10 * 1024 * 1024;
-
+  useEffect(() => {
+    if (hasImage && initialImage) {
+      setUploadPreview(initialImage);
+    }
+  }, [hasImage, initialImage]);
   const handleUploadImg = async e => {
     let file = e.target?.files[0];
 
@@ -67,8 +84,8 @@ export default function RecommendImgPrev({ onRecommendImageUrlChange }) {
       return;
     }
     const options = {
-      maxSizeMB: 0.3, // 이미지 최대 용량
-      maxWidthOrHeight: 230, // 최대 넓이(혹은 높이)
+      maxSizeMB: 2, // 이미지 최대 용량
+      maxWidthOrHeight: 1024, // 최대 넓이(혹은 높이)
       useWebWorker: true,
     };
     try {
@@ -85,7 +102,7 @@ export default function RecommendImgPrev({ onRecommendImageUrlChange }) {
       reader.onloadend = () => {
         const base64data = reader.result;
         const imageUrl = formDataHandler(base64data); // 이 함수는 밑에서 설명
-        onRecommendImageUrlChange(file, imageUrl);
+        onRecommendImageUrlChange(file, base64data);
         setImgUrl(imageUrl);
       };
     } catch (error) {
@@ -106,14 +123,18 @@ export default function RecommendImgPrev({ onRecommendImageUrlChange }) {
 
   return (
     <RecommendImgWrapper>
-      <RecommendIconWrapper>
+      <RecommendIconWrapper wrapperStyle={wrapperStyle}>
         <RecommendImgInput
           type="file"
           accept="image/jpeg,image/jpg,image/png"
           onChange={handleUploadImg}
           ref={fileInputRef}
         />
-        <RecommendImgIcon src={uploadPhoto} alt="사진을 올리는 버튼 이미지" />
+        <RecommendImgIcon
+          src={uploadPhoto}
+          iconStyle={iconStyle}
+          alt="사진을 올리는 버튼 이미지"
+        />
       </RecommendIconWrapper>
       {uploadPreview.length > 0 ? (
         <ImgWrapper>

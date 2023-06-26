@@ -132,7 +132,9 @@ export default function Modal({
     report: (
       <ModalWrapDiv>
         <ModalLineSpan />
-        <ModalTextBtn>신고하기</ModalTextBtn>
+        <ModalTextBtn onClick={() => alertOpen("report")}>
+          신고하기
+        </ModalTextBtn>
       </ModalWrapDiv>
     ),
     delete: (

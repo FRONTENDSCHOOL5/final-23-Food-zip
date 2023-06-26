@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PostItem from "../Post/PostItem/PostItem";
 import styled from "styled-components";
 import Modal from "../Modal/Modal";
-import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 const List = styled.ul`
   background-color: white;
@@ -24,7 +23,6 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
     setModalShow(true);
   }
   const getOtherInfo = async () => {
-    console.log("이건 좋아요");
     const token = localStorage.getItem("token");
     try {
       const res = await axios.get(
@@ -36,11 +34,8 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
           },
         },
       );
-      console.log("데이터 포스트 홈", res.data.posts);
       setOtherInfo(res.data.posts);
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   console.log("myFeed", myFeed);
