@@ -11,7 +11,6 @@ import PostEdit from "../../components/Post/PostEdit/PostEdit";
 import BasicProfile from "../../assets/images/basic-profile-lg.svg";
 
 const DetailPostWrapper = styled.div`
-  /* background: #fff; */
   width: 100%;
   height: 100vh;
   padding: 68px 0 0px 0;
@@ -79,14 +78,12 @@ export default function DetailPost() {
   const [commentCnt, setCommentCnt] = useState(0);
   const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
-  const [fetchInfo, setFetchInfo] = useState(postInfo);
 
   const [myImg, setMyImg] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = event => {
     setInputValue(event.target.value);
-    console.log("댓글 입력창 :", inputValue);
   };
   function modalClose(e) {
     if (e.target === e.currentTarget) {
@@ -94,7 +91,6 @@ export default function DetailPost() {
     }
   }
   function modalOpen(type, id) {
-    console.log("type", type);
     setModalShow(true);
     setModalType(type);
     setSelectedId(id);
@@ -107,7 +103,6 @@ export default function DetailPost() {
     }
   }
   const fetchPostInfo = async () => {
-    // console.log("현재", selectedId);
     try {
       const response = await axios.get(
         `https://api.mandarin.weniv.co.kr/post/${selectedId ?? id}`,
@@ -120,10 +115,7 @@ export default function DetailPost() {
       const post = response.data.post;
       setMyPostInfo([post]);
       setShouldFetchPostInfo(false);
-      console.log("새 게시글 정보", post);
-      console.log("페치 성공?", shouldFetchPostInfo);
     } catch (error) {
-      console.error(error);
       navigate("/error");
     }
   };
@@ -150,9 +142,7 @@ export default function DetailPost() {
       loadcommentList();
       setComment(res.data.comment);
       setInputValue("");
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
   const loadcommentList = async () => {
     try {
@@ -167,9 +157,7 @@ export default function DetailPost() {
       );
       setCommentList(res.data.comments);
       setCommentCnt(res.data.comments.length);
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
   const getUserInfo = async () => {
     try {
@@ -184,7 +172,6 @@ export default function DetailPost() {
       const image = res.data.user;
       setMyImg(image);
     } catch (error) {
-      console.error(error);
       navigate("/error");
     }
   };
