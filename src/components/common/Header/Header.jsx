@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import IconSearch from "../../../assets/images/icon-search.svg";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
 import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
+import RandomRecommend from "../../RandomRecommend/RandomRecommend";
+import fulllogo from "../../../assets/images/full-logo-xs.svg";
+import { Context } from "../../../components/RandomRecommend/RandomRecommendContext";
 
 const HeaderWrap = styled.header`
   position: fixed;
@@ -67,9 +70,15 @@ const HeaderSpan = styled.span`
 
 const HeaderTextP = styled.p`
   display: inline-block;
-  /* margin-left: 8px; */
   font-size: 14px;
   font-weight: 600;
+`;
+
+const HeaderLogoBtn = styled.button`
+  background: url(${fulllogo}) no-repeat center center;
+  width: 20px;
+  height: 20px;
+  margin-right: 216px;
 `;
 
 export default function Header({
@@ -86,11 +95,26 @@ export default function Header({
   function handleClick() {
     navigate("/search");
   }
-  console.log(handleUploadBtn);
+
+  const [randomShow, setRandomShow] = useState(false);
+  function randomClose(e) {
+    if (e.target === e.currentTarget) {
+      setRandomShow(false);
+    }
+  }
+
+  const [handleRecommendation] = useContext(Context);
+
+  function randomOpen() {
+    setRandomShow(true);
+    handleRecommendation();
+  }
+
   const UI = {
     home: (
       <HeaderLayoutDiv>
-        <HeaderTitleP>FOODZIP 피드</HeaderTitleP>
+        <HeaderTitleP>FOODZIP</HeaderTitleP>
+        <HeaderLogoBtn type="button" onClick={randomOpen} />
         <HeaderRightBtn type="button">
           <img src={IconSearch} alt="돋보기 아이콘" onClick={handleClick} />
         </HeaderRightBtn>
@@ -243,5 +267,10 @@ export default function Header({
     ),
   };
 
-  return <HeaderWrap>{UI[type]}</HeaderWrap>;
+  return (
+    <>
+      <HeaderWrap>{UI[type]}</HeaderWrap>
+      {randomShow && <RandomRecommend randomClose={randomClose} />}
+    </>
+  );
 }
