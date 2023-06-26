@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDebounce } from "use-debounce";
 import { useNavigate } from "react-router-dom";
-import ErrorPage from "../../pages/Error/ErrorPage";
 
 const SearchWrapper = styled.ul`
   padding: 0 0 60px 0;
@@ -53,7 +52,6 @@ export default function SearchList({ searchKeyword }) {
 
   function handleClick(accountname) {
     const where = localStorage.getItem("accountname");
-    console.log(accountname);
     if (accountname === where) {
       navigate("/myprofile", {
         state: {
@@ -88,7 +86,6 @@ export default function SearchList({ searchKeyword }) {
               },
             },
           );
-          console.log("서치", response);
 
           const filteredData = response.data.filter(
             item => !item.image.startsWith("https://mandarin.api.weniv"),

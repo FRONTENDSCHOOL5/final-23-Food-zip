@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useLocation, Link } from "react-router-dom";
 import homeIcon from "../../../assets/images/icon-home.svg";
@@ -32,7 +32,7 @@ const NavLink = styled(Link)`
   color: #767676;
 
   &.active {
-    color: #286140; /* Apply active color */
+    color: #286140;
   }
 `;
 

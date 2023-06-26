@@ -1,5 +1,7 @@
-# 어?금지 
- ## ✨ 어? 금지의 조원 소개
+# 어?금지
+
+## ✨ 어? 금지의 조원 소개
+
  <table>
    <tr>
      <td align="center">
@@ -48,3 +50,50 @@
      </td>
    </tr>
 </table>
+## 폴더 구조
+
+```
+    src
+      ├─ App.js
+      ├─ components
+      │  ├─ Auth
+      │  ├─ Chat
+      │  ├─ Comment
+      │  ├─ common
+      │  │  ├─ Button
+      │  │  ├─ Header
+      │  │  └─ Nav
+      │  ├─ Error
+      │  ├─ Feed
+      │  ├─ FollowItem
+      │  ├─ Modal
+      │  ├─ Post
+      │  │  ├─ ImgPrev
+      │  │  ├─ PostEdit
+      │  │  ├─ PostItem
+      │  │  ├─ PostList
+      │  │  └─ StarRating
+      │  ├─ Profile
+      │  ├─ Search
+      │  └─ styles
+      ├─ dummy
+      ├─ index.js
+      ├─ pages
+      │  ├─ AuthorPage
+      │  │  ├─ Login
+      │  │  └─ SignUp
+      │  ├─ Chat
+      │  ├─ Error
+      │  ├─ FollowerList
+      │  ├─ Home
+      │  ├─ Loading
+      │  ├─ Map
+      │  ├─ Post
+      │  ├─ Profile
+      │  ├─ ProfileSetting
+      │  ├─ Search
+      │  ├─ Splash
+      │  └─ Welcome
+      └─ routes
+
+```

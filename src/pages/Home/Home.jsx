@@ -1,7 +1,6 @@
 import { useState } from "react";
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import EmptyHome from "../../components/Feed/EmptyHome";
 import Header from "../../components/common/Header/Header";
 import Navigation from "../../components/common/Nav/Navigation";
@@ -36,7 +35,6 @@ export default function Home() {
             },
           },
         );
-        console.log("데이터", res.data);
 
         // 포스트가 비어있는 경우 isEmptyFeed를 true로 설정
         if (res.data.posts.length === 0) {
@@ -48,9 +46,7 @@ export default function Home() {
         }
 
         setLoading(false);
-      } catch (err) {
-        console.error(err);
-      }
+      } catch (err) {}
     };
     getFeed();
   }, [page]);
