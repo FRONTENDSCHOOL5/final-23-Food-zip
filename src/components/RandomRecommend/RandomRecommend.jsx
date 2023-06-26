@@ -19,11 +19,11 @@ const slideDown = keyframes`
       opacity: 1;
     }
     30% {
-      transform: translateY(66px);
+      transform: translateY(100%);
       opacity: 1;
     }
     50% {
-      transform: translateY(66px);
+      transform: translateY(100%);
       opacity: 1;
     }
     100% {

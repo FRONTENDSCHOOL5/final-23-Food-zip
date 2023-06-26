@@ -60,7 +60,7 @@ export default function ChatRoom() {
           <MessageWrap>
             <MessageText>
               {chatValue[index]}
-              <TimeStamp>13:50</TimeStamp>
+              <TimeStamp>14:10</TimeStamp>
             </MessageText>
           </MessageWrap>
         ))}
