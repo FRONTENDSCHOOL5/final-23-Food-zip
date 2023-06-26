@@ -27,16 +27,10 @@ export default function FollowerList({ type, followType }) {
   const [followerList, setFollowerList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
 
-  // function moveProfile(accountname) {
-  //   navigate(`/profile/${accountname}`, {
-  //     state: {
-  //       accountname: accountname,
-  //     },
-  //   });
-  // }
   useEffect(() => {
     type === "followers" ? getFollowerList() : getFollowingList();
   }, []);
+
   const getFollowerList = async () => {
     try {
       const res = await axios.get(
@@ -51,10 +45,10 @@ export default function FollowerList({ type, followType }) {
       setFollowerList(res.data);
       console.log("followers", res.data);
     } catch (err) {
-      console.error("에러!!", err);
       navigate("/error");
     }
   };
+
   const getFollowingList = async () => {
     try {
       const res = await axios.get(
@@ -68,7 +62,6 @@ export default function FollowerList({ type, followType }) {
       );
       setFollowingList(res.data);
     } catch (err) {
-      console.error(err);
       navigate("/error");
     }
   };

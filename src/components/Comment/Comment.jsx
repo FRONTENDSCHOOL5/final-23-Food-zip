@@ -1,4 +1,3 @@
-import { getValue } from "@testing-library/user-event/dist/utils";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -36,7 +35,6 @@ const StyledCommentUserInfo = styled.div`
   flex-grow: 1;
   display: flex;
   gap: 6px;
-  /* margin-bottom: 16px; */
   h3 {
     font-size: 14px;
     font-weight: 700;
@@ -74,7 +72,7 @@ export default function Comment({ commentList, postId }) {
   const [modalType, setModalType] = useState("delete");
   const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
-  // 댓글 달린 시간 계산
+
   const elapsedTime = commentDate => {
     const now = new Date();
     const commentTime = new Date(commentDate);
@@ -97,6 +95,7 @@ export default function Comment({ commentList, postId }) {
     }
     return "방금 전";
   };
+
   function moveProfile(accountname) {
     if (accountname === where) {
       navigate("/myprofile");
@@ -108,6 +107,7 @@ export default function Comment({ commentList, postId }) {
       });
     }
   }
+
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -131,7 +131,7 @@ export default function Comment({ commentList, postId }) {
   function alertOpen() {
     setAlertShow(true);
   }
-  console.log("commentList", commentList);
+
   return (
     <StyledCommentWrapper>
       {commentList?.map(comment => {

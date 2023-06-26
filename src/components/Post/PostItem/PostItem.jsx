@@ -50,11 +50,11 @@ const PostImg = styled.img`
   margin-bottom: 12px;
   border: 0.5px solid #dbdbdb;
   border-radius: 10px;
+  object-fit: cover;
 `;
 const PostInfoBox = styled.div`
   display: flex;
   justify-content: space-between;
-  /* cursor: pointer; */
 `;
 const PostBtnBox = styled.div`
   display: flex;
@@ -65,7 +65,6 @@ const PostDate = styled.p`
   color: #767676;
 `;
 const BtnLike = styled.button`
-  /* width: 100%; */
   height: 20px;
   display: flex;
   align-items: center;
