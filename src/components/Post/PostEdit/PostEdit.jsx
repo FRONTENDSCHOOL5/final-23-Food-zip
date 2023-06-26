@@ -56,14 +56,13 @@ const PostContent = styled.textarea`
   line-height: 20px;
   padding: 0;
 `;
-export default function PostEdit({ closeModal, postId, Info }) {
+export default function PostEdit({ closeModal, postId }) {
   console.log("edit", postId);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [postInfo, setPostInfo] = useState({});
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 게시물 정보 가져오기
     fetchPostInfo();
   }, []);
 
@@ -138,7 +137,6 @@ export default function PostEdit({ closeModal, postId, Info }) {
     const blob = await response.blob();
     return new File([blob], "image.jpg", { type: "image/jpeg" });
   };
-  console.log(postInfo.author);
   function handleUpload() {
     postEditUpload();
   }

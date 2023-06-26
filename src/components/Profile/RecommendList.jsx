@@ -81,7 +81,6 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
   useEffect(() => {
     getUserInfo();
     if (cardClosed) {
-      console.log("여기 지나감");
       getUserInfo();
     }
   }, [location, cardClosed]);
@@ -105,7 +104,6 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
       });
 
       const products = res.data.product;
-      console.log("tkdvna", products);
       setRecommendInfo(products);
       setUploadList(!cardClosed);
     } catch (error) {

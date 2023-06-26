@@ -52,7 +52,7 @@ const StyledError = styled.small`
   left: 35px;
 `;
 
-const SignUpForm = ({ onSubmit }) => {
+const SignUpForm = () => {
   const {
     register,
     handleSubmit,

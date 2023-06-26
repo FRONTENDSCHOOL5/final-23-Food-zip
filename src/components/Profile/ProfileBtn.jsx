@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import IconMessage from "../../assets/images/icon-message-circle.svg";
@@ -56,7 +56,6 @@ export default function ProfileBtn({
   }
 
   function moveChat(yourAccountname) {
-    console.log(yourAccountname);
     navigate(`/chatroom/${yourAccountname}`, {
       state: {
         yourAccountname: yourAccountname,

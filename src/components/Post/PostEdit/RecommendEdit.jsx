@@ -87,15 +87,12 @@ export default function RecommendEdit({ closeModal, productId }) {
         },
       );
       const product = response.data.product;
-      console.log("이 상품은", product);
       setProductInfo(product);
-      console.log("기존 게시글 정보", product);
     } catch (error) {
       console.error(error);
       navigate("/error");
     }
   };
-  console.log(productInfo);
   const recommendEditUpload = async () => {
     try {
       const res = await axios.put(

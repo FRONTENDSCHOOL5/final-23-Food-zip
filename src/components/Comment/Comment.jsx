@@ -115,7 +115,6 @@ export default function Comment({ commentList, postId }) {
   }
 
   function modalOpen(type, id) {
-    console.log("type", type);
     setModalShow(true);
     setModalType(type);
     setSelectedId(id);

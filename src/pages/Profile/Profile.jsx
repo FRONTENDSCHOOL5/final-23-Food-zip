@@ -49,7 +49,6 @@ export default function Profile({ type }) {
       setCardShow(false);
     }
     setCardClosed(true);
-    console.log("프로필", cardClosed);
   }
 
   function cardOpen(id) {

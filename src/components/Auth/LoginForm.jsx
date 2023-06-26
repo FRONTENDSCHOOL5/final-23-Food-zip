@@ -56,7 +56,7 @@ const StyledError = styled.small`
   left: 35px;
 `;
 
-const LoginForm = ({ onSubmit }) => {
+const LoginForm = () => {
   const {
     register,
     handleSubmit,
@@ -67,7 +67,6 @@ const LoginForm = ({ onSubmit }) => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const handleFormSubmit = async formData => {
     try {
-      console.log(formData.email, formData.password);
       const res = await axios.post(
         "https://api.mandarin.weniv.co.kr/user/login",
         {

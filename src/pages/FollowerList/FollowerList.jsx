@@ -42,7 +42,6 @@ export default function FollowerList({ type, followType }) {
         },
       );
       setFollowerList(res.data);
-      console.log("followers", res.data);
     } catch (err) {
       navigate("/error");
     }

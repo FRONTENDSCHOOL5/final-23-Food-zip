@@ -11,7 +11,6 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [otherInfo, setOtherInfo] = useState(myFeed);
-  console.log(myFeed);
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -38,8 +37,6 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
     } catch (err) {}
   };
 
-  console.log("myFeed", myFeed);
-  console.log("myNewFeed", otherInfo);
   return (
     <List>
       <PostItem

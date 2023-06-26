@@ -140,7 +140,6 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
   }
 
   function modalOpen() {
-    console.log("modal", recommendInfo.itemName);
     setModalShow(true);
   }
   const openRecommendEditModal = () => {
