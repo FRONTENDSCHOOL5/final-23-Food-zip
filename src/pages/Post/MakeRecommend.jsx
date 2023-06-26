@@ -73,7 +73,6 @@ export default function MakeRecommend() {
           },
         },
       );
-      console.log("1 : " + uploadResponse.data);
       const imageUrl =
         "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
 

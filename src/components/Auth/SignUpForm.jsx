@@ -7,12 +7,10 @@ import axios from "axios";
 import _ from "lodash";
 const StyledForm = styled.form`
   margin-top: 40px;
+  height: 100%;
 `;
 const StyledButton = styled(ButtonStyle)`
-  margin: 0px auto 20px;
-`;
-const StyledInputContainer = styled.div`
-  position: relative;
+  margin: 50px auto 20px;
 `;
 const StyledLabel = styled.label`
   display: block;
@@ -43,7 +41,9 @@ const StyledInput = styled.input`
     border-bottom: 1px solid #286140;
   }
 `;
-
+const StyledInputContainer = styled.div`
+  position: relative;
+`;
 const StyledError = styled.small`
   font-size: 12px;
   color: red;
@@ -58,12 +58,14 @@ const SignUpForm = ({ onSubmit }) => {
     handleSubmit,
     clearErrors,
     setError,
+    getValues,
     formState: { errors, isValid }, // Added isValid from formState
   } = useForm({
     mode: "onChange",
     defaultValues: {
       email: null,
       password: null,
+      passwordConfirm: null,
     },
   });
   const [email, setEmail] = useState("");
@@ -120,6 +122,7 @@ const SignUpForm = ({ onSubmit }) => {
       return false;
     }
   };
+
   useEffect(() => {
     // Check if form is valid and set abledBtn state accordingly
     setAbledBtn(isValid);
@@ -168,6 +171,28 @@ const SignUpForm = ({ onSubmit }) => {
         />
         {errors.password && (
           <StyledError role="alert">{errors.password.message}</StyledError>
+        )}
+      </StyledInputContainer>
+      <StyledInputContainer>
+        <StyledLabel htmlFor="passwordConfirm">비밀번호 확인</StyledLabel>
+        <StyledInput
+          id="passwordConfirm"
+          type="password"
+          placeholder="비밀번호를 한 번 더 입력하세요"
+          {...register("passwordConfirm", {
+            required: "비밀번호 확인은 필수 입력입니다.",
+            validate: {
+              matchesPreviousPassword: value => {
+                const { password } = getValues();
+                return password === value || "비밀번호가 일치하지 않습니다.";
+              },
+            },
+          })}
+        />
+        {errors.passwordConfirm && (
+          <StyledError role="alert">
+            {errors.passwordConfirm.message}
+          </StyledError>
         )}
       </StyledInputContainer>
 

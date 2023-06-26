@@ -46,6 +46,7 @@ export default function MakePost() {
   console.log(imgFile);
   const uploadPost = async (url, content) => {
     try {
+      console.log("게시물 작성", imgFile);
       const formData = new FormData();
       formData.append("image", imgFile);
       const uploadResponse = await axios.post(
