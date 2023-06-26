@@ -84,8 +84,8 @@ export default function RecommendImgPrev({
       return;
     }
     const options = {
-      maxSizeMB: 0.3, // 이미지 최대 용량
-      maxWidthOrHeight: 700, // 최대 넓이(혹은 높이)
+      maxSizeMB: 2, // 이미지 최대 용량
+      maxWidthOrHeight: 1024, // 최대 넓이(혹은 높이)
       useWebWorker: true,
     };
     try {

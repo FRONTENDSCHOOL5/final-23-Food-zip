@@ -95,17 +95,35 @@ export default function PostEdit({ closeModal, postId, Info }) {
   };
 
   const postEditUpload = async () => {
-    // event.preventDefault();
-
-    console.log("게시물 아이디", postId);
-    console.log("새 게시물정보", postInfo);
     try {
+      let imageUrl = "";
+      console.log("이미지", postInfo.image);
+      if (postInfo.image) {
+        const file = await convertBase64ToBlob(postInfo.image);
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const uploadResponse = await axios.post(
+          "https://api.mandarin.weniv.co.kr/image/uploadfile",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          },
+        );
+        console.log("새이미지", uploadResponse);
+        if (uploadResponse.data.filename) {
+          imageUrl =
+            "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
+        }
+      }
       const res = await axios.put(
         `https://api.mandarin.weniv.co.kr/post/${postId}`,
         {
           post: {
             content: postInfo.content,
-            image: postInfo.image,
+            image: imageUrl,
           },
         },
         {
@@ -115,6 +133,7 @@ export default function PostEdit({ closeModal, postId, Info }) {
           },
         },
       );
+
       const updatedPost = res.data.post;
       setPostInfo(updatedPost);
       console.log("새 게시물", postInfo);
@@ -125,10 +144,14 @@ export default function PostEdit({ closeModal, postId, Info }) {
       return false;
     }
   };
-
+  const convertBase64ToBlob = async base64Data => {
+    const response = await fetch(base64Data);
+    const blob = await response.blob();
+    return new File([blob], "image.jpg", { type: "image/jpeg" });
+  };
   console.log(postInfo.author);
   function handleUpload() {
-    postEditUpload(postInfo.image, postInfo.content);
+    postEditUpload();
   }
   return (
     <ModalOverlay onClick={closeModal}>
