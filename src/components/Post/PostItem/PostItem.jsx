@@ -65,7 +65,7 @@ const PostDate = styled.p`
   color: #767676;
 `;
 const BtnLike = styled.button`
-  width: 41px;
+  /* width: 100%; */
   height: 20px;
   display: flex;
   align-items: center;
@@ -73,7 +73,7 @@ const BtnLike = styled.button`
   color: #767676;
 `;
 const BtnComment = styled.button`
-  width: 38px;
+  width: 50px;
   height: 20px;
   display: flex;
   align-items: center;

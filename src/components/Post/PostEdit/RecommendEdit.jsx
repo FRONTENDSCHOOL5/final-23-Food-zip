@@ -66,7 +66,7 @@ const RecommendInfo = styled.input`
   background: transparent;
   padding: 6px 0 0;
   &:focus {
-    border-bottom: 1px solid #629678;
+    border-bottom: #629678;
   }
 `;
 export default function RecommendEdit({ closeModal, productId }) {

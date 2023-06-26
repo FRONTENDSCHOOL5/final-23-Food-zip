@@ -67,6 +67,7 @@ export default function Profile({ type }) {
   return (
     <Container>
       <Header type="profile" modalOpen={() => modalOpen("setting")} />
+      {/* btn-> 페이지 -> 모달 -> alert */}
       <ProfileInformation type={type} />
       <RecommendList cardOpen={cardOpen} cardClosed={cardClosed} />
       <PostList post={post} />

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
 import Button from "../../common/Button/Button";
+import RecommendImgPrev from "../ImgPrev/RecommendImgPrev";
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -57,7 +58,8 @@ const PostContent = styled.textarea`
     outline: none;
   }
   width: 100%;
-  margin-top: ${props => (props.hasImage ? "17px" : "")};
+  margin-top: -17px;
+  /* ${props => (props.hasImage ? "17px" : "")}; */
   line-height: 20px;
   padding: 0;
 `;
@@ -147,12 +149,20 @@ export default function PostEdit({ closeModal, postId, Info }) {
               width="ms"
               bgColor="active"
               onClick={handleUpload}
-              // onClick={closeModal}
             ></Button>
           </HeaderLayoutDiv>
-          {postInfo.image !== "" && (
+          {/* {postInfo.image !== "" && (
             <PostImage src={postInfo.image} alt="게시물 사진" />
-          )}
+          )} */}
+          <RecommendImgPrev
+            onRecommendImageUrlChange={(file, imageUrl) =>
+              setPostInfo({ ...postInfo, image: imageUrl })
+            }
+            hasImage={postInfo.image !== ""}
+            initialImage={postInfo.image}
+            iconStyle={`width: 65%; height: 65%;`}
+            wrapperStyle={`bottom: 43px; right: -12px;`}
+          />
           <PostContent
             rows="10"
             columns="60"
