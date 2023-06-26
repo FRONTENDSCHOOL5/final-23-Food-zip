@@ -16,14 +16,18 @@ const ModalTopDiv = styled.div`
 const slideDown = keyframes`
     0% {
       transform: translateY(-2%);
-      opacity: 0;
+      opacity: 1;
     }
-    40% {
+    30% {
+      transform: translateY(66px);
+      opacity: 1;
+    }
+    50% {
       transform: translateY(66px);
       opacity: 1;
     }
     100% {
-      transform: translateY(100px);
+      transform: translateY(-2%);
       opacity: 1;
     }
   `;
@@ -36,7 +40,7 @@ const RandomDiv = styled.div`
   perspective: 1000px;
   background-color: #629678;
   border-radius: 0 0 20px 20px;
-  animation: ${slideDown} 10s ease;
+  animation: ${slideDown} 8s ease;
 `;
 
 const RandomP = styled.div`
@@ -62,7 +66,9 @@ export default function RandomRecommend({ randomClose }) {
     <ModalTopDiv onClick={randomClose}>
       <RandomDiv isAnimationActive={isAnimationActive}>
         <RandomP>
-          {isAnimationActive ? randomFood : foodName[randomFood]} 땡겨요
+          {isAnimationActive
+            ? `${randomFood} 땡겨요`
+            : foodName[randomFood] && `${foodName[randomFood]} 땡겨요`}
         </RandomP>
       </RandomDiv>
     </ModalTopDiv>

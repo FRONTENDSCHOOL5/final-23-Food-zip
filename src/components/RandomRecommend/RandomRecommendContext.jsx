@@ -5,7 +5,6 @@ export const Context = createContext();
 export default function RandomRecommendContext(props) {
   const [randomFood, setRandomFood] = useState("");
   const [isAnimationActive, setIsAnimationActive] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const foodList = [
     "🍕",
@@ -51,20 +50,15 @@ export default function RandomRecommendContext(props) {
     let intervalId;
 
     if (isAnimationActive) {
-      setIsButtonDisabled(true); // Disable the button during the animation
-
       intervalId = setInterval(() => {
         const randomIndex = Math.floor(Math.random() * foodList.length);
         setRandomFood(foodList[randomIndex]);
-      }, 80); // 0.08초마다 음식을 랜덤으로 선택하여 업데이트
+      }, 80);
 
       setTimeout(() => {
         clearInterval(intervalId);
         setIsAnimationActive(false);
-        setTimeout(() => {
-          setIsButtonDisabled(false); // Enable the button after 1 second
-        }, 1800);
-      }, 2000); // 2초 후에 애니메이션 완료
+      }, 1900);
     }
 
     return () => {
@@ -73,10 +67,13 @@ export default function RandomRecommendContext(props) {
   }, [isAnimationActive, foodList]);
 
   const handleRecommendation = () => {
-    if (!isAnimationActive) {
-      setRandomFood(""); // Reset the random food
-      setIsAnimationActive(true);
-    }
+    setRandomFood("");
+    setTimeout(() => {
+      if (!isAnimationActive) {
+        setRandomFood("");
+        setIsAnimationActive(true);
+      }
+    }, 1200);
   };
   return (
     <Context.Provider

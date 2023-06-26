@@ -108,6 +108,9 @@ export default function Header({
   function randomOpen() {
     setRandomShow(true);
     handleRecommendation();
+    setTimeout(() => {
+      setRandomShow(false);
+    }, 6800);
   }
 
   const UI = {
