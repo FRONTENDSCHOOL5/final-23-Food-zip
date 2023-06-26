@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Rating } from "react-simple-star-rating";
 import RecommendImgPrev from "../../components/Post/ImgPrev/RecommendImgPrev";
 import StarRating from "../../components/Post/StarRating/StarRating";
 import Header from "../../components/common/Header/Header";
@@ -52,15 +51,12 @@ export default function MakeRecommend() {
 
   const handleRatingChange = rate => {
     setRating(rate);
-    // Perform any other actions with the rating value
   };
   const handleImageUrlChange = (file, url) => {
     setImgFile(file);
-    // const fileUrl = URL.createObjectURL(file);
     setImgUrl(url);
   };
-  console.log(imgFile);
-  const uploadPost = async (url, content) => {
+  const uploadPost = async () => {
     try {
       const formData = new FormData();
       formData.append("image", imgFile);
@@ -76,7 +72,7 @@ export default function MakeRecommend() {
       const imageUrl =
         "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
 
-      const postResponse = await axios.post(
+      await axios.post(
         "https://api.mandarin.weniv.co.kr/product",
         {
           product: {
@@ -93,8 +89,6 @@ export default function MakeRecommend() {
           },
         },
       );
-
-      console.log(postResponse);
       navigate("/myprofile");
     } catch (error) {
       console.error(error);

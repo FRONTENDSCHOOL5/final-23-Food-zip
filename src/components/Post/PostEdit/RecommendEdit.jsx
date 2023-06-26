@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
-import Header from "../../common/Header/Header";
+import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
@@ -27,7 +26,6 @@ const ProductImage = styled.img`
   display: block;
   width: 100%;
   height: 180px;
-  /* width: 250px; */
   border-radius: 10px;
   margin-bottom: 30px;
 `;
@@ -74,7 +72,6 @@ export default function RecommendEdit({ closeModal, productId }) {
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState({});
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 게시물 정보 가져오기
     fetchProductInfo();
   }, []);
 
@@ -100,8 +97,6 @@ export default function RecommendEdit({ closeModal, productId }) {
   };
   console.log(productInfo);
   const recommendEditUpload = async () => {
-    console.log();
-    // event.preventDefault();
     try {
       const res = await axios.put(
         `https://api.mandarin.weniv.co.kr/product/${productId}`,
@@ -122,7 +117,6 @@ export default function RecommendEdit({ closeModal, productId }) {
       );
       const updatedProduct = res.data.product;
       setProductInfo(updatedProduct);
-      console.log("새 게시물", productInfo);
       closeModal();
     } catch (error) {
       console.error(error);
@@ -158,7 +152,6 @@ export default function RecommendEdit({ closeModal, productId }) {
               width="ms"
               bgColor="active"
               onClick={handleUpload}
-              // onClick={closeModal}
             ></Button>
           </HeaderLayoutDiv>
           {productInfo.itemImage !== "" && (

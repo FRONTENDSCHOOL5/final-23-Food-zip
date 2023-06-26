@@ -120,7 +120,7 @@ export default function PostItem({
         return false;
       }
       if (post.hearted) {
-        const res = await axios.delete(
+        await axios.delete(
           `https://api.mandarin.weniv.co.kr/post/${post.id}/unheart`,
           {
             headers: {
@@ -130,7 +130,7 @@ export default function PostItem({
           },
         );
       } else {
-        const res = await axios.post(
+        await axios.post(
           `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
           {},
           {
@@ -153,11 +153,10 @@ export default function PostItem({
     try {
       const post = otherInfo.find(post => post.id === postId);
       if (!post) {
-        console.error("Post not found");
         return false;
       }
       if (post.hearted) {
-        const res = await axios.delete(
+        await axios.delete(
           `https://api.mandarin.weniv.co.kr/post/${post.id}/unheart`,
           {
             headers: {
@@ -167,7 +166,7 @@ export default function PostItem({
           },
         );
       } else {
-        const res = await axios.post(
+        await axios.post(
           `https://api.mandarin.weniv.co.kr/post/${post.id}/heart`,
           {},
           {

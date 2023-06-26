@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import PostItem from "../PostItem/PostItem";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
 import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
-import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import PostItem from "../PostItem/PostItem";
 import Modal from "../../Modal/Modal";
 import PostEdit from "../PostEdit/PostEdit";
 
@@ -101,20 +101,6 @@ export default function PostList({ post, modalOpen }) {
           "Content-type": "application/json",
         },
       });
-
-      // 이미지 3장 기능
-      // const { username, image } = res.data.post.author;
-      // setUserInfo({
-      //   username,
-      //   image,
-      // });
-      // const postImages = posts.map(item => item.image.split(","));
-      // const combinedInfo = posts.map((item, index) => ({
-      //   ...item,
-      //   images: postImages[index],
-      // }));
-      // setPostInfo(combinedInfo);
-
       const posts = res.data.post;
       if (posts.length === 0) {
         setHasPosts(false);

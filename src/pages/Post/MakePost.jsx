@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PostImgPrev from "../../components/Post/ImgPrev/PostImgPrev";
 import Header from "../../components/common/Header/Header";
@@ -43,10 +43,8 @@ export default function MakePost() {
     setImgFile(file);
     setImgUrl(url);
   };
-  console.log(imgFile);
   const uploadPost = async (url, content) => {
     try {
-      console.log("게시물 작성", imgFile);
       const formData = new FormData();
       formData.append("image", imgFile);
       const uploadResponse = await axios.post(
@@ -63,8 +61,7 @@ export default function MakePost() {
         imageUrl =
           "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
       }
-      console.log("upload:", content, imageUrl);
-      const postResponse = await axios.post(
+      await axios.post(
         "https://api.mandarin.weniv.co.kr/post",
         {
           post: {
@@ -85,7 +82,6 @@ export default function MakePost() {
       navigate("/error");
     }
   };
-
   const handleUpload = () => {
     if (isValid) {
       uploadPost(imgUrl, content);
@@ -93,7 +89,6 @@ export default function MakePost() {
       alert("게시글이 작성되지 않았습니다.");
     }
   };
-  // console.log("postUrl:", imageUrls);
   const checkContent = () => {
     if (!content || content.trim().length === 0) {
       if (imgUrl) {

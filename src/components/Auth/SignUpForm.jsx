@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { ButtonStyle } from "../common/Button/Button";
@@ -59,7 +59,7 @@ const SignUpForm = ({ onSubmit }) => {
     clearErrors,
     setError,
     getValues,
-    formState: { errors, isValid }, // Added isValid from formState
+    formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -68,14 +68,12 @@ const SignUpForm = ({ onSubmit }) => {
       passwordConfirm: null,
     },
   });
-  const [email, setEmail] = useState("");
-  const [emailValid, setEmailValid] = useState(false);
+
   const navigate = useNavigate();
   const [abledBtn, setAbledBtn] = useState(true);
 
   const handleFormSubmit = async data => {
     const isValidEmail = await checkEmailValid(data.email);
-    console.log("check", isValidEmail);
     if (isValidEmail) {
       navigate("/signup/profile", {
         state: {
@@ -83,9 +81,6 @@ const SignUpForm = ({ onSubmit }) => {
           password: data.password,
         },
       });
-    } else {
-      // Handle invalid email case
-      console.log("Invalid email");
     }
   };
 
@@ -105,7 +100,6 @@ const SignUpForm = ({ onSubmit }) => {
         },
       );
       const reqMsg = res.data.message;
-      console.log(reqMsg === "이미 가입된 이메일 주소 입니다.");
       clearErrors("email");
       if (reqMsg === "이미 가입된 이메일 주소 입니다.") {
         setError("email", {
@@ -122,15 +116,9 @@ const SignUpForm = ({ onSubmit }) => {
       return false;
     }
   };
-
   useEffect(() => {
-    // Check if form is valid and set abledBtn state accordingly
     setAbledBtn(isValid);
   }, [isValid, setAbledBtn]);
-
-  const handleEmailChange = e => {
-    setEmail(e.target.value);
-  };
 
   return (
     <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
@@ -148,7 +136,6 @@ const SignUpForm = ({ onSubmit }) => {
               message: "유효한 이메일 주소를 입력하세요.",
             },
           })}
-          // onChange={handleEmailChange}
         />
         {errors.email && (
           <StyledError role="alert">{errors.email.message}</StyledError>
