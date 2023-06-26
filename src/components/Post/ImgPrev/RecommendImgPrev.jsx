@@ -34,8 +34,8 @@ const ImgWrapper = styled.div`
   height: 204px;
 `;
 const defaultIconPosition = `
-  bottom: 40px;
-  right: 0px;
+  bottom: 44px;
+  right: -4px;
 `;
 const RecommendIconWrapper = styled.label`
   display: inline-block;
@@ -44,8 +44,8 @@ const RecommendIconWrapper = styled.label`
   ${props => props.wrapperStyle || defaultIconPosition}
 `;
 const defaultIconStyle = `
-  width: 80%;
-  height: 80%;
+  width: 75%;
+  height: 75%;
 `;
 const RecommendImgIcon = styled.img`
   object-fit: contain;

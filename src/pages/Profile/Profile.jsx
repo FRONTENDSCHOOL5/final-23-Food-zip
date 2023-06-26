@@ -12,6 +12,8 @@ import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import RandomRecommend from "../../components/RandomRecommend/RandomRecommend";
+
 const Container = styled.div`
   max-width: 390px;
   margin: 0 auto;
@@ -64,6 +66,7 @@ export default function Profile({ type }) {
       setCardClosed(false);
     }
   }, [cardClosed]);
+
   return (
     <Container>
       <Header type="profile" modalOpen={() => modalOpen("setting")} />
