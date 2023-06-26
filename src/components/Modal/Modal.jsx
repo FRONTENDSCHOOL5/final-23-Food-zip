@@ -77,9 +77,9 @@ export default function Modal({
   }
   console.log("console", restaurantName);
 
-  function alertOpen(type) {
+  function alertOpen(customType) {
     setAlertShow(true);
-    setAlertType(type);
+    setAlertType(customType || type);
   }
 
   function handlerOpenMap() {
@@ -90,7 +90,7 @@ export default function Modal({
       },
     });
   }
-
+  console.log("정보", postId, commentId);
   console.log("product:", productId);
   const UI = {
     setting: (
@@ -132,7 +132,9 @@ export default function Modal({
     report: (
       <ModalWrapDiv>
         <ModalLineSpan />
-        <ModalTextBtn onClick={() => alertOpen("report")}>
+        <ModalTextBtn
+          onClick={() => alertOpen(commentId ? "commentReport" : "postReport")}
+        >
           신고하기
         </ModalTextBtn>
       </ModalWrapDiv>
