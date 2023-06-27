@@ -28,10 +28,9 @@
     "eject": "react-scripts eject",
     "serve": "serve -s build",
     "build-and-serve": "npm run build && npm run serve",
-    "deploy": "gh-pages -d build",
-    "predeploy": "npm run build"
+    "deploy": "npm run build"
   },
-  "homepage": "https://foodzip.netlify.app/",
+  // "homepage": "https://foodzip.netlify.app/",
   "eslintConfig": {
     "extends": [
       "react-app",
