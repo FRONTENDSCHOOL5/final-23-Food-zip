@@ -1,5 +1,5 @@
 # 어?금지
-
+![Frame 15](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/120389195/e80e09c4-cba9-4dcd-8840-63770218781e)
 ## ✨ 어? 금지의 조원 소개
 
  <table>
@@ -77,8 +77,6 @@
       │  ├─ Profile
       │  ├─ Search
       │  └─ styles
-      ├─ dummy
-      ├─ index.js
       ├─ pages
       │  ├─ AuthorPage
       │  │  ├─ Login
