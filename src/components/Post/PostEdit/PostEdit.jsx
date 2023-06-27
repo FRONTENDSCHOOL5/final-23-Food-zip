@@ -52,12 +52,10 @@ const PostContent = styled.textarea`
   }
   width: 100%;
   margin-top: -17px;
-  /* ${props => (props.hasImage ? "17px" : "")}; */
   line-height: 20px;
   padding: 0;
 `;
 export default function PostEdit({ closeModal, postId }) {
-  console.log("edit", postId);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [postInfo, setPostInfo] = useState({});
@@ -161,11 +159,8 @@ export default function PostEdit({ closeModal, postId }) {
               onClick={handleUpload}
             ></Button>
           </HeaderLayoutDiv>
-          {/* {postInfo.image !== "" && (
-            <PostImage src={postInfo.image} alt="게시물 사진" />
-          )} */}
           <RecommendImgPrev
-            onRecommendImageUrlChange={imageUrl =>
+            onRecommendImageUrlChange={(file, imageUrl) =>
               setPostInfo({ ...postInfo, image: imageUrl })
             }
             hasImage={postInfo.image !== ""}
