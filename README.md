@@ -76,13 +76,14 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 ## 👨‍👩‍👧‍👧 협업 툴
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">  <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">  <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 ## 📄 페이지 소개
-// 회원가입
-
-<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/8649ee1f-a826-4401-bfcd-650affaccbc9" width="250"/>
-
-// 로그인
+|스플래시|회원가입|
+|:----:|:----:|
+|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/5faf3b1d-28e0-437b-b3a7-e37ff4c0d056" width="250"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/8649ee1f-a826-4401-bfcd-650affaccbc9" width="250"/>|
+|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 앱 시작화면<br>- 자동 로그인 시 홈 피드로 이동<br>- 로그인 안 한 경우 웰컴 페이지 이동<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|<pre>- 이메일, 비밀번호 유효성 검사<br>         - 유효성 검사 통과 시 버튼 활성화         </pre>|
 
 <img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/4e60dada-ad37-45f2-b748-7d29a5ea0ed9" width="250"/>
+
+
 
 // 팔로우
 
