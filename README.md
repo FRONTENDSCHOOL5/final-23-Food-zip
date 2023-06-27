@@ -77,21 +77,37 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">  <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">  <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 ## 📄 페이지 소개
 // 회원가입
+
 <img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/8649ee1f-a826-4401-bfcd-650affaccbc9" width="250"/>
 
 // 로그인
+
 <img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/4e60dada-ad37-45f2-b748-7d29a5ea0ed9" width="250"/>
 
 // 팔로우
 
 // splash
+
 <img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/5faf3b1d-28e0-437b-b3a7-e37ff4c0d056" width="250"/>
 
 // search
+
 <img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/b2502b6a-b237-421c-8089-a3502f0348e0" width="250"/>
 
 // 채팅
+
 <img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/3c67bf0a-3641-436f-8625-5910d79697a2" width="250"/>
+
+// 게시글 등록, 수정
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/5174f33b-6cea-4c45-bb3f-b9bfafb8fcae" width="250"/>
+
+// 땡겨요
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/cc3164b2-8a44-4a49-af7a-4b0d920ed007" width="250"/>
+
+// 댓글, 좋아요
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/0e31fcf0-26a5-4ffb-834d-05109105d201" width="250"/>
+
+
 ## 📌 주요 기능 소개
 ## 🗂️ 폴더 구조
 
