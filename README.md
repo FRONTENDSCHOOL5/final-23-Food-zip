@@ -6,7 +6,7 @@
 ## 🖥 프로젝트 소개
 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 이들을 위한 푸짐하고 맛있는 식당 공유 커뮤니티
 #### 개발 기간
-
+![image](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/120389195/2d2bbbca-f780-4502-9802-2132de5450bf)
 ## 🧑‍🤝‍🧑 어? 금지의 조원 소개
  <table>
    <tr>
