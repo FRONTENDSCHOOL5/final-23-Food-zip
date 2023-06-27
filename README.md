@@ -58,12 +58,13 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 </table>
 
 ### 역할 분담
+![image](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/120389195/9fa53d1f-8571-4de9-a39f-b0abbd3eb6c6)
 ### 팀 문화
 - <strong>투명한 정보 공유</strong> : 협업에 있어 서로의 작업에 대한 이해를 깊게 합니다.
   
 - <strong>신속한 의견 조율</strong> : 실행 속도와 책임감이 높아집니다.
   
-- <strong>진입장벽 낮추기</strong> : 이를 바탕으로 팀 간의 진입장벽을 낮추고, 팀원 모두가 프로젝트에 적극적으로 참여 하는 환경을 만들었습니다.
+- <strong>진입장벽 낮추기</strong> : 팀 간의 진입장벽을 낮추고, 팀원 모두가 프로젝트에 적극적으로 참여 하는 환경을 만들었습니다.
   
 - <strong>건강한 팀 분위기</strong> : 원활한 의사소통을 통해 상호 신뢰를 쌓아갑니다. 결과적으로 모든 팀원이 프로젝트를 적극적으로 참여하는 분위기를 조성했습니다.
   
@@ -76,6 +77,38 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 ## 👨‍👩‍👧‍👧 협업 툴
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">  <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">  <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 ## 📄 페이지 소개
+// 회원가입
+
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/8649ee1f-a826-4401-bfcd-650affaccbc9" width="250"/>
+
+// 로그인
+
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/4e60dada-ad37-45f2-b748-7d29a5ea0ed9" width="250"/>
+
+// 팔로우
+
+// splash
+
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/5faf3b1d-28e0-437b-b3a7-e37ff4c0d056" width="250"/>
+
+// search
+
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/b2502b6a-b237-421c-8089-a3502f0348e0" width="250"/>
+
+// 채팅
+
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/3c67bf0a-3641-436f-8625-5910d79697a2" width="250"/>
+
+// 게시글 등록, 수정
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/5174f33b-6cea-4c45-bb3f-b9bfafb8fcae" width="250"/>
+
+// 땡겨요
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/cc3164b2-8a44-4a49-af7a-4b0d920ed007" width="250"/>
+
+// 댓글, 좋아요
+<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/0e31fcf0-26a5-4ffb-834d-05109105d201" width="250"/>
+
+
 ## 📌 주요 기능 소개
 ## 🗂️ 폴더 구조
 
