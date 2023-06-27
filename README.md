@@ -129,7 +129,7 @@ const {
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      // 초기값값
+      // 초기값
     },
   });
 ```
