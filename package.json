@@ -29,9 +29,9 @@
     "serve": "serve -s build",
     "build-and-serve": "npm run build && npm run serve",
     "deploy": "gh-pages -d build",
-    "predeploy" : "npm run build"
+    "predeploy": "npm run build"
   },
-  "homepage": "https://frontendschool5.github.io/final-23-Food-zip/",
+  "homepage": "foodzip.netlify.app",
   "eslintConfig": {
     "extends": [
       "react-app",
