@@ -30,7 +30,6 @@
     "build-and-serve": "npm run build && npm run serve",
     "deploy": "npm run build"
   },
-  // "homepage": "https://foodzip.netlify.app/",
   "eslintConfig": {
     "extends": [
       "react-app",
