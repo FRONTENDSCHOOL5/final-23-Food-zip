@@ -179,7 +179,7 @@ const {
 
 | 코드 | 설명 |
 |------|--------|
-| `useEffect` 및 `useDebounce` | 해당 코드는 `useEffect`와 `useDebounce`를 사용하여 검색 키워드가 업데이트될 때마다 검색 API를 호출하고 결과를 필터링하여 작성된 코드입니다. `useDebounce`는 검색 키워드에 대한 짧은 지연 시간을 추가하여 빠른 검색을 방지하고, `useEffect`는 디바운스된 키워드가 변경될 때마다 결과 목록을 업데이트합니다. |
+| `useEffect` 및 `useDebounce` | 해당 코드는 `useEffect`와 `useDebounce`를 사용하여 검색 키워드가 업데이트될 때마다 검색 API를 호출하고 결과를 필터링하여 작성된 코드입니다. `useDebounce`는 일정 시간 동안의 입력이 멈춘 후 API 요청이 될 수 있도록 제어해 불필요한 API 호출을 방지합니다., `useEffect`는 디바운스된 키워드가 변경될 때마다 결과 목록을 업데이트합니다. 추가로 조건에 따라 데이터를 걸러내어 불필요한 이미지 로딩과 처리시간을 줄일수 있게 설계했습니다.|
 ```jsx
   const [debouncedSearchKeyword] = useDebounce(searchKeyword, 300);
 
@@ -200,6 +200,33 @@ const {
 ...
     fetchData();
   }, [debouncedSearchKeyword]);
+```
+| 코드 | 설명 |
+|------|--------|
+| `elapsedTime` 함수 | 댓글이 작성된 시간과 현재 시간 사이의 경과 시간을 계산하여 문자열로 반환합니다. 경과 시간은 년, 개월, 일, 시간, 분 등의 단위로 표현되며, 가장 큰 단위부터 계산됩니다. |
+```jsx
+const elapsedTime = commentDate => {
+    const now = new Date();
+    const commentTime = new Date(commentDate);
+    const elapsedSeconds = Math.floor((now - commentTime) / 1000);
+
+    const times = [
+      { name: "년", seconds: 60 * 60 * 24 * 365 },
+      { name: "개월", seconds: 60 * 60 * 24 * 30 },
+      { name: "일", seconds: 60 * 60 * 24 },
+      { name: "시간", seconds: 60 * 60 },
+      { name: "분", seconds: 60 },
+    ];
+
+    for (const value of times) {
+      const elapsed = Math.floor(elapsedSeconds / value.seconds);
+
+      if (elapsed > 0) {
+        return `${elapsed}${value.name} 전`;
+      }
+    }
+    return "방금 전";
+  };
 ```
 | 코드 | 설명 |
 |------|--------|
@@ -304,33 +331,7 @@ const options = {
     return file;
   };
 ```
-| 코드 | 설명 |
-|------|--------|
-| `elapsedTime` 함수 | 댓글이 작성된 시간과 현재 시간 사이의 경과 시간을 계산하여 문자열로 반환합니다. 경과 시간은 년, 개월, 일, 시간, 분 등의 단위로 표현되며, 가장 큰 단위부터 계산됩니다. |
-```jsx
-const elapsedTime = commentDate => {
-    const now = new Date();
-    const commentTime = new Date(commentDate);
-    const elapsedSeconds = Math.floor((now - commentTime) / 1000);
 
-    const times = [
-      { name: "년", seconds: 60 * 60 * 24 * 365 },
-      { name: "개월", seconds: 60 * 60 * 24 * 30 },
-      { name: "일", seconds: 60 * 60 * 24 },
-      { name: "시간", seconds: 60 * 60 },
-      { name: "분", seconds: 60 },
-    ];
-
-    for (const value of times) {
-      const elapsed = Math.floor(elapsedSeconds / value.seconds);
-
-      if (elapsed > 0) {
-        return `${elapsed}${value.name} 전`;
-      }
-    }
-    return "방금 전";
-  };
-```
 
 
 ## 🗂️ 폴더 구조
