@@ -31,7 +31,7 @@
     "deploy": "gh-pages -d build",
     "predeploy": "npm run build"
   },
-  "homepage": "foodzip.netlify.app",
+  "homepage": "https://foodzip.netlify.app/",
   "eslintConfig": {
     "extends": [
       "react-app",
