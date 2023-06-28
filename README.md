@@ -197,7 +197,7 @@ const {
 
 | 코드 | 설명 |
 |------|--------|
-| `useEffect` <br> `useDebounce` | 다음은 `useEffect`와 `useDebounce`를 사용하여 검색 키워드가 업데이트될 때마다 검색 API를 호출하고 결과를 필터링하는 코드다.<br> `useDebounce`는 일정 시간 동안의 입력이 멈춘 후 API 요청이 될 수 있도록 제어해 불필요한 API 호출을 방지합니다.<br> `useEffect`는 디바운스된 키워드가 변경될 때마다 결과 목록을 업데이트합니다. 추가로 조건에 따라 데이터를 걸러내어 불필요한 이미지 로딩과 처리시간을 줄일수 있게 설계했습니다.|
+| `useEffect` <br> `useDebounce` | 다음은 `useEffect`와 `useDebounce`를 사용하여 검색 키워드가 업데이트될 때마다 검색 API를 호출하고 결과를 필터링하는 코드입니다.<br> `useDebounce`는 일정 시간 동안의 입력이 멈춘 후 API 요청이 될 수 있도록 제어해 불필요한 API 호출을 방지합니다.<br> `useEffect`는 디바운스된 키워드가 변경될 때마다 결과 목록을 업데이트합니다. 추가로 조건에 따라 데이터를 걸러내어 불필요한 이미지 로딩과 처리시간을 줄일수 있게 설계했습니다.|
 ```jsx
   const [debouncedSearchKeyword] = useDebounce(searchKeyword, 300);
 
