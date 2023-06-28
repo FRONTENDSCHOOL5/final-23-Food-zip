@@ -109,6 +109,226 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 
 
 ## 📌 주요 기능 소개
+| 코드 | 설명 |
+|------|--------|
+| `import useForm` | react-hook-form 라이브러리 사용을 위해 `useForm`을 가져옵니다. |
+| `useForm` 활용 | useForm 훅을 호출하여 필요한 메소드와 속성을 추출합니다. 이 통해 입력, 제출, 오류 및 유효성을 처리하기 위한 작업을 수행할 수 있습니다. `mode: "onChange"`를 사용하여 입력 값의 변화를 감지하면서 동시에 유효성 검사를 실행합니다. |
+| `setError` | 폼 컨트롤의 오류 상태를 수동으로 설정 또는 변경할 수 있는 함수입니다.<br> `name`: 오류 상태를 설정하려는 폼 컨트롤의 이름.<br> `type`: 오류 유형(예: "required", "pattern", "custom" 등).<br> `message`: 사용자에게 표시할 오류 메시지. |
+| 이메일 입력 폼 | Register를 통해 value를 제어하고 required와 pattern 을 통해 API 유효성 검사 이전에 패턴 유효성검사를 진행합니다. |
+| `validate` | `pattern`은 형식을 검증하고 `validate`는 조건을 검증합다 |
+```jsx
+import { useForm } from "react-hook-form";
+
+const {
+    register,
+    handleSubmit,
+    clearErrors,
+    setError,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      // 초기값
+    },
+  });
+```
+```jsx
+  const checkEmailValid = async email => {
+    try {
+      const res = await axios.post(
+
+      // 이메일 Validation API
+
+      const reqMsg = res.data.message;
+      clearErrors("email");
+      if (reqMsg === "이미 가입된 이메일 주소 입니다.") {
+        setError("email", {
+          type: "manual",
+          message: "이미 가입된 이메일 주소 입니다.",
+        });
+        return false;
+      } else {
+        clearErrors("email");
+        return true;
+```
+```jsx
+  return (
+    <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
+      <StyledInputContainer>
+        <StyledLabel htmlFor="email">이메일</StyledLabel>
+        <StyledInput
+          {...register("email", {
+            required: "이메일은 필수 입력입니다.",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "유효한 이메일 주소를 입력하세요.",
+            },
+          })}
+        />
+        {errors.email && (
+          <StyledError role="alert">{errors.email.message}</StyledError>
+        )}
+      </StyledInputContainer>
+      // 이메일 부분과 동일
+            validate: {
+              matchesPreviousPassword: value => {
+                const { password } = getValues();
+                return password === value || "비밀번호가 일치하지 않습니다.";
+```
+
+| 코드 | 설명 |
+|------|--------|
+| `useEffect` 및 `useDebounce` | 해당 코드는 `useEffect`와 `useDebounce`를 사용하여 검색 키워드가 업데이트될 때마다 검색 API를 호출하고 결과를 필터링하여 작성된 코드입니다.<br> `useDebounce`는 일정 시간 동안의 입력이 멈춘 후 API 요청이 될 수 있도록 제어해 불필요한 API 호출을 방지합니다.<br> `useEffect`는 디바운스된 키워드가 변경될 때마다 결과 목록을 업데이트합니다. 추가로 조건에 따라 데이터를 걸러내어 불필요한 이미지 로딩과 처리시간을 줄일수 있게 설계했습니다.|
+```jsx
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 300);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!debouncedSearchKeyword) {
+        return;
+      } else {
+
+        // 검색 API 코드 부분
+
+          const filteredData = response.data.filter(
+            item => !item.image.startsWith("https://mandarin.api.weniv"),
+          );
+          setSearchListData(filteredData);
+        } 
+    };
+...
+    fetchData();
+  }, [debouncedSearchKeyword]);
+```
+| 코드 | 설명 |
+|------|--------|
+| `elapsedTime`  | 댓글이 작성된 시간과 현재 시간 사이의 경과 시간을 계산하여 문자열로 반환합니다. 경과 시간은 년, 개월, 일, 시간, 분 등의 단위로 표현되며, 가장 큰 단위부터 계산됩니다. |
+```jsx
+const elapsedTime = commentDate => {
+    const now = new Date();
+    const commentTime = new Date(commentDate);
+    const elapsedSeconds = Math.floor((now - commentTime) / 1000);
+
+    const times = [
+      { name: "년", seconds: 60 * 60 * 24 * 365 },
+      { name: "개월", seconds: 60 * 60 * 24 * 30 },
+      { name: "일", seconds: 60 * 60 * 24 },
+      { name: "시간", seconds: 60 * 60 },
+      { name: "분", seconds: 60 },
+    ];
+
+    for (const value of times) {
+      const elapsed = Math.floor(elapsedSeconds / value.seconds);
+
+      if (elapsed > 0) {
+        return `${elapsed}${value.name} 전`;
+      }
+    }
+    return "방금 전";
+  };
+```
+| 코드 | 설명 |
+|------|--------|
+| `const { kakao } = window;` | 카카오 API에서 제공하는 기능들을 사용할 수 있도록 구현된 객체입니다.|
+| `useState` 및 `useEffect` | Map 컴포넌트를 초기화하고, 사용자 위도, 경도에 따라 지도 마커를 표시하도록 설정합니다. 이를 위해 `useState`와 `useEffect`를 사용하여 상태를 유지하고 컴포넌트 라이프 사이클에 맞추어 동작합니다. |
+| 검색 지도 마커 생성 | 검색된 위치의 마커와 오버레이를 생성하고 관련 클릭 이벤트를 처리합니다. |
+```jsx
+const { kakao } = window;
+
+const MapTest = () => {
+  const [place, setPlace] = useState("");
+  const [map, setMap] = useState(null);
+  const location = useLocation();
+  const data = location.state;
+  const recommendName = data.restaurantname;
+
+  useEffect(() => {
+    let container = document.getElementById("map");
+    let options = { center: new kakao.maps.LatLng(37.5045, 127.049) };
+    let kakaoMap = new kakao.maps.Map(container, options);
+    setMap(kakaoMap);
+  }, []);
+  useEffect(() => {
+    if (map && recommendName) {
+      const ps = new kakao.maps.services.Places();
+      ps.keywordSearch(recommendName, placesSearchCB);
+      function placesSearchCB(data, status, pagination) {
+        if (status === kakao.maps.services.Status.OK) {
+          let bounds = new kakao.maps.LatLngBounds();
+          for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+          map.setBounds(bounds);
+        }
+      }
+      function displayMarker(place) {
+        const imageSize = new kakao.maps.Size(45, 45);
+        const imageSrc = Marker;
+        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+        let marker = new kakao.maps.Marker({
+          // 마커 커스텀
+        });
+        let content =
+          // 지도 Overlay 커스텀
+        setPlace(place.road_address_name);
+        let customOverlay = new kakao.maps.CustomOverlay({
+          position: new kakao.maps.LatLng(place.y, place.x),
+          content: content,
+          yAnchor: 1,
+        });
+
+        kakao.maps.event.addListener(marker, "click", function () {
+          customOverlay.setMap(map);
+        });
+      }
+    }
+  }, [recommendName, map]);
+```
+| 코드 | 설명 |
+|------|--------|
+| `options` | 이미지 압축에 사용되는 옵션을 설정합니다. 이미지 최대 크기, 최대 너비 또는 높이, 웹 작업자 사용 여부를 설정할 수 있습니다. |
+| 이미지 압축 및 변환 | 선택한 파일을 압축하고 이를 미리보기로 표시하며, 데이터 URL로 변환한 후, 이미지를 핸들링하는데 필요한 업로드 함수를 호출합니다. |
+| `formDataHandler` | base64 데이터 URI를 blob으로 변환하고, 이를 다시 File 객체로 변환하는 함수입니다. |
+```jsx
+const options = {
+      maxSizeMB: 0.7,
+      maxWidthOrHeight: 500,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(file, options);
+      setBoardImage(compressedFile);
+      const promise = imageCompression.getDataUrlFromFile(compressedFile);
+      promise.then(result => {
+        setUploadPreview(result);
+      });
+      const reader = new FileReader();
+      reader.readAsDataURL(compressedFile);
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        const imageUrl = formDataHandler(base64data);
+        onImageUrlChange(file, imageUrl);
+        setImgUrl(imageUrl);
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const formDataHandler = async dataURI => {
+    const byteString = atob(dataURI.split(",")[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([ab], { type: "image/jpeg" });
+    const file = new File([blob], "image.jpg", { type: "image/jpeg" });
+    return file;
+  };
+```
+
 ## 🗂️ 폴더 구조
 
 ```
