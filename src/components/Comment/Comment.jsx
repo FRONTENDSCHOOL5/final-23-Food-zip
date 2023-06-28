@@ -64,6 +64,7 @@ const CommentContent = styled.p`
   text-align: left;
   margin: 10px 0;
   word-break: break-all;
+  width: 290px;
 `;
 
 export default function Comment({ commentList, postId }) {
