@@ -58,7 +58,8 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 </table>
 
 ### 역할 분담
-![image](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/120389195/8a8b107b-a06a-4969-80f3-7aef526e0632)
+![Group 2278](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/bd5e9afa-2f91-488c-b33b-57ebf3e00bea)
+
 ### 팀 문화
 - <strong>투명한 정보 공유</strong> : 협업에 있어 서로의 작업에 대한 이해를 깊게 합니다.
   
