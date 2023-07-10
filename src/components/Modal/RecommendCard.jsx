@@ -18,7 +18,7 @@ const RecommendDiv = styled.div`
   max-width: 390px;
 `;
 
-const RecommendCardDiv = styled.div`
+const RecommendCardArticle = styled.article`
   width: 304px;
   background-color: white;
   border-radius: 10px;
@@ -36,12 +36,12 @@ const RecommendListImg = styled.img`
   border-radius: 8px 8px 0 0;
 `;
 
-const RecommendTextDiv = styled.div`
+const RecommendTextSection = styled.section`
   padding: 13px;
   position: relative;
 `;
 
-const RecommendNameP = styled.p`
+const RecommendName = styled.h3`
   font-size: 17px;
   margin-bottom: 13px;
   font-weight: 600;
@@ -158,13 +158,14 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
   }, [shouldFetchProductInfo]);
   return (
     <RecommendDiv>
-      <RecommendCardDiv>
+      <RecommendCardArticle>
+        <h2 className="a11y-hidden">추천 맛집</h2>
         <RecommendListImg src={recommendInfo.itemImage} alt="" />
-        <RecommendTextDiv>
-          <RecommendNameP>
+        <RecommendTextSection>
+          <RecommendName>
             {recommendInfo.itemName}
             <RecommendScoreSpan>{recommendInfo.price}.0</RecommendScoreSpan>
-          </RecommendNameP>
+          </RecommendName>
           <RecommendLocationP>{recommendInfo.link}</RecommendLocationP>
           <RecommendMoreBtn type="button" onClick={modalOpen}>
             <img src={IconMoreVertical} alt="더보기 아이콘" />
@@ -172,8 +173,8 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
           <RecommendCloseBtn type="button" onClick={cardClose}>
             &#60; 닫기
           </RecommendCloseBtn>
-        </RecommendTextDiv>
-      </RecommendCardDiv>
+        </RecommendTextSection>
+      </RecommendCardArticle>
       {modalShow && (
         <Modal
           type={!accountname ? "product" : "yourproduct"}
