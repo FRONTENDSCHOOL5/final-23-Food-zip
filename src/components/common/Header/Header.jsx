@@ -28,7 +28,7 @@ const HeaderLayoutDiv = styled.div`
   background-color: white;
 `;
 
-const HeaderTitleP = styled.p`
+const HeaderTitleH = styled.h1`
   font-size: 18px;
   font-weight: 600;
 `;
@@ -116,7 +116,7 @@ export default function Header({
   const UI = {
     home: (
       <HeaderLayoutDiv>
-        <HeaderTitleP>FOODZIP</HeaderTitleP>
+        <HeaderTitleH>FOODZIP</HeaderTitleH>
         <HeaderLogoBtn type="button" onClick={randomOpen} />
         <HeaderRightBtn type="button">
           <img src={IconSearch} alt="돋보기 아이콘" onClick={handleClick} />

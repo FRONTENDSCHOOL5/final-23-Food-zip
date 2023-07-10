@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { Context } from "./RandomRecommendContext";
 
@@ -32,7 +32,7 @@ const slideDown = keyframes`
     }
   `;
 
-const RandomDiv = styled.div`
+const RandomSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,12 +43,7 @@ const RandomDiv = styled.div`
   animation: ${slideDown} 8s ease;
 `;
 
-const RandomP = styled.div`
-  margin: 0 10px;
-  padding: 5px 10px;
-  height: 100px;
-  line-height: 100px;
-  border-radius: 5px;
+const RandomText = styled.p`
   animation-duration: 0.1s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -64,13 +59,13 @@ export default function RandomRecommend({ randomClose }) {
     useContext(Context);
   return (
     <ModalTopDiv onClick={randomClose}>
-      <RandomDiv isAnimationActive={isAnimationActive}>
-        <RandomP>
+      <RandomSection isAnimationActive={isAnimationActive}>
+        <RandomText>
           {isAnimationActive
             ? `${randomFood} 땡겨요`
             : foodName[randomFood] && `${foodName[randomFood]} 땡겨요`}
-        </RandomP>
-      </RandomDiv>
+        </RandomText>
+      </RandomSection>
     </ModalTopDiv>
   );
 }
