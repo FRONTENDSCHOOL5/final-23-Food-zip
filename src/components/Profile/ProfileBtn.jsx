@@ -13,7 +13,7 @@ const FlexCommon = css`
   align-items: center;
 `;
 
-const InformationBottomDiv = styled.div`
+const InformationBottomSection = styled.section`
   ${FlexCommon};
   padding-bottom: 26px;
   border-bottom: 1px solid #dbdbdb;
@@ -103,7 +103,7 @@ export default function ProfileBtn({
   const UI = {
     your: (
       <>
-        <InformationBottomDiv>
+        <InformationBottomSection>
           <ImgCircleBtn type="button" onClick={() => moveChat(yourAccountname)}>
             <img src={IconMessage} alt="메시지 아이콘" />
           </ImgCircleBtn>
@@ -133,12 +133,12 @@ export default function ProfileBtn({
           <ImgCircleBtn>
             <img src={IconShare} alt="공유 아이콘" />
           </ImgCircleBtn>
-        </InformationBottomDiv>
+        </InformationBottomSection>
       </>
     ),
 
     my: (
-      <InformationBottomDiv>
+      <InformationBottomSection>
         <Button
           type="button"
           content="프로필 수정"
@@ -157,7 +157,7 @@ export default function ProfileBtn({
         >
           맛집 등록
         </AddBtn>
-      </InformationBottomDiv>
+      </InformationBottomSection>
     ),
   };
 

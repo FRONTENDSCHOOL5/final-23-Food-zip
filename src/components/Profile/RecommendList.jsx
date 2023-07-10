@@ -4,7 +4,7 @@ import ImgStar from "../../assets/images/star.svg";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const RecommendWrapDiv = styled.div`
+const RecommendWrap = styled.section`
   width: 100%;
   padding: 20px 16px 8px;
   overflow: auto;
@@ -22,7 +22,7 @@ const RecommendWrapDiv = styled.div`
   }
 `;
 
-const RecommendTitleP = styled.p`
+const RecommendTitle = styled.h2`
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 16px;
@@ -117,8 +117,8 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
   }
 
   return (
-    <RecommendWrapDiv>
-      <RecommendTitleP>추천 맛집</RecommendTitleP>
+    <RecommendWrap>
+      <RecommendTitle>추천 맛집</RecommendTitle>
       <RecommendListUl>
         {recommendInfo.map(recommendation => (
           <li
@@ -134,6 +134,6 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
           </li>
         ))}
       </RecommendListUl>
-    </RecommendWrapDiv>
+    </RecommendWrap>
   );
 }

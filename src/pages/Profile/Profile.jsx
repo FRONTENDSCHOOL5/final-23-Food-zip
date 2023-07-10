@@ -64,15 +64,21 @@ export default function Profile({ type }) {
   return (
     <Container>
       <Header type="profile" modalOpen={() => modalOpen("setting")} />
-      <ProfileInformation type={type} />
-      <RecommendList cardOpen={cardOpen} cardClosed={cardClosed} />
-      <PostList />
-      {modalShow && (
-        <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
-      )}
-      {alertShow && <Alert type="logout" alertClose={alertClose} />}
-      {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
-      <Navigation />
+      <main>
+        <ProfileInformation type={type} />
+        <RecommendList cardOpen={cardOpen} cardClosed={cardClosed} />
+        <PostList />
+        {modalShow && (
+          <Modal
+            type={modalType}
+            modalClose={modalClose}
+            alertOpen={alertOpen}
+          />
+        )}
+        {alertShow && <Alert type="logout" alertClose={alertClose} />}
+        {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
+        <Navigation />
+      </main>
     </Container>
   );
 }

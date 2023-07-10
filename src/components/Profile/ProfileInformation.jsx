@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Loading from "../../pages/Loading/Loading";
 
-const InformationTopDiv = styled.div`
+const InformationTopSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,7 +42,7 @@ const FollowingCntP = styled.p`
   ${FollowCommonP}
 `;
 
-const InformationDiv = styled.div`
+const InformationSection = styled.section`
   text-align: center;
   margin: 16px 0 24px;
 `;
@@ -201,7 +201,7 @@ export default function ProfileInformation({ type, modalOpen }) {
         <Loading />
       ) : (
         <>
-          <InformationTopDiv>
+          <InformationTopSection>
             <Link
               to="/followerlist"
               state={{
@@ -221,12 +221,12 @@ export default function ProfileInformation({ type, modalOpen }) {
               <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
               <FollowingCntP>followings</FollowingCntP>
             </Link>
-          </InformationTopDiv>
-          <InformationDiv>
+          </InformationTopSection>
+          <InformationSection>
             <InfoNameP>{userInfo.username}</InfoNameP>
             <InfoIdP>@ {userInfo.accountname}</InfoIdP>
             <InfoTextP>{userInfo.intro}</InfoTextP>
-          </InformationDiv>
+          </InformationSection>
           <ProfileBtn
             type={type}
             yourAccountname={userInfo.accountname}
