@@ -4,7 +4,7 @@ import Header from "../../components/common/Header/Header";
 import ChatNavigation from "../../components/common/Nav/ChatNavigation";
 import SendMessage from "../../components/Chat/SendMessage";
 import ReceiveMessage from "../../components/Chat/ReceiveMessage";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal/Modal/Modal";
 import { MessageWrap } from "../../components/Chat/SendMessage";
 import { MessageText } from "../../components/Chat/SendMessage";
 import { TimeStamp } from "../../components/Chat/SendMessage";

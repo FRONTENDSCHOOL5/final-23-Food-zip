@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header/Header";
 import ChatListItem from "../../components/Chat/ChatListItem";
-import Modal from "../../components/Modal/Modal";
-import Alert from "../../components/Modal/Alert";
+import Modal from "../../components/Modal/Modal/Modal";
+import Alert from "../../components/Modal/Alert/Alert";
 import Navigation from "../../components/common/Nav/Navigation";
 const Container = styled.div`
   max-width: 390px;

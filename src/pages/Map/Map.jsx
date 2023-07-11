@@ -7,8 +7,8 @@ import BookMark from "../../assets/images/bookmark-solid.svg";
 import Marker from "../../assets/images/location.svg";
 import { useLocation } from "react-router-dom";
 import "./MapStyle.css";
-import Modal from "../../components/Modal/Modal";
-import Alert from "../../components/Modal/Alert";
+import Modal from "../../components/Modal/Modal/Modal";
+import Alert from "../../components/Modal/Alert/Alert";
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;

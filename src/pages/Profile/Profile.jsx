@@ -3,18 +3,12 @@ import styled from "styled-components";
 import ProfileInformation from "../../components/Profile/ProfileInformation/ProfileInformation";
 import PostList from "../../components/Post/PostList/PostList";
 import RecommendList from "../../components/Profile/RecommendList/RecommendList";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal/Modal/Modal";
 import Navigation from "../../components/common/Nav/Navigation";
-import Alert from "../../components/Modal/Alert";
+import Alert from "../../components/Modal/Alert/Alert";
 import { useState, useEffect } from "react";
 import Header from "../../components/common/Header/Header";
-import RecommendCard from "../../components/Modal/RecommendCard";
-
-const Container = styled.div`
-  max-width: 390px;
-  margin: 0 auto;
-  background-color: #fff;
-`;
+import RecommendCard from "../../components/Modal/RecommendCard/RecommendCard";
 
 export default function Profile({ type }) {
   const [modalShow, setModalShow] = useState(false);
@@ -62,7 +56,7 @@ export default function Profile({ type }) {
   }, [cardClosed]);
 
   return (
-    <Container>
+    <>
       <Header type="profile" modalOpen={() => modalOpen("setting")} />
       <main>
         <ProfileInformation type={type} />
@@ -77,8 +71,8 @@ export default function Profile({ type }) {
         )}
         {alertShow && <Alert type="logout" alertClose={alertClose} />}
         {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
-        <Navigation />
       </main>
-    </Container>
+      <Navigation />
+    </>
   );
 }

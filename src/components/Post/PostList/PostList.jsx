@@ -7,10 +7,10 @@ import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import PostItem from "../PostItem/PostItem";
-import Modal from "../../Modal/Modal";
+import Modal from "../../Modal/Modal/Modal";
 import PostEdit from "../PostEdit/PostEdit";
 
-const PostListDiv = styled.div`
+const PostListSection = styled.section`
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -45,7 +45,7 @@ const PostItemList = styled.ul`
   }
 `;
 
-const GridItemList = styled.div`
+const GridItemWrap = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 114px);
@@ -56,12 +56,15 @@ const GridItemList = styled.div`
   background-color: white;
 `;
 
+const GridItemList = styled.li`
+  display: ${props => (props.hasImage ? "none" : "block")};
+`;
+
 const PostGridImg = styled.button`
   position: relative;
   width: 114px;
   height: 114px;
   cursor: pointer;
-  display: ${props => (props.hasImage ? "none" : "block")};
   & img {
     width: 100%;
     height: 100%;
@@ -157,7 +160,7 @@ export default function PostList({ post, modalOpen }) {
     <>
       {hasPosts && (
         <>
-          <PostListDiv>
+          <PostListSection>
             <PostListBtn
               type="button"
               onClick={() => handleViewModeChange("list")}
@@ -176,7 +179,7 @@ export default function PostList({ post, modalOpen }) {
                 alt="앨범형 아이콘"
               />
             </PostListBtn>
-          </PostListDiv>
+          </PostListSection>
           {viewMode === "list" ? (
             <PostItemList>
               <PostItem
@@ -187,21 +190,22 @@ export default function PostList({ post, modalOpen }) {
               />
             </PostItemList>
           ) : (
-            <GridItemList>
+            <GridItemWrap>
               {postInfo.map(item => (
-                <PostGridImg
-                  key={item.id}
-                  onClick={() => {
-                    moveDetail(item.id);
-                  }}
-                  hasImage={item.image === ""}
-                >
-                  {item.image !== "" && (
-                    <img src={item.image} alt="grid 이미지" />
-                  )}
-                </PostGridImg>
+                <GridItemList hasImage={item.image === ""}>
+                  <PostGridImg
+                    key={item.id}
+                    onClick={() => {
+                      moveDetail(item.id);
+                    }}
+                  >
+                    {item.image !== "" && (
+                      <img src={item.image} alt="grid 이미지" />
+                    )}
+                  </PostGridImg>
+                </GridItemList>
               ))}
-            </GridItemList>
+            </GridItemWrap>
           )}
         </>
       )}

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MoreIcon from "../../assets/images/icon-more-vertical.svg";
-import Alert from "../Modal/Alert";
-import Modal from "../Modal/Modal";
+import Alert from "../Modal/Alert/Alert";
+import Modal from "../Modal/Modal/Modal";
 
 const StyledCommentWrapper = styled.ul`
   display: flex;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PostItem from "../Post/PostItem/PostItem";
 import styled from "styled-components";
-import Modal from "../Modal/Modal";
+import Modal from "../Modal/Modal/Modal";
 import axios from "axios";
 const List = styled.ul`
   background-color: white;

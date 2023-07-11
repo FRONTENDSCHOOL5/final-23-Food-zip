@@ -1,59 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
-import Alert from "./Alert";
-
-const ModalDiv = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 100%;
-  z-index: 999;
-  background-color: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  max-width: 390px;
-`;
-
-const slideUp = keyframes`
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
-
-const ModalWrapDiv = styled.div`
-  border-radius: 10px 10px 0 0;
-  padding: 16px 26px 10px;
-  background-color: white;
-  box-sizing: border-box;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  animation: ${slideUp} 0.5s ease;
-`;
-
-const ModalLineSpan = styled.span`
-  display: block;
-  width: 50px;
-  height: 4px;
-  border-radius: 5px;
-  background-color: #dbdbdb;
-  margin: 0 auto 16px;
-`;
-
-const ModalTextBtn = styled.button`
-  display: block;
-  padding: 14px 0;
-  box-sizing: border-box;
-  font-size: 14px;
-  background-color: transparent;
-  border: 0;
-  width: 100%;
-  text-align: left;
-`;
+import Alert from "../Alert/Alert";
+import {
+  ModalDiv,
+  ModalWrapArticle,
+  ModalLineSpan,
+  ModalTextBtn,
+} from "./ModalStyle";
 
 export default function Modal({
   type,
@@ -91,23 +44,23 @@ export default function Modal({
 
   const UI = {
     setting: (
-      <ModalWrapDiv>
+      <ModalWrapArticle>
         <ModalLineSpan />
         <ModalTextBtn>설정 및 개인정보</ModalTextBtn>
         <ModalTextBtn onClick={() => alertOpen("logout")}>
           로그아웃
         </ModalTextBtn>
-      </ModalWrapDiv>
+      </ModalWrapArticle>
     ),
     modification: (
-      <ModalWrapDiv>
+      <ModalWrapArticle>
         <ModalLineSpan />
         <ModalTextBtn onClick={() => alertOpen("post")}>삭제</ModalTextBtn>
         <ModalTextBtn onClick={handlerPostEdit}>수정</ModalTextBtn>
-      </ModalWrapDiv>
+      </ModalWrapArticle>
     ),
     product: (
-      <ModalWrapDiv>
+      <ModalWrapArticle>
         <ModalLineSpan />
         <ModalTextBtn onClick={() => alertOpen("product")}>삭제</ModalTextBtn>
         <ModalTextBtn onClick={handlerRecommendEdit}>수정</ModalTextBtn>
@@ -115,38 +68,38 @@ export default function Modal({
           카카오맵으로 이동하기
         </ModalTextBtn>
         <ModalTextBtn>SNS 공유하기</ModalTextBtn>
-      </ModalWrapDiv>
+      </ModalWrapArticle>
     ),
     yourproduct: (
-      <ModalWrapDiv>
+      <ModalWrapArticle>
         <ModalLineSpan />
         <ModalTextBtn onClick={handlerOpenMap}>
           카카오맵으로 이동하기
         </ModalTextBtn>
         <ModalTextBtn>SNS 공유하기</ModalTextBtn>
-      </ModalWrapDiv>
+      </ModalWrapArticle>
     ),
     report: (
-      <ModalWrapDiv>
+      <ModalWrapArticle>
         <ModalLineSpan />
         <ModalTextBtn
           onClick={() => alertOpen(commentId ? "commentReport" : "postReport")}
         >
           신고하기
         </ModalTextBtn>
-      </ModalWrapDiv>
+      </ModalWrapArticle>
     ),
     delete: (
-      <ModalWrapDiv>
+      <ModalWrapArticle>
         <ModalLineSpan />
         <ModalTextBtn onClick={() => alertOpen("comment")}>삭제</ModalTextBtn>
-      </ModalWrapDiv>
+      </ModalWrapArticle>
     ),
     chat: (
-      <ModalWrapDiv>
+      <ModalWrapArticle>
         <ModalLineSpan />
         <ModalTextBtn onClick={() => navigate(-1)}>채팅방 나가기</ModalTextBtn>
-      </ModalWrapDiv>
+      </ModalWrapArticle>
     ),
   };
 
