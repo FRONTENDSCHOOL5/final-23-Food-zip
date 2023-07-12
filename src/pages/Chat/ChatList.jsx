@@ -5,10 +5,10 @@ import ChatListItem from "../../components/Chat/ChatListItem";
 import Modal from "../../components/Modal/Modal";
 import Alert from "../../components/Modal/Alert";
 import Navigation from "../../components/common/Nav/Navigation";
-const Container = styled.div`
-  max-width: 390px;
-  margin: 0 auto;
-`;
+// const Container = styled.div`
+//   max-width: 390px;
+//   margin: 0 auto;
+// `;
 const List = styled.section`
   padding: 48px 0 60px 0;
   background-color: white;
@@ -37,7 +37,8 @@ export default function ChatList() {
   }
 
   return (
-    <Container>
+    <>
+      <h1 className="a11y-hidden">채팅 리스트 페이지</h1>
       <Header type="profile" modalOpen={modalOpen} />
       <List>
         <ChatListItem />
@@ -47,6 +48,6 @@ export default function ChatList() {
       )}
       {alertShow && <Alert type="logout" alertClose={alertClose} />}
       <Navigation />
-    </Container>
+    </>
   );
 }
