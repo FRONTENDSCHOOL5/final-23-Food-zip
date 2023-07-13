@@ -12,6 +12,7 @@ import Navigation from "../../components/common/Nav/Navigation";
 const List = styled.section`
   padding: 48px 0 60px 0;
   background-color: white;
+  height: calc(100vh - 108px);
 `;
 export default function ChatList() {
   const [modalShow, setModalShow] = useState(false);
