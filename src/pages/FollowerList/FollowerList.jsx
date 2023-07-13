@@ -9,9 +9,9 @@ import { FollowList, FollowListItem } from "./FollowerListStyle";
 
 export default function FollowerList({ type, followType }) {
   const token = localStorage.getItem("token");
-  const accountname = location.state.accountname;
   const location = useLocation();
   const navigate = useNavigate();
+  const accountname = location.state.accountname;
   const [followerList, setFollowerList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
 
