@@ -22,6 +22,7 @@ const SignUpTitle = styled.h2`
 export default function SignUp() {
   return (
     <>
+      <h1 className="a11y-hidden">회원가입페이지</h1>
       <Section className="l-wrapper">
         <SignUpTitle>회원가입</SignUpTitle>
         <SignUpForm />

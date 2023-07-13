@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const RecommendWrapper = styled.div`
+const RecommendWrapper = styled.section`
   padding: 78px 36px;
   background: #fff;
   height: 100vh;
@@ -129,6 +129,7 @@ export default function MakeRecommend() {
   };
   return (
     <>
+      <h1 className="a11y-hidden">추천맛집 작성 페이지</h1>
       <Header
         type="upload"
         handleUploadBtn={isValid}

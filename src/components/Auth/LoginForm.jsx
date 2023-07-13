@@ -1,60 +1,15 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { ButtonStyle } from "../common/Button/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState, useEffect } from "react";
-
-const StyledForm = styled.form`
-  margin-top: 40px;
-`;
-
-const StyledButton = styled(ButtonStyle)`
-  margin: 30px auto 20px auto;
-`;
-const StyledInputContainer = styled.div`
-  position: relative;
-`;
-
-const StyledLabel = styled.label`
-  display: block;
-  text-align: left;
-  padding: 0 35px;
-  font-size: 16px;
-  color: #767676;
-  pointer-events: none;
-`;
-
-const StyledInput = styled.input`
-  display: block;
-  width: 322px;
-  box-sizing: border-box;
-  border: none;
-  box-shadow: 0 1px 0 0 #677880;
-  height: 46px;
-  border-radius: 4px 4px 0 0;
-  padding-top: 8px;
-  font-size: 14px;
-  margin: 0 auto 36px auto;
-  outline: none;
-  background: transparent;
-  &::placeholder {
-    color: #dbdbdb;
-  }
-  &:focus {
-    /* outline: none; */
-    border-bottom: 1px solid #286140;
-  }
-`;
-
-const StyledError = styled.small`
-  font-size: 12px;
-  color: red;
-  position: absolute;
-  bottom: -18px;
-  left: 35px;
-`;
+import {
+  StyledButton,
+  StyledError,
+  StyledForm,
+  StyledInput,
+  StyledInputContainerDiv,
+  StyledLabel,
+} from "./LoginFormStyle";
 
 const LoginForm = () => {
   const {
@@ -111,7 +66,7 @@ const LoginForm = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
-      <StyledInputContainer>
+      <StyledInputContainerDiv>
         <StyledLabel htmlFor="email">이메일</StyledLabel>
         <StyledInput
           id="email"
@@ -128,9 +83,9 @@ const LoginForm = () => {
           })}
         />
         {errors.email && <StyledError>{errors.email.message}</StyledError>}
-      </StyledInputContainer>
+      </StyledInputContainerDiv>
 
-      <StyledInputContainer>
+      <StyledInputContainerDiv>
         <StyledLabel htmlFor="password">비밀번호</StyledLabel>
         <StyledInput
           id="password"
@@ -147,7 +102,7 @@ const LoginForm = () => {
         {errors.password && (
           <StyledError>{errors.password.message}</StyledError>
         )}
-      </StyledInputContainer>
+      </StyledInputContainerDiv>
 
       <StyledButton
         type="submit"
