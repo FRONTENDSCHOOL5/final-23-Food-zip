@@ -8,7 +8,7 @@ export const MessageWrap = styled.li`
   align-items: flex-start;
 `;
 
-export const MessageText = styled.div`
+export const MessageText = styled.article`
   max-width: 240px;
   padding: 12px;
   border-radius: 10px 0 10px 10px;
@@ -17,7 +17,7 @@ export const MessageText = styled.div`
   font-size: 14px;
   line-height: 16px;
   position: relative;
-  margin: 0 16px 0 auto;
+  margin: 0 0 0 auto;
 `;
 
 export const TimeStamp = styled.span`

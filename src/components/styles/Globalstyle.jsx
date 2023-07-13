@@ -45,7 +45,12 @@ li{
       outline: none;
     }
   }
-  
+  #root{
+    width:390px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: #fff;
+  }
   .a11y-hidden {
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);

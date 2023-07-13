@@ -1,18 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import Header from "../../../components/common/Header/Header";
 import ProfileForm from "../../../components/Profile/ProfileForm/ProfileForm";
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 48px;
-  gap: 12px;
-  background: #fff;
-  height: 100vh;
-`;
+import Container from "./ProfileEditStyle.jsx";
+
 export default function ProfileEdit() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();

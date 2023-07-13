@@ -48,6 +48,7 @@ export default function ChatRoom() {
 
   return (
     <>
+      <h1 className="a11y-hidden">채팅방 페이지</h1>
       <Header
         type="chat"
         modalOpen={modalOpen}

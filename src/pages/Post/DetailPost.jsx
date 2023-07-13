@@ -10,20 +10,21 @@ import axios from "axios";
 import PostEdit from "../../components/Post/PostEdit/PostEdit";
 import BasicProfile from "../../assets/images/basic-profile-lg.svg";
 
-const DetailPostWrapper = styled.div`
+const DetailPostWrapper = styled.section`
   width: 100%;
   height: 100vh;
-  padding: 68px 0 0px 0;
+  margin-top: 48px;
+  padding: 20px 0 0px 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
 `;
-const PostItemSection = styled.div`
+const PostItemSection = styled.section`
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
 `;
-const WriteCommentSection = styled.div`
+const WriteCommentSection = styled.section`
   position: fixed;
   bottom: 0;
   display: flex;
@@ -52,7 +53,7 @@ const PostUserImg = styled.img`
   object-fit: cover;
   border-radius: 50%;
 `;
-const CommentSection = styled.div`
+const CommentSection = styled.section`
   width: 100%;
   padding: 5px 15px 65px;
   box-sizing: border-box;

@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.section`
   width: 100%;
   height: calc(100vh - 48px);
   padding-top: 48px;
@@ -110,7 +110,8 @@ export default function MakePost() {
     checkContent();
   };
   return (
-    <div>
+    <>
+      <h1 className="a11y-hidden">게시물 작성 페이지</h1>
       <Header
         type="upload"
         handleUploadBtn={isValid}
@@ -127,6 +128,6 @@ export default function MakePost() {
           ></StyledPost>
         </form>
       </StyledContainer>
-    </div>
+    </>
   );
 }
