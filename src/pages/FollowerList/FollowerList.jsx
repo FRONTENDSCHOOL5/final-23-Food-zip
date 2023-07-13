@@ -1,26 +1,15 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import FollowItem from "../../components/FollowItem/FollowItem";
 import Header from "../../components/common/Header/Header";
 import Navigation from "../../components/common/Nav/Navigation";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
-const FollowList = styled.ul`
-  padding: 60px 16px 64px;
-  background-color: #fff;
-`;
-
-const FollowListItem = styled.li`
-  margin-bottom: 12px;
-  cursor: pointer;
-`;
+import { FollowList, FollowListItem } from "./FollowerListStyle";
 
 export default function FollowerList({ type, followType }) {
-  const location = useLocation();
   const token = localStorage.getItem("token");
+  const location = useLocation();
   const navigate = useNavigate();
   const accountname = location.state.accountname;
   const [followerList, setFollowerList] = useState([]);
