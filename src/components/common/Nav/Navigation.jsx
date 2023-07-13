@@ -9,7 +9,7 @@ import fillMessageIcon from "../../../assets/images/icon-message-circle-fill.svg
 import userIcon from "../../../assets/images/icon-user.svg";
 import fillUserIcon from "../../../assets/images/icon-user-fill.svg";
 
-const NavWrapper = styled.footer`
+const NavWrapper = styled.nav`
   position: fixed;
   max-width: 390px;
   height: 60px;
