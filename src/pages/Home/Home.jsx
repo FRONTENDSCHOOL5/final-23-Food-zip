@@ -9,11 +9,11 @@ import { useEffect } from "react";
 import axios from "axios";
 import Loading from "../Loading/Loading";
 
-const Container = styled.div`
-  max-width: 390px;
-  margin: 0 auto;
-  background-color: #fff;
-`;
+// const Container = styled.div`
+//   max-width: 390px;
+//   margin: 0 auto;
+//   background-color: #fff;
+// `;
 export default function Home() {
   const [myFeed, setMyFeed] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
@@ -51,7 +51,7 @@ export default function Home() {
   }, [page]);
 
   return (
-    <Container>
+    <>
       <Header type="home" />
       {loading ? (
         <Loading />
@@ -61,6 +61,6 @@ export default function Home() {
         <EmptyHome />
       )}
       <Navigation />
-    </Container>
+    </>
   );
 }
