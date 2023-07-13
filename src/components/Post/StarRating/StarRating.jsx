@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Rating } from "react-simple-star-rating";
 
-const RatingWrapper = styled.div`
+const RatingWrapper = styled.article`
   margin-bottom: 28px;
 `;
 const RatingP = styled.p`
