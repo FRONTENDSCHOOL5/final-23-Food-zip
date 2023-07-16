@@ -59,6 +59,7 @@ const SignUpForm = () => {
         },
       );
       const reqMsg = res.data.message;
+      console.log("이메일", res);
       clearErrors("email");
       if (reqMsg === "이미 가입된 이메일 주소 입니다.") {
         setError("email", {

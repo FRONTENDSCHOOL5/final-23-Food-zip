@@ -2,64 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostItem from "../../components/Post/PostItem/PostItem";
 import Comment from "../../components/Comment/Comment";
-import styled from "styled-components";
 import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal/Modal";
 import Alert from "../../components/Modal/Alert/Alert";
 import axios from "axios";
 import PostEdit from "../../components/Post/PostEdit/PostEdit";
 import BasicProfile from "../../assets/images/basic-profile-lg.svg";
-
-const DetailPostWrapper = styled.section`
-  width: 100%;
-  height: 100vh;
-  margin-top: 48px;
-  padding: 20px 0 0px 0;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-`;
-const PostItemSection = styled.section`
-  width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
-`;
-const WriteCommentSection = styled.section`
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  gap: 18px;
-  padding: 12.5px 16px;
-  justify-content: baseline;
-  background-color: #fff;
-  width: 100%;
-  max-width: 390px;
-  box-sizing: border-box;
-  border-top: 1px solid #dbdbdb;
-`;
-
-const WriteComment = styled.input`
-  border: none;
-  flex-grow: 1;
-`;
-
-const BtnDisplay = styled.button`
-  color: ${({ hasText }) => (hasText ? "#286140" : "#C4C4C4")};
-`;
-
-const PostUserImg = styled.img`
-  width: 36px;
-  height: 36px;
-  object-fit: cover;
-  border-radius: 50%;
-`;
-const CommentSection = styled.section`
-  width: 100%;
-  padding: 5px 15px 65px;
-  box-sizing: border-box;
-  border-top: 1px solid #dbdbdb;
-  background-color: #fff;
-`;
+import {
+  PostItemSection,
+  CommentSection,
+  PostUserImg,
+  BtnDisplay,
+  WriteComment,
+  WriteCommentSection,
+  DetailPostWrapper,
+} from "./DetailPostStyle";
 
 export default function DetailPost() {
   const [modalShow, setModalShow] = useState(false);
@@ -70,19 +27,16 @@ export default function DetailPost() {
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   const location = useLocation();
   const [comment, setComment] = useState([]);
-
   const data = location.state;
   const token = localStorage.getItem("token");
   const where = localStorage.getItem("accountname");
-  const { id, postInfo, authorInfo, otherInfo } = data;
-  const infoToIterate = postInfo || otherInfo;
+  const { id, infoToIterate } = data;
   const [commentCnt, setCommentCnt] = useState(0);
   const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
-
   const [myImg, setMyImg] = useState("");
+  const [alertShow, setAlertShow] = useState(false);
   const navigate = useNavigate();
-
   const handleInputChange = event => {
     setInputValue(event.target.value);
   };
@@ -97,7 +51,6 @@ export default function DetailPost() {
     setSelectedId(id);
   }
 
-  const [alertShow, setAlertShow] = useState(false);
   function alertClose(e) {
     if (e.target === e.currentTarget) {
       setAlertShow(false);
@@ -114,7 +67,7 @@ export default function DetailPost() {
         },
       );
       const post = response.data.post;
-      setMyPostInfo([post]);
+      setMyPostInfo(post);
       setShouldFetchPostInfo(false);
     } catch (error) {
       navigate("/error");
@@ -195,6 +148,7 @@ export default function DetailPost() {
   useEffect(() => {
     getUserInfo();
   }, []);
+
   return (
     <>
       <Header
@@ -203,28 +157,22 @@ export default function DetailPost() {
         modalOpen={() => modalOpen("setting")}
       />
       <DetailPostWrapper>
-        {myPostInfo?.map(
-          item =>
-            item.id === id && (
-              <PostItemSection key={item.id}>
-                <PostItem
-                  modalOpen={() =>
-                    modalOpen(
-                      where === authorInfo.accountname
-                        ? "modification"
-                        : "report",
+        <PostItemSection>
+          <PostItem
+            modalOpen={() =>
+              modalOpen(
+                where === infoToIterate.author.accountname
+                  ? "modification"
+                  : "report",
 
-                      item.id,
-                    )
-                  }
-                  postInfo={[item]}
-                  authorInfo={item.author}
-                  commentCnt={commentCnt}
-                  getUserInfo={fetchPostInfo}
-                />
-              </PostItemSection>
-            ),
-        )}
+                myPostInfo.id,
+              )
+            }
+            postInfo={myPostInfo}
+            commentCnt={commentCnt}
+            getUserInfo={fetchPostInfo}
+          />
+        </PostItemSection>
         <CommentSection>
           <Comment commentList={commentList} postId={id} />
         </CommentSection>
@@ -261,9 +209,11 @@ export default function DetailPost() {
         <PostEdit
           closeModal={closePostEditModal}
           postId={selectedId}
-          postInfo={postInfo}
+          postInfo={infoToIterate}
         />
       )}
     </>
   );
 }
+
+//수정 부분 확인 요망--------

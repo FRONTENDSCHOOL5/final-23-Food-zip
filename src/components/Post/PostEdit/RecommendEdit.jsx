@@ -71,12 +71,7 @@ export default function RecommendEdit({ closeModal, productId }) {
   };
 
   function handleUpload() {
-    recommendEditUpload(
-      productInfo.itemName,
-      productInfo.price,
-      productInfo.link,
-      productInfo.itemImage,
-    );
+    recommendEditUpload();
   }
   return (
     <ModalOverlay onClick={closeModal}>
