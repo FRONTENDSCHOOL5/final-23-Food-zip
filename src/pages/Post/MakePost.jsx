@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PostImgPrev from "../../components/Post/ImgPrev/PostImgPrev";
 import Header from "../../components/common/Header/Header";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { imgUpload } from "../../api/imgUpload";
+import { postUploadApi } from "../../api/post";
 
 const StyledContainer = styled.section`
   width: 100%;
@@ -43,39 +43,17 @@ export default function MakePost() {
     setImgFile(file);
     setImgUrl(url);
   };
-  const uploadPost = async (url, content) => {
+  const uploadPost = async content => {
     try {
       const formData = new FormData();
       formData.append("image", imgFile);
-      const uploadResponse = await axios.post(
-        "https://api.mandarin.weniv.co.kr/image/uploadfile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
+      const uploadResponse = await imgUpload(formData);
       let imageUrl = "";
       if (uploadResponse.data.filename) {
         imageUrl =
           "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
       }
-      await axios.post(
-        "https://api.mandarin.weniv.co.kr/post",
-        {
-          post: {
-            content: content,
-            image: imageUrl,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      await postUploadApi(content, imageUrl, token);
       navigate("/myprofile");
     } catch (error) {
       console.error(error);
@@ -84,7 +62,7 @@ export default function MakePost() {
   };
   const handleUpload = () => {
     if (isValid) {
-      uploadPost(imgUrl, content);
+      uploadPost(content);
     } else {
       alert("게시글이 작성되지 않았습니다.");
     }

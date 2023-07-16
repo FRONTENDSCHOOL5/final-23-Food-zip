@@ -6,9 +6,11 @@ import styled from "styled-components";
 import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal/Modal";
 import Alert from "../../components/Modal/Alert/Alert";
-import axios from "axios";
 import PostEdit from "../../components/Post/PostEdit/PostEdit";
 import BasicProfile from "../../assets/images/basic-profile-lg.svg";
+import { postInfoApi } from "../../api/post";
+import { commentListApi, commentUploadApi } from "../../api/comment";
+import { userInfoApi } from "../../api/user";
 
 const DetailPostWrapper = styled.section`
   width: 100%;
@@ -105,15 +107,16 @@ export default function DetailPost() {
   }
   const fetchPostInfo = async () => {
     try {
-      const response = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/${selectedId ?? id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const post = response.data.post;
+      // const response = await axios.get(
+      //   `https://api.mandarin.weniv.co.kr/post/${selectedId ?? id}`,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   },
+      // );
+      const res = await postInfoApi(selectedId ?? id, token);
+      const post = res.data.post;
       setMyPostInfo([post]);
       setShouldFetchPostInfo(false);
     } catch (error) {
@@ -125,20 +128,7 @@ export default function DetailPost() {
   }
   const uploadComment = async () => {
     try {
-      const res = await axios.post(
-        `https://api.mandarin.weniv.co.kr/post/${id}/comments`,
-        {
-          comment: {
-            content: inputValue,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await commentUploadApi(id, inputValue, token);
       setInputValue("");
       loadcommentList();
       setComment(res.data.comment);
@@ -147,29 +137,14 @@ export default function DetailPost() {
   };
   const loadcommentList = async () => {
     try {
-      const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/${id}/comments/?limit=Number&skip=Number`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await commentListApi(id, token);
       setCommentList(res.data.comments);
       setCommentCnt(res.data.comments.length);
     } catch (err) {}
   };
   const getUserInfo = async () => {
     try {
-      const res = await axios.get(
-        "https://api.mandarin.weniv.co.kr/user/myinfo",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const res = await userInfoApi(token);
       const image = res.data.user;
       setMyImg(image);
     } catch (error) {

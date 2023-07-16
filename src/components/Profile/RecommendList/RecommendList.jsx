@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ImgStar from "../../../assets/images/star.svg";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   RecommendWrap,
@@ -12,6 +11,7 @@ import {
   RecommendScoreSpan,
   RecommendStarImg,
 } from "./RecommendListStyle";
+import { recommendListApi } from "../../../api/recommend";
 
 export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
   const [recommendInfo, setRecommendInfo] = useState([]);
@@ -29,22 +29,11 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
     const { accountname } = location.state || {};
     const token = localStorage.getItem("token");
     try {
-      let apiUrl = `https://api.mandarin.weniv.co.kr/product/${accountname}/?limit=Number&skip=Number`;
-
-      if (!accountname) {
-        const loggedInAccountname = localStorage.getItem("accountname");
-        apiUrl = `https://api.mandarin.weniv.co.kr/product/${loggedInAccountname}/?limit=Number&skip=Number`;
-      }
-
-      const res = await axios.get(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-type": "application/json",
-        },
-      });
-
-      const products = res.data.product;
-      setRecommendInfo(products);
+      const res = await recommendListApi(
+        accountname || localStorage.getItem("accountname"),
+        token,
+      );
+      setRecommendInfo(res.data.product);
       setUploadList(!cardClosed);
     } catch (error) {
       console.log("error");
