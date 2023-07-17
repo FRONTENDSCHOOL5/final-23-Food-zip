@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
@@ -9,70 +8,16 @@ import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import PostItem from "../PostItem/PostItem";
 import Modal from "../../Modal/Modal/Modal";
 import PostEdit from "../PostEdit/PostEdit";
-
-const PostListSection = styled.section`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 44px;
-  box-sizing: border-box;
-  background-color: white;
-  border-bottom: 1px solid #dbdbdb;
-`;
-
-const PostListBtn = styled.button`
-  margin-right: 16px;
-  box-sizing: border-box;
-  background-color: transparent;
-  border: 0;
-`;
-
-const PostItemList = styled.ul`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  margin: 16px 20px 60px;
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #dbdbdb;
-    border-radius: 50px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-`;
-
-const GridItemWrap = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 114px);
-  gap: 8px;
-  padding: 16px 16px 80px 16px;
-  height: 100%;
-  min-height: 425px;
-  background-color: white;
-`;
-
-const GridItemList = styled.li`
-  display: ${props => (props.hasImage ? "none" : "block")};
-`;
-
-const PostGridImg = styled.button`
-  position: relative;
-  width: 114px;
-  height: 114px;
-  cursor: pointer;
-  & img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-export default function PostList({ post, modalOpen }) {
+import {
+  PostGridImg,
+  PostItemList,
+  PostListBtn,
+  PostListItem,
+  PostListSection,
+  GridItemList,
+  GridItemWrap,
+} from "./PostListStyle";
+export default function PostList({ modalOpen }) {
   const [viewMode, setViewMode] = useState("list");
   const location = useLocation();
   const { accountname } = location.state || {};
@@ -92,11 +37,11 @@ export default function PostList({ post, modalOpen }) {
   const getUserInfo = async () => {
     const token = localStorage.getItem("token");
     try {
-      let apiUrl = `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost/?limit=Number&skip=Number`;
+      let apiUrl = `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`;
 
       if (!accountname) {
         const loggedInAccountname = localStorage.getItem("accountname");
-        apiUrl = `https://api.mandarin.weniv.co.kr/post/${loggedInAccountname}/userpost/?limit=Number&skip=Number`;
+        apiUrl = `https://api.mandarin.weniv.co.kr/post/${loggedInAccountname}/userpost`;
       }
       const res = await axios.get(apiUrl, {
         headers: {
@@ -122,13 +67,11 @@ export default function PostList({ post, modalOpen }) {
 
   const navigate = useNavigate();
 
-  function moveDetail(id) {
+  function moveDetail(id, item) {
     navigate(`/detailpost`, {
       state: {
         id: id,
-        postInfo: postInfo,
-        authorInfo: authorInfo,
-        accountname: accountname,
+        infoToIterate: item,
       },
     });
   }
@@ -156,6 +99,7 @@ export default function PostList({ post, modalOpen }) {
     setModalShow(false);
     getUserInfo();
   };
+
   return (
     <>
       {hasPosts && (
@@ -182,21 +126,23 @@ export default function PostList({ post, modalOpen }) {
           </PostListSection>
           {viewMode === "list" ? (
             <PostItemList>
-              <PostItem
-                modalOpen={modalOpen}
-                postInfo={postInfo}
-                authorInfo={authorInfo}
-                getUserInfo={getUserInfo}
-              />
+              {postInfo.map(item => (
+                <PostListItem key={item.id}>
+                  <PostItem
+                    modalOpen={modalOpen}
+                    postInfo={item}
+                    getUserInfo={getUserInfo}
+                  />
+                </PostListItem>
+              ))}
             </PostItemList>
           ) : (
             <GridItemWrap>
               {postInfo.map(item => (
-                <GridItemList hasImage={item.image === ""}>
+                <GridItemList hasImage={item.image === ""} key={item.id}>
                   <PostGridImg
-                    key={item.id}
                     onClick={() => {
-                      moveDetail(item.id);
+                      moveDetail(item.id, item);
                     }}
                   >
                     {item.image !== "" && (

@@ -30,16 +30,21 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
   };
 
   return (
-    <List>
-      <PostItem
-        modalOpen={modalOpen}
-        otherInfo={otherInfo}
-        authorInfo={authorInfo}
-        getOtherInfo={getOtherInfo}
-      />
-      {modalShow && (
-        <Modal type="report" modalClose={modalClose} postId={selectedId} />
-      )}
-    </List>
+    <main>
+      <List>
+        {otherInfo.map(item => (
+          <li key={item.id}>
+            <PostItem
+              modalOpen={modalOpen}
+              otherInfo={item}
+              getOtherInfo={getOtherInfo}
+            />
+          </li>
+        ))}
+        {modalShow && (
+          <Modal type="report" modalClose={modalClose} postId={selectedId} />
+        )}
+      </List>
+    </main>
   );
 }
