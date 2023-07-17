@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import RecommendImgPrev from "../../components/Post/ImgPrev/RecommendImgPrev";
 import StarRating from "../../components/Post/StarRating/StarRating";
 import Header from "../../components/common/Header/Header";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { imgUpload } from "../../api/imgUpload";
+import { recommendUploadApi } from "../../api/recommend";
 
 const RecommendWrapper = styled.section`
   padding: 78px 36px;
@@ -90,39 +90,20 @@ export default function MakeRecommend() {
     setImgFile(file);
     setImgUrl(url);
   };
-
-  const uploadPost = async () => {
+  const uploadRecommend = async () => {
     try {
       const formData = new FormData();
       formData.append("image", imgFile);
-      const uploadResponse = await axios.post(
-        "https://api.mandarin.weniv.co.kr/image/uploadfile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
+      const uploadResponse = await imgUpload(formData);
       const imageUrl =
         "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
 
-      await axios.post(
-        "https://api.mandarin.weniv.co.kr/product",
-        {
-          product: {
-            itemName: restaurantname,
-            price: rating, //별 평점
-            link: selectedAddress, //주소
-            itemImage: imageUrl,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        },
+      await recommendUploadApi(
+        restaurantname,
+        rating,
+        address,
+        imageUrl,
+        token,
       );
       navigate("/myprofile");
     } catch (error) {
@@ -133,8 +114,7 @@ export default function MakeRecommend() {
 
   const handleUpload = () => {
     if (isValid) {
-      console.log(selectedAddress);
-      uploadPost(imgUrl, restaurantname, rating, selectedAddress);
+      uploadRecommend(imgUrl, restaurantname, rating, address);
     } else {
       alert("입력이 안된 부분이 있습니다.");
     }

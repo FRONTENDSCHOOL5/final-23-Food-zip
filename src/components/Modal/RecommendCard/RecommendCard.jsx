@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
 import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import RecommendEdit from "../../Post/PostEdit/RecommendEdit";
 import {
@@ -15,6 +14,7 @@ import {
   RecommendMoreBtn,
   RecommendCloseBtn,
 } from "./RecommendCardStyle";
+import { getRecommendInfoApi } from "../../../api/recommend";
 
 export default function RecommendCard({ cardClose, id, modalOpen }) {
   const location = useLocation();
@@ -36,23 +36,16 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
   const getUserInfo = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/product/detail/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
-      const { itemImage, itemName, link, price } = res.data.product;
-      setRecommendInfo({
-        itemImage,
-        itemName,
-        link,
-        price,
+      await getRecommendInfoApi(id, token).then(res => {
+        const { itemImage, itemName, link, price } = res.data.product;
+        setRecommendInfo({
+          itemImage,
+          itemName,
+          link,
+          price,
+        });
+        setShouldFetchProductInfo(false);
       });
-      setShouldFetchProductInfo(false);
     } catch (err) {
       navigation("/error");
     }

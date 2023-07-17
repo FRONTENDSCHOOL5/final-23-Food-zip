@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import ProfileBtn from "../ProfileBtn/ProfileBtn";
 import {
   InformationTopSection,
@@ -12,10 +13,9 @@ import {
   InfoTextP,
   ProfileImg,
 } from "./ProfileInformationStyle";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import Loading from "../../../pages/Loading/Loading";
+import { userInfoApi } from "../../../api/user";
+import { userProfileApi } from "../../../api/profile";
 
 export default function ProfileInformation({ type, modalOpen }) {
   const [userInfo, setUserInfo] = useState({
@@ -40,47 +40,9 @@ export default function ProfileInformation({ type, modalOpen }) {
     const getUserInfo = async () => {
       setLoading(true);
       const token = localStorage.getItem("token");
-      let apiUrl = "";
-
       if (type === "my") {
-        apiUrl = "https://api.mandarin.weniv.co.kr/user/myinfo";
-      } else if (type === "your" && yourAccountname) {
-        apiUrl = `https://api.mandarin.weniv.co.kr/profile/${yourAccountname.accountname}`;
-      }
-
-      const res = await axios.get(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (type === "my") {
+        const res = await userInfoApi(token);
         setFollowerInfo(res.data.user.follower);
-      } else if (type === "your" && yourAccountname) {
-        setFollowerInfo(res.data.profile.follower);
-      }
-
-      if (type === "your") {
-        const {
-          accountname,
-          username,
-          followingCount,
-          followerCount,
-          image,
-          isfollow,
-          intro,
-        } = res.data.profile;
-
-        setUserInfo({
-          accountname,
-          username,
-          followingCount,
-          followerCount,
-          image,
-          isfollow,
-          intro,
-        });
-      } else if (type === "my" && myAccountname) {
         const {
           accountname,
           username,
@@ -100,7 +62,30 @@ export default function ProfileInformation({ type, modalOpen }) {
           isfollow,
           intro,
         });
+      } else if (type === "your" && yourAccountname) {
+        const res = await userProfileApi(yourAccountname.accountname, token);
+        setFollowerInfo(res.data.profile.follower);
+        const {
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        } = res.data.profile;
+
+        setUserInfo({
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        });
       }
+
       setLoading(false);
     };
 

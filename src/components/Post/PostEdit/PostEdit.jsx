@@ -12,6 +12,8 @@ import {
   PostContent,
   EditContainer,
 } from "./PostEditStyle";
+import { postEditApi, postInfoApi } from "../../../api/post";
+import { imgUpload } from "../../../api/imgUpload";
 export default function PostEdit({ closeModal, postId }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -23,17 +25,19 @@ export default function PostEdit({ closeModal, postId }) {
 
   const fetchPostInfo = async () => {
     try {
-      const response = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/${postId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
-      const post = response.data.post;
-      setPostInfo(post);
+      // const response = await axios.get(
+      //   `https://api.mandarin.weniv.co.kr/post/${postId}`,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //       "Content-type": "application/json",
+      //     },
+      //   },
+      // );
+      await postInfoApi(postId, token).then(res => {
+        const post = res.data.post;
+        setPostInfo(post);
+      });
     } catch (error) {
       console.error(error);
       navigate("/error");
@@ -47,37 +51,13 @@ export default function PostEdit({ closeModal, postId }) {
         const file = await convertBase64ToBlob(postInfo.image);
         const formData = new FormData();
         formData.append("image", file);
-
-        const uploadResponse = await axios.post(
-          "https://api.mandarin.weniv.co.kr/image/uploadfile",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          },
-        );
+        const uploadResponse = await imgUpload(formData);
         if (uploadResponse.data.filename) {
           imageUrl =
             "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
         }
       }
-      const res = await axios.put(
-        `https://api.mandarin.weniv.co.kr/post/${postId}`,
-        {
-          post: {
-            content: postInfo.content,
-            image: imageUrl,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
-
+      const res = await postEditApi(postId, token, postInfo.content, imageUrl);
       const updatedPost = res.data.post;
       setPostInfo(updatedPost);
       closeModal();

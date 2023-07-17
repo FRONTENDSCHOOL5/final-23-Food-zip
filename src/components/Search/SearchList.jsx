@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import {
   UserName,
   UserID,
 } from "./SearchListStyle";
+import { userSearch } from "../../api/search";
 
 export default function SearchList({ searchKeyword }) {
   const navigate = useNavigate();
@@ -41,17 +41,8 @@ export default function SearchList({ searchKeyword }) {
       } else {
         try {
           const token = localStorage.getItem("token");
-          const response = await axios.get(
-            `https://api.mandarin.weniv.co.kr/user/searchuser/?keyword=${debouncedSearchKeyword}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-type": "application/json",
-              },
-            },
-          );
-
-          const filteredData = response.data.filter(
+          const res = await userSearch(debouncedSearchKeyword, token);
+          const filteredData = res.data.filter(
             item => !item.image.startsWith("https://mandarin.api.weniv"),
           );
           setSearchListData(filteredData);

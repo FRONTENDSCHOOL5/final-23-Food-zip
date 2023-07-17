@@ -1,33 +1,14 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Button from "../common/Button/Button";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-const Container = styled.div`
-  width: 358px;
-  display: flex;
-  align-items: center;
-`;
-const FollowerImgTest = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 12px;
-  object-fit: cover;
-`;
-const FollowerInfo = styled.div`
-  padding: 5px 0;
-  width: 228px;
-`;
-const FollowerName = styled.p`
-  font-size: 14px;
-  margin-bottom: 6px;
-`;
-const FollowerIntro = styled.p`
-  font-size: 12px;
-  color: #767676;
-`;
+import { followApi, unfollowApi } from "../../api/follow";
+import {
+  Container,
+  FollowerImgTest,
+  FollowerInfo,
+  FollowerName,
+  FollowerIntro,
+} from "./FollowItemStyle";
 
 export default function FollowItem({
   username,
@@ -52,26 +33,9 @@ export default function FollowItem({
   const toggleFollow = async () => {
     try {
       if (!follow) {
-        await axios.post(
-          `https://api.mandarin.weniv.co.kr/profile/${accountname}/follow`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-type": "application/json",
-            },
-          },
-        );
+        await followApi(accountname, token);
       } else {
-        await axios.delete(
-          `https://api.mandarin.weniv.co.kr/profile/${accountname}/unfollow`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-type": "application/json",
-            },
-          },
-        );
+        await unfollowApi(accountname, token);
       }
       setFollow(!follow);
     } catch (err) {

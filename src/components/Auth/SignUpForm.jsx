@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { EmailValid } from "../../api/auth";
 import {
   StyledButton,
   StyledError,
@@ -31,33 +31,9 @@ const SignUpForm = () => {
   const navigate = useNavigate();
   const [abledBtn, setAbledBtn] = useState(true);
 
-  const handleFormSubmit = async data => {
-    const isValidEmail = await checkEmailValid(data.email);
-    if (isValidEmail) {
-      navigate("/signup/profile", {
-        state: {
-          email: data.email,
-          password: data.password,
-        },
-      });
-    }
-  };
-
   const checkEmailValid = async email => {
     try {
-      const res = await axios.post(
-        "https://api.mandarin.weniv.co.kr/user/emailvalid",
-        {
-          user: {
-            email: email,
-          },
-        },
-        {
-          headers: {
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await EmailValid(email);
       const reqMsg = res.data.message;
       console.log("이메일", res);
       clearErrors("email");
@@ -76,6 +52,19 @@ const SignUpForm = () => {
       return false;
     }
   };
+
+  const handleFormSubmit = async data => {
+    const isValidEmail = await checkEmailValid(data.email);
+    if (isValidEmail) {
+      navigate("/signup/profile", {
+        state: {
+          email: data.email,
+          password: data.password,
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     setAbledBtn(isValid);
   }, [isValid, setAbledBtn]);
