@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { followApi, unfollowApi } from "../../../api/follow";
 import IconMessage from "../../../assets/images/icon-message-circle.svg";
 import IconShare from "../../../assets/images/icon-share.svg";
 import Button from "../../../components/common/Button/Button";
@@ -38,16 +39,7 @@ export default function ProfileBtn({
 
   const Follow = async () => {
     try {
-      const res = await axios.post(
-        `https://api.mandarin.weniv.co.kr/profile/${yourAccountname}/follow`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      await followApi(yourAccountname, token);
       setFollow(!follow);
     } catch (err) {
       console.error("에러!", err);
@@ -57,15 +49,7 @@ export default function ProfileBtn({
 
   const UnFollow = async () => {
     try {
-      const res = await axios.delete(
-        `https://api.mandarin.weniv.co.kr/profile/${yourAccountname}/unfollow`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      await unfollowApi(yourAccountname, token);
       setFollow(!follow);
     } catch (err) {
       console.error("에러!", err);

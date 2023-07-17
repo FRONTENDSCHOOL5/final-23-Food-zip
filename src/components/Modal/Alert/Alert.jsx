@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   AlertDiv,
   AlertWrapArticle,
@@ -10,6 +9,9 @@ import {
   AlertMainBtn,
   AlertLineSpan,
 } from "./AlertStyle";
+import { postDeleteApi, postReportApi } from "../../../api/post";
+import { recommendDeleteApi } from "../../../api/recommend";
+import { commentDeleteApi, commentReportApi } from "../../../api/comment";
 
 export default function Alert({
   type,
@@ -31,12 +33,7 @@ export default function Alert({
   const handleDeletePost = async () => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`https://api.mandarin.weniv.co.kr/post/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-type": "application/json",
-        },
-      });
+      await postDeleteApi(postId, token);
       alertClose("post");
       navigate("/myprofile");
       modalClose("modification");
@@ -49,15 +46,7 @@ export default function Alert({
   const handleDeleteProduct = async () => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(
-        `https://api.mandarin.weniv.co.kr/product/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      await recommendDeleteApi(productId, token);
       alertClose("post");
       modalClose("modification");
       navigate("/myprofile");
@@ -71,15 +60,7 @@ export default function Alert({
   const handleDeleteComment = async () => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(
-        `https://api.mandarin.weniv.co.kr/post/${postId}/comments/${commentId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      await commentDeleteApi(postId, commentId, token);
       alertClose("comment");
       modalClose("delete");
       window.location.reload();
@@ -90,16 +71,7 @@ export default function Alert({
   const handleReportComment = async () => {
     const token = localStorage.getItem("token");
     try {
-      const report = await axios.post(
-        `https://api.mandarin.weniv.co.kr/post/${postId}/comments/${commentId}/report`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      await commentReportApi(postId, commentId, token);
       alertClose("report");
       modalClose("report");
       alert("해당 댓글을 신고하였습니다.");
@@ -110,16 +82,7 @@ export default function Alert({
   const handleReportPost = async () => {
     const token = localStorage.getItem("token");
     try {
-      const report = await axios.post(
-        `https://api.mandarin.weniv.co.kr/post/${postId}/report`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      await postReportApi(postId, token);
       alertClose("report");
       modalClose("report");
       alert("해당 게시글을 신고하였습니다.");

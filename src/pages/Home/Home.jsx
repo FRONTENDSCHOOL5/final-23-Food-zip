@@ -1,13 +1,10 @@
-import { useState } from "react";
-import React from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import EmptyHome from "../../components/Feed/EmptyHome";
 import Header from "../../components/common/Header/Header";
 import Navigation from "../../components/common/Nav/Navigation";
 import PostHome from "../../components/Feed/PostHome";
-import { useEffect } from "react";
-import axios from "axios";
 import Loading from "../Loading/Loading";
+import { feed } from "../../api/post";
 
 export default function Home() {
   const [myFeed, setMyFeed] = useState([]);
@@ -21,15 +18,7 @@ export default function Home() {
       setLoading(true);
       const token = localStorage.getItem("token");
       try {
-        const res = await axios.get(
-          `https://api.mandarin.weniv.co.kr/post/feed/?limit=Number&skip=Number`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-type": "application/json",
-            },
-          },
-        );
+        const res = await feed(token);
 
         if (res.data.posts.length === 0) {
           setIsEmptyFeed(true);

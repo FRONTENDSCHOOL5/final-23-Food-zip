@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import StarRating from "../StarRating/StarRating";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
@@ -14,6 +13,7 @@ import {
   EditContainer,
   ProductImage,
 } from "./RecommendEditStyle";
+import { getRecommendInfoApi, recommendEditApi } from "../../../api/recommend";
 
 export default function RecommendEdit({ closeModal, productId }) {
   const token = localStorage.getItem("token");
@@ -25,16 +25,8 @@ export default function RecommendEdit({ closeModal, productId }) {
 
   const fetchProductInfo = async () => {
     try {
-      const response = await axios.get(
-        `https://api.mandarin.weniv.co.kr/product/detail/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
-      const product = response.data.product;
+      const res = await getRecommendInfoApi(productId, token);
+      const product = res.data.product;
       setProductInfo(product);
     } catch (error) {
       console.error(error);
@@ -43,23 +35,7 @@ export default function RecommendEdit({ closeModal, productId }) {
   };
   const recommendEditUpload = async () => {
     try {
-      const res = await axios.put(
-        `https://api.mandarin.weniv.co.kr/product/${productId}`,
-        {
-          product: {
-            itemName: productInfo.itemName,
-            price: productInfo.price,
-            link: productInfo.link,
-            itemImage: productInfo.itemImage,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await recommendEditApi(productId, token, productInfo);
       const updatedProduct = res.data.product;
       setProductInfo(updatedProduct);
       closeModal();
@@ -71,12 +47,7 @@ export default function RecommendEdit({ closeModal, productId }) {
   };
 
   function handleUpload() {
-    recommendEditUpload(
-      productInfo.itemName,
-      productInfo.price,
-      productInfo.link,
-      productInfo.itemImage,
-    );
+    recommendEditUpload();
   }
   return (
     <ModalOverlay onClick={closeModal}>

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import FollowItem from "../../components/FollowItem/FollowItem";
 import Header from "../../components/common/Header/Header";
 import Navigation from "../../components/common/Nav/Navigation";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { FollowList, FollowListItem } from "./FollowerListStyle";
+import { followerListApi, followingListApi } from "../../api/follow";
 
 export default function FollowerList({ type, followType }) {
   const token = localStorage.getItem("token");
@@ -21,15 +21,7 @@ export default function FollowerList({ type, followType }) {
 
   const getFollowerList = async () => {
     try {
-      const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/profile/${accountname}/follower/?limit=Number&skip=Number`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await followerListApi(accountname, token);
       setFollowerList(res.data);
     } catch (err) {
       navigate("/error");
@@ -38,15 +30,7 @@ export default function FollowerList({ type, followType }) {
 
   const getFollowingList = async () => {
     try {
-      const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/profile/${accountname}/following/?limit=Number&skip=Number`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await followingListApi(accountname, token);
       setFollowingList(res.data);
     } catch (err) {
       navigate("/error");

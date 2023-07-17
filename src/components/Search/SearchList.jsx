@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import debounce from "lodash/debounce";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import {
   UserName,
   UserID,
 } from "./SearchListStyle";
+import { userSearch } from "../../api/search";
 
 export default function SearchList({ searchKeyword }) {
   const navigate = useNavigate();
@@ -36,31 +36,22 @@ export default function SearchList({ searchKeyword }) {
     fetchData(keyword);
   }, 300);
 
-  const fetchData = async keyword => {
-    if (!keyword) {
-      return;
-    } else {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `https://api.mandarin.weniv.co.kr/user/searchuser/?keyword=${keyword}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-type": "application/json",
-            },
-          },
-        );
-
-        const filteredData = response.data.filter(
-          item => !item.image.startsWith("https://mandarin.api.weniv"),
-        );
-        setSearchListData(filteredData);
-      } catch (error) {
-        navigate("/error");
+    const fetchData = async keyword => {
+      if (!keyword) {
+        return;
+      } else {
+        try {
+          const token = localStorage.getItem("token");
+          const res = await userSearch(keyword, token);
+          const filteredData = res.data.filter(
+            item => !item.image.startsWith("https://mandarin.api.weniv"),
+          );
+          setSearchListData(filteredData);
+        } catch (error) {
+          navigate("/error");
+        }
       }
-    }
-  };
+    };
 
   useEffect(() => {
     debouncedSearchKeyword(searchKeyword);
