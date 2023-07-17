@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDebounce } from "use-debounce";
+import debounce from "lodash/debounce";
 import { useNavigate } from "react-router-dom";
 import {
   SearchWrapper,
@@ -32,16 +32,17 @@ export default function SearchList({ searchKeyword }) {
   }
 
   const [searchListData, setSearchListData] = useState([]);
-  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 300);
+  const debouncedSearchKeyword = debounce(keyword => {
+    fetchData(keyword);
+  }, 300);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!debouncedSearchKeyword) {
+    const fetchData = async keyword => {
+      if (!keyword) {
         return;
       } else {
         try {
           const token = localStorage.getItem("token");
-          const res = await userSearch(debouncedSearchKeyword, token);
+          const res = await userSearch(keyword, token);
           const filteredData = res.data.filter(
             item => !item.image.startsWith("https://mandarin.api.weniv"),
           );
@@ -52,8 +53,9 @@ export default function SearchList({ searchKeyword }) {
       }
     };
 
-    fetchData();
-  }, [debouncedSearchKeyword]);
+  useEffect(() => {
+    debouncedSearchKeyword(searchKeyword);
+  }, [searchKeyword, debouncedSearchKeyword]);
 
   return (
     <SearchWrapper>

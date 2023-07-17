@@ -6,11 +6,6 @@ import PostHome from "../../components/Feed/PostHome";
 import Loading from "../Loading/Loading";
 import { feed } from "../../api/post";
 
-// const Container = styled.div`
-//   max-width: 390px;
-//   margin: 0 auto;
-//   background-color: #fff;
-// `;
 export default function Home() {
   const [myFeed, setMyFeed] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
