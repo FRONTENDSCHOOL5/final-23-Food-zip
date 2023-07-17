@@ -62,7 +62,7 @@ export default function DetailPost() {
     try {
       const res = await postInfoApi(selectedId ?? id, token);
       const post = res.data.post;
-      setMyPostInfo([post]);
+      setMyPostInfo(post);
       setShouldFetchPostInfo(false);
     } catch (error) {
       navigate("/error");

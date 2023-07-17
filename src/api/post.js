@@ -2,12 +2,15 @@ import axios from "axios";
 import { BASE_URL } from "./baseUrl";
 
 export const feed = async token => {
-  const res = await axios.get(`${BASE_URL}/post/feed`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-type": "application/json",
+  const res = await axios.get(
+    `${BASE_URL}/post/feed?limit=Number&skip=Number`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
     },
-  });
+  );
   return res;
 };
 
@@ -78,4 +81,36 @@ export const postReportApi = async (postId, token) => {
       },
     },
   );
+};
+
+export const postLikeApi = async (postId, token) => {
+  await axios.post(
+    `${BASE_URL}/post/${postId}/heart`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
+    },
+  );
+};
+
+export const postUnlikeApi = async (postId, token) => {
+  await axios.delete(`${BASE_URL}/post/${postId}/unheart`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+  });
+};
+
+export const userPostListApi = async (accountname, token) => {
+  const res = await axios.get(`${BASE_URL}/post/${accountname}/userpost`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+  });
+  return res;
 };
