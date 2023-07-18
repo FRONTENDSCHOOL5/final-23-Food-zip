@@ -40,6 +40,7 @@ export default function PostItem({
   }
   const postLike = async () => {
     const token = localStorage.getItem("token");
+    console.log("check");
     try {
       if (infoToIterate.hearted) {
         await axios.delete(

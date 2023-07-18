@@ -12,7 +12,7 @@ import {
 import { postDeleteApi, postReportApi } from "../../../api/post";
 import { recommendDeleteApi } from "../../../api/recommend";
 import { commentDeleteApi, commentReportApi } from "../../../api/comment";
-
+import { userInfoApi } from "../../../api/user";
 export default function Alert({
   type,
   alertClose,
@@ -37,7 +37,11 @@ export default function Alert({
       alertClose("post");
       navigate("/myprofile");
       modalClose("modification");
-      window.location.reload();
+      try {
+        await userInfoApi(token);
+      } catch (error) {
+        console.error("Failed to fetch post info:", error);
+      }
     } catch (error) {
       console.error("Delete request failed", error);
       navigate("/error");
@@ -47,7 +51,7 @@ export default function Alert({
     const token = localStorage.getItem("token");
     try {
       await recommendDeleteApi(productId, token);
-      alertClose("post");
+      alertClose("product");
       modalClose("modification");
       navigate("/myprofile");
       window.location.reload();

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PostImgPrev from "../../components/Post/ImgPrev/PostImgPrev";
 import Header from "../../components/common/Header/Header";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { imgUpload } from "../../api/imgUpload";
-import { postUploadApi } from "../../api/post";
+import { useEffect } from "react";
 
 const StyledContainer = styled.section`
   width: 100%;
@@ -42,18 +42,43 @@ export default function MakePost() {
   const handleImageUrlChange = (file, url) => {
     setImgFile(file);
     setImgUrl(url);
+    console.log("url object in MakePost:", url);
+    console.log("File object in MakePost:", file);
   };
-  const uploadPost = async content => {
+  const uploadPost = async (url, content) => {
     try {
       const formData = new FormData();
-      formData.append("image", imgFile);
-      const uploadResponse = await imgUpload(formData);
+      formData.append("image", imgUrl);
+      console.log("up", formData);
+      const uploadResponse = await axios.post(
+        "https://api.mandarin.weniv.co.kr/image/uploadfile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
       let imageUrl = "";
       if (uploadResponse.data.filename) {
         imageUrl =
           "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
       }
-      await postUploadApi(content, imageUrl, token);
+      await axios.post(
+        "https://api.mandarin.weniv.co.kr/post",
+        {
+          post: {
+            content: content,
+            image: imageUrl,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
       navigate("/myprofile");
     } catch (error) {
       console.error(error);
@@ -62,7 +87,7 @@ export default function MakePost() {
   };
   const handleUpload = () => {
     if (isValid) {
-      uploadPost(content);
+      uploadPost(imgUrl, content);
     } else {
       alert("게시글이 작성되지 않았습니다.");
     }

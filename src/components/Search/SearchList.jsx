@@ -36,22 +36,22 @@ export default function SearchList({ searchKeyword }) {
     fetchData(keyword);
   }, 300);
 
-    const fetchData = async keyword => {
-      if (!keyword) {
-        return;
-      } else {
-        try {
-          const token = localStorage.getItem("token");
-          const res = await userSearch(keyword, token);
-          const filteredData = res.data.filter(
-            item => !item.image.startsWith("https://mandarin.api.weniv"),
-          );
-          setSearchListData(filteredData);
-        } catch (error) {
-          navigate("/error");
-        }
+  const fetchData = async keyword => {
+    if (!keyword) {
+      return;
+    } else {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await userSearch(keyword, token);
+        const filteredData = res.data.filter(
+          item => !item.image.startsWith("https://mandarin.api.weniv"),
+        );
+        setSearchListData(filteredData);
+      } catch (error) {
+        navigate("/error");
       }
-    };
+    }
+  };
 
   useEffect(() => {
     debouncedSearchKeyword(searchKeyword);

@@ -33,7 +33,7 @@ export default function PostImgPrev({ onImageUrlChange }) {
     }
     const options = {
       maxSizeMB: 0.7,
-      maxWidthOrHeight: 500,
+      maxWidthOrHeight: 1000,
       useWebWorker: true,
     };
     try {
@@ -45,9 +45,10 @@ export default function PostImgPrev({ onImageUrlChange }) {
       });
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const base64data = reader.result;
-        const imageUrl = formDataHandler(base64data);
+        const imageUrl = await formDataHandler(base64data);
+        console.log("File object in MakePost:", file);
         onImageUrlChange(file, imageUrl);
         setImgUrl(imageUrl);
       };
@@ -55,6 +56,7 @@ export default function PostImgPrev({ onImageUrlChange }) {
       console.log(error);
     }
   };
+  // 9496 5612
   const formDataHandler = async dataURI => {
     const byteString = atob(dataURI.split(",")[1]);
     const ab = new ArrayBuffer(byteString.length);
@@ -64,6 +66,7 @@ export default function PostImgPrev({ onImageUrlChange }) {
     }
     const blob = new Blob([ab], { type: "image/jpeg" });
     const file = new File([blob], "image.jpg", { type: "image/jpeg" });
+    console.log("File object:", file); // 이 부분을 추가합니다.
     return file;
   };
   const removeImg = () => {
