@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
   HeaderWrap,
   HeaderLayoutSection,
@@ -16,7 +16,11 @@ import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import RandomRecommend from "../../RandomRecommend/RandomRecommend";
-import { Context } from "../../../components/RandomRecommend/RandomRecommendContext";
+import { useRecoilState } from "recoil";
+import {
+  randomFoodState,
+  isAnimationActiveState,
+} from "../../../atoms/randomFoodAtom";
 
 export default function Header({
   type,
@@ -39,9 +43,14 @@ export default function Header({
       setRandomShow(false);
     }
   }
-
-  const [handleRecommendation] = useContext(Context);
-
+  const [randomFood, setRandomFood] = useRecoilState(randomFoodState);
+  const [isAnimationActive, setIsAnimationActive] = useRecoilState(
+    isAnimationActiveState,
+  );
+  const handleRecommendation = () => {
+    setRandomFood("");
+    setIsAnimationActive(true);
+  };
   function randomOpen() {
     setRandomShow(true);
     handleRecommendation();
@@ -49,7 +58,6 @@ export default function Header({
       setRandomShow(false);
     }, 6800);
   }
-
   function renderHeaderLeftBtn() {
     return (
       <HeaderLeftBtn type="button">
@@ -61,7 +69,6 @@ export default function Header({
       </HeaderLeftBtn>
     );
   }
-
   function renderHeaderText(text) {
     return (
       <HeaderSpan>
