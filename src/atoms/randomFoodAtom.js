@@ -7,5 +7,5 @@ export const randomFoodState = atom({
 
 export const isAnimationActiveState = atom({
   key: "isAnimationActiveState",
-  default: false,
+  default: true,
 });

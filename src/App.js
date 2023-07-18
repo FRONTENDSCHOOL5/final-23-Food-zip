@@ -1,9 +1,7 @@
 import { GlobalStyle } from "./components/styles/Globalstyle";
 import styled from "styled-components";
 import Routers from "./routes/Routers";
-import RandomRecommendContext from "./components/RandomRecommend/RandomRecommendContext";
 import { RecoilRoot } from "recoil";
-import RandomRecommend from "./components/RandomRecommend/RandomRecommend";
 
 // const Container = styled.div`
 //   max-width: 390px;

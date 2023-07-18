@@ -49,7 +49,12 @@ export default function Header({
   );
   const handleRecommendation = () => {
     setRandomFood("");
-    setIsAnimationActive(true);
+    setTimeout(() => {
+      if (!isAnimationActive) {
+        setRandomFood("");
+        setIsAnimationActive(true);
+      }
+    }, 1200);
   };
   function randomOpen() {
     setRandomShow(true);
