@@ -27,9 +27,9 @@ export default function Modal({
       setAlertShow(false);
     }
   }
-  function alertOpen(customType) {
+  function alertOpen(type) {
     setAlertShow(true);
-    setAlertType(customType || type);
+    setAlertType(type);
   }
   function handlerOpenMap() {
     navigate("/map", {
