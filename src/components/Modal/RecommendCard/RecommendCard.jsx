@@ -16,7 +16,7 @@ import {
 } from "./RecommendCardStyle";
 import { getRecommendInfoApi } from "../../../api/recommend";
 
-export default function RecommendCard({ cardClose, id, modalOpen }) {
+export default function RecommendCard({ cardClose, id }) {
   const location = useLocation();
   const { accountname } = location.state || {};
   const [recommendInfo, setRecommendInfo] = useState({
@@ -57,7 +57,6 @@ export default function RecommendCard({ cardClose, id, modalOpen }) {
       setModalShow(false);
     }
   }
-
   function modalOpen() {
     setModalShow(true);
   }
