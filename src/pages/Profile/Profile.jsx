@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import ProfileInformation from "../../components/Profile/ProfileInformation/ProfileInformation";
 import PostList from "../../components/Post/PostList/PostList";
 import RecommendList from "../../components/Profile/RecommendList/RecommendList";

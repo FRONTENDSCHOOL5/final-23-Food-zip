@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
 import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
@@ -17,19 +16,21 @@ import {
   GridItemList,
   GridItemWrap,
 } from "./PostListStyle";
+import { userPostListApi } from "../../../api/post";
+
 export default function PostList({ modalOpen }) {
   const [viewMode, setViewMode] = useState("list");
   const location = useLocation();
+  const navigate = useNavigate();
   const { accountname } = location.state || {};
-
   const handleViewModeChange = mode => {
     setViewMode(mode);
   };
-
   const [postInfo, setPostInfo] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
   const [hasPosts, setHasPosts] = useState(false);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
+
   useEffect(() => {
     getUserInfo();
   }, [location]);
@@ -37,18 +38,10 @@ export default function PostList({ modalOpen }) {
   const getUserInfo = async () => {
     const token = localStorage.getItem("token");
     try {
-      let apiUrl = `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost`;
-
-      if (!accountname) {
-        const loggedInAccountname = localStorage.getItem("accountname");
-        apiUrl = `https://api.mandarin.weniv.co.kr/post/${loggedInAccountname}/userpost`;
-      }
-      const res = await axios.get(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-type": "application/json",
-        },
-      });
+      const res = await userPostListApi(
+        accountname || localStorage.getItem("accountname"),
+        token,
+      );
       const posts = res.data.post;
       if (posts.length === 0) {
         setHasPosts(false);
@@ -64,8 +57,6 @@ export default function PostList({ modalOpen }) {
       console.log("error");
     }
   };
-
-  const navigate = useNavigate();
 
   function moveDetail(id, item) {
     navigate(`/detailpost`, {

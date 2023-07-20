@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   BtnMore,
   BtnComment,
@@ -19,6 +18,7 @@ import {
   PostUserName,
   Container,
 } from "./PostItemStyle";
+import { postLikeApi, postUnlikeApi } from "../../../api/post";
 export default function PostItem({
   postInfo,
   modalOpen,
@@ -42,26 +42,9 @@ export default function PostItem({
     const token = localStorage.getItem("token");
     try {
       if (infoToIterate.hearted) {
-        await axios.delete(
-          `https://api.mandarin.weniv.co.kr/post/${infoToIterate.id}/unheart`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-type": "application/json",
-            },
-          },
-        );
+        await postUnlikeApi(infoToIterate.id, token);
       } else {
-        await axios.post(
-          `https://api.mandarin.weniv.co.kr/post/${infoToIterate.id}/heart`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-type": "application/json",
-            },
-          },
-        );
+        await postLikeApi(infoToIterate.id, token);
       }
       if (getUserInfo) getUserInfo();
       if (fetchPostInfo) fetchPostInfo();

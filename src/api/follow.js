@@ -24,21 +24,27 @@ export const unfollowApi = async (accountname, token) => {
 };
 
 export const followerListApi = async (accountname, token) => {
-  const res = await axios.get(`${BASE_URL}/profile/${accountname}/follower`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const res = await axios.get(
+    `${BASE_URL}/profile/${accountname}/follower?limit=Number&skip=Number`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     },
-  });
+  );
   return res;
 };
 
 export const followingListApi = async (accountname, token) => {
-  const res = await axios.get(`${BASE_URL}/profile/${accountname}/following`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const res = await axios.get(
+    `${BASE_URL}/profile/${accountname}/following?limit=Number&skip=Number`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     },
-  });
+  );
   return res;
 };

@@ -14,7 +14,7 @@ export const recommendListApi = async (accountname, token) => {
 export const recommendUploadApi = async (
   restaurantname,
   rating,
-  address,
+  selectedAddress,
   image,
   token,
 ) => {
@@ -24,7 +24,7 @@ export const recommendUploadApi = async (
       product: {
         itemName: restaurantname,
         price: rating,
-        link: address,
+        link: selectedAddress,
         itemImage: image,
       },
     },
