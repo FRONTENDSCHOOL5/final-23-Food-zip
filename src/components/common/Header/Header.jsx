@@ -38,6 +38,7 @@ export default function Header({
   }
 
   const [randomShow, setRandomShow] = useState(false);
+  const [isRandomOpening, setIsRandomOpening] = useState(false);
   function randomClose(e) {
     if (e.target === e.currentTarget) {
       setRandomShow(false);
@@ -57,11 +58,15 @@ export default function Header({
     }, 1200);
   };
   function randomOpen() {
-    setRandomShow(true);
-    handleRecommendation();
-    setTimeout(() => {
-      setRandomShow(false);
-    }, 6800);
+    if (!isRandomOpening) {
+      setIsRandomOpening(true);
+      setRandomShow(true);
+      handleRecommendation();
+      setTimeout(() => {
+        setRandomShow(false);
+        setIsRandomOpening(false);
+      }, 6800);
+    }
   }
   function renderHeaderLeftBtn() {
     return (
