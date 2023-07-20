@@ -114,7 +114,7 @@ export default function MakeRecommend() {
 
   const handleUpload = () => {
     if (isValid) {
-      uploadRecommend(imgUrl, restaurantname, rating);
+      uploadRecommend(imgUrl, restaurantname, rating, selectedAddress);
     } else {
       alert("입력이 안된 부분이 있습니다.");
     }

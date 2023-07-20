@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
   HeaderWrap,
   HeaderLayoutSection,
@@ -16,7 +16,11 @@ import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import RandomRecommend from "../../RandomRecommend/RandomRecommend";
-import { Context } from "../../../components/RandomRecommend/RandomRecommendContext";
+import { useRecoilState } from "recoil";
+import {
+  randomFoodState,
+  isAnimationActiveState,
+} from "../../../atoms/randomFoodAtom";
 
 export default function Header({
   type,
@@ -34,22 +38,36 @@ export default function Header({
   }
 
   const [randomShow, setRandomShow] = useState(false);
+  const [isRandomOpening, setIsRandomOpening] = useState(false);
   function randomClose(e) {
     if (e.target === e.currentTarget) {
       setRandomShow(false);
     }
   }
-
-  const [handleRecommendation] = useContext(Context);
-
-  function randomOpen() {
-    setRandomShow(true);
-    handleRecommendation();
+  const [randomFood, setRandomFood] = useRecoilState(randomFoodState);
+  const [isAnimationActive, setIsAnimationActive] = useRecoilState(
+    isAnimationActiveState,
+  );
+  const handleRecommendation = () => {
+    setRandomFood("");
     setTimeout(() => {
-      setRandomShow(false);
-    }, 6800);
+      if (!isAnimationActive) {
+        setRandomFood("");
+        setIsAnimationActive(true);
+      }
+    }, 1200);
+  };
+  function randomOpen() {
+    if (!isRandomOpening) {
+      setIsRandomOpening(true);
+      setRandomShow(true);
+      handleRecommendation();
+      setTimeout(() => {
+        setRandomShow(false);
+        setIsRandomOpening(false);
+      }, 6800);
+    }
   }
-
   function renderHeaderLeftBtn() {
     return (
       <HeaderLeftBtn type="button">
@@ -61,7 +79,6 @@ export default function Header({
       </HeaderLeftBtn>
     );
   }
-
   function renderHeaderText(text) {
     return (
       <HeaderSpan>

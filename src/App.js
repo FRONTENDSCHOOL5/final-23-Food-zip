@@ -1,7 +1,7 @@
 import { GlobalStyle } from "./components/styles/Globalstyle";
 import styled from "styled-components";
 import Routers from "./routes/Routers";
-import RandomRecommendContext from "./components/RandomRecommend/RandomRecommendContext";
+import { RecoilRoot } from "recoil";
 
 // const Container = styled.div`
 //   max-width: 390px;
@@ -12,12 +12,12 @@ import RandomRecommendContext from "./components/RandomRecommend/RandomRecommend
 
 function App() {
   return (
-    <RandomRecommendContext>
+    <RecoilRoot>
       {/* <Container> */}
       <GlobalStyle />
       <Routers />
       {/* </Container> */}
-    </RandomRecommendContext>
+    </RecoilRoot>
   );
 }
 export default App;

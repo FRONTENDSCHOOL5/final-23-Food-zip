@@ -14,6 +14,7 @@ export default function Profile({ type }) {
   const [modalType, setModalType] = useState("setting");
   const [selectedId, setSelectedId] = useState(null);
   const [cardClosed, setCardClosed] = useState(false);
+
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
@@ -32,9 +33,13 @@ export default function Profile({ type }) {
     }
   }
 
-  function alertOpen() {
-    setAlertShow(true);
-  }
+  // function alertOpen() {
+  //   setAlertShow(true);
+  // }
+  // function alertOpen(customType) {
+  //   setAlertShow(true);
+  //   setAlertType(customType || type);
+  // }
 
   const [cardShow, setCardShow] = useState(false);
   function cardClose(e) {
@@ -61,13 +66,7 @@ export default function Profile({ type }) {
         <ProfileInformation type={type} />
         <RecommendList cardOpen={cardOpen} cardClosed={cardClosed} />
         <PostList />
-        {modalShow && (
-          <Modal
-            type={modalType}
-            modalClose={modalClose}
-            alertOpen={alertOpen}
-          />
-        )}
+        {modalShow && <Modal type={modalType} modalClose={modalClose} />}
         {alertShow && <Alert type="logout" alertClose={alertClose} />}
         {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
       </main>

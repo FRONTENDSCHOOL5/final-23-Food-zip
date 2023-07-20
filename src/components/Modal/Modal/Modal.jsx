@@ -11,7 +11,6 @@ import {
 export default function Modal({
   type,
   modalClose,
-  alertOpen,
   postId,
   productId,
   commentId,
@@ -28,12 +27,10 @@ export default function Modal({
       setAlertShow(false);
     }
   }
-
-  function alertOpen(customType) {
+  function alertOpen(type) {
     setAlertShow(true);
-    setAlertType(customType || type);
+    setAlertType(type);
   }
-
   function handlerOpenMap() {
     navigate("/map", {
       state: {
@@ -41,7 +38,6 @@ export default function Modal({
       },
     });
   }
-
   const UI = {
     setting: (
       <ModalWrapArticle>
