@@ -55,9 +55,12 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
             onClick={() => cardOpen(recommendation.id)}
           >
             <RecommendLiBtn type="button">
-              <RecommendListImg src={recommendation.itemImage} alt="" />
+              <RecommendListImg
+                src={recommendation.itemImage}
+                alt="추천맛집 사진"
+              />
               <RecommendNameP>{recommendation.itemName}</RecommendNameP>
-              <RecommendStarImg src={ImgStar} alt="" />
+              <RecommendStarImg src={ImgStar} alt="별평점" />
               <RecommendScoreSpan>{recommendation.price}.0</RecommendScoreSpan>
             </RecommendLiBtn>
           </li>

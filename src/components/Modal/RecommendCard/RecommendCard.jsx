@@ -29,6 +29,7 @@ export default function RecommendCard({ cardClose, id }) {
   const navigation = useNavigate();
   const [recommendEditModalOpen, setRecommendEditModalOpen] = useState(false);
   const [shouldFetchProductInfo, setShouldFetchProductInfo] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   useEffect(() => {
     getUserInfo();
   }, [id]);
@@ -51,7 +52,6 @@ export default function RecommendCard({ cardClose, id }) {
     }
   };
 
-  const [modalShow, setModalShow] = useState(false);
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModalShow(false);
