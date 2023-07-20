@@ -47,6 +47,7 @@ export default function MakePost() {
   };
   const uploadPost = async (url, content) => {
     try {
+      console.log(imgUrl);
       const formData = new FormData();
       formData.append("image", imgUrl);
       console.log("up", formData);

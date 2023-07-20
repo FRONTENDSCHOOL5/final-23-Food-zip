@@ -41,7 +41,7 @@ export default function RecommendImgPrev({
       return;
     }
     const options = {
-      maxSizeMB: 2,
+      maxSizeMB: 0.7,
       maxWidthOrHeight: 700,
       useWebWorker: true,
     };
@@ -54,10 +54,10 @@ export default function RecommendImgPrev({
       });
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const base64data = reader.result;
-        const imageUrl = formDataHandler(base64data);
-        onRecommendImageUrlChange(file, base64data);
+        const imageUrl = await formDataHandler(base64data);
+        onRecommendImageUrlChange(file, imageUrl);
         setImgUrl(imageUrl);
       };
     } catch (error) {

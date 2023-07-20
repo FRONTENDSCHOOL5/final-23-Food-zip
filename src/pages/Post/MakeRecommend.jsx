@@ -93,7 +93,7 @@ export default function MakeRecommend() {
   const uploadRecommend = async () => {
     try {
       const formData = new FormData();
-      formData.append("image", imgFile);
+      formData.append("image", imgUrl);
       const uploadResponse = await imgUpload(formData);
       const imageUrl =
         "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;

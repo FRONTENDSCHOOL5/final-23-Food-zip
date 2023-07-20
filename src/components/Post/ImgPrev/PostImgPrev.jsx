@@ -32,8 +32,8 @@ export default function PostImgPrev({ onImageUrlChange }) {
       return;
     }
     const options = {
-      maxSizeMB: 0.7,
-      maxWidthOrHeight: 1000,
+      maxSizeMB: 0.5,
+      maxWidthOrHeight: 700,
       useWebWorker: true,
     };
     try {
