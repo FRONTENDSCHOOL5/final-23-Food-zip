@@ -25,8 +25,10 @@ export default function PostItem({
   otherInfo,
   getUserInfo,
   commentCnt,
-  getOtherInfo,
   fetchPostInfo,
+  getFeed,
+  options,
+  getOtherInfo,
 }) {
   const infoToIterate = postInfo || otherInfo;
   const navigate = useNavigate();
@@ -49,13 +51,12 @@ export default function PostItem({
       }
       if (getUserInfo) getUserInfo();
       if (fetchPostInfo) fetchPostInfo();
-      if (getOtherInfo) getOtherInfo();
+      if (getFeed) getFeed(options);
     } catch (error) {
       console.error(error);
       return false;
     }
   };
-
   function moveProfile(accountname) {
     const where = localStorage.getItem("accountname");
     if (accountname === where) {

@@ -5,34 +5,64 @@ import Navigation from "../../components/common/Nav/Navigation";
 import PostHome from "../../components/Feed/PostHome";
 import Loading from "../Loading/Loading";
 import { feed } from "../../api/post";
+import { useInView } from "react-intersection-observer";
 
 export default function Home() {
   const [myFeed, setMyFeed] = useState([]);
-  const [authorInfo, setAuthorInfo] = useState([]);
+  // const [authorInfo, setAuthorInfo] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isEmptyFeed, setIsEmptyFeed] = useState(false); // 새로운 상태 변수
-  const [page, setPage] = useState(1);
+  // const [isEmptyFeed, setIsEmptyFeed] = useState(false); // 새로운 상태 변수
+  // const [page, setPage] = useState(1);
+  const [skip, setSkip] = useState(0);
+  const [infiniteScrollRef, inView] = useInView();
+  const token = localStorage.getItem("token");
+  const options = { token, limit: 10, skip };
+  const [otherInfo, setOtherInfo] = useState(myFeed);
+
+  const getFeed = async options => {
+    // setLoading(false);
+    console.log("getFeed 함수 실행");
+    const res = await feed(options);
+    setLoading(false);
+    console.log(
+      "options.skip: " +
+        options.skip +
+        ", posts.length: " +
+        res.data.posts.length,
+    );
+    setMyFeed(prev => [...prev, ...res.data.posts]);
+    return res;
+    // setSkip(options.skip + res.data.posts.length);
+    // console.log("1. myFeed: ", myFeed);
+  };
+
+  console.log("2. myFeed: ", myFeed);
+
+  const loadFeedMore = async () => {
+    const response = await getFeed(options);
+    console.log("res", response);
+    // setMyFeed(prev => [...prev, ...response.data.posts]);
+    setSkip(options.skip + response.data.posts.length);
+  };
+
+  console.log("!!", myFeed);
 
   useEffect(() => {
-    const getFeed = async () => {
-      setLoading(true);
-      const token = localStorage.getItem("token");
-      try {
-        const res = await feed(token);
+    setOtherInfo(myFeed);
+    console.log("실행되거라");
+  }, [myFeed]);
 
-        if (res.data.posts.length === 0) {
-          setIsEmptyFeed(true);
-        } else {
-          setMyFeed(prev => [...prev, ...res.data.posts]);
-          const authors = res.data.posts[0].author;
-          setAuthorInfo(authors);
-        }
+  useEffect(() => {
+    console.log("실행됨!");
+    if (inView) {
+      console.log("무한스크롤");
+      loadFeedMore();
+    }
+  }, [inView]);
 
-        setLoading(false);
-      } catch (err) {}
-    };
-    getFeed();
-  }, [page]);
+  useEffect(() => {
+    loadFeedMore();
+  }, []);
 
   return (
     <>
@@ -40,7 +70,10 @@ export default function Home() {
       {loading ? (
         <Loading />
       ) : myFeed.length > 1 ? (
-        <PostHome myFeed={myFeed} postInfo={myFeed} authorInfo={authorInfo} />
+        <>
+          <PostHome myFeed={myFeed} getFeed={getFeed} options={options} />
+          <div ref={infiniteScrollRef} />
+        </>
       ) : (
         <EmptyHome />
       )}
