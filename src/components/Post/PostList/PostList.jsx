@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
-import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
-import IconListOff from "../../../assets/images/icon-post-list-off.svg";
-import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import PostItem from "../PostItem/PostItem";
 import Modal from "../../Modal/Modal/Modal";
 import PostEdit from "../PostEdit/PostEdit";
@@ -17,8 +13,14 @@ import {
   GridItemWrap,
 } from "./PostListStyle";
 import { userPostListApi } from "../../../api/post";
+import sprite from "../../../assets/images/SpriteIcon.svg";
 
 export default function PostList({ modalOpen }) {
+  const SocialSVG = ({ id, color = "white", size = 26 }) => (
+    <svg fill={color} width={size} height={size}>
+      <use href={`${sprite}#${id}`} />
+    </svg>
+  );
   const [viewMode, setViewMode] = useState("list");
   const location = useLocation();
   const navigate = useNavigate();
@@ -100,18 +102,24 @@ export default function PostList({ modalOpen }) {
               type="button"
               onClick={() => handleViewModeChange("list")}
             >
-              <img
-                src={viewMode === "list" ? IconListOn : IconListOff}
-                alt="리스트형 아이콘"
+              <SocialSVG
+                id={
+                  viewMode === "list"
+                    ? "icon-post-list-on"
+                    : "icon-post-list-off"
+                }
               />
             </PostListBtn>
             <PostListBtn
               type="button"
               onClick={() => handleViewModeChange("album")}
             >
-              <img
-                src={viewMode === "album" ? IconAlbumOn : IconAlbumOff}
-                alt="앨범형 아이콘"
+              <SocialSVG
+                id={
+                  viewMode === "album"
+                    ? "icon-post-album-on"
+                    : "icon-post-album-off"
+                }
               />
             </PostListBtn>
           </PostListSection>

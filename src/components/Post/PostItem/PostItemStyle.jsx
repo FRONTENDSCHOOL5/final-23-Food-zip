@@ -75,10 +75,7 @@ const BtnComment = styled.button`
   gap: 6px;
   color: #767676;
 `;
-const BtnImg = styled.img`
-  width: 20px;
-  height: 20px;
-`;
+
 const BtnMore = styled.button`
   width: 18px;
   height: 18px;
@@ -91,7 +88,6 @@ const BtnMore = styled.button`
 export {
   BtnMore,
   BtnComment,
-  BtnImg,
   BtnLike,
   PostBtnBox,
   PostContent,

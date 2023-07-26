@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import {
   BtnMore,
   BtnComment,
-  BtnImg,
   BtnLike,
   PostBtnBox,
   PostContent,
@@ -19,6 +18,8 @@ import {
   Container,
 } from "./PostItemStyle";
 import { postLikeApi, postUnlikeApi } from "../../../api/post";
+import sprite from "../../../assets/images/SpriteIcon.svg";
+
 export default function PostItem({
   postInfo,
   modalOpen,
@@ -28,6 +29,20 @@ export default function PostItem({
   getOtherInfo,
   fetchPostInfo,
 }) {
+  const SocialSVG = ({
+    id,
+    color = "white",
+    size = 20,
+    strokeColor = "#767676",
+    onClick,
+  }) => (
+    <div onClick={onClick}>
+      <svg fill={color} width={size} height={size} stroke={strokeColor}>
+        <use href={`${sprite}#${id}`} style={{ stroke: "strokeColor" }} />
+      </svg>
+    </div>
+  );
+
   const infoToIterate = postInfo || otherInfo;
   const navigate = useNavigate();
   function moveDetail(id) {
@@ -107,35 +122,19 @@ export default function PostItem({
             <PostBtnBox>
               <BtnLike onClick={() => postLike(infoToIterate.id)}>
                 {infoToIterate.hearted ? (
-                  <BtnImg
-                    src={
-                      require("../../../assets/images/icon-heart-fill.svg")
-                        .default
-                    }
-                    alt="게시글 좋아요"
-                  />
+                  <SocialSVG id="icon-heart" color="red" strokeColor="red" />
                 ) : (
-                  <BtnImg
-                    src={
-                      require("../../../assets/images/icon-heart.svg").default
-                    }
-                    alt="게시글 좋아요"
-                  />
+                  <SocialSVG id="icon-heart" />
                 )}
                 {infoToIterate.heartCount}
               </BtnLike>
+
               <BtnComment
                 onClick={() => {
                   moveDetail(infoToIterate.id);
                 }}
               >
-                <BtnImg
-                  src={
-                    require("../../../assets/images/icon-message-circle-1.svg")
-                      .default
-                  }
-                  alt="게시글 댓글"
-                />
+                <SocialSVG id="icon-message-circle-1" />
                 {commentCnt || infoToIterate.comments.length}
               </BtnComment>
             </PostBtnBox>

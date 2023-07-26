@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
-import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import RecommendEdit from "../../Post/PostEdit/RecommendEdit";
 import {
@@ -15,8 +14,14 @@ import {
   RecommendCloseBtn,
 } from "./RecommendCardStyle";
 import { getRecommendInfoApi } from "../../../api/recommend";
+import sprite from "../../../assets/images/SpriteIcon.svg";
 
 export default function RecommendCard({ cardClose, id }) {
+  const SocialSVG = ({ id, color = "white", size = 22 }) => (
+    <svg fill={color} width={size} height={size}>
+      <use href={`${sprite}#${id}`} />
+    </svg>
+  );
   const location = useLocation();
   const { accountname } = location.state || {};
   const [recommendInfo, setRecommendInfo] = useState({
@@ -84,7 +89,7 @@ export default function RecommendCard({ cardClose, id }) {
           <RecommendScoreSpan>{recommendInfo.price}.0</RecommendScoreSpan>
           <RecommendLocationP>{recommendInfo.link}</RecommendLocationP>
           <RecommendMoreBtn type="button" onClick={modalOpen}>
-            <img src={IconMoreVertical} alt="더보기 아이콘" />
+            <SocialSVG id="icon-more-vertical" />
           </RecommendMoreBtn>
           <RecommendCloseBtn type="button" onClick={cardClose}>
             &#60; 닫기

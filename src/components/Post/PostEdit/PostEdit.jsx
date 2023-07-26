@@ -14,7 +14,16 @@ import {
 } from "./PostEditStyle";
 import { postEditApi, postInfoApi } from "../../../api/post";
 import { imgUpload } from "../../../api/imgUpload";
+import sprite from "../../../assets/images/SpriteIcon.svg";
+
 export default function PostEdit({ closeModal, postId }) {
+  const SocialSVG = ({ id, color = "white", size = 24, onClick }) => (
+    <div onClick={onClick}>
+      <svg fill={color} width={size} height={size}>
+        <use href={`${sprite}#${id}`} />
+      </svg>
+    </div>
+  );
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [postInfo, setPostInfo] = useState({});
@@ -81,11 +90,7 @@ export default function PostEdit({ closeModal, postId }) {
         <EditContainer>
           <HeaderLayoutDiv>
             <HeaderLeftBtn type="button">
-              <img
-                src={IconArrowLeft}
-                alt="뒤로가기 아이콘"
-                onClick={closeModal}
-              />
+              <SocialSVG id="icon-arrow-left" onClick={closeModal} />
             </HeaderLeftBtn>
             <Button
               type="submit"

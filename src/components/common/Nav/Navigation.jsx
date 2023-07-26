@@ -1,16 +1,15 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import homeIcon from "../../../assets/images/icon-home.svg";
-import editIcon from "../../../assets/images/icon-edit.svg";
-import fillHomeIcon from "../../../assets/images/icon-home-fill.svg";
-import messageIcon from "../../../assets/images/icon-message-circle.svg";
-import fillMessageIcon from "../../../assets/images/icon-message-circle-fill.svg";
-import userIcon from "../../../assets/images/icon-user.svg";
-import fillUserIcon from "../../../assets/images/icon-user-fill.svg";
 import { NavWrapper, NavList, NavLink, StyledNavText } from "./NavigationStyle";
+import sprite from "../../../assets/images/SpriteIcon.svg";
 
 export default function Navigation() {
   const location = useLocation();
+  const SocialSVG = ({ id, color = "white", size = 24 }) => (
+    <svg fill={color} width={size} height={size}>
+      <use href={`${sprite}#${id}`} style={{ stroke: "currentColor" }} />
+    </svg>
+  );
 
   return (
     <NavWrapper>
@@ -22,9 +21,10 @@ export default function Navigation() {
               location.pathname === "/home" ? "active" : ""
             }`}
           >
-            <img
-              src={location.pathname === "/home" ? fillHomeIcon : homeIcon}
-              alt="홈"
+            <SocialSVG
+              id={
+                location.pathname === "/home" ? "icon-home-fill" : "icon-home"
+              }
             />
             <StyledNavText>홈</StyledNavText>
           </NavLink>
@@ -36,12 +36,12 @@ export default function Navigation() {
               location.pathname === "/chat" ? "active" : ""
             }`}
           >
-            <img
-              src={
-                location.pathname === "/chat" ? fillMessageIcon : messageIcon
+            <SocialSVG
+              id="icon-message-circle"
+              color={location.pathname === "/chat" ? "#286140" : "white"}
+              strokeColor={
+                location.pathname === "/chat" ? "#286140" : undefined
               }
-              alt="채팅"
-              width="24px"
             />
             <StyledNavText>채팅</StyledNavText>
           </NavLink>
@@ -53,7 +53,7 @@ export default function Navigation() {
               location.pathname === "/makepost" ? "active" : ""
             }`}
           >
-            <img src={editIcon} alt="게시물 작성" />
+            <SocialSVG id="icon-edit" />
             <StyledNavText>게시물 작성</StyledNavText>
           </NavLink>
         </li>
@@ -64,9 +64,12 @@ export default function Navigation() {
               location.pathname === "/myprofile" ? "active" : ""
             }`}
           >
-            <img
-              src={location.pathname === "/myprofile" ? fillUserIcon : userIcon}
-              alt="프로필"
+            <SocialSVG
+              id="icon-user"
+              color={location.pathname === "/myprofile" ? "#286140" : "white"}
+              strokeColor={
+                location.pathname === "/myprofile" ? "#286140" : undefined
+              }
             />
             <StyledNavText>프로필</StyledNavText>
           </NavLink>

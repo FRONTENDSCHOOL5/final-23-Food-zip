@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ImgStar from "../../../assets/images/star.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   RecommendWrap,
@@ -9,11 +8,16 @@ import {
   RecommendListImg,
   RecommendNameP,
   RecommendScoreSpan,
-  RecommendStarImg,
 } from "./RecommendListStyle";
 import { recommendListApi } from "../../../api/recommend";
+import sprite from "../../../assets/images/SpriteIcon.svg";
 
 export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
+  const SocialSVG = ({ id, color = "white", size = 15 }) => (
+    <svg fill={color} width={size} height={size}>
+      <use href={`${sprite}#${id}`} />
+    </svg>
+  );
   const [recommendInfo, setRecommendInfo] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,7 +64,7 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
                 alt="추천맛집 사진"
               />
               <RecommendNameP>{recommendation.itemName}</RecommendNameP>
-              <RecommendStarImg src={ImgStar} alt="별평점" />
+              <SocialSVG id="star" />
               <RecommendScoreSpan>{recommendation.price}.0</RecommendScoreSpan>
             </RecommendLiBtn>
           </li>

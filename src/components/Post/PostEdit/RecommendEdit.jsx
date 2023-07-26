@@ -14,8 +14,16 @@ import {
   ProductImage,
 } from "./RecommendEditStyle";
 import { getRecommendInfoApi, recommendEditApi } from "../../../api/recommend";
+import sprite from "../../../assets/images/SpriteIcon.svg";
 
 export default function RecommendEdit({ closeModal, productId }) {
+  const SocialSVG = ({ id, color = "white", size = 24, onClick }) => (
+    <div onClick={onClick}>
+      <svg fill={color} width={size} height={size}>
+        <use href={`${sprite}#${id}`} />
+      </svg>
+    </div>
+  );
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState({});
@@ -55,11 +63,7 @@ export default function RecommendEdit({ closeModal, productId }) {
         <EditContainer>
           <HeaderLayoutDiv>
             <HeaderLeftBtn type="button">
-              <img
-                src={IconArrowLeft}
-                alt="뒤로가기 아이콘"
-                onClick={closeModal}
-              />
+              <SocialSVG id="icon-arrow-left" onClick={closeModal} />
             </HeaderLeftBtn>
             <Button
               type="submit"
