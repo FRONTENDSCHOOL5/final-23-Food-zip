@@ -1,10 +1,11 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import Header from "../../../components/common/Header/Header";
 import ProfileForm from "../../../components/Profile/ProfileForm/ProfileForm";
-const Container = styled.div`
+import styled from "styled-components";
+import { userInfoApi } from "../../../api/user";
+
+const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,6 +14,7 @@ const Container = styled.div`
   background: #fff;
   height: 100vh;
 `;
+
 export default function ProfileEdit() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -29,14 +31,7 @@ export default function ProfileEdit() {
 
   const prevUserInfo = async () => {
     try {
-      const res = await axios.get(
-        "https://api.mandarin.weniv.co.kr/user/myinfo",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const res = await userInfoApi(token);
       const { image, username, accountname, intro } = res.data.user;
       setUserInfo({ image, username, accountname, intro });
     } catch (error) {

@@ -1,87 +1,36 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import IconAlbumOff from "../../../assets/images/icon-post-album-off.svg";
 import IconAlbumOn from "../../../assets/images/icon-post-album-on.svg";
 import IconListOff from "../../../assets/images/icon-post-list-off.svg";
 import IconListOn from "../../../assets/images/icon-post-list-on.svg";
 import PostItem from "../PostItem/PostItem";
-import Modal from "../../Modal/Modal";
+import Modal from "../../Modal/Modal/Modal";
 import PostEdit from "../PostEdit/PostEdit";
+import {
+  PostGridImg,
+  PostItemList,
+  PostListBtn,
+  PostListItem,
+  PostListSection,
+  GridItemList,
+  GridItemWrap,
+} from "./PostListStyle";
+import { userPostListApi } from "../../../api/post";
 
-const PostListDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 44px;
-  box-sizing: border-box;
-  background-color: white;
-  border-bottom: 1px solid #dbdbdb;
-`;
-
-const PostListBtn = styled.button`
-  margin-right: 16px;
-  box-sizing: border-box;
-  background-color: transparent;
-  border: 0;
-`;
-
-const PostItemList = styled.ul`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  margin: 16px 20px 60px;
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #dbdbdb;
-    border-radius: 50px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-`;
-
-const GridItemList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 114px);
-  gap: 8px;
-  padding: 16px 16px 80px 16px;
-  height: 100%;
-  min-height: 425px;
-  background-color: white;
-`;
-
-const PostGridImg = styled.button`
-  position: relative;
-  width: 114px;
-  height: 114px;
-  cursor: pointer;
-  display: ${props => (props.hasImage ? "none" : "block")};
-  & img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-export default function PostList({ post, modalOpen }) {
+export default function PostList({ modalOpen }) {
   const [viewMode, setViewMode] = useState("list");
   const location = useLocation();
+  const navigate = useNavigate();
   const { accountname } = location.state || {};
-
   const handleViewModeChange = mode => {
     setViewMode(mode);
   };
-
   const [postInfo, setPostInfo] = useState([]);
   const [authorInfo, setAuthorInfo] = useState([]);
   const [hasPosts, setHasPosts] = useState(false);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
+
   useEffect(() => {
     getUserInfo();
   }, [location]);
@@ -89,18 +38,10 @@ export default function PostList({ post, modalOpen }) {
   const getUserInfo = async () => {
     const token = localStorage.getItem("token");
     try {
-      let apiUrl = `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost/?limit=Number&skip=Number`;
-
-      if (!accountname) {
-        const loggedInAccountname = localStorage.getItem("accountname");
-        apiUrl = `https://api.mandarin.weniv.co.kr/post/${loggedInAccountname}/userpost/?limit=Number&skip=Number`;
-      }
-      const res = await axios.get(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-type": "application/json",
-        },
-      });
+      const res = await userPostListApi(
+        accountname || localStorage.getItem("accountname"),
+        token,
+      );
       const posts = res.data.post;
       if (posts.length === 0) {
         setHasPosts(false);
@@ -117,15 +58,11 @@ export default function PostList({ post, modalOpen }) {
     }
   };
 
-  const navigate = useNavigate();
-
-  function moveDetail(id) {
+  function moveDetail(id, item) {
     navigate(`/detailpost`, {
       state: {
         id: id,
-        postInfo: postInfo,
-        authorInfo: authorInfo,
-        accountname: accountname,
+        infoToIterate: item,
       },
     });
   }
@@ -153,11 +90,12 @@ export default function PostList({ post, modalOpen }) {
     setModalShow(false);
     getUserInfo();
   };
+
   return (
     <>
       {hasPosts && (
         <>
-          <PostListDiv>
+          <PostListSection>
             <PostListBtn
               type="button"
               onClick={() => handleViewModeChange("list")}
@@ -176,32 +114,35 @@ export default function PostList({ post, modalOpen }) {
                 alt="앨범형 아이콘"
               />
             </PostListBtn>
-          </PostListDiv>
+          </PostListSection>
           {viewMode === "list" ? (
             <PostItemList>
-              <PostItem
-                modalOpen={modalOpen}
-                postInfo={postInfo}
-                authorInfo={authorInfo}
-                getUserInfo={getUserInfo}
-              />
+              {postInfo.map(item => (
+                <PostListItem key={item.id}>
+                  <PostItem
+                    modalOpen={modalOpen}
+                    postInfo={item}
+                    getUserInfo={getUserInfo}
+                  />
+                </PostListItem>
+              ))}
             </PostItemList>
           ) : (
-            <GridItemList>
+            <GridItemWrap>
               {postInfo.map(item => (
-                <PostGridImg
-                  key={item.id}
-                  onClick={() => {
-                    moveDetail(item.id);
-                  }}
-                  hasImage={item.image === ""}
-                >
-                  {item.image !== "" && (
-                    <img src={item.image} alt="grid 이미지" />
-                  )}
-                </PostGridImg>
+                <GridItemList hasImage={item.image === ""} key={item.id}>
+                  <PostGridImg
+                    onClick={() => {
+                      moveDetail(item.id, item);
+                    }}
+                  >
+                    {item.image !== "" && (
+                      <img src={item.image} alt="grid 이미지" />
+                    )}
+                  </PostGridImg>
+                </GridItemList>
               ))}
-            </GridItemList>
+            </GridItemWrap>
           )}
         </>
       )}

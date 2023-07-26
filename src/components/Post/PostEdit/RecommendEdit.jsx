@@ -1,72 +1,20 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import StarRating from "../StarRating/StarRating";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
 import Button from "../../common/Button/Button";
-import StarRating from "../StarRating/StarRating";
 import { RecommendLabel } from "../../../pages/Post/MakeRecommend";
+import {
+  RecommendInfo,
+  ModalContent,
+  ModalOverlay,
+  HeaderLayoutDiv,
+  HeaderLeftBtn,
+  EditContainer,
+  ProductImage,
+} from "./RecommendEditStyle";
+import { getRecommendInfoApi, recommendEditApi } from "../../../api/recommend";
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const EditContainer = styled.form`
-  width: 300px;
-`;
-const ProductImage = styled.img`
-  display: block;
-  width: 100%;
-  height: 180px;
-  border-radius: 10px;
-  margin-bottom: 30px;
-`;
-const HeaderLayoutDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 48px;
-  border-bottom: 1px solid #dbdbdb;
-  box-sizing: border-box;
-  margin-bottom: 30px;
-  background-color: white;
-`;
-const HeaderLeftBtn = styled.button`
-  border: 0;
-  padding: 10px;
-  padding-left: 0;
-  background-color: transparent;
-`;
-const ModalContent = styled.div`
-  background-color: #fff;
-  padding: 0 20px 10px 20px;
-  border-radius: 5px;
-`;
-
-const RecommendInfo = styled.input`
-  display: block;
-  width: 300px;
-  box-sizing: border-box;
-  border: none;
-  box-shadow: 0 1px 0 0 #dedede;
-  height: 42px;
-  font-size: 14px;
-  margin: 0 auto 30px auto;
-  outline: none;
-  background: transparent;
-  padding: 6px 0 0;
-  &:focus {
-    border-bottom: #629678;
-  }
-`;
 export default function RecommendEdit({ closeModal, productId }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -77,16 +25,8 @@ export default function RecommendEdit({ closeModal, productId }) {
 
   const fetchProductInfo = async () => {
     try {
-      const response = await axios.get(
-        `https://api.mandarin.weniv.co.kr/product/detail/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
-      const product = response.data.product;
+      const res = await getRecommendInfoApi(productId, token);
+      const product = res.data.product;
       setProductInfo(product);
     } catch (error) {
       console.error(error);
@@ -95,23 +35,7 @@ export default function RecommendEdit({ closeModal, productId }) {
   };
   const recommendEditUpload = async () => {
     try {
-      const res = await axios.put(
-        `https://api.mandarin.weniv.co.kr/product/${productId}`,
-        {
-          product: {
-            itemName: productInfo.itemName,
-            price: productInfo.price,
-            link: productInfo.link,
-            itemImage: productInfo.itemImage,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await recommendEditApi(productId, token, productInfo);
       const updatedProduct = res.data.product;
       setProductInfo(updatedProduct);
       closeModal();
@@ -123,12 +47,7 @@ export default function RecommendEdit({ closeModal, productId }) {
   };
 
   function handleUpload() {
-    recommendEditUpload(
-      productInfo.itemName,
-      productInfo.price,
-      productInfo.link,
-      productInfo.itemImage,
-    );
+    recommendEditUpload();
   }
   return (
     <ModalOverlay onClick={closeModal}>

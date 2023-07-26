@@ -4,11 +4,6 @@ import Header from "../../components/common/Header/Header";
 import SearchList from "../../components/Search/SearchList";
 import Navigation from "../../components/common/Nav/Navigation";
 
-const Container = styled.div`
-  max-width: 390px;
-  margin: 0 auto;
-`;
-
 const List = styled.section`
   padding: 48px 0 60px 0;
   height: calc(100vh - 108px);
@@ -21,7 +16,8 @@ export default function Search() {
     setSearchKeyword(event.target.value);
   }
   return (
-    <Container>
+    <>
+      <h1 className="a11y-hidden">검색 페이지</h1>
       <Header
         type="search"
         searchKeyword={searchKeyword}
@@ -31,6 +27,6 @@ export default function Search() {
         <SearchList searchKeyword={searchKeyword} />
       </List>
       <Navigation />
-    </Container>
+    </>
   );
 }

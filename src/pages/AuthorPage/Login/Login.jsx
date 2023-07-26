@@ -25,12 +25,13 @@ const StyledLink = styled(Link)`
 `;
 export default function Login() {
   return (
-    <Section className="l-wrapper">
-      <LoginTitle>로그인</LoginTitle>
-      <LoginForm />
-      <StyledLink to="/signup" className="join-email">
-        이메일로 회원가입
-      </StyledLink>
-    </Section>
+    <>
+      <h1 className="a11y-hidden">로그인페이지</h1>
+      <Section>
+        <LoginTitle>로그인</LoginTitle>
+        <LoginForm />
+        <StyledLink to="/signup">이메일로 회원가입</StyledLink>
+      </Section>
+    </>
   );
 }

@@ -1,26 +1,15 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import FollowItem from "../../components/FollowItem/FollowItem";
 import Header from "../../components/common/Header/Header";
 import Navigation from "../../components/common/Nav/Navigation";
-import axios from "axios";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
-const FollowList = styled.ul`
-  padding: 60px 16px 64px;
-  background-color: #fff;
-`;
-
-const FollowListItem = styled.li`
-  margin-bottom: 12px;
-  cursor: pointer;
-`;
+import { FollowList, FollowListItem } from "./FollowerListStyle";
+import { followerListApi, followingListApi } from "../../api/follow";
 
 export default function FollowerList({ type, followType }) {
-  const location = useLocation();
   const token = localStorage.getItem("token");
+  const location = useLocation();
   const navigate = useNavigate();
   const accountname = location.state.accountname;
   const [followerList, setFollowerList] = useState([]);
@@ -32,15 +21,7 @@ export default function FollowerList({ type, followType }) {
 
   const getFollowerList = async () => {
     try {
-      const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/profile/${accountname}/follower/?limit=Number&skip=Number`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await followerListApi(accountname, token);
       setFollowerList(res.data);
     } catch (err) {
       navigate("/error");
@@ -49,15 +30,7 @@ export default function FollowerList({ type, followType }) {
 
   const getFollowingList = async () => {
     try {
-      const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/profile/${accountname}/following/?limit=Number&skip=Number`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await followingListApi(accountname, token);
       setFollowingList(res.data);
     } catch (err) {
       navigate("/error");

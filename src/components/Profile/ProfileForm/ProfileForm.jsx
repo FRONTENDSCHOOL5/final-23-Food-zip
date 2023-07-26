@@ -1,80 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import BasicProfileInput from "../../../assets/images/basic-profile-lg.svg";
-import ImgButton from "../../../assets/images/upload-file.svg";
-import styled from "styled-components";
-import { ButtonStyle } from "../../common/Button/Button";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-
-const ProfileInputForm = styled.form`
-  width: 322px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 16px;
-`;
-
-const ProfileImgDiv = styled.div`
-  position: relative;
-  margin: 0 auto;
-`;
-
-const ProfileInputImgButton = styled.button`
-  position: relative;
-  &::after {
-    content: "";
-    position: absolute;
-    width: 36px;
-    height: 36px;
-    bottom: 0;
-    right: 0;
-    transform: translateY(-30px);
-    background: url(${ImgButton}) no-repeat center / cover;
-  }
-`;
-
-const ProfileImg = styled.img`
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  margin: 30px 0;
-  object-fit: cover;
-`;
-
-const ProfileInput = styled.input`
-  display: none;
-`;
-
-const ProfileFormLabel = styled.label`
-  color: #767676;
-  position: relative;
-`;
-
-const ProfileFormInput = styled.input`
-  width: 100%;
-  display: block;
-  margin: 10px 0 8px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #dbdbdb;
-  font-size: 14px;
-  &::placeholder {
-    color: #dbdbdb;
-  }
-  &:focus {
-    outline: none;
-    border-bottom: 1px solid #286140;
-  }
-`;
-const StartButton = styled(ButtonStyle)`
-  margin-top: 18px;
-`;
-const StyledError = styled.small`
-  font-size: 12px;
-  color: red;
-  position: absolute;
-  bottom: -10px;
-`;
+import {
+  ProfileInputForm,
+  ProfileImgDiv,
+  ProfileInputImgButton,
+  ProfileImg,
+  ProfileInput,
+  ProfileFormLabel,
+  ProfileFormInput,
+  StartButton,
+  StyledError,
+} from "./ProfileFormStyle";
+import { imgUpload } from "../../../api/imgUpload";
+import { BASE_URL } from "../../../api/baseUrl";
+import { accountValid, signup } from "../../../api/auth";
+import { profileEdit } from "../../../api/profile";
 
 export default function ProfileForm({ userInfo, setUserInfo }) {
   const {
@@ -88,11 +30,9 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
   const token = localStorage.getItem("token");
   const location = useLocation();
   const navigate = useNavigate();
-  const defaultImg = "https://api.mandarin.weniv.co.kr/1687267818879.png";
   const [profileImg, setProfileImg] = useState(null);
   const fileInputRef = useRef(null);
   const data = location.state;
-
   useEffect(() => {
     if (location.pathname === "/myprofile/edit") {
       setValue("image", userInfo?.image || BasicProfileInput);
@@ -111,33 +51,18 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
     const formData = new FormData();
     const file = event.target.files[0];
     formData.append("image", file);
-    const res = await axios.post(
-      "https://api.mandarin.weniv.co.kr/image/uploadfile",
-      formData,
-      {
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-      },
-    );
-    const imgUrl = "https://api.mandarin.weniv.co.kr/" + res.data.filename;
-    setProfileImg(imgUrl);
+    await imgUpload(formData).then(res => {
+      const imgUrl = `${BASE_URL}/` + res.data.filename;
+      setProfileImg(imgUrl);
+    });
   };
 
-  const accountValid = async (newAccountName, currentAccountName) => {
+  const checkAccountValid = async (newAccountName, currentAccountName) => {
     if (newAccountName === currentAccountName) {
       return true;
     }
     try {
-      const res = await axios.post(
-        `https://api.mandarin.weniv.co.kr/user/accountnamevalid`,
-        { user: { accountname: newAccountName } },
-        {
-          headers: {
-            "Content-type": "application/json",
-          },
-        },
-      );
+      const res = await accountValid(newAccountName);
       if (res.data.message === "사용 가능한 계정ID 입니다.") {
         return true;
       } else if (res.data.message === "이미 가입된 계정ID 입니다.") {
@@ -150,50 +75,12 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
 
   const handleFormSubmit = async formData => {
     if (location.pathname === "/signup/profile") {
-      try {
-        const res = await axios.post(
-          "https://api.mandarin.weniv.co.kr/user/",
-          {
-            user: {
-              username: formData.username,
-              email: data.email,
-              password: data.password,
-              accountname: formData.accountname,
-              intro: formData.intro,
-              image: profileImg || defaultImg,
-            },
-          },
-          {
-            headers: {
-              "Content-type": "application/json",
-            },
-          },
-        );
-        navigate("/login");
-      } catch (err) {
-        alert(err.response.data.message);
-        console.log(err.response.data.message);
-      }
+      await signup(formData, data, profileImg).then(navigate("/login"));
     } else if (location.pathname === "/myprofile/edit") {
       try {
         setProfileImg(userInfo?.image || BasicProfileInput);
-        const res = await axios.put(
-          "https://api.mandarin.weniv.co.kr/user/",
-          {
-            user: {
-              username: formData.username,
-              accountname: formData.accountname,
-              intro: formData.intro,
-              image: profileImg || userInfo?.image,
-            },
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-type": "application/json",
-            },
-          },
-        );
+        const image = profileImg || userInfo?.image;
+        const res = await profileEdit(formData, image, token);
         localStorage.setItem("_id", res.data.user._id);
         localStorage.setItem("accountname", formData.accountname);
         navigate("/myprofile");
@@ -264,7 +151,10 @@ export default function ProfileForm({ userInfo, setUserInfo }) {
             },
             validate: {
               uniqueAccount: async value => {
-                const result = await accountValid(value, userInfo?.accountname);
+                const result = await checkAccountValid(
+                  value,
+                  userInfo?.accountname,
+                );
                 return result === true || result;
               },
             },

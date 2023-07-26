@@ -1,76 +1,21 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
-import ProfileBtn from "./ProfileBtn";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import Loading from "../../pages/Loading/Loading";
-
-const InformationTopDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding-top: 78px;
-`;
-
-const FollowCommonSpan = css`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const FollowCommonP = css`
-  font-size: 10px;
-  margin-top: 6px;
-  color: #767676;
-`;
-
-const FollowerCntSpan = styled.span`
-  ${FollowCommonSpan}
-`;
-
-const FollowerCntP = styled.p`
-  ${FollowCommonP}
-`;
-
-const FollowingCntSpan = styled.span`
-  ${FollowCommonSpan}
-  color: #767676;
-`;
-
-const FollowingCntP = styled.p`
-  ${FollowCommonP}
-`;
-
-const InformationDiv = styled.div`
-  text-align: center;
-  margin: 16px 0 24px;
-`;
-
-const InfoNameP = styled.p`
-  font-size: 16px;
-  font-weight: 600;
-`;
-
-const InfoIdP = styled.p`
-  font-size: 12px;
-  color: #767676;
-  margin: 6px 0 16px;
-`;
-
-const InfoTextP = styled.p`
-  font-size: 14px;
-  color: #767676;
-`;
-
-const ProfileImg = styled.img`
-  width: 110px;
-  height: 110px;
-  margin: 0 40px;
-  border-radius: 50%;
-  border: 1px solid #dbdbdb;
-  object-fit: cover;
-`;
+import { Link, useLocation } from "react-router-dom";
+import ProfileBtn from "../ProfileBtn/ProfileBtn";
+import {
+  InformationTopSection,
+  FollowerCntSpan,
+  FollowerCntP,
+  FollowingCntSpan,
+  FollowingCntP,
+  InformationSection,
+  InfoNameP,
+  InfoIdP,
+  InfoTextP,
+  ProfileImg,
+} from "./ProfileInformationStyle";
+import Loading from "../../../pages/Loading/Loading";
+import { userInfoApi } from "../../../api/user";
+import { userProfileApi } from "../../../api/profile";
 
 export default function ProfileInformation({ type, modalOpen }) {
   const [userInfo, setUserInfo] = useState({
@@ -95,47 +40,9 @@ export default function ProfileInformation({ type, modalOpen }) {
     const getUserInfo = async () => {
       setLoading(true);
       const token = localStorage.getItem("token");
-      let apiUrl = "";
-
       if (type === "my") {
-        apiUrl = "https://api.mandarin.weniv.co.kr/user/myinfo";
-      } else if (type === "your" && yourAccountname) {
-        apiUrl = `https://api.mandarin.weniv.co.kr/profile/${yourAccountname.accountname}`;
-      }
-
-      const res = await axios.get(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (type === "my") {
+        const res = await userInfoApi(token);
         setFollowerInfo(res.data.user.follower);
-      } else if (type === "your" && yourAccountname) {
-        setFollowerInfo(res.data.profile.follower);
-      }
-
-      if (type === "your") {
-        const {
-          accountname,
-          username,
-          followingCount,
-          followerCount,
-          image,
-          isfollow,
-          intro,
-        } = res.data.profile;
-
-        setUserInfo({
-          accountname,
-          username,
-          followingCount,
-          followerCount,
-          image,
-          isfollow,
-          intro,
-        });
-      } else if (type === "my" && myAccountname) {
         const {
           accountname,
           username,
@@ -155,7 +62,30 @@ export default function ProfileInformation({ type, modalOpen }) {
           isfollow,
           intro,
         });
+      } else if (type === "your" && yourAccountname) {
+        const res = await userProfileApi(yourAccountname.accountname, token);
+        setFollowerInfo(res.data.profile.follower);
+        const {
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        } = res.data.profile;
+
+        setUserInfo({
+          accountname,
+          username,
+          followingCount,
+          followerCount,
+          image,
+          isfollow,
+          intro,
+        });
       }
+
       setLoading(false);
     };
 
@@ -201,7 +131,7 @@ export default function ProfileInformation({ type, modalOpen }) {
         <Loading />
       ) : (
         <>
-          <InformationTopDiv>
+          <InformationTopSection>
             <Link
               to="/followerlist"
               state={{
@@ -221,12 +151,12 @@ export default function ProfileInformation({ type, modalOpen }) {
               <FollowingCntSpan>{userInfo.followingCount}</FollowingCntSpan>
               <FollowingCntP>followings</FollowingCntP>
             </Link>
-          </InformationTopDiv>
-          <InformationDiv>
+          </InformationTopSection>
+          <InformationSection>
             <InfoNameP>{userInfo.username}</InfoNameP>
             <InfoIdP>@ {userInfo.accountname}</InfoIdP>
             <InfoTextP>{userInfo.intro}</InfoTextP>
-          </InformationDiv>
+          </InformationSection>
           <ProfileBtn
             type={type}
             yourAccountname={userInfo.accountname}

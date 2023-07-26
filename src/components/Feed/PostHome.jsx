@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import PostItem from "../Post/PostItem/PostItem";
 import styled from "styled-components";
-import Modal from "../Modal/Modal";
-import axios from "axios";
+import Modal from "../Modal/Modal/Modal";
+import { feed } from "../../api/post";
+
 const List = styled.ul`
   background-color: white;
   padding: 57px 24px 69px 24px;
 `;
+
 export default function PostHome({ myFeed, modalOpen, authorInfo }) {
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -23,31 +25,26 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
   }
   const getOtherInfo = async () => {
     const token = localStorage.getItem("token");
-    try {
-      const res = await axios.get(
-        `https://api.mandarin.weniv.co.kr/post/feed/?limit=Number&skip=Number`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
-      setOtherInfo(res.data.posts);
-    } catch (err) {}
+    const res = await feed(token);
+    setOtherInfo(res.data.posts);
   };
 
   return (
-    <List>
-      <PostItem
-        modalOpen={modalOpen}
-        otherInfo={otherInfo}
-        authorInfo={authorInfo}
-        getOtherInfo={getOtherInfo}
-      />
-      {modalShow && (
-        <Modal type="report" modalClose={modalClose} postId={selectedId} />
-      )}
-    </List>
+    <main>
+      <List>
+        {otherInfo.map(item => (
+          <li key={item.id}>
+            <PostItem
+              modalOpen={modalOpen}
+              otherInfo={item}
+              getOtherInfo={getOtherInfo}
+            />
+          </li>
+        ))}
+        {modalShow && (
+          <Modal type="report" modalClose={modalClose} postId={selectedId} />
+        )}
+      </List>
+    </main>
   );
 }

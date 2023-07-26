@@ -1,57 +1,16 @@
 import React, { useRef, useState } from "react";
-import styled from "styled-components";
-import uploadPhoto from "../../../assets/images/camera-btn.svg";
 import imageCompression from "browser-image-compression";
-import closeBtn from "../../../assets/images/close-btn.svg";
+import uploadPhoto from "../../../assets/images/camera-btn.svg";
+import {
+  UploadContainer,
+  UploadImg,
+  UploadImgDiv,
+  UploadImgIcon,
+  UploadImgInput,
+  UploadImgWrapper,
+  CloseImgBtn,
+} from "./PostImgPrevStyle";
 
-const UploadContainer = styled.div`
-  width: 100%;
-  padding: 20px 16px;
-  overflow: auto;
-  box-sizing: border-box;
-  background-color: white;
-  display: flex;
-  border-bottom: 1px solid #c4c4c4;
-`;
-
-const UploadImgWrapper = styled.label`
-  display: inline-block;
-  width: 90px;
-  height: 90px;
-  flex-shrink: 0;
-  cursor: pointer;
-  margin-right: 10px;
-`;
-
-const UploadImgInput = styled.input`
-  display: none;
-`;
-
-const UploadImgIcon = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-`;
-const UploadImgDiv = styled.div`
-  position: relative;
-`;
-const UploadImg = styled.img`
-  max-width: 90px;
-  max-height: 90px;
-  object-fit: contain;
-  border-radius: 10px;
-  border: 1px solid #eee;
-  box-sizing: border-box;
-`;
-const CloseImgBtn = styled.button`
-  background: url(${closeBtn}) center center / 18px 18px no-repeat;
-  width: 18px;
-  height: 18px;
-  position: absolute;
-  top: 4px;
-  right: 4px;
-`;
 export default function PostImgPrev({ onImageUrlChange }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [boardImage, setBoardImage] = useState(null);
@@ -73,8 +32,8 @@ export default function PostImgPrev({ onImageUrlChange }) {
       return;
     }
     const options = {
-      maxSizeMB: 0.7,
-      maxWidthOrHeight: 500,
+      maxSizeMB: 0.5,
+      maxWidthOrHeight: 700,
       useWebWorker: true,
     };
     try {
@@ -86,9 +45,10 @@ export default function PostImgPrev({ onImageUrlChange }) {
       });
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const base64data = reader.result;
-        const imageUrl = formDataHandler(base64data);
+        const imageUrl = await formDataHandler(base64data);
+        console.log("File object in MakePost:", file);
         onImageUrlChange(file, imageUrl);
         setImgUrl(imageUrl);
       };
@@ -96,6 +56,7 @@ export default function PostImgPrev({ onImageUrlChange }) {
       console.log(error);
     }
   };
+  // 9496 5612
   const formDataHandler = async dataURI => {
     const byteString = atob(dataURI.split(",")[1]);
     const ab = new ArrayBuffer(byteString.length);
@@ -105,6 +66,7 @@ export default function PostImgPrev({ onImageUrlChange }) {
     }
     const blob = new Blob([ab], { type: "image/jpeg" });
     const file = new File([blob], "image.jpg", { type: "image/jpeg" });
+    console.log("File object:", file); // 이 부분을 추가합니다.
     return file;
   };
   const removeImg = () => {

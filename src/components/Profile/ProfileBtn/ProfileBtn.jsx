@@ -1,42 +1,16 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styled, { css } from "styled-components";
-import IconMessage from "../../assets/images/icon-message-circle.svg";
-import IconShare from "../../assets/images/icon-share.svg";
-import Button from "../common/Button/Button";
-import { ButtonStyle } from "../common/Button/Button";
-
-const FlexCommon = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const InformationBottomDiv = styled.div`
-  ${FlexCommon};
-  padding-bottom: 26px;
-  border-bottom: 1px solid #dbdbdb;
-`;
-
-const ImgCircleBtn = styled.button`
-  width: 34px;
-  height: 34px;
-  border: 1px solid #dbdbdb;
-  background-color: transparent;
-  border-radius: 50%;
-  box-sizing: border-box;
-  ${FlexCommon}
-`;
-
-const FollowBtn = styled(ButtonStyle)`
-  margin: 0 10px;
-`;
-
-const AddBtn = styled(ButtonStyle)`
-  width: 100px;
-  margin-left: 12px;
-`;
+import { followApi, unfollowApi } from "../../../api/follow";
+import IconMessage from "../../../assets/images/icon-message-circle.svg";
+import IconShare from "../../../assets/images/icon-share.svg";
+import Button from "../../../components/common/Button/Button";
+import {
+  InformationBottomSection,
+  ImgCircleBtn,
+  FollowBtn,
+  AddBtn,
+} from "./ProfileBtnStyle";
 
 export default function ProfileBtn({
   type,
@@ -65,16 +39,7 @@ export default function ProfileBtn({
 
   const Follow = async () => {
     try {
-      const res = await axios.post(
-        `https://api.mandarin.weniv.co.kr/profile/${yourAccountname}/follow`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      await followApi(yourAccountname, token);
       setFollow(!follow);
     } catch (err) {
       console.error("에러!", err);
@@ -84,15 +49,7 @@ export default function ProfileBtn({
 
   const UnFollow = async () => {
     try {
-      const res = await axios.delete(
-        `https://api.mandarin.weniv.co.kr/profile/${yourAccountname}/unfollow`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json",
-          },
-        },
-      );
+      await unfollowApi(yourAccountname, token);
       setFollow(!follow);
     } catch (err) {
       console.error("에러!", err);
@@ -103,7 +60,7 @@ export default function ProfileBtn({
   const UI = {
     your: (
       <>
-        <InformationBottomDiv>
+        <InformationBottomSection>
           <ImgCircleBtn type="button" onClick={() => moveChat(yourAccountname)}>
             <img src={IconMessage} alt="메시지 아이콘" />
           </ImgCircleBtn>
@@ -133,12 +90,12 @@ export default function ProfileBtn({
           <ImgCircleBtn>
             <img src={IconShare} alt="공유 아이콘" />
           </ImgCircleBtn>
-        </InformationBottomDiv>
+        </InformationBottomSection>
       </>
     ),
 
     my: (
-      <InformationBottomDiv>
+      <InformationBottomSection>
         <Button
           type="button"
           content="프로필 수정"
@@ -157,7 +114,7 @@ export default function ProfileBtn({
         >
           맛집 등록
         </AddBtn>
-      </InformationBottomDiv>
+      </InformationBottomSection>
     ),
   };
 
