@@ -19,6 +19,8 @@ import {
   WriteCommentSection,
   DetailPostWrapper,
 } from "./DetailPostStyle";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 
 export default function DetailPost() {
   const [modalShow, setModalShow] = useState(false);
@@ -42,16 +44,25 @@ export default function DetailPost() {
   const handleInputChange = event => {
     setInputValue(event.target.value);
   };
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
-  function modalOpen(type, id) {
-    setModalShow(true);
-    setModalType(type);
-    setSelectedId(id);
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
+  // function modalOpen(type, id) {
+  //   setModalShow(true);
+  //   setModalType(type);
+  //   setSelectedId(id);
+  // }
+  const [modal, setModal] = useRecoilState(modalState);
+  console.log(modal);
+  const modalOpen = (type, id) => {
+    setModal({
+      show: true,
+      type,
+      postId: id,
+    });
+  };
 
   function alertClose(e) {
     if (e.target === e.currentTarget) {
@@ -131,7 +142,6 @@ export default function DetailPost() {
                 where === infoToIterate.author.accountname
                   ? "modification"
                   : "report",
-
                 myPostInfo.id,
               )
             }
@@ -160,12 +170,12 @@ export default function DetailPost() {
           </BtnDisplay>
         </WriteCommentSection>
       </DetailPostWrapper>
-      {modalShow && (
+      {modal.show && (
         <Modal
-          type={modalType}
-          modalClose={modalClose}
+          type={modal.type}
+          // modalClose={modalClose}
           alertOpen={alertOpen}
-          postId={selectedId}
+          // postId={selectedId}
           handlerPostEdit={openPostEditModal}
         />
       )}

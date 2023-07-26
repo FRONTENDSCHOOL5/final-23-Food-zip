@@ -8,23 +8,24 @@ import Alert from "../../components/Modal/Alert/Alert";
 import { useState, useEffect } from "react";
 import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard/RecommendCard";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 
 export default function Profile({ type }) {
-  const [modalShow, setModalShow] = useState(false);
-  const [modalType, setModalType] = useState("setting");
+  // const [modalShow, setModalShow] = useState(false);
+  // const [modalType, setModalType] = useState("setting");
+  const [modal, setModal] = useRecoilState(modalState);
   const [selectedId, setSelectedId] = useState(null);
   const [cardClosed, setCardClosed] = useState(false);
-
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
-
-  function modalOpen(type) {
-    setModalShow(true);
-    setModalType(type);
-  }
+  console.log(modal);
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModal(prevModal => ({ ...prevModal, show: false }));
+  //   }
+  // }
+  // function modalOpen() {
+  //   setModal(prevModal => ({ ...prevModal, show: true }));
+  // }
 
   const [alertShow, setAlertShow] = useState(false);
   function alertClose(e) {
@@ -61,12 +62,14 @@ export default function Profile({ type }) {
 
   return (
     <>
-      <Header type="profile" modalOpen={() => modalOpen("setting")} />
+      {/* <Header type="profile" modalOpen={modalOpen} /> */}
+      <Header type="profile" />
       <main>
         <ProfileInformation type={type} />
         <RecommendList cardOpen={cardOpen} cardClosed={cardClosed} />
         <PostList />
-        {modalShow && <Modal type={modalType} modalClose={modalClose} />}
+        {/* {modal.show && <Modal type={modal.type} modalClose={modalClose} />} */}
+        {modal.show && <Modal type={modal.type} />}
         {alertShow && <Alert type="logout" alertClose={alertClose} />}
         {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
       </main>

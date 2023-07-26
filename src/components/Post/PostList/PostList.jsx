@@ -17,8 +17,10 @@ import {
   GridItemWrap,
 } from "./PostListStyle";
 import { userPostListApi } from "../../../api/post";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../../atoms/modalAtom";
 
-export default function PostList({ modalOpen }) {
+export default function PostList() {
   const [viewMode, setViewMode] = useState("list");
   const location = useLocation();
   const navigate = useNavigate();
@@ -67,19 +69,28 @@ export default function PostList({ modalOpen }) {
     });
   }
 
-  const [modalShow, setModalShow] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  // const [modalShow, setModalShow] = useState(false);
+  // const [selectedId, setSelectedId] = useState(null);
 
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
 
-  function modalOpen(id) {
-    setSelectedId(id);
-    setModalShow(true);
-  }
+  // function modalOpen(id) {
+  //   setSelectedId(id);
+  //   setModalShow(true);
+  // }
+  const [modal, setModal] = useRecoilState(modalState);
+  console.log(modal);
+  const modalOpen = id => {
+    setModal({
+      show: true,
+      type: !accountname ? "modification" : "report",
+      postId: id,
+    });
+  };
 
   const openPostEditModal = () => {
     setPostEditModalOpen(true);
@@ -87,7 +98,7 @@ export default function PostList({ modalOpen }) {
 
   const closePostEditModal = () => {
     setPostEditModalOpen(false);
-    setModalShow(false);
+    setModal(prevModal => ({ ...prevModal, show: false }));
     getUserInfo();
   };
 
@@ -146,18 +157,18 @@ export default function PostList({ modalOpen }) {
           )}
         </>
       )}
-      {modalShow && (
+      {modal.show && (
         <Modal
-          type={!accountname ? "modification" : "report"}
-          modalClose={modalClose}
-          postId={selectedId}
+          type={modal.type}
+          // modalClose={modalClose}
+          // postId={selectedId}
           handlerPostEdit={openPostEditModal}
         />
       )}
       {postEditModalOpen && (
         <PostEdit
           closeModal={closePostEditModal}
-          postId={selectedId}
+          // postId={selectedId}
           postInfo={postInfo}
         />
       )}

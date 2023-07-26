@@ -11,11 +11,13 @@ import {
   StyledCommentContent,
   CommentContent,
 } from "./CommentStyle";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 export default function Comment({ commentList, postId }) {
   const where = localStorage.getItem("accountname");
-  const [modalShow, setModalShow] = useState(false);
-  const [modalType, setModalType] = useState("delete");
-  const [selectedId, setSelectedId] = useState(null);
+  // const [modalShow, setModalShow] = useState(false);
+  // const [modalType, setModalType] = useState("delete");
+  // const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
 
   const elapsedTime = commentDate => {
@@ -53,17 +55,26 @@ export default function Comment({ commentList, postId }) {
     }
   }
 
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
 
-  function modalOpen(type, id) {
-    setModalShow(true);
-    setModalType(type);
-    setSelectedId(id);
-  }
+  // function modalOpen(type, id) {
+  //   setModalShow(true);
+  //   setModalType(type);
+  //   setSelectedId(id);
+  // }
+  const [modal, setModal] = useRecoilState(modalState);
+  console.log(modal);
+  const modalOpen = (type, id) => {
+    setModal({
+      show: true,
+      type,
+      commentId: id,
+    });
+  };
 
   const [alertShow, setAlertShow] = useState(false);
   function alertClose(e) {
@@ -108,12 +119,12 @@ export default function Comment({ commentList, postId }) {
           </StyledComment>
         );
       })}
-      {modalShow && (
+      {modal.show && (
         <Modal
-          type={modalType}
-          modalClose={modalClose}
+          type={modal.type}
+          // modalClose={modalClose}
           alertOpen={alertOpen}
-          commentId={selectedId}
+          // commentId={selectedId}
           postId={postId}
         />
       )}
@@ -121,7 +132,7 @@ export default function Comment({ commentList, postId }) {
         <Alert
           type="comment"
           alertClose={alertClose}
-          commentId={selectedId}
+          // commentId={selectedId}
           postId={postId}
         />
       )}

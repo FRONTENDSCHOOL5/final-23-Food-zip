@@ -1,7 +1,9 @@
 import { GlobalStyle } from "./components/styles/Globalstyle";
 import styled from "styled-components";
 import Routers from "./routes/Routers";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
+import Modal from "./components/Modal/Modal/Modal";
+import { modalState } from "./atoms/modalAtom";
 
 // const Container = styled.div`
 //   max-width: 390px;
@@ -11,13 +13,15 @@ import { RecoilRoot } from "recoil";
 // `;
 
 function App() {
+  // const [modal, setModal] = useRecoilState(modalState);
   return (
-    <RecoilRoot>
+    <>
       {/* <Container> */}
       <GlobalStyle />
       <Routers />
+      {/* {modal.show && <Modal type={modal.type} />} */}
       {/* </Container> */}
-    </RecoilRoot>
+    </>
   );
 }
 export default App;

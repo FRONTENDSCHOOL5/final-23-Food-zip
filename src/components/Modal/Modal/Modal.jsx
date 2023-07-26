@@ -7,10 +7,12 @@ import {
   ModalLineSpan,
   ModalTextBtn,
 } from "./ModalStyle";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { modalState } from "../../../atoms/modalAtom";
 
 export default function Modal({
   type,
-  modalClose,
+  // modalClose,
   postId,
   productId,
   commentId,
@@ -21,7 +23,12 @@ export default function Modal({
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
   const [alertType, setAlertType] = useState("logout");
-
+  const [modal, setModal] = useRecoilState(modalState);
+  function modalClose(e) {
+    if (e.target === e.currentTarget) {
+      setModal(prevModal => ({ ...prevModal, show: false }));
+    }
+  }
   function alertClose(e) {
     if (e.target === e.currentTarget) {
       setAlertShow(false);
@@ -37,7 +44,9 @@ export default function Modal({
         restaurantname: restaurantName,
       },
     });
+    setModal(prevModal => ({ ...prevModal, show: false }));
   }
+  console.log(modal);
   const UI = {
     setting: (
       <ModalWrapArticle>
@@ -79,7 +88,9 @@ export default function Modal({
       <ModalWrapArticle>
         <ModalLineSpan />
         <ModalTextBtn
-          onClick={() => alertOpen(commentId ? "commentReport" : "postReport")}
+          onClick={() =>
+            alertOpen(modal.commentId ? "commentReport" : "postReport")
+          }
         >
           신고하기
         </ModalTextBtn>
