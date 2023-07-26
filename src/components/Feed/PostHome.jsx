@@ -9,7 +9,7 @@ const List = styled.ul`
   padding: 57px 24px 69px 24px;
 `;
 
-export default function PostHome({ myFeed, modalOpen, authorInfo }) {
+export default function PostHome({ myFeed, modalOpen, getFeed, options }) {
   const [modalShow, setModalShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [otherInfo, setOtherInfo] = useState(myFeed);
@@ -28,7 +28,7 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
     const res = await feed(token);
     setOtherInfo(res.data.posts);
   };
-
+  console.log("PostHome:", options);
   return (
     <main>
       <List>
@@ -37,6 +37,8 @@ export default function PostHome({ myFeed, modalOpen, authorInfo }) {
             <PostItem
               modalOpen={modalOpen}
               otherInfo={item}
+              getFeed={getFeed}
+              options={options}
               getOtherInfo={getOtherInfo}
             />
           </li>

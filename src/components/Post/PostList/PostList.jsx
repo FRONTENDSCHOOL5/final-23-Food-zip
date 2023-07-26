@@ -82,6 +82,7 @@ export default function PostList({ modalOpen }) {
   }
 
   const openPostEditModal = () => {
+    console.log("openPostEditModal is called");
     setPostEditModalOpen(true);
   };
 
@@ -158,7 +159,7 @@ export default function PostList({ modalOpen }) {
         <PostEdit
           closeModal={closePostEditModal}
           postId={selectedId}
-          postInfo={postInfo}
+          // postInfo={postInfo}
         />
       )}
     </>

@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { followApi, unfollowApi } from "../../../api/follow";
@@ -11,12 +10,14 @@ import {
   FollowBtn,
   AddBtn,
 } from "./ProfileBtnStyle";
+const { kakao } = window;
 
 export default function ProfileBtn({
   type,
   yourAccountname,
   setFollow,
   follow,
+  userInfo,
 }) {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -56,6 +57,51 @@ export default function ProfileBtn({
       navigate("/error");
     }
   };
+  const initializeKakao = () => {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init("cac39e5e6556a7917d1c0c5b966012b7");
+    }
+  };
+  function kakaoButton(userInfo) {
+    initializeKakao();
+    console.log(userInfo);
+    if (!window.Kakao) {
+      return;
+    }
+
+    const kakao = window.Kakao;
+    kakao.Share.sendDefault({
+      objectType: "feed",
+      content: {
+        title: `${userInfo.username}님의 프로필 공유`,
+        imageUrl: `${userInfo.image}`,
+        link: {
+          mobileWebUrl: `http://foodzip.netlify.app/profile/${userInfo.accountname}`,
+          webUrl: `http://foodzip.netlify.app/profile/${userInfo.accountname}`,
+        },
+      },
+      // social: {
+      //   followerCount: userInfo.followerCount,
+      //   followingCount: userInfo.followingCount,
+      // },
+      buttons: [
+        {
+          title: "웹으로 보기",
+          link: {
+            mobileWebUrl: `http://foodzip.netlify.app/profile/${userInfo.accountname}`,
+            webUrl: `http://foodzip.netlify.app/profile/${userInfo.accountname}`,
+          },
+        },
+        {
+          title: "앱으로 보기",
+          link: {
+            mobileWebUrl: `http://foodzip.netlify.app/profile/${userInfo.accountname}`,
+            webUrl: `http://foodzip.netlify.app/profile/${userInfo.accountname}`,
+          },
+        },
+      ],
+    });
+  }
 
   const UI = {
     your: (
@@ -88,7 +134,11 @@ export default function ProfileBtn({
           )}
 
           <ImgCircleBtn>
-            <img src={IconShare} alt="공유 아이콘" />
+            <img
+              src={IconShare}
+              alt="공유 아이콘"
+              onClick={() => kakaoButton(userInfo)}
+            />
           </ImgCircleBtn>
         </InformationBottomSection>
       </>

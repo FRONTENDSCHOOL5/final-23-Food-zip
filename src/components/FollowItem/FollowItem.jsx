@@ -35,7 +35,7 @@ export default function FollowItem({
       if (!follow) {
         await followApi(accountname, token);
       } else {
-        await unfollowApi(accountname, token);
+        const res = await unfollowApi(accountname, token);
       }
       setFollow(!follow);
     } catch (err) {

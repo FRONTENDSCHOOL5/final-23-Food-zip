@@ -98,6 +98,7 @@ export default function RecommendCard({ cardClose, id }) {
           productId={id}
           restaurantName={recommendInfo.itemName}
           handlerRecommendEdit={openRecommendEditModal}
+          recommendInfo={recommendInfo}
         />
       )}
       {recommendEditModalOpen && (

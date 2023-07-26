@@ -83,3 +83,13 @@ export const accountValid = async accountname => {
   );
   return res;
 };
+
+export const tokenValid = async token => {
+  const res = await axios.get(`${BASE_URL}/user/checktoken`, {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res;
+};

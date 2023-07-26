@@ -19,16 +19,20 @@ import {
   Container,
 } from "./PostItemStyle";
 import { postLikeApi, postUnlikeApi } from "../../../api/post";
+import useLocalStorage from "../../../hooks/useLocalStorage";
 export default function PostItem({
   postInfo,
   modalOpen,
   otherInfo,
   getUserInfo,
   commentCnt,
-  getOtherInfo,
+  getFeed,
   fetchPostInfo,
+  options,
+  getOtherInfo,
 }) {
   const infoToIterate = postInfo || otherInfo;
+  const [token] = useLocalStorage("token", "");
   const navigate = useNavigate();
   function moveDetail(id) {
     navigate("/detailpost", {
@@ -38,9 +42,8 @@ export default function PostItem({
       },
     });
   }
+  // console.log("post:", options);
   const postLike = async () => {
-    const token = localStorage.getItem("token");
-    console.log("check");
     try {
       if (infoToIterate.hearted) {
         await postUnlikeApi(infoToIterate.id, token);
@@ -49,6 +52,13 @@ export default function PostItem({
       }
       if (getUserInfo) getUserInfo();
       if (fetchPostInfo) fetchPostInfo();
+      // if (getFeed) {
+      //   if (options.skip >= 10) {
+      //     options.skip = options.skip - 10;
+      //   }
+      //   console.log(options);
+      //   getFeed(options);
+      // }
       if (getOtherInfo) getOtherInfo();
     } catch (error) {
       console.error(error);

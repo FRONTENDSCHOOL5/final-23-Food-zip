@@ -8,7 +8,8 @@ import fillMessageIcon from "../../../assets/images/icon-message-circle-fill.svg
 import userIcon from "../../../assets/images/icon-user.svg";
 import fillUserIcon from "../../../assets/images/icon-user-fill.svg";
 import { NavWrapper, NavList, NavLink, StyledNavText } from "./NavigationStyle";
-
+import ProfileIcon from "../../../assets/images/ProfileIcon";
+import HomeIcon from "../../../assets/images/HomeIcon";
 export default function Navigation() {
   const location = useLocation();
 
@@ -22,9 +23,19 @@ export default function Navigation() {
               location.pathname === "/home" ? "active" : ""
             }`}
           >
-            <img
+            {/* <img
               src={location.pathname === "/home" ? fillHomeIcon : homeIcon}
               alt="홈"
+            /> */}
+            <HomeIcon
+              fillColor={
+                location.pathname === "/home" ? "rgb(40, 97, 64)" : "none"
+              }
+              strokeColor={
+                location.pathname === "/home" ? "rgb(40, 97, 64)" : undefined
+              }
+              fillColor1={location.pathname === "/home" ? "#fff" : "none"}
+              alt="프로필"
             />
             <StyledNavText>홈</StyledNavText>
           </NavLink>
@@ -64,8 +75,21 @@ export default function Navigation() {
               location.pathname === "/myprofile" ? "active" : ""
             }`}
           >
-            <img
-              src={location.pathname === "/myprofile" ? fillUserIcon : userIcon}
+            {/* <img
+              src={
+                location.pathname === "/myprofile" ? "rgb(40, 97, 64)" : "none"
+              }
+              alt="프로필"
+            /> */}
+            <ProfileIcon
+              fillColor={
+                location.pathname === "/myprofile" ? "rgb(40, 97, 64)" : "none"
+              }
+              strokeColor={
+                location.pathname === "/myprofile"
+                  ? "rgb(40, 97, 64)"
+                  : undefined
+              }
               alt="프로필"
             />
             <StyledNavText>프로필</StyledNavText>

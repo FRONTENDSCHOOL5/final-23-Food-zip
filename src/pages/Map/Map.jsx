@@ -104,6 +104,7 @@ const MapTest = () => {
       }
 
       function displayMarker(place) {
+        console.log(place);
         const imageSize = new kakao.maps.Size(45, 45);
         const imageSrc = Marker;
         let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);

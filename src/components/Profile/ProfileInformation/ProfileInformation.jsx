@@ -162,6 +162,7 @@ export default function ProfileInformation({ type, modalOpen }) {
             yourAccountname={userInfo.accountname}
             setFollow={setFollow}
             follow={follow}
+            userInfo={userInfo}
           />
         </>
       )}

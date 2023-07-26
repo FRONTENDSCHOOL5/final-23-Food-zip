@@ -7,7 +7,7 @@ import {
   ModalLineSpan,
   ModalTextBtn,
 } from "./ModalStyle";
-
+const { kakao } = window;
 export default function Modal({
   type,
   modalClose,
@@ -17,6 +17,7 @@ export default function Modal({
   restaurantName,
   handlerPostEdit,
   handlerRecommendEdit,
+  recommendInfo,
 }) {
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
@@ -36,6 +37,46 @@ export default function Modal({
       state: {
         restaurantname: restaurantName,
       },
+    });
+  }
+  const initializeKakao = () => {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init("cac39e5e6556a7917d1c0c5b966012b7");
+    }
+  };
+
+  function kakaoButton(recommendInfo) {
+    initializeKakao();
+    if (!window.Kakao) {
+      return;
+    }
+    const kakao = window.Kakao;
+
+    kakao.Share.sendDefault({
+      objectType: "location",
+      address: recommendInfo.link,
+      addressTitle: recommendInfo.itemName,
+      content: {
+        title: recommendInfo.itemName,
+        imageUrl: recommendInfo.itemImage,
+        description: recommendInfo.link,
+        link: {
+          mobileWebUrl: "https://foodzip.netlify.app",
+          webUrl: "https://foodzip.netlify.app",
+        },
+      },
+      social: {
+        likeCount: recommendInfo.price,
+      },
+      buttons: [
+        {
+          title: "웹으로 보기",
+          link: {
+            mobileWebUrl: "https://foodzip.netlify.app",
+            webUrl: "https://foodzip.netlify.app",
+          },
+        },
+      ],
     });
   }
   const UI = {
@@ -63,7 +104,9 @@ export default function Modal({
         <ModalTextBtn onClick={handlerOpenMap}>
           카카오맵으로 이동하기
         </ModalTextBtn>
-        <ModalTextBtn>SNS 공유하기</ModalTextBtn>
+        <ModalTextBtn onClick={() => kakaoButton(recommendInfo)}>
+          SNS 공유하기
+        </ModalTextBtn>
       </ModalWrapArticle>
     ),
     yourproduct: (

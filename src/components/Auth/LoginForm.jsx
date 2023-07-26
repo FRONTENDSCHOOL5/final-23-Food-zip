@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/auth";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import {
   StyledButton,
   StyledError,
@@ -20,53 +21,19 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
   const [loginSuccess, setLoginSuccess] = useState(false);
-  // const handleFormSubmit = async formData => {
-  //   try {
-  //     const res = await axios.post(
-  //       "https://api.mandarin.weniv.co.kr/user/login",
-  //       {
-  //         user: {
-  //           email: formData.email,
-  //           password: formData.password,
-  //         },
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-type": "application/json",
-  //         },
-  //       },
-  //     );
-  //     const token = res.data.user["token"];
-  //     const accountname = res.data.user["accountname"];
-  //     const _id = res.data.user["_id"];
-  //     localStorage.setItem("token", token);
-  //     localStorage.setItem("_id", _id);
-  //     localStorage.setItem("accountname", accountname);
-
-  //     if (res.status === 200) {
-  //       setLoginSuccess(true);
-  //     } else {
-  //       setLoginSuccess(false);
-  //       alert(
-  //         "일시적인 오류로 서비스 접속에 실패했습니다. 잠시 후 다시 시도해 주세요.",
-  //       );
-  //     }
-  //   } catch (err) {
-  //     const errorMessage =
-  //       err.response?.data?.message ||
-  //       "이메일 또는 비밀번호가 일치하지 않습니다.";
-  //     alert(errorMessage);
-  //   }
-  // };
+  const [token, setToken] = useLocalStorage("token", "");
+  const [_id, set_id] = useLocalStorage("_id", "");
+  const [accountname, setAccountname] = useLocalStorage("accountname", "");
 
   const handleFormSubmit = async formData => {
     await login(formData).then(res => {
       const token = res.data.user["token"];
       const accountname = res.data.user["accountname"];
       const _id = res.data.user["_id"];
-      localStorage.setItem("token", token);
-      localStorage.setItem("_id", _id);
-      localStorage.setItem("accountname", accountname);
+
+      setToken(token);
+      set_id(_id);
+      setAccountname(accountname);
 
       if (res.status === 200) {
         setLoginSuccess(true);

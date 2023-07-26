@@ -2,15 +2,25 @@ import axios from "axios";
 import { BASE_URL } from "./baseUrl";
 
 export const feed = async token => {
-  const res = await axios.get(
-    `${BASE_URL}/post/feed?limit=Number&skip=Number`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-type": "application/json",
-      },
+  const res = await axios.get(`${BASE_URL}/post/feed`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
     },
-  );
+  });
+  return res;
+};
+
+export const feedFetch = async ({ token, limit = 10, skip = 0 }) => {
+  const query = `?limit=${limit}&skip=${skip}`;
+  console.log("query: ", query);
+  const res = await axios.get(`${BASE_URL}/post/feed/${query}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+  });
+  console.log("new", res);
   return res;
 };
 
