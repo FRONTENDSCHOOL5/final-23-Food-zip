@@ -47,6 +47,7 @@ export default function Modal({
     setModal(prevModal => ({ ...prevModal, show: false }));
   }
   console.log(modal);
+  console.log("here!!!!!!!", handlerPostEdit);
   const UI = {
     setting: (
       <ModalWrapArticle>
@@ -118,7 +119,7 @@ export default function Modal({
           type={alertType}
           modalClose={modalClose}
           alertClose={alertClose}
-          postId={postId}
+          // postId={modal.postId}
           productId={productId}
           commentId={commentId}
         />

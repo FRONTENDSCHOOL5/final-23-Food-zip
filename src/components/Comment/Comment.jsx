@@ -73,6 +73,7 @@ export default function Comment({ commentList, postId }) {
       show: true,
       type,
       commentId: id,
+      postId: postId,
     });
   };
 
@@ -125,7 +126,7 @@ export default function Comment({ commentList, postId }) {
           // modalClose={modalClose}
           alertOpen={alertOpen}
           // commentId={selectedId}
-          postId={postId}
+          // postId={postId}
         />
       )}
       {alertShow && (
@@ -133,7 +134,7 @@ export default function Comment({ commentList, postId }) {
           type="comment"
           alertClose={alertClose}
           // commentId={selectedId}
-          postId={postId}
+          // postId={postId}
         />
       )}
     </StyledCommentWrapper>

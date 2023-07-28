@@ -83,11 +83,19 @@ export default function PostList() {
   //   setModalShow(true);
   // }
   const [modal, setModal] = useRecoilState(modalState);
-  console.log(modal);
-  const modalOpen = id => {
+
+  // const modalOpen = id => {
+  //   setModal({
+  //     show: true,
+  //     type: !accountname ? "modification" : "report",
+  //     postId: id,
+  //   });
+  // };
+
+  const modalOpen = (type, id) => {
     setModal({
       show: true,
-      type: !accountname ? "modification" : "report",
+      type,
       postId: id,
     });
   };
@@ -101,7 +109,9 @@ export default function PostList() {
     setModal(prevModal => ({ ...prevModal, show: false }));
     getUserInfo();
   };
-
+  console.log(modal);
+  console.log("plz!!!!!!", openPostEditModal);
+  console.log(postInfo);
   return (
     <>
       {hasPosts && (
@@ -131,7 +141,12 @@ export default function PostList() {
               {postInfo.map(item => (
                 <PostListItem key={item.id}>
                   <PostItem
-                    modalOpen={modalOpen}
+                    modalOpen={() =>
+                      modalOpen(
+                        !accountname ? "modification" : "report",
+                        item.id,
+                      )
+                    }
                     postInfo={item}
                     getUserInfo={getUserInfo}
                   />
@@ -168,8 +183,8 @@ export default function PostList() {
       {postEditModalOpen && (
         <PostEdit
           closeModal={closePostEditModal}
-          // postId={selectedId}
-          postInfo={postInfo}
+          postId={modal.postId}
+          // postInfo={postInfo}
         />
       )}
     </>

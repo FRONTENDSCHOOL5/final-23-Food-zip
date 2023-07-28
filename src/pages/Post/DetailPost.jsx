@@ -71,7 +71,7 @@ export default function DetailPost() {
   }
   const fetchPostInfo = async () => {
     try {
-      const res = await postInfoApi(selectedId ?? id, token);
+      const res = await postInfoApi(modal.postId ?? id, token);
       const post = res.data.post;
       setMyPostInfo(post);
       setShouldFetchPostInfo(false);
@@ -114,7 +114,7 @@ export default function DetailPost() {
   const closePostEditModal = () => {
     setPostEditModalOpen(false);
     setShouldFetchPostInfo(true);
-    setModalShow(false);
+    setModal(prevModal => ({ ...prevModal, show: false }));
   };
   useEffect(() => {
     loadcommentList();
@@ -185,8 +185,8 @@ export default function DetailPost() {
       {postEditModalOpen && (
         <PostEdit
           closeModal={closePostEditModal}
-          postId={selectedId}
-          postInfo={infoToIterate}
+          postId={modal.postId}
+          // postInfo={infoToIterate}
         />
       )}
     </>

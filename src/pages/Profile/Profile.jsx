@@ -69,7 +69,7 @@ export default function Profile({ type }) {
         <RecommendList cardOpen={cardOpen} cardClosed={cardClosed} />
         <PostList />
         {/* {modal.show && <Modal type={modal.type} modalClose={modalClose} />} */}
-        {modal.show && <Modal type={modal.type} />}
+        {/* {modal.show && <Modal type={modal.type} />} */}
         {alertShow && <Alert type="logout" alertClose={alertClose} />}
         {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
       </main>

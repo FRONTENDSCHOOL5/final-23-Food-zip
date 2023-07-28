@@ -14,10 +14,13 @@ import {
 } from "./PostEditStyle";
 import { postEditApi, postInfoApi } from "../../../api/post";
 import { imgUpload } from "../../../api/imgUpload";
+// import { useRecoilState } from "recoil";
+// import { modalState } from "../../../atoms/modalAtom";
 export default function PostEdit({ closeModal, postId }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [postInfo, setPostInfo] = useState({});
+  // const [modal, setModal] = useRecoilState(modalState);
 
   useEffect(() => {
     fetchPostInfo();
