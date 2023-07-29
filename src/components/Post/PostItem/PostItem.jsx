@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BtnMore,
@@ -27,11 +27,11 @@ export default function PostItem({
   commentCnt,
   fetchPostInfo,
   getFeed,
-  options,
-  getOtherInfo,
 }) {
   const infoToIterate = postInfo || otherInfo;
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -41,7 +41,6 @@ export default function PostItem({
     });
   }
   const postLike = async () => {
-    const token = localStorage.getItem("token");
     console.log("check");
     try {
       if (infoToIterate.hearted) {
@@ -49,9 +48,18 @@ export default function PostItem({
       } else {
         await postLikeApi(infoToIterate.id, token);
       }
-      if (getUserInfo) getUserInfo();
-      if (fetchPostInfo) fetchPostInfo();
-      if (getFeed) getFeed(options);
+      if (getUserInfo) {
+        console.log("getUserInfo실행됨");
+        getUserInfo();
+      }
+      if (fetchPostInfo) {
+        console.log("fetchPostInfo  ㄱㄱ");
+        // fetchPostInfo();
+      }
+      if (getFeed) {
+        console.log("getFeed  ㄱㄱ");
+        getFeed({ token });
+      }
     } catch (error) {
       console.error(error);
       return false;

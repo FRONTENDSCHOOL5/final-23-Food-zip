@@ -1,9 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "./baseUrl";
 
-export const feed = async ({ token, limit = 10, skip = 0 }) => {
+export const feed = async ({ token, limit, skip }) => {
   const query = `?limit=${limit}&skip=${skip}`;
-  console.log("query: ", query);
+  // console.log("query: ", query);
   const res = await axios.get(`${BASE_URL}/post/feed/${query}`, {
     headers: {
       Authorization: `Bearer ${token}`,
