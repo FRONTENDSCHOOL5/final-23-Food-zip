@@ -37,18 +37,16 @@ export default function PostHome({ modalOpen }) {
 
   useEffect(() => {
     const onIntersect = entries => {
-      console.log("entries", entries);
       const target = entries[0];
-      console.log("target", target);
       if (target.isIntersecting) setPage(p => p + 1);
     };
     const io = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-    console.log("io: ", io);
+
     if (observer?.current) {
       io.observe(observer.current);
     }
     return () => io && io.disconnect();
-  }, [observer.current]);
+  }, [observer, loading]);
 
   useEffect(() => {
     loadFeed({ token, limit: 10, skip });
@@ -91,7 +89,7 @@ export default function PostHome({ modalOpen }) {
               />
             )}
             {/* 무한 스크롤을 위한 Ref */}
-            <div ref={observer}>보임</div>
+            <div ref={observer} />
           </List>
         </main>
       ) : (
