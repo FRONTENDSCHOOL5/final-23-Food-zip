@@ -73,7 +73,6 @@ export default function PostHome({ modalOpen }) {
           <List>
             {myFeed.map((item, idx) => (
               <li key={item.id}>
-                <p>{idx}</p>
                 <PostItem
                   modalOpen={modalOpen}
                   otherInfo={item}
