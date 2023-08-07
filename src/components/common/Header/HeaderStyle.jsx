@@ -72,6 +72,9 @@ const HeaderLogoBtn = styled.button`
   height: 20px;
   margin-right: 216px;
 `;
+const SocialSvg = styled.div`
+  height: 24px;
+`;
 
 export {
   HeaderWrap,
@@ -83,4 +86,5 @@ export {
   HeaderSpan,
   HeaderTextP,
   HeaderLogoBtn,
+  SocialSvg,
 };

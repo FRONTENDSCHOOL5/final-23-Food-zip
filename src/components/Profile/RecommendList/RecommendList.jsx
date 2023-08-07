@@ -8,6 +8,7 @@ import {
   RecommendListImg,
   RecommendNameP,
   RecommendScoreSpan,
+  TitleWrapper,
 } from "./RecommendListStyle";
 import { recommendListApi } from "../../../api/recommend";
 import sprite from "../../../assets/images/SpriteIcon.svg";
@@ -64,8 +65,12 @@ export default function RecommendList({ cardOpen, cardClose, cardClosed }) {
                 alt="추천맛집 사진"
               />
               <RecommendNameP>{recommendation.itemName}</RecommendNameP>
-              <SocialSVG id="star" />
-              <RecommendScoreSpan>{recommendation.price}.0</RecommendScoreSpan>
+              <TitleWrapper>
+                <SocialSVG id="star" />
+                <RecommendScoreSpan>
+                  {recommendation.price}.0
+                </RecommendScoreSpan>
+              </TitleWrapper>
             </RecommendLiBtn>
           </li>
         ))}

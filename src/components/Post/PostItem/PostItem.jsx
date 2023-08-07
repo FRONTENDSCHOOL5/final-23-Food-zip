@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  BtnMore,
   BtnComment,
   BtnLike,
   PostBtnBox,
@@ -16,6 +15,7 @@ import {
   PostUserImg,
   PostUserName,
   Container,
+  SocialSvg,
 } from "./PostItemStyle";
 import { postLikeApi, postUnlikeApi } from "../../../api/post";
 import sprite from "../../../assets/images/SpriteIcon.svg";
@@ -35,12 +35,13 @@ export default function PostItem({
     size = 20,
     strokeColor = "#767676",
     onClick,
+    margin = "0",
   }) => (
-    <div onClick={onClick}>
+    <SocialSvg onClick={onClick} style={{ margin: margin }}>
       <svg fill={color} width={size} height={size} stroke={strokeColor}>
         <use href={`${sprite}#${id}`} style={{ stroke: "strokeColor" }} />
       </svg>
-    </div>
+    </SocialSvg>
   );
 
   const infoToIterate = postInfo || otherInfo;
@@ -111,12 +112,24 @@ export default function PostItem({
               <PostUserName>{infoToIterate.author.username}</PostUserName>
               <PostUserId>@ {infoToIterate.author.accountname}</PostUserId>
             </PostUserBox>
+            <SocialSVG
+              id="icon-more-vertical"
+              strokeColor="#c4c4c4"
+              margin="0 0 0 0 auto"
+              onClick={() => modalOpen(infoToIterate.id)}
+            />
           </PostUser>
         )}
         <PostContent>
           <PostText>{infoToIterate.content}</PostText>
           {infoToIterate.image !== "" && (
-            <PostImg src={infoToIterate.image} alt="포스트 이미지" />
+            <PostImg
+              src={infoToIterate.image}
+              alt="포스트 이미지"
+              onClick={() => {
+                moveDetail(infoToIterate.id);
+              }}
+            />
           )}
           <PostInfoBox>
             <PostBtnBox>
@@ -141,7 +154,6 @@ export default function PostItem({
             <PostDate>{formatDate(infoToIterate.updatedAt)}</PostDate>
           </PostInfoBox>
         </PostContent>
-        <BtnMore onClick={() => modalOpen(infoToIterate.id)}></BtnMore>
       </Container>
     </>
   );

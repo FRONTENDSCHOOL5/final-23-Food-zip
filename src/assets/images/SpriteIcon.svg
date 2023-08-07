@@ -30,7 +30,7 @@
         <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.417 11H4.583M11 17.417L4.583 11 11 4.583" />
     </symbol>
     <symbol id="icon-more-vertical" viewBox="0 0 24 24">
-        <path fill="#767676" stroke="#767676" stroke-linecap="round" stroke-linejoin="round" d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0-7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+        <path fill="#767676" stroke="strokeColor" stroke-linecap="round" stroke-linejoin="round" d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0-7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
     </symbol>
     <symbol id="img-button" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="#C4C4C4"/><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M24.417 9.75H11.583c-1.012 0-1.833.82-1.833 1.833v12.834c0 1.012.82 1.833 1.833 1.833h12.834c1.012 0 1.833-.82 1.833-1.833V11.583c0-1.012-.82-1.833-1.833-1.833z"/><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.792 16.166a1.375 1.375 0 1 0 0-2.75 1.375 1.375 0 0 0 0 2.75zM26.25 20.75l-4.583-4.584L11.583 26.25"/></symbol>
     <symbol id="icon-share" viewBox="0 0 20 20">

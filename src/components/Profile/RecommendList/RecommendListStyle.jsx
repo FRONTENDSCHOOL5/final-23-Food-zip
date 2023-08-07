@@ -61,7 +61,9 @@ const RecommendScoreSpan = styled.span`
   margin-left: 2px;
   line-height: 17px;
 `;
-
+const TitleWrapper = styled.article`
+  display: flex;
+`;
 export {
   RecommendWrap,
   RecommendTitle,
@@ -70,4 +72,5 @@ export {
   RecommendListImg,
   RecommendNameP,
   RecommendScoreSpan,
+  TitleWrapper,
 };

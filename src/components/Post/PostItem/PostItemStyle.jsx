@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import MoreIcon from "../../../assets/images/s-icon-more-vertical.svg";
 
 const Container = styled.article`
   position: relative;
@@ -9,6 +8,7 @@ const Container = styled.article`
 const PostUser = styled.div`
   display: flex;
   gap: 13px;
+  align-items: center;
 `;
 const PostUserImg = styled.img`
   width: 42px;
@@ -76,17 +76,11 @@ const BtnComment = styled.button`
   color: #767676;
 `;
 
-const BtnMore = styled.button`
-  width: 18px;
-  height: 18px;
-  background: url(${MoreIcon});
-  position: absolute;
-  top: 7px;
-  right: 0;
+const SocialSvg = styled.div`
+  height: 20px;
+  margin-left: auto;
 `;
-
 export {
-  BtnMore,
   BtnComment,
   BtnLike,
   PostBtnBox,
@@ -101,4 +95,5 @@ export {
   PostUserImg,
   PostUserName,
   Container,
+  SocialSvg,
 };

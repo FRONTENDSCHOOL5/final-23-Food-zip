@@ -12,6 +12,7 @@ import {
   RecommendLocationP,
   RecommendMoreBtn,
   RecommendCloseBtn,
+  TitleWrapper,
 } from "./RecommendCardStyle";
 import { getRecommendInfoApi } from "../../../api/recommend";
 import sprite from "../../../assets/images/SpriteIcon.svg";
@@ -85,8 +86,11 @@ export default function RecommendCard({ cardClose, id }) {
         <h3 className="a11y-hidden">추천 맛집 카드</h3>
         <RecommendListImg src={recommendInfo.itemImage} alt="" />
         <RecommendTextSection>
-          <RecommendName>{recommendInfo.itemName}</RecommendName>
-          <RecommendScoreSpan>{recommendInfo.price}.0</RecommendScoreSpan>
+          <TitleWrapper>
+            <RecommendName>{recommendInfo.itemName}</RecommendName>
+            <SocialSVG id="star" size="16px" />
+            <RecommendScoreSpan>{recommendInfo.price}.0</RecommendScoreSpan>
+          </TitleWrapper>
           <RecommendLocationP>{recommendInfo.link}</RecommendLocationP>
           <RecommendMoreBtn type="button" onClick={modalOpen}>
             <SocialSVG id="icon-more-vertical" />

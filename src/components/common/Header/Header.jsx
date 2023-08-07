@@ -9,6 +9,7 @@ import {
   HeaderSpan,
   HeaderTextP,
   HeaderLogoBtn,
+  SocialSvg,
 } from "./HeaderStyle";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +20,7 @@ import {
   isAnimationActiveState,
 } from "../../../atoms/randomFoodAtom";
 import sprite from "../../../assets/images/SpriteIcon.svg";
+import styled from "styled-components";
 
 export default function Header({
   type,
@@ -30,12 +32,18 @@ export default function Header({
   handleUploadBtn,
   yourAccountname,
 }) {
-  const SocialSVG = ({ id, color = "white", size = 24, onClick }) => (
-    <div onClick={onClick}>
-      <svg fill={color} width={size} height={size}>
+  const SocialSVG = ({
+    id,
+    color = "white",
+    size = 24,
+    strokeColor = "#767676",
+    onClick,
+  }) => (
+    <SocialSvg onClick={onClick}>
+      <svg fill={color} width={size} height={size} stroke={strokeColor}>
         <use href={`${sprite}#${id}`} />
       </svg>
-    </div>
+    </SocialSvg>
   );
   const navigate = useNavigate();
   function handleClick() {
