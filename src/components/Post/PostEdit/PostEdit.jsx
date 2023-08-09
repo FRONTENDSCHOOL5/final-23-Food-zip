@@ -14,13 +14,10 @@ import {
 } from "./PostEditStyle";
 import { postEditApi, postInfoApi } from "../../../api/post";
 import { imgUpload } from "../../../api/imgUpload";
-// import { useRecoilState } from "recoil";
-// import { modalState } from "../../../atoms/modalAtom";
 export default function PostEdit({ closeModal, postId }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [postInfo, setPostInfo] = useState({});
-  // const [modal, setModal] = useRecoilState(modalState);
 
   useEffect(() => {
     fetchPostInfo();
@@ -51,15 +48,19 @@ export default function PostEdit({ closeModal, postId }) {
     try {
       let imageUrl = "";
       if (postInfo.image) {
+        console.log("check", postInfo.image);
         const file = await convertBase64ToBlob(postInfo.image);
+        console.log("!!!!", file);
         const formData = new FormData();
         formData.append("image", file);
         const uploadResponse = await imgUpload(formData);
+        console.log("upload", uploadResponse);
         if (uploadResponse.data.filename) {
           imageUrl =
             "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
         }
       }
+      console.log("img", imageUrl);
       const res = await postEditApi(postId, token, postInfo.content, imageUrl);
       const updatedPost = res.data.post;
       setPostInfo(updatedPost);
@@ -78,6 +79,7 @@ export default function PostEdit({ closeModal, postId }) {
   function handleUpload() {
     postEditUpload();
   }
+  console.log("edit", postInfo);
   return (
     <ModalOverlay onClick={closeModal}>
       <ModalContent onClick={e => e.stopPropagation()}>

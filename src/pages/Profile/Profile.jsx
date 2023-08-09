@@ -2,22 +2,22 @@ import React from "react";
 import ProfileInformation from "../../components/Profile/ProfileInformation/ProfileInformation";
 import PostList from "../../components/Post/PostList/PostList";
 import RecommendList from "../../components/Profile/RecommendList/RecommendList";
-import Modal from "../../components/Modal/Modal/Modal";
+// import Modal from "../../components/Modal/Modal/Modal";
 import Navigation from "../../components/common/Nav/Navigation";
-import Alert from "../../components/Modal/Alert/Alert";
+// import Alert from "../../components/Modal/Alert/Alert";
 import { useState, useEffect } from "react";
 import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard/RecommendCard";
-import { useRecoilState } from "recoil";
-import { modalState } from "../../atoms/modalAtom";
+// import { useRecoilState } from "recoil";
+// import { modalState } from "../../atoms/modalAtom";
 
 export default function Profile({ type }) {
   // const [modalShow, setModalShow] = useState(false);
   // const [modalType, setModalType] = useState("setting");
-  const [modal, setModal] = useRecoilState(modalState);
+  // const [modal, setModal] = useRecoilState(modalState);
   const [selectedId, setSelectedId] = useState(null);
   const [cardClosed, setCardClosed] = useState(false);
-  console.log(modal);
+  // console.log(modal);
   // function modalClose(e) {
   //   if (e.target === e.currentTarget) {
   //     setModal(prevModal => ({ ...prevModal, show: false }));
@@ -27,12 +27,12 @@ export default function Profile({ type }) {
   //   setModal(prevModal => ({ ...prevModal, show: true }));
   // }
 
-  const [alertShow, setAlertShow] = useState(false);
-  function alertClose(e) {
-    if (e.target === e.currentTarget) {
-      setAlertShow(false);
-    }
-  }
+  // const [alertShow, setAlertShow] = useState(false);
+  // function alertClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setAlertShow(false);
+  //   }
+  // }
 
   // function alertOpen() {
   //   setAlertShow(true);
@@ -70,7 +70,7 @@ export default function Profile({ type }) {
         <PostList />
         {/* {modal.show && <Modal type={modal.type} modalClose={modalClose} />} */}
         {/* {modal.show && <Modal type={modal.type} />} */}
-        {alertShow && <Alert type="logout" alertClose={alertClose} />}
+        {/* {alertShow && <Alert type="logout" alertClose={alertClose} />} */}
         {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
       </main>
       <Navigation />

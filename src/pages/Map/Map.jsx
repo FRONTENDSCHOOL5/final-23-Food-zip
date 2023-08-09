@@ -198,7 +198,7 @@ const MapTest = () => {
         <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
       )} */}
       {modal.show && <Modal type={modal.type} />}
-      {alertShow && <Alert type="logout" alertClose={alertClose} />}
+      {/* {alertShow && <Alert type="logout" alertClose={alertClose} />} */}
     </>
   );
 };

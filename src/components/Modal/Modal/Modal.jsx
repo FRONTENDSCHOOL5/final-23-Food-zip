@@ -13,7 +13,7 @@ import { modalState } from "../../../atoms/modalAtom";
 export default function Modal({
   type,
   // modalClose,
-  postId,
+  // postId,
   productId,
   commentId,
   restaurantName,
@@ -121,7 +121,7 @@ export default function Modal({
           alertClose={alertClose}
           // postId={modal.postId}
           productId={productId}
-          commentId={commentId}
+          // commentId={commentId}
         />
       )}
     </>

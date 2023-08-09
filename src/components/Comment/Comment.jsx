@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from "../Modal/Alert/Alert";
+// import Alert from "../Modal/Alert/Alert";
 import Modal from "../Modal/Modal/Modal";
 import {
   StyledCommentWrapper,
@@ -67,7 +67,6 @@ export default function Comment({ commentList, postId }) {
   //   setSelectedId(id);
   // }
   const [modal, setModal] = useRecoilState(modalState);
-  console.log(modal);
   const modalOpen = (type, id) => {
     setModal({
       show: true,
@@ -77,16 +76,16 @@ export default function Comment({ commentList, postId }) {
     });
   };
 
-  const [alertShow, setAlertShow] = useState(false);
-  function alertClose(e) {
-    if (e.target === e.currentTarget) {
-      setAlertShow(false);
-    }
-  }
+  // const [alertShow, setAlertShow] = useState(false);
+  // function alertClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setAlertShow(false);
+  //   }
+  // }
 
-  function alertOpen() {
-    setAlertShow(true);
-  }
+  // function alertOpen() {
+  //   setAlertShow(true);
+  // }
 
   return (
     <StyledCommentWrapper>
@@ -124,19 +123,19 @@ export default function Comment({ commentList, postId }) {
         <Modal
           type={modal.type}
           // modalClose={modalClose}
-          alertOpen={alertOpen}
+          // alertOpen={alertOpen}
           // commentId={selectedId}
           // postId={postId}
         />
       )}
-      {alertShow && (
+      {/* {alertShow && (
         <Alert
           type="comment"
           alertClose={alertClose}
           // commentId={selectedId}
           // postId={postId}
         />
-      )}
+      )} */}
     </StyledCommentWrapper>
   );
 }

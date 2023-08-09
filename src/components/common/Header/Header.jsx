@@ -29,7 +29,7 @@ export default function Header({
   uploadHandler,
   searchKeyword,
   handleSearchKeyword,
-  handleSaveBtn,
+  // handleSaveBtn,
   handleUploadBtn,
   yourAccountname,
 }) {

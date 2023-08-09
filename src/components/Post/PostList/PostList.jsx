@@ -109,9 +109,6 @@ export default function PostList() {
     setModal(prevModal => ({ ...prevModal, show: false }));
     getUserInfo();
   };
-  console.log(modal);
-  console.log("plz!!!!!!", openPostEditModal);
-  console.log(postInfo);
   return (
     <>
       {hasPosts && (

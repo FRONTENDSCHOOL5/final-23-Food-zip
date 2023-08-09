@@ -13,7 +13,7 @@ import { postDeleteApi, postReportApi } from "../../../api/post";
 import { recommendDeleteApi } from "../../../api/recommend";
 import { commentDeleteApi, commentReportApi } from "../../../api/comment";
 import { userInfoApi } from "../../../api/user";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { modalState } from "../../../atoms/modalAtom";
 export default function Alert({
   type,
