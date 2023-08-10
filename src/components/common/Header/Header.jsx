@@ -9,10 +9,8 @@ import {
   HeaderSpan,
   HeaderTextP,
   HeaderLogoBtn,
+  SocialSvg,
 } from "./HeaderStyle";
-import IconSearch from "../../../assets/images/icon-search.svg";
-import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
-import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import RandomRecommend from "../../RandomRecommend/RandomRecommend";
@@ -21,6 +19,7 @@ import {
   randomFoodState,
   isAnimationActiveState,
 } from "../../../atoms/randomFoodAtom";
+import sprite from "../../../assets/images/SpriteIcon.svg";
 import { modalState } from "../../../atoms/modalAtom";
 
 export default function Header({
@@ -33,6 +32,19 @@ export default function Header({
   handleUploadBtn,
   yourAccountname,
 }) {
+  const SocialSVG = ({
+    id,
+    color = "white",
+    size = 24,
+    strokeColor = "#767676",
+    onClick,
+  }) => (
+    <SocialSvg onClick={onClick}>
+      <svg fill={color} width={size} height={size} stroke={strokeColor}>
+        <use href={`${sprite}#${id}`} />
+      </svg>
+    </SocialSvg>
+  );
   const navigate = useNavigate();
   function handleClick() {
     navigate("/search");
@@ -76,11 +88,7 @@ export default function Header({
   function renderHeaderLeftBtn() {
     return (
       <HeaderLeftBtn type="button">
-        <img
-          src={IconArrowLeft}
-          alt="뒤로가기 아이콘"
-          onClick={() => navigate(-1)}
-        />
+        <SocialSVG id="icon-arrow-left" onClick={() => navigate(-1)} />
       </HeaderLeftBtn>
     );
   }
@@ -88,11 +96,7 @@ export default function Header({
     return (
       <HeaderSpan>
         <HeaderLeftBtn type="button">
-          <img
-            src={IconArrowLeft}
-            alt="뒤로가기 아이콘"
-            onClick={() => navigate(-1)}
-          />
+          <SocialSVG id="icon-arrow-left" onClick={() => navigate(-1)} />
         </HeaderLeftBtn>
         <HeaderTextP>{text}</HeaderTextP>
       </HeaderSpan>
@@ -102,7 +106,7 @@ export default function Header({
   function renderHeaderRightBtn() {
     return (
       <HeaderRightBtn type="button" onClick={modalOpen}>
-        <img src={IconMoreVertical} alt="더보기 아이콘" />
+        <SocialSVG id="icon-more-vertical" />
       </HeaderRightBtn>
     );
   }
@@ -113,7 +117,7 @@ export default function Header({
         <HeaderTitle>FOODZIP</HeaderTitle>
         <HeaderLogoBtn type="button" onClick={randomOpen} />
         <HeaderRightBtn type="button">
-          <img src={IconSearch} alt="돋보기 아이콘" onClick={handleClick} />
+          <SocialSVG id="icon-search" onClick={handleClick} />
         </HeaderRightBtn>
       </HeaderLayoutSection>
     ),

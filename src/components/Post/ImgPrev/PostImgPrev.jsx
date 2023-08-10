@@ -1,18 +1,22 @@
 import React, { useRef, useState } from "react";
 import imageCompression from "browser-image-compression";
-import uploadPhoto from "../../../assets/images/camera-btn.svg";
 import {
   UploadContainer,
   UploadImg,
   UploadImgDiv,
-  UploadImgIcon,
   UploadImgInput,
   UploadImgWrapper,
   CloseImgBtn,
 } from "./PostImgPrevStyle";
+import sprite from "../../../assets/images/SpriteIcon.svg";
 import { imgUpload } from "../../../api/imgUpload";
 
 export default function PostImgPrev({ onImageUrlChange }) {
+  const SocialSVG = ({ id, color = "white", size = 90 }) => (
+    <svg fill={color} width={size} height={size}>
+      <use href={`${sprite}#${id}`} />
+    </svg>
+  );
   const [imgUrl, setImgUrl] = useState([]);
   const [boardImage, setBoardImage] = useState(null);
   const [uploadPreview, setUploadPreview] = useState([]);
@@ -132,7 +136,7 @@ export default function PostImgPrev({ onImageUrlChange }) {
           onChange={handleUploadImg}
           ref={fileInputRef}
         />
-        <UploadImgIcon src={uploadPhoto} alt="사진을 올리는 버튼 이미지" />
+        <SocialSVG id="camera-btn" />
       </UploadImgWrapper>
       {uploadPreview?.map((preview, index) => (
         <UploadImgDiv key={index}>

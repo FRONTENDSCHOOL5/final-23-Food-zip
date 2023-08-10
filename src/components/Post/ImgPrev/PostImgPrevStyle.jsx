@@ -24,12 +24,6 @@ const UploadImgInput = styled.input`
   display: none;
 `;
 
-const UploadImgIcon = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-`;
 const UploadImgDiv = styled.div`
   position: relative;
 `;
@@ -54,7 +48,6 @@ export {
   UploadContainer,
   UploadImg,
   UploadImgDiv,
-  UploadImgIcon,
   UploadImgInput,
   UploadImgWrapper,
   CloseImgBtn,

@@ -31,6 +31,19 @@ export default function SearchList({ searchKeyword }) {
     }
   }
 
+  function highlightKeyword(text, keyword) {
+    const parts = text.split(new RegExp(`(${keyword})`, "gi"));
+    return parts.map((part, index) =>
+      part.toLowerCase() === keyword.toLowerCase() ? (
+        <span key={index} style={{ color: "#019223" }}>
+          {part}
+        </span>
+      ) : (
+        part
+      ),
+    );
+  }
+
   const [searchListData, setSearchListData] = useState([]);
   const debouncedSearchKeyword = debounce(keyword => {
     fetchData(keyword);
@@ -44,7 +57,9 @@ export default function SearchList({ searchKeyword }) {
         const token = localStorage.getItem("token");
         const res = await userSearch(keyword, token);
         const filteredData = res.data.filter(
-          item => !item.image.startsWith("https://mandarin.api.weniv"),
+          item =>
+            !item.image.startsWith("https://mandarin.api.weniv") &&
+            item.image.startsWith("https://api.mandarin.weniv.co.kr"),
         );
         setSearchListData(filteredData);
       } catch (error) {
@@ -66,8 +81,12 @@ export default function SearchList({ searchKeyword }) {
         >
           <ProfileImg src={searchItem.image} alt="프로필 이미지" />
           <TextWrap>
-            <UserName>{searchItem.username}</UserName>
-            <UserID>@ {searchItem.accountname}</UserID>
+            <UserName>
+              {highlightKeyword(searchItem.username, searchKeyword)}
+            </UserName>
+            <UserID>
+              @ {highlightKeyword(searchItem.accountname, searchKeyword)}
+            </UserID>
           </TextWrap>
         </List>
       ))}

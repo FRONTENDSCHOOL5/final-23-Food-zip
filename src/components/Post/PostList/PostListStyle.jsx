@@ -16,6 +16,7 @@ const PostListBtn = styled.button`
   box-sizing: border-box;
   background-color: transparent;
   border: 0;
+  height: 25.99px;
 `;
 
 const PostItemList = styled.ul`

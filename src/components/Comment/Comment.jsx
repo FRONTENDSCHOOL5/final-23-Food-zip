@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import Alert from "../Modal/Alert/Alert";
 import Modal from "../Modal/Modal/Modal";
+import sprite from "../../assets/images/SpriteIcon.svg";
 import {
   StyledCommentWrapper,
   StyledComment,
-  CommentBtnMore,
+  SocialSvg,
   StyledCommentUserInfo,
   CommentUserProfile,
   StyledCommentContent,
@@ -20,6 +21,19 @@ export default function Comment({ commentList, postId }) {
   // const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
 
+  const SocialSVG = ({
+    id,
+    color = "white",
+    size = 20,
+    strokeColor = "#767676",
+    onClick,
+  }) => (
+    <SocialSvg onClick={onClick}>
+      <svg fill={color} width={size} height={size} stroke={strokeColor}>
+        <use href={`${sprite}#${id}`} style={{ stroke: "strokeColor" }} />
+      </svg>
+    </SocialSvg>
+  );
   const elapsedTime = commentDate => {
     const now = new Date();
     const commentTime = new Date(commentDate);
@@ -106,16 +120,15 @@ export default function Comment({ commentList, postId }) {
               </StyledCommentUserInfo>
               <CommentContent>{comment.content}</CommentContent>
             </StyledCommentContent>
-
-            <CommentBtnMore
-              type="button"
-              onClick={() => {
+            <SocialSVG
+              id="icon-more-vertical"
+              onClick={() =>
                 modalOpen(
                   where === comment.author.accountname ? "delete" : "report",
                   comment.id,
-                );
-              }}
-            ></CommentBtnMore>
+                )
+              }
+            />
           </StyledComment>
         );
       })}
