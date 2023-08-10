@@ -30,7 +30,7 @@ export default function RecommendImgPrev({
       setUploadPreview(initialImage);
     }
   }, [hasImage, initialImage]);
-  console.log(initialImage);
+
   const handleUploadImg = async e => {
     let file = e.target?.files[0];
     console.log("pre1", file);

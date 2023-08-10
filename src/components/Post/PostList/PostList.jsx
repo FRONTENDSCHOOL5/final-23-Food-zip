@@ -26,7 +26,10 @@ import { userPostListApi } from "../../../api/post";
 import Stack from "../../../assets/images/stack.svg";
 import Heart from "../../../assets/images/icon-heart.svg";
 import Comment from "../../../assets/images/icon-message-circle-1.svg";
-export default function PostList({ modalOpen }) {
+import { useRecoilState } from "recoil";
+import { modalState } from "../../../atoms/modalAtom";
+
+export default function PostList() {
   const [viewMode, setViewMode] = useState("list");
   const location = useLocation();
   const navigate = useNavigate();
@@ -75,19 +78,36 @@ export default function PostList({ modalOpen }) {
     });
   }
 
-  const [modalShow, setModalShow] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  // const [modalShow, setModalShow] = useState(false);
+  // const [selectedId, setSelectedId] = useState(null);
 
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
 
-  function modalOpen(id) {
-    setSelectedId(id);
-    setModalShow(true);
-  }
+  // function modalOpen(id) {
+  //   setSelectedId(id);
+  //   setModalShow(true);
+  // }
+  const [modal, setModal] = useRecoilState(modalState);
+
+  // const modalOpen = id => {
+  //   setModal({
+  //     show: true,
+  //     type: !accountname ? "modification" : "report",
+  //     postId: id,
+  //   });
+  // };
+
+  const modalOpen = (type, id) => {
+    setModal({
+      show: true,
+      type,
+      postId: id,
+    });
+  };
 
   const openPostEditModal = () => {
     setPostEditModalOpen(true);
@@ -95,10 +115,9 @@ export default function PostList({ modalOpen }) {
 
   const closePostEditModal = () => {
     setPostEditModalOpen(false);
-    setModalShow(false);
+    setModal(prevModal => ({ ...prevModal, show: false }));
     getUserInfo();
   };
-  console.log("list", postInfo);
   return (
     <>
       {hasPosts && (
@@ -128,7 +147,12 @@ export default function PostList({ modalOpen }) {
               {postInfo.map(item => (
                 <PostListItem key={item.id}>
                   <PostItem
-                    modalOpen={modalOpen}
+                    modalOpen={() =>
+                      modalOpen(
+                        !accountname ? "modification" : "report",
+                        item.id,
+                      )
+                    }
                     postInfo={item}
                     getUserInfo={getUserInfo}
                   />
@@ -178,19 +202,19 @@ export default function PostList({ modalOpen }) {
           )}
         </>
       )}
-      {modalShow && (
+      {modal.show && (
         <Modal
-          type={!accountname ? "modification" : "report"}
-          modalClose={modalClose}
-          postId={selectedId}
+          type={modal.type}
+          // modalClose={modalClose}
+          // postId={selectedId}
           handlerPostEdit={openPostEditModal}
         />
       )}
       {postEditModalOpen && (
         <PostEdit
           closeModal={closePostEditModal}
-          postId={selectedId}
-          postInfo={postInfo}
+          postId={modal.postId}
+          // postInfo={postInfo}
         />
       )}
     </>
