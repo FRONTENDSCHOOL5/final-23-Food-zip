@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import KakaoLogo from "../../assets/images/kakao.svg";
-import GoogleLogo from "../../assets/images/Google.svg";
-import FacebookLogo from "../../assets/images/facebook.svg";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -31,31 +28,41 @@ const LoginBox = styled.section`
   bottom: 0;
 `;
 const KakaoLogin = styled.button`
+  display: flex;
   width: 322px;
+  height: 45px;
   text-align: center;
   color: #767676;
   border: 1px solid #f2c94c;
   border-radius: 44px;
-  padding: 13px 87px;
-  background: url(${KakaoLogo}) no-repeat 12px 9px;
+  align-items: center;
+  gap: 52px;
+  padding-left: 17px;
 `;
 const GoogleLogin = styled.button`
+  display: flex;
   width: 322px;
+  height: 45px;
   text-align: center;
   color: #767676;
   border: 1px solid #767676;
   border-radius: 44px;
-  padding: 13px 87px;
-  background: url(${GoogleLogo}) no-repeat 12px 9px;
+  align-items: center;
+  gap: 52px;
+  padding-left: 17px;
 `;
 const FacebookLogin = styled.button`
+  display: flex;
   width: 322px;
+  height: 45px;
   text-align: center;
   color: #767676;
   border: 1px solid #2d9cdb;
   border-radius: 44px;
   padding: 13px 87px;
-  background: url(${FacebookLogo}) no-repeat 12px 9px;
+  align-items: center;
+  gap: 52px;
+  padding-left: 17px;
 `;
 const LoginJoinBox = styled.div`
   display: flex;

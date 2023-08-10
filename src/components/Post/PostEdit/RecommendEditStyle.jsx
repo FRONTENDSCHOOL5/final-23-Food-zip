@@ -61,6 +61,9 @@ const RecommendInfo = styled.input`
   }
 `;
 
+const SocialSvg = styled.div`
+  height: 24px;
+`;
 export {
   RecommendInfo,
   ModalContent,
@@ -69,4 +72,5 @@ export {
   HeaderLeftBtn,
   EditContainer,
   ProductImage,
+  SocialSvg,
 };

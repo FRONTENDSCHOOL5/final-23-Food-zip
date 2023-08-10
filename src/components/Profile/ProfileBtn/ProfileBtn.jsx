@@ -2,9 +2,8 @@ import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { followApi, unfollowApi } from "../../../api/follow";
-import IconMessage from "../../../assets/images/icon-message-circle.svg";
-import IconShare from "../../../assets/images/icon-share.svg";
 import Button from "../../../components/common/Button/Button";
+import sprite from "../../../assets/images/SpriteIcon.svg";
 import {
   InformationBottomSection,
   ImgCircleBtn,
@@ -18,6 +17,11 @@ export default function ProfileBtn({
   setFollow,
   follow,
 }) {
+  const SocialSVG = ({ id, color = "white", size = 20 }) => (
+    <svg fill={color} width={size} height={size}>
+      <use href={`${sprite}#${id}`} />
+    </svg>
+  );
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -62,7 +66,7 @@ export default function ProfileBtn({
       <>
         <InformationBottomSection>
           <ImgCircleBtn type="button" onClick={() => moveChat(yourAccountname)}>
-            <img src={IconMessage} alt="메시지 아이콘" />
+            <SocialSVG id="icon-message-circle-1" />
           </ImgCircleBtn>
           {follow ? (
             <FollowBtn
@@ -88,7 +92,7 @@ export default function ProfileBtn({
           )}
 
           <ImgCircleBtn>
-            <img src={IconShare} alt="공유 아이콘" />
+            <SocialSVG id="icon-share" />
           </ImgCircleBtn>
         </InformationBottomSection>
       </>

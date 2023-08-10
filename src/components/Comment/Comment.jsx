@@ -1,21 +1,39 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from "../Modal/Alert/Alert";
+// import Alert from "../Modal/Alert/Alert";
 import Modal from "../Modal/Modal/Modal";
+import sprite from "../../assets/images/SpriteIcon.svg";
 import {
   StyledComment,
-  CommentBtnMore,
+  SocialSvg,
   StyledCommentUserInfo,
   CommentUserProfile,
   StyledCommentContent,
   CommentContent,
 } from "./CommentStyle";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 export default function Comment({ commentList, postId }) {
   const where = localStorage.getItem("accountname");
-  const [modalShow, setModalShow] = useState(false);
-  const [modalType, setModalType] = useState("delete");
-  const [selectedId, setSelectedId] = useState(null);
+  // const [modalShow, setModalShow] = useState(false);
+  // const [modalType, setModalType] = useState("delete");
+  // const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
+
+  const SocialSVG = ({
+    id,
+    color = "white",
+    size = 20,
+    strokeColor = "#767676",
+    onClick,
+  }) => (
+    <SocialSvg onClick={onClick}>
+      <svg fill={color} width={size} height={size} stroke={strokeColor}>
+        <use href={`${sprite}#${id}`} style={{ stroke: "strokeColor" }} />
+      </svg>
+    </SocialSvg>
+  );
+
   const elapsedTime = commentDate => {
     const now = new Date();
     const commentTime = new Date(commentDate);
@@ -51,28 +69,37 @@ export default function Comment({ commentList, postId }) {
     }
   }
 
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
 
-  function modalOpen(type, id) {
-    setModalShow(true);
-    setModalType(type);
-    setSelectedId(id);
-  }
+  // function modalOpen(type, id) {
+  //   setModalShow(true);
+  //   setModalType(type);
+  //   setSelectedId(id);
+  // }
+  const [modal, setModal] = useRecoilState(modalState);
+  const modalOpen = (type, id) => {
+    setModal({
+      show: true,
+      type,
+      commentId: id,
+      postId: postId,
+    });
+  };
 
-  const [alertShow, setAlertShow] = useState(false);
-  function alertClose(e) {
-    if (e.target === e.currentTarget) {
-      setAlertShow(false);
-    }
-  }
+  // const [alertShow, setAlertShow] = useState(false);
+  // function alertClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setAlertShow(false);
+  //   }
+  // }
 
-  function alertOpen() {
-    setAlertShow(true);
-  }
+  // function alertOpen() {
+  //   setAlertShow(true);
+  // }
 
   return (
     <>
@@ -93,34 +120,25 @@ export default function Comment({ commentList, postId }) {
               </StyledCommentUserInfo>
               <CommentContent>{comment.content}</CommentContent>
             </StyledCommentContent>
-
-            <CommentBtnMore
-              type="button"
-              onClick={() => {
+            <SocialSVG
+              id="icon-more-vertical"
+              onClick={() =>
                 modalOpen(
                   where === comment.author.accountname ? "delete" : "report",
                   comment.id,
-                );
-              }}
-            ></CommentBtnMore>
+                )
+              }
+            />
           </StyledComment>
         );
       })}
-      {modalShow && (
+      {modal.show && (
         <Modal
-          type={modalType}
-          modalClose={modalClose}
-          alertOpen={alertOpen}
-          commentId={selectedId}
-          postId={postId}
-        />
-      )}
-      {alertShow && (
-        <Alert
-          type="comment"
-          alertClose={alertClose}
-          commentId={selectedId}
-          postId={postId}
+          type={modal.type}
+          // modalClose={modalClose}
+          // alertOpen={alertOpen}
+          // commentId={selectedId}
+          // postId={postId}
         />
       )}
     </>

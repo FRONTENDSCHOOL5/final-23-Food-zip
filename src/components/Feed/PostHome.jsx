@@ -6,15 +6,17 @@ import { feed } from "../../api/post";
 import { useRef } from "react";
 import Loading from "../../pages/Loading/Loading";
 import EmptyHome from "./EmptyHome";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 
 const List = styled.ul`
   background-color: white;
   padding: 57px 24px 69px 24px;
 `;
 
-export default function PostHome({ modalOpen }) {
-  const [modalShow, setModalShow] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+export default function PostHome() {
+  const [modal, setModal] = useRecoilState(modalState);
+//   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [skip, setSkip] = useState(0);
   const [myFeed, setMyFeed] = useState([]);
@@ -61,13 +63,13 @@ export default function PostHome({ modalOpen }) {
     }
   }
 
-  function modalOpen(id) {
-    setSelectedId(id);
-    setModalShow(true);
-  }
-  console.log("page: ", page);
-  // console.log("POSTHOME's myFeed: ", myFeed);
-  // console.log("observer.current", observer.current);
+  const modalOpen = id => {
+    setModal({
+      show: true,
+      postId: id,
+    });
+  };
+
   return (
     <>
       {loading ? (
@@ -86,13 +88,7 @@ export default function PostHome({ modalOpen }) {
                 />
               </li>
             ))}
-            {modalShow && (
-              <Modal
-                type="report"
-                modalClose={modalClose}
-                postId={selectedId}
-              />
-            )}
+            {modal.show && <Modal type="report" />}
             {/* 무한 스크롤을 위한 Ref */}
             <div ref={observer} />
           </List>
