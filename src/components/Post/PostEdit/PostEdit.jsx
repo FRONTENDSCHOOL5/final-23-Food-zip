@@ -10,13 +10,10 @@ import {
   PostContent,
   EditContainer,
   EditImgWrapper,
-  ImgStyle,
 } from "./PostEditStyle";
 import {
-  UploadContainer,
   UploadImg,
   UploadImgDiv,
-  UploadImgIcon,
   UploadImgInput,
   UploadImgWrapper,
   CloseImgBtn,
@@ -287,7 +284,7 @@ export default function PostEdit({ closeModal, postId }) {
                   }}
                 ></CloseImgBtn>
                 <UploadImg
-                  draggable={false}
+                  draggable
                   onDragStart={e => dragStart(e, index)}
                   onDragEnter={e => dragEnter(e, index)}
                   onDragEnd={drop}

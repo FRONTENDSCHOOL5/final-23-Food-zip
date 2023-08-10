@@ -21,7 +21,6 @@ import {
 import { userPostListApi } from "../../../api/post";
 import sprite from "../../../assets/images/SpriteIcon.svg";
 import Stack from "../../../assets/images/stack.svg";
-
 import { useRecoilState } from "recoil";
 import { modalState } from "../../../atoms/modalAtom";
 
