@@ -14,20 +14,21 @@ import {
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import RandomRecommend from "../../RandomRecommend/RandomRecommend";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   randomFoodState,
   isAnimationActiveState,
 } from "../../../atoms/randomFoodAtom";
 import sprite from "../../../assets/images/SpriteIcon.svg";
+import { modalState } from "../../../atoms/modalAtom";
 
 export default function Header({
   type,
-  modalOpen,
+  // modalOpen,
   uploadHandler,
   searchKeyword,
   handleSearchKeyword,
-  handleSaveBtn,
+  // handleSaveBtn,
   handleUploadBtn,
   yourAccountname,
 }) {
@@ -80,6 +81,10 @@ export default function Header({
       }, 6800);
     }
   }
+  const setModal = useSetRecoilState(modalState);
+  const modalOpen = () => {
+    setModal({ show: true, type: "setting" });
+  };
   function renderHeaderLeftBtn() {
     return (
       <HeaderLeftBtn type="button">

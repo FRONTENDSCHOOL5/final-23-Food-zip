@@ -7,7 +7,8 @@ import "./MapStyle.css";
 import Modal from "../../components/Modal/Modal/Modal";
 import Alert from "../../components/Modal/Alert/Alert";
 import sprite from "../../assets/images/SpriteIcon.svg";
-
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 const MapWrapper = styled.div`
   width: 100%;
   height: 100vh;
@@ -131,24 +132,23 @@ const MapTest = () => {
       }
     }
   }, [recommendName, map]);
+
   const SocialSVG = ({ id, color = "white", size = 25 }) => (
     <svg fill={color} width={size} height={size}>
       <use href={`${sprite}#${id}`} />
     </svg>
   );
-  const [modalShow, setModalShow] = useState(false);
-  const [modalType, setModalType] = useState("setting");
 
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
 
-  function modalOpen(type) {
-    setModalShow(true);
-    setModalType(type);
-  }
+  // function modalOpen(type) {
+  //   setModalShow(true);
+  //   setModalType(type);
+  // }
 
   const [alertShow, setAlertShow] = useState(false);
   function alertClose(e) {
@@ -157,13 +157,15 @@ const MapTest = () => {
     }
   }
 
-  function alertOpen() {
-    setAlertShow(true);
-  }
-
+  // function alertOpen() {
+  //   setAlertShow(true);
+  // }
+  const [modal, setModal] = useRecoilState(modalState);
+  console.log(modal);
   return (
     <>
-      <Header type="map" modalOpen={() => modalOpen("setting")} />
+      {/* <Header type="map" modalOpen={() => modalOpen("setting")} /> */}
+      <Header type="map" />
       <MapWrapper>
         <Map id="map"></Map>
         <InfoWrapper>
@@ -189,10 +191,11 @@ const MapTest = () => {
           </BtnList>
         </InfoWrapper>
       </MapWrapper>
-      {modalShow && (
+      {/* {modalShow && (
         <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
-      )}
-      {alertShow && <Alert type="logout" alertClose={alertClose} />}
+      )} */}
+      {modal.show && <Modal type={modal.type} />}
+      {/* {alertShow && <Alert type="logout" alertClose={alertClose} />} */}
     </>
   );
 };

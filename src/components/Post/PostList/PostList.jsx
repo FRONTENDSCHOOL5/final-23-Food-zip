@@ -11,19 +11,30 @@ import {
   PostListSection,
   GridItemList,
   GridItemWrap,
+  IconContainer,
+  Icon,
+  Likes,
+  Comments,
+  InfoContainer,
+  GridIconImg,
 } from "./PostListStyle";
 import { userPostListApi } from "../../../api/post";
 import sprite from "../../../assets/images/SpriteIcon.svg";
+import Stack from "../../../assets/images/stack.svg";
+import Heart from "../../../assets/images/icon-heart.svg";
+import Comment from "../../../assets/images/icon-message-circle-1.svg";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../../atoms/modalAtom";
 
-export default function PostList({ modalOpen }) {
+export default function PostList() {
+  const [viewMode, setViewMode] = useState("list");
+  const location = useLocation();
+  const navigate = useNavigate();
   const SocialSVG = ({ id, color = "white", size = 26 }) => (
     <svg fill={color} width={size} height={size}>
       <use href={`${sprite}#${id}`} />
     </svg>
   );
-  const [viewMode, setViewMode] = useState("list");
-  const location = useLocation();
-  const navigate = useNavigate();
   const { accountname } = location.state || {};
   const handleViewModeChange = mode => {
     setViewMode(mode);
@@ -69,19 +80,36 @@ export default function PostList({ modalOpen }) {
     });
   }
 
-  const [modalShow, setModalShow] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  // const [modalShow, setModalShow] = useState(false);
+  // const [selectedId, setSelectedId] = useState(null);
 
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
 
-  function modalOpen(id) {
-    setSelectedId(id);
-    setModalShow(true);
-  }
+  // function modalOpen(id) {
+  //   setSelectedId(id);
+  //   setModalShow(true);
+  // }
+  const [modal, setModal] = useRecoilState(modalState);
+
+  // const modalOpen = id => {
+  //   setModal({
+  //     show: true,
+  //     type: !accountname ? "modification" : "report",
+  //     postId: id,
+  //   });
+  // };
+
+  const modalOpen = (type, id) => {
+    setModal({
+      show: true,
+      type,
+      postId: id,
+    });
+  };
 
   const openPostEditModal = () => {
     setPostEditModalOpen(true);
@@ -89,10 +117,9 @@ export default function PostList({ modalOpen }) {
 
   const closePostEditModal = () => {
     setPostEditModalOpen(false);
-    setModalShow(false);
+    setModal(prevModal => ({ ...prevModal, show: false }));
     getUserInfo();
   };
-
   return (
     <>
       {hasPosts && (
@@ -128,7 +155,12 @@ export default function PostList({ modalOpen }) {
               {postInfo.map(item => (
                 <PostListItem key={item.id}>
                   <PostItem
-                    modalOpen={modalOpen}
+                    modalOpen={() =>
+                      modalOpen(
+                        !accountname ? "modification" : "report",
+                        item.id,
+                      )
+                    }
                     postInfo={item}
                     getUserInfo={getUserInfo}
                   />
@@ -145,8 +177,32 @@ export default function PostList({ modalOpen }) {
                     }}
                   >
                     {item.image !== "" && (
-                      <img src={item.image} alt="grid 이미지" />
+                      <img
+                        src={
+                          item.image.startsWith("https://")
+                            ? item.image.split(",")[0].trim()
+                            : `https://api.mandarin.weniv.co.kr/${item.image
+                                .split(",")[0]
+                                .trim()}`
+                        }
+                        alt="grid 이미지"
+                      />
                     )}
+                    {item.image.includes(",") && (
+                      <IconContainer>
+                        <Icon src={Stack} />
+                      </IconContainer>
+                    )}
+                    <InfoContainer>
+                      <Likes>
+                        <GridIconImg src={Heart} alt="하트 아이콘" />
+                        {item.heartCount}
+                      </Likes>
+                      <Comments>
+                        <GridIconImg src={Comment} alt="코멘트 아이콘" />
+                        {item.commentCount}
+                      </Comments>
+                    </InfoContainer>
                   </PostGridImg>
                 </GridItemList>
               ))}
@@ -154,19 +210,19 @@ export default function PostList({ modalOpen }) {
           )}
         </>
       )}
-      {modalShow && (
+      {modal.show && (
         <Modal
-          type={!accountname ? "modification" : "report"}
-          modalClose={modalClose}
-          postId={selectedId}
+          type={modal.type}
+          // modalClose={modalClose}
+          // postId={selectedId}
           handlerPostEdit={openPostEditModal}
         />
       )}
       {postEditModalOpen && (
         <PostEdit
           closeModal={closePostEditModal}
-          postId={selectedId}
-          postInfo={postInfo}
+          postId={modal.postId}
+          // postInfo={postInfo}
         />
       )}
     </>

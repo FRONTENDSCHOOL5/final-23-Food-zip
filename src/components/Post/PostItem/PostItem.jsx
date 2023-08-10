@@ -19,7 +19,7 @@ import {
 } from "./PostItemStyle";
 import { postLikeApi, postUnlikeApi } from "../../../api/post";
 import sprite from "../../../assets/images/SpriteIcon.svg";
-
+import Carousel from "../../common/Carousels/Carousel";
 export default function PostItem({
   postInfo,
   modalOpen,
@@ -56,7 +56,6 @@ export default function PostItem({
   }
   const postLike = async () => {
     const token = localStorage.getItem("token");
-    console.log("check");
     try {
       if (infoToIterate.hearted) {
         await postUnlikeApi(infoToIterate.id, token);
@@ -88,7 +87,6 @@ export default function PostItem({
       });
     }
   }
-
   function formatDate(dateString) {
     const dateObj = new Date(dateString);
     const year = dateObj.getFullYear();
@@ -122,13 +120,17 @@ export default function PostItem({
         )}
         <PostContent>
           <PostText>{infoToIterate.content}</PostText>
-          {infoToIterate.image !== "" && (
-            <PostImg
-              src={infoToIterate.image}
-              alt="포스트 이미지"
-              onClick={() => {
-                moveDetail(infoToIterate.id);
-              }}
+//           {infoToIterate.image !== "" && (
+//             <PostImg
+//               src={infoToIterate.image}
+//               alt="포스트 이미지"
+//               onClick={() => {
+//                 moveDetail(infoToIterate.id);
+//               }}
+          {infoToIterate.image && infoToIterate.author && (
+            <Carousel
+              images={infoToIterate.image}
+              userInfo={infoToIterate.author.username}
             />
           )}
           <PostInfoBox>

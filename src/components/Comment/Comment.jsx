@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from "../Modal/Alert/Alert";
+// import Alert from "../Modal/Alert/Alert";
 import Modal from "../Modal/Modal/Modal";
 import sprite from "../../assets/images/SpriteIcon.svg";
 import {
@@ -12,11 +12,13 @@ import {
   StyledCommentContent,
   CommentContent,
 } from "./CommentStyle";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 export default function Comment({ commentList, postId }) {
   const where = localStorage.getItem("accountname");
-  const [modalShow, setModalShow] = useState(false);
-  const [modalType, setModalType] = useState("delete");
-  const [selectedId, setSelectedId] = useState(null);
+  // const [modalShow, setModalShow] = useState(false);
+  // const [modalType, setModalType] = useState("delete");
+  // const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
 
   const SocialSVG = ({
@@ -67,28 +69,37 @@ export default function Comment({ commentList, postId }) {
     }
   }
 
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
 
-  function modalOpen(type, id) {
-    setModalShow(true);
-    setModalType(type);
-    setSelectedId(id);
-  }
+  // function modalOpen(type, id) {
+  //   setModalShow(true);
+  //   setModalType(type);
+  //   setSelectedId(id);
+  // }
+  const [modal, setModal] = useRecoilState(modalState);
+  const modalOpen = (type, id) => {
+    setModal({
+      show: true,
+      type,
+      commentId: id,
+      postId: postId,
+    });
+  };
 
-  const [alertShow, setAlertShow] = useState(false);
-  function alertClose(e) {
-    if (e.target === e.currentTarget) {
-      setAlertShow(false);
-    }
-  }
+  // const [alertShow, setAlertShow] = useState(false);
+  // function alertClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setAlertShow(false);
+  //   }
+  // }
 
-  function alertOpen() {
-    setAlertShow(true);
-  }
+  // function alertOpen() {
+  //   setAlertShow(true);
+  // }
 
   return (
     <StyledCommentWrapper>
@@ -121,23 +132,23 @@ export default function Comment({ commentList, postId }) {
           </StyledComment>
         );
       })}
-      {modalShow && (
+      {modal.show && (
         <Modal
-          type={modalType}
-          modalClose={modalClose}
-          alertOpen={alertOpen}
-          commentId={selectedId}
-          postId={postId}
+          type={modal.type}
+          // modalClose={modalClose}
+          // alertOpen={alertOpen}
+          // commentId={selectedId}
+          // postId={postId}
         />
       )}
-      {alertShow && (
+      {/* {alertShow && (
         <Alert
           type="comment"
           alertClose={alertClose}
-          commentId={selectedId}
-          postId={postId}
+          // commentId={selectedId}
+          // postId={postId}
         />
-      )}
+      )} */}
     </StyledCommentWrapper>
   );
 }

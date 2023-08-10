@@ -16,6 +16,8 @@ import {
 } from "./RecommendCardStyle";
 import { getRecommendInfoApi } from "../../../api/recommend";
 import sprite from "../../../assets/images/SpriteIcon.svg";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../../atoms/modalAtom";
 
 export default function RecommendCard({ cardClose, id }) {
   const SocialSVG = ({ id, color = "white", size = 22 }) => (
@@ -35,7 +37,13 @@ export default function RecommendCard({ cardClose, id }) {
   const navigation = useNavigate();
   const [recommendEditModalOpen, setRecommendEditModalOpen] = useState(false);
   const [shouldFetchProductInfo, setShouldFetchProductInfo] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
+  // const [modalShow, setModalShow] = useState(false);
+  const [modal, setModal] = useRecoilState(modalState);
+  console.log(modal);
+  const modalOpen = () => {
+    setModal({ show: true, type: !accountname ? "product" : "yourproduct" });
+  };
+
   useEffect(() => {
     getUserInfo();
   }, [id]);
@@ -57,22 +65,21 @@ export default function RecommendCard({ cardClose, id }) {
       navigation("/error");
     }
   };
-
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
-  function modalOpen() {
-    setModalShow(true);
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
+  // function modalOpen() {
+  //   setModalShow(true);
+  // }
   const openRecommendEditModal = () => {
     setRecommendEditModalOpen(true);
   };
   const closeRecommendEditModal = () => {
     setRecommendEditModalOpen(false);
     setShouldFetchProductInfo(true);
-    setModalShow(false);
+    setModal(prevModal => ({ ...prevModal, show: false }));
     getUserInfo();
   };
   useEffect(() => {
@@ -100,10 +107,10 @@ export default function RecommendCard({ cardClose, id }) {
           </RecommendCloseBtn>
         </RecommendTextSection>
       </RecommendCardArticle>
-      {modalShow && (
+      {modal.show && (
         <Modal
-          type={!accountname ? "product" : "yourproduct"}
-          modalClose={modalClose}
+          type={modal.type}
+          // modalClose={modalClose}
           productId={id}
           restaurantName={recommendInfo.itemName}
           handlerRecommendEdit={openRecommendEditModal}
