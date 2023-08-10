@@ -45,7 +45,7 @@ const PostUserImg = styled.img`
 `;
 const CommentSection = styled.section`
   width: 100%;
-  padding: 5px 15px 65px;
+  padding: 5px 20px 65px;
   box-sizing: border-box;
   border-top: 1px solid #dbdbdb;
   background-color: #fff;

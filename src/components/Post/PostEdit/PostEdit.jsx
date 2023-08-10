@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
 import Button from "../../common/Button/Button";
 import RecommendImgPrev from "../ImgPrev/RecommendImgPrev";
 import {

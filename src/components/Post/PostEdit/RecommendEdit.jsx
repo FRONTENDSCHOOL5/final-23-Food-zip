@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StarRating from "../StarRating/StarRating";
-import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
 import Button from "../../common/Button/Button";
 import { RecommendLabel } from "../../../pages/Post/MakeRecommend";
 import {
@@ -12,17 +11,18 @@ import {
   HeaderLeftBtn,
   EditContainer,
   ProductImage,
+  SocialSvg,
 } from "./RecommendEditStyle";
 import { getRecommendInfoApi, recommendEditApi } from "../../../api/recommend";
 import sprite from "../../../assets/images/SpriteIcon.svg";
 
 export default function RecommendEdit({ closeModal, productId }) {
   const SocialSVG = ({ id, color = "white", size = 24, onClick }) => (
-    <div onClick={onClick}>
+    <SocialSvg onClick={onClick}>
       <svg fill={color} width={size} height={size}>
         <use href={`${sprite}#${id}`} />
       </svg>
-    </div>
+    </SocialSvg>
   );
   const token = localStorage.getItem("token");
   const navigate = useNavigate();

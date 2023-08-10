@@ -20,7 +20,6 @@ import {
   isAnimationActiveState,
 } from "../../../atoms/randomFoodAtom";
 import sprite from "../../../assets/images/SpriteIcon.svg";
-import styled from "styled-components";
 
 export default function Header({
   type,

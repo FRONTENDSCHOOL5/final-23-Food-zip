@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ImgStar from "../../../assets/images/star.svg";
 
 const RecommendDiv = styled.div`
   position: fixed;
