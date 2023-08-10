@@ -32,45 +32,50 @@ const StyledPost = styled.textarea`
 `;
 
 export default function MakePost() {
-  const [imgFile, setImgFile] = useState(null);
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgFile, setImgFile] = useState([]);
+  const [imgUrl, setImgUrl] = useState([]);
   // const [imageUrls, setImageUrls] = useState("");
   const [content, setContent] = useState("");
   const [isValid, setIsValid] = useState(false);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const handleImageUrlChange = (file, url) => {
-    setImgFile(file);
-    setImgUrl(url);
+    setImgFile(prevImgFile => [...prevImgFile, ...file]);
+    setImgUrl(prevImgUrl => [...prevImgUrl, ...url]);
     console.log("url object in MakePost:", url);
     console.log("File object in MakePost:", file);
   };
   const uploadPost = async (url, content) => {
     try {
-      console.log(imgUrl);
-      const formData = new FormData();
-      formData.append("image", imgUrl);
-      console.log("up", formData);
-      const uploadResponse = await axios.post(
-        "https://api.mandarin.weniv.co.kr/image/uploadfile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
+      console.log("ce", imgUrl);
+      const uploadedImageUrls = [];
+      for (const image of imgUrl) {
+        const formData = new FormData();
+        formData.append("image", image);
+        const uploadResponse = await axios.post(
+          "https://api.mandarin.weniv.co.kr/image/uploadfile",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           },
-        },
-      );
-      let imageUrl = "";
-      if (uploadResponse.data.filename) {
-        imageUrl =
-          "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
+        );
+        let imageUrl = "";
+        if (uploadResponse.data.filename) {
+          imageUrl =
+            "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
+        }
+
+        uploadedImageUrls.push(imageUrl); // 결과를 배열에 추가
       }
+      console.log("up", uploadedImageUrls);
       await axios.post(
         "https://api.mandarin.weniv.co.kr/post",
         {
           post: {
             content: content,
-            image: imageUrl,
+            image: uploadedImageUrls.join(", "),
           },
         },
         {

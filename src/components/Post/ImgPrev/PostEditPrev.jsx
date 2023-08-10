@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import imageCompression from "browser-image-compression";
 import uploadPhoto from "../../../assets/images/camera-btn.svg";
 import {
@@ -12,14 +12,27 @@ import {
 } from "./PostImgPrevStyle";
 import { imgUpload } from "../../../api/imgUpload";
 
-export default function PostImgPrev({ onImageUrlChange }) {
+export default function PostEditPrev({
+  onRecommendImageUrlChange,
+  hasImage,
+  initialImage,
+  iconStyle,
+  wrapperStyle,
+}) {
   const [imgUrl, setImgUrl] = useState([]);
   const [boardImage, setBoardImage] = useState(null);
   const [uploadPreview, setUploadPreview] = useState([]);
 
   const fileInputRef = useRef(null);
   const maxSize = 10 * 1024 * 1024;
-  console.log("maek", uploadPreview);
+
+  useEffect(() => {
+    if (hasImage && initialImage) {
+      setUploadPreview(initialImage);
+    }
+  }, [hasImage, initialImage]);
+  console.log("prev", hasImage, uploadPreview);
+
   const handleUploadImg = async e => {
     if (!e.target?.files) {
       return;
@@ -91,7 +104,7 @@ export default function PostImgPrev({ onImageUrlChange }) {
 
     // 모든 이미지 업로드가 완료된 후
     await Promise.all(imageUploadPromises);
-    onImageUrlChange(uploadedFileObjects, uploadedFileUrls);
+    onRecommendImageUrlChange(uploadedFileObjects, uploadedFileUrls);
     setImgUrl(prevImgUrl => [...prevImgUrl, ...uploadedFileUrls]);
     console.log("!!!", imgUrl);
   };
@@ -109,7 +122,13 @@ export default function PostImgPrev({ onImageUrlChange }) {
     return file;
   };
   const removeImg = index => {
-    console.log("remove", index, imgUrl, uploadPreview, onImageUrlChange);
+    console.log(
+      "remove",
+      index,
+      imgUrl,
+      uploadPreview,
+      onRecommendImageUrlChange,
+    );
     const updatedUploadPreview = uploadPreview.filter(
       (_imageData, currentIndex) => currentIndex !== index,
     );
@@ -118,7 +137,7 @@ export default function PostImgPrev({ onImageUrlChange }) {
     );
     console.log(updatedUploadPreview, updatedImageUrls);
     setUploadPreview(updatedUploadPreview);
-    onImageUrlChange(null, updatedImageUrls);
+    onRecommendImageUrlChange(null, updatedImageUrls);
     setImgUrl(updatedImageUrls);
   };
   return (
@@ -145,12 +164,6 @@ export default function PostImgPrev({ onImageUrlChange }) {
           <UploadImg src={preview} alt="업로드된 이미지" />
         </UploadImgDiv>
       ))}
-      {/* {uploadPreview.length > 0 && (
-        <UploadImgDiv>
-          <CloseImgBtn onClick={removeImg}></CloseImgBtn>
-          <UploadImg src={uploadPreview} alt="업로드된 이미지" />
-        </UploadImgDiv>
-      )} */}
     </UploadContainer>
   );
 }

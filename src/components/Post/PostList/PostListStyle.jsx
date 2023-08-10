@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 const PostListSection = styled.section`
   display: flex;
   justify-content: flex-end;
@@ -51,17 +50,74 @@ const GridItemWrap = styled.ul`
 const GridItemList = styled.li`
   display: ${props => (props.hasImage ? "none" : "block")};
 `;
-
+const InfoContainer = styled.div`
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+`;
+const GridIconImg = styled.img`
+  width: 30px;
+  object-fit: contain;
+  margin-right: 10px;
+`;
 const PostGridImg = styled.button`
   position: relative;
   width: 114px;
   height: 114px;
   cursor: pointer;
-  & img {
+
+  & img:not(${GridIconImg}) {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+
+  &:hover ${InfoContainer} {
+    width: 100%;
+    height: 114px;
+    display: flex;
+    justify-content: center; // 가로 축 정렬
+    align-items: center;
+    flex-direction: column;
+  }
+`;
+const IconContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  z-index: 10;
+  right: 0%;
+  top: 0;
+`;
+
+const Icon = styled.img`
+  width: 10px;
+  height: 10px;
+`;
+
+const Likes = styled.div`
+  width: 100%;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const Comments = styled.div`
+  width: 100%;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export {
@@ -72,4 +128,10 @@ export {
   PostListSection,
   GridItemList,
   GridItemWrap,
+  IconContainer,
+  Icon,
+  Likes,
+  Comments,
+  InfoContainer,
+  GridIconImg,
 };

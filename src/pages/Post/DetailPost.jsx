@@ -64,11 +64,6 @@ export default function DetailPost() {
     });
   };
 
-  // function alertClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     setAlertShow(false);
-  //   }
-  // }
   const fetchPostInfo = async () => {
     try {
       const res = await postInfoApi(modal.postId ?? id, token);
@@ -118,13 +113,15 @@ export default function DetailPost() {
   };
   useEffect(() => {
     loadcommentList();
-    if (shouldFetchPostInfo) {
+    if (shouldFetchPostInfo || myPostInfo.hearted) {
       fetchPostInfo();
     }
-  }, [comment, shouldFetchPostInfo]);
+  }, [comment, shouldFetchPostInfo, myPostInfo.hearted]);
 
   useEffect(() => {
+    console.log("새로고침");
     getUserInfo();
+    fetchPostInfo();
   }, []);
 
   return (
@@ -192,5 +189,3 @@ export default function DetailPost() {
     </>
   );
 }
-
-//수정 부분 확인 요망--------

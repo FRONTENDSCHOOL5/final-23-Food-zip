@@ -15,8 +15,17 @@ import {
   PostListSection,
   GridItemList,
   GridItemWrap,
+  IconContainer,
+  Icon,
+  Likes,
+  Comments,
+  InfoContainer,
+  GridIconImg,
 } from "./PostListStyle";
 import { userPostListApi } from "../../../api/post";
+import Stack from "../../../assets/images/stack.svg";
+import Heart from "../../../assets/images/icon-heart.svg";
+import Comment from "../../../assets/images/icon-message-circle-1.svg";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../../atoms/modalAtom";
 
@@ -160,8 +169,32 @@ export default function PostList() {
                     }}
                   >
                     {item.image !== "" && (
-                      <img src={item.image} alt="grid 이미지" />
+                      <img
+                        src={
+                          item.image.startsWith("https://")
+                            ? item.image.split(",")[0].trim()
+                            : `https://api.mandarin.weniv.co.kr/${item.image
+                                .split(",")[0]
+                                .trim()}`
+                        }
+                        alt="grid 이미지"
+                      />
                     )}
+                    {item.image.includes(",") && (
+                      <IconContainer>
+                        <Icon src={Stack} />
+                      </IconContainer>
+                    )}
+                    <InfoContainer>
+                      <Likes>
+                        <GridIconImg src={Heart} alt="하트 아이콘" />
+                        {item.heartCount}
+                      </Likes>
+                      <Comments>
+                        <GridIconImg src={Comment} alt="코멘트 아이콘" />
+                        {item.commentCount}
+                      </Comments>
+                    </InfoContainer>
                   </PostGridImg>
                 </GridItemList>
               ))}
