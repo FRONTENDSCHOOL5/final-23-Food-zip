@@ -87,13 +87,16 @@ export default function MakeRecommend() {
     setRating(rate);
   };
   const handleImageUrlChange = (file, url) => {
+    console.log("heck", file, url);
     setImgFile(file);
     setImgUrl(url);
   };
   const uploadRecommend = async () => {
     try {
+      const RecImg = await convertBase64ToBlob(imgUrl);
       const formData = new FormData();
-      formData.append("image", imgUrl);
+      formData.append("image", RecImg);
+      console.log("rec", RecImg);
       const uploadResponse = await imgUpload(formData);
       const imageUrl =
         "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
@@ -143,7 +146,11 @@ export default function MakeRecommend() {
       setSelectedAddress(data[0].road_address_name);
     }
   };
-
+  const convertBase64ToBlob = async base64Data => {
+    const response = await fetch(base64Data);
+    const blob = await response.blob();
+    return new File([blob], "image.jpg", { type: "image/jpeg" });
+  };
   const onButtonClick = event => {
     event.preventDefault(); // 이벤트 버블링 방지
     console.log("현재 가게 이름", restaurantname);

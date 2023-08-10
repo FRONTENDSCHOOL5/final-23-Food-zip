@@ -58,6 +58,7 @@ export default function DetailPost() {
       setAlertShow(false);
     }
   }
+  console.log("detail", myPostInfo);
   const fetchPostInfo = async () => {
     try {
       const res = await postInfoApi(selectedId ?? id, token);
@@ -107,13 +108,15 @@ export default function DetailPost() {
   };
   useEffect(() => {
     loadcommentList();
-    if (shouldFetchPostInfo) {
+    if (shouldFetchPostInfo || myPostInfo.hearted) {
       fetchPostInfo();
     }
-  }, [comment, shouldFetchPostInfo]);
+  }, [comment, shouldFetchPostInfo, myPostInfo.hearted]);
 
   useEffect(() => {
+    console.log("새로고침");
     getUserInfo();
+    fetchPostInfo();
   }, []);
 
   return (

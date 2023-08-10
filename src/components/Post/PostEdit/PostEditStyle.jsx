@@ -22,7 +22,7 @@ const HeaderLayoutDiv = styled.div`
   height: 48px;
   border-bottom: 1px solid #dbdbdb;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  /* margin-bottom: 10px; */
   background-color: white;
 `;
 const HeaderLeftBtn = styled.button`
@@ -50,7 +50,33 @@ const PostContent = styled.textarea`
   line-height: 20px;
   padding: 0;
 `;
-
+const EditImgWrapper = styled.div`
+  display: flex;
+  /* height: 200px; */
+  padding: 05px 16px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  gap: 8px;
+  width: 100%; // 추가된 부분
+  overflow-x: auto;
+  white-space: nowrap;
+  border-bottom: 1px solid #c4c4c4;
+  &::-webkit-scrollbar {
+    height: 12px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+    border-radius: 50px;
+    background-clip: padding-box;
+    border: 3px solid transparent;
+  }
+`;
+const ImgStyle = styled.div`
+  /* display: inline-block; */
+  flex-shrink: 0;
+  /* overflow: hidden; */
+  /* overflow-x: auto; */
+`;
 export {
   ModalContent,
   ModalOverlay,
@@ -58,4 +84,6 @@ export {
   HeaderLeftBtn,
   PostContent,
   EditContainer,
+  EditImgWrapper,
+  ImgStyle,
 };
