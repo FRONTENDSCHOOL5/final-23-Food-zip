@@ -134,14 +134,14 @@ export default function DetailPost() {
       fetchPostInfo();
     }
   }, [shouldFetchPostInfo]);
-  
-//   useEffect(() => {
-//     fetchPostInfo();
-//     loadcommentList();
-//     if (shouldFetchPostInfo || myPostInfo.hearted) {
-//       fetchPostInfo();
-//     }
-//   }, [comment, shouldFetchPostInfo, myPostInfo.hearted]);
+
+  //   useEffect(() => {
+  //     fetchPostInfo();
+  //     loadcommentList();
+  //     if (shouldFetchPostInfo || myPostInfo.hearted) {
+  //       fetchPostInfo();
+  //     }
+  //   }, [comment, shouldFetchPostInfo, myPostInfo.hearted]);
 
   useEffect(() => {
     getUserInfo();

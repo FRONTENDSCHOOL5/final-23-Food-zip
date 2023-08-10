@@ -21,8 +21,6 @@ import {
 import { userPostListApi } from "../../../api/post";
 import sprite from "../../../assets/images/SpriteIcon.svg";
 import Stack from "../../../assets/images/stack.svg";
-import Heart from "../../../assets/images/icon-heart.svg";
-import Comment from "../../../assets/images/icon-message-circle-1.svg";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../../atoms/modalAtom";
 
@@ -195,11 +193,11 @@ export default function PostList() {
                     )}
                     <InfoContainer>
                       <Likes>
-                        <GridIconImg src={Heart} alt="하트 아이콘" />
+                        <SocialSVG id="icon-heart" />
                         {item.heartCount}
                       </Likes>
                       <Comments>
-                        <GridIconImg src={Comment} alt="코멘트 아이콘" />
+                        <SocialSVG id="icon-message-circle-1" />
                         {item.commentCount}
                       </Comments>
                     </InfoContainer>
