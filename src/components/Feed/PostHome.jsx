@@ -57,12 +57,6 @@ export default function PostHome() {
     loadFeed({ token, limit: 10, skip });
   }, [page]);
 
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
-
   const modalOpen = id => {
     setModal({
       show: true,

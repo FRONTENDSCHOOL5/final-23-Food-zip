@@ -39,7 +39,6 @@ export default function RecommendCard({ cardClose, id }) {
   const [shouldFetchProductInfo, setShouldFetchProductInfo] = useState(false);
   // const [modalShow, setModalShow] = useState(false);
   const [modal, setModal] = useRecoilState(modalState);
-  console.log(modal);
   const modalOpen = () => {
     setModal({ show: true, type: !accountname ? "product" : "yourproduct" });
   };
