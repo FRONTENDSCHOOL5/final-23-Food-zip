@@ -21,23 +21,26 @@ export default function PostHome({ modalOpen }) {
   const [page, setPage] = useState(0);
   const observer = useRef();
   const token = localStorage.getItem("token");
-
   const getFeed = async options => {
     const res = await feed(options);
+    if (options.test === 1) setMyFeed(res.data.posts);
     return res.data.posts;
   };
 
   const loadFeed = async options => {
     const posts = await getFeed(options);
+    console.log("posts", posts);
+    console.log("skip", skip);
     setMyFeed(prev => [...prev, ...posts]);
     setSkip(prev => prev + posts.length);
     setLoading(false);
-    console.log("피드 로드됨");
+    // console.log("피드 로드됨");
   };
-
+  console.log("myFeed: ", myFeed);
   useEffect(() => {
     const onIntersect = entries => {
       const target = entries[0];
+      console.log("감지됨", target);
       if (target.isIntersecting) setPage(p => p + 1);
     };
     const io = new IntersectionObserver(onIntersect, { threshold: 0.5 });
@@ -62,8 +65,9 @@ export default function PostHome({ modalOpen }) {
     setSelectedId(id);
     setModalShow(true);
   }
-  console.log("POSTHOME's myFeed: ", myFeed);
-  console.log("observer.current", observer.current);
+  console.log("page: ", page);
+  // console.log("POSTHOME's myFeed: ", myFeed);
+  // console.log("observer.current", observer.current);
   return (
     <>
       {loading ? (
@@ -71,12 +75,14 @@ export default function PostHome({ modalOpen }) {
       ) : myFeed.length > 1 ? (
         <main>
           <List>
-            {myFeed.map((item, idx) => (
+            {myFeed.map(item => (
               <li key={item.id}>
                 <PostItem
                   modalOpen={modalOpen}
                   otherInfo={item}
                   getFeed={getFeed}
+                  // loadFeed={loadFeed}
+                  skip={skip}
                 />
               </li>
             ))}

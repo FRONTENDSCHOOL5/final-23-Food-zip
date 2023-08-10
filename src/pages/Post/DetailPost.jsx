@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostItem from "../../components/Post/PostItem/PostItem";
 import Comment from "../../components/Comment/Comment";
@@ -18,6 +18,7 @@ import {
   WriteComment,
   WriteCommentSection,
   DetailPostWrapper,
+  CommentWrapper,
 } from "./DetailPostStyle";
 
 export default function DetailPost() {
@@ -39,6 +40,12 @@ export default function DetailPost() {
   const [myImg, setMyImg] = useState("");
   const [alertShow, setAlertShow] = useState(false);
   const navigate = useNavigate();
+
+  const [skip, setSkip] = useState(0);
+  const [page, setPage] = useState(0);
+  // const [loading, setLoading] = useState(true);
+  const observer = useRef();
+  // console.log("!!", infoToIterate);
   const handleInputChange = event => {
     setInputValue(event.target.value);
   };
@@ -75,18 +82,28 @@ export default function DetailPost() {
     try {
       const res = await commentUploadApi(id, inputValue, token);
       setInputValue("");
-      loadcommentList();
+      console.log("실행됨!");
+      loadCommentList();
       setComment(res.data.comment);
       setInputValue("");
     } catch (err) {}
   };
-  const loadcommentList = async () => {
+  const getCommentList = async options => {
+    const res = await commentListApi(options);
+    // setCommentList(res.data.comments);
+    return res.data.comments;
+  };
+  const loadCommentList = async options => {
     try {
-      const res = await commentListApi(id, token);
-      setCommentList(res.data.comments);
-      setCommentCnt(res.data.comments.length);
+      const comments = await getCommentList(options);
+      console.log("통신한 comments: ", comments);
+      console.log("1.skip: ", skip);
+      setCommentList(prev => [...prev, ...comments]);
+      setSkip(prev => prev + comments.length);
+      // setCommentCnt(comments.length);
     } catch (err) {}
   };
+
   const getUserInfo = async () => {
     try {
       const res = await userInfoApi(token);
@@ -106,16 +123,45 @@ export default function DetailPost() {
     setModalShow(false);
   };
   useEffect(() => {
-    loadcommentList();
+    // loadCommentList();
     if (shouldFetchPostInfo) {
       fetchPostInfo();
     }
-  }, [comment, shouldFetchPostInfo]);
-
+  }, [shouldFetchPostInfo]);
   useEffect(() => {
+    fetchPostInfo();
     getUserInfo();
   }, []);
 
+  // 댓글 무한 스크롤
+  useEffect(() => {
+    const onIntersect = entries => {
+      const target = entries[0];
+      if (target.isIntersecting) setPage(p => p + 1);
+      console.log("감지됨", target.isIntersecting);
+    };
+    const io = new IntersectionObserver(onIntersect, {
+      threshold: 1,
+    });
+
+    if (observer?.current) {
+      io.observe(observer.current);
+    }
+    return () => io && io.disconnect();
+  }, [observer]);
+
+  useEffect(() => {
+    console.log("실행됩니다유");
+    if (page === 0) return;
+    loadCommentList({ id, token, limit: 10, skip });
+  }, [page]);
+
+  console.log("page: ", page);
+  console.log("2.skip: ", skip);
+  console.log(
+    "현재 commentList!: ",
+    commentList.map(x => x.id + x.content),
+  );
   return (
     <>
       <Header
@@ -141,7 +187,14 @@ export default function DetailPost() {
           />
         </PostItemSection>
         <CommentSection>
-          <Comment commentList={commentList} postId={id} />
+          <CommentWrapper>
+            <Comment
+              commentList={commentList}
+              postId={id}
+              loadCommentList={loadCommentList}
+            />
+          </CommentWrapper>
+          <div ref={observer} />
         </CommentSection>
         <WriteCommentSection>
           <PostUserImg src={myImg.image || BasicProfile} alt="사용자 이미지" />
@@ -182,5 +235,3 @@ export default function DetailPost() {
     </>
   );
 }
-
-//수정 부분 확인 요망--------

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Modal/Alert/Alert";
 import Modal from "../Modal/Modal/Modal";
 import {
-  StyledCommentWrapper,
   StyledComment,
   CommentBtnMore,
   StyledCommentUserInfo,
@@ -17,7 +16,6 @@ export default function Comment({ commentList, postId }) {
   const [modalType, setModalType] = useState("delete");
   const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
-
   const elapsedTime = commentDate => {
     const now = new Date();
     const commentTime = new Date(commentDate);
@@ -77,7 +75,7 @@ export default function Comment({ commentList, postId }) {
   }
 
   return (
-    <StyledCommentWrapper>
+    <>
       {commentList?.map(comment => {
         return (
           <StyledComment key={comment.id}>
@@ -125,6 +123,6 @@ export default function Comment({ commentList, postId }) {
           postId={postId}
         />
       )}
-    </StyledCommentWrapper>
+    </>
   );
 }

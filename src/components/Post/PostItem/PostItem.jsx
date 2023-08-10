@@ -27,6 +27,8 @@ export default function PostItem({
   commentCnt,
   fetchPostInfo,
   getFeed,
+  // loadFeed,
+  skip,
 }) {
   const infoToIterate = postInfo || otherInfo;
   const navigate = useNavigate();
@@ -58,7 +60,8 @@ export default function PostItem({
       }
       if (getFeed) {
         console.log("getFeed  ㄱㄱ");
-        getFeed({ token });
+        getFeed({ token, test: 1 });
+        // getFeed({ token, test: 1, skip });
       }
     } catch (error) {
       console.error(error);
@@ -145,7 +148,8 @@ export default function PostItem({
                   }
                   alt="게시글 댓글"
                 />
-                {commentCnt || infoToIterate.comments.length}
+                {/* {commentCnt || infoToIterate.comments.length} */}
+                {infoToIterate.comments.length}
               </BtnComment>
             </PostBtnBox>
             <PostDate>{formatDate(infoToIterate.updatedAt)}</PostDate>

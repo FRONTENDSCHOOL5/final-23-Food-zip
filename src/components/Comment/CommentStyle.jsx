@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import MoreIcon from "../../assets/images/icon-more-vertical.svg";
 
-const StyledCommentWrapper = styled.ul`
-  display: flex;
-  flex-direction: column-reverse;
-`;
 const StyledComment = styled.li`
   position: relative;
   display: flex;
@@ -19,7 +15,6 @@ const CommentBtnMore = styled.button`
   top: 20px;
   right: 0;
 `;
-
 const CommentUserProfile = styled.img`
   border-radius: 50%;
   width: 36px;
@@ -47,11 +42,9 @@ const StyledCommentUserInfo = styled.div`
     align-items: center;
   }
 `;
-
 const StyledCommentContent = styled.div`
   flex-grow: 1;
 `;
-
 const CommentContent = styled.p`
   font-size: 14px;
   font-weight: 400;
@@ -62,9 +55,7 @@ const CommentContent = styled.p`
   word-break: break-all;
   width: 290px;
 `;
-
 export {
-  StyledCommentWrapper,
   StyledComment,
   CommentBtnMore,
   StyledCommentUserInfo,

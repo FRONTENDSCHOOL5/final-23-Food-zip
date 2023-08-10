@@ -19,8 +19,9 @@ export const commentUploadApi = async (id, content, token) => {
   return res;
 };
 
-export const commentListApi = async (id, token) => {
-  const res = await axios.get(`${BASE_URL}/post/${id}/comments`, {
+export const commentListApi = async ({ id, token, limit = 10, skip = 0 }) => {
+  const query = `?limit=${limit}&skip=${skip}`;
+  const res = await axios.get(`${BASE_URL}/post/${id}/comments/${query}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
