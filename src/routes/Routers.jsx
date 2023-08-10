@@ -19,42 +19,38 @@ import MakeRecommend from "../pages/Post/MakeRecommend";
 import Map from "../pages/Map/Map";
 export default function Routers() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Splash />} />
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup">
-          <Route index element={<SignUp />} />
-          <Route path="profile" element={<ProfileSetting />} />
-        </Route>
-        <Route path="/home" element={<Home />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/chat" element={<ChatList />} />
-        <Route path="/chatroom/:accountname" element={<ChatRoom />} />
-        <Route path="/error" element={<ErrorPage />} />
-        <Route path="/makepost" element={<MakePost />} />
-        <Route path="/myprofile">
-          <Route index element={<Profile type="my" />} />
-          <Route path="edit" element={<ProfileEdit />} />
-        </Route>
-        <Route path="/profile/:accountname">
-          <Route index element={<Profile type="your" />} />
-        </Route>
-        <Route
-          path="/followerlist"
-          element={<FollowerList type="followers" followType="followerList" />}
-        />
-        <Route
-          path="/followinglist"
-          element={
-            <FollowerList type="followings" followType="followingList" />
-          }
-        />
-        <Route path="/detailpost" element={<DetailPost />} />
-        <Route path="/makerecommend" element={<MakeRecommend />} />
-        <Route path="/map" element={<Map />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Splash />} />
+      <Route path="/welcome" element={<Welcome />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup">
+        <Route index element={<SignUp />} />
+        <Route path="profile" element={<ProfileSetting />} />
+      </Route>
+      <Route path="/home" element={<Home />} />
+      <Route path="/search" element={<Search />} />
+      <Route path="/chat" element={<ChatList />} />
+      <Route path="/chatroom/:accountname" element={<ChatRoom />} />
+      <Route path="/error" element={<ErrorPage />} />
+      <Route path="/makepost" element={<MakePost />} />
+      <Route path="/myprofile">
+        <Route index element={<Profile type="my" />} />
+        <Route path="edit" element={<ProfileEdit />} />
+      </Route>
+      <Route path="/profile/:accountname">
+        <Route index element={<Profile type="your" />} />
+      </Route>
+      <Route
+        path="/followerlist"
+        element={<FollowerList type="followers" followType="followerList" />}
+      />
+      <Route
+        path="/followinglist"
+        element={<FollowerList type="followings" followType="followingList" />}
+      />
+      <Route path="/detailpost" element={<DetailPost />} />
+      <Route path="/makerecommend" element={<MakeRecommend />} />
+      <Route path="/map" element={<Map />} />
+    </Routes>
   );
 }

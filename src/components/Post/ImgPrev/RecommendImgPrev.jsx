@@ -10,6 +10,7 @@ import {
   ImgWrapper,
   EmptyBox,
 } from "./RecommendImgPrevStyle";
+
 export default function RecommendImgPrev({
   onRecommendImageUrlChange,
   hasImage,
@@ -23,14 +24,16 @@ export default function RecommendImgPrev({
   const [uploadPreview, setUploadPreview] = useState([]);
 
   const maxSize = 10 * 1024 * 1024;
+
   useEffect(() => {
     if (hasImage && initialImage) {
       setUploadPreview(initialImage);
     }
   }, [hasImage, initialImage]);
+
   const handleUploadImg = async e => {
     let file = e.target?.files[0];
-
+    console.log("pre1", file);
     if (file.size > maxSize) {
       alert("파일 사이즈는 10MB 이하만 가능합니다");
       return;
@@ -40,40 +43,24 @@ export default function RecommendImgPrev({
       alert("파일 포맷은 */jpeg,*/png,*/jpg 만 가능합니다");
       return;
     }
+
     const options = {
       maxSizeMB: 0.7,
       maxWidthOrHeight: 700,
       useWebWorker: true,
     };
+
     try {
       const compressedFile = await imageCompression(file, options);
       setBoardImage(compressedFile);
-      const promise = imageCompression.getDataUrlFromFile(compressedFile);
-      promise.then(result => {
-        setUploadPreview(result);
-      });
-      const reader = new FileReader();
-      reader.readAsDataURL(compressedFile);
-      reader.onloadend = async () => {
-        const base64data = reader.result;
-        const imageUrl = await formDataHandler(base64data);
-        onRecommendImageUrlChange(file, imageUrl);
-        setImgUrl(imageUrl);
-      };
+
+      const result = await imageCompression.getDataUrlFromFile(compressedFile);
+      setUploadPreview(result);
+
+      onRecommendImageUrlChange(compressedFile, result);
     } catch (error) {
       console.log(error);
     }
-  };
-  const formDataHandler = async dataURI => {
-    const byteString = atob(dataURI.split(",")[1]);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([ab], { type: "image/jpeg" });
-    const file = new File([blob], "image.jpg", { type: "image/jpeg" });
-    return file;
   };
 
   return (

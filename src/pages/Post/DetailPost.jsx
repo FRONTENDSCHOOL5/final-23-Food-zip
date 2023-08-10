@@ -4,7 +4,7 @@ import PostItem from "../../components/Post/PostItem/PostItem";
 import Comment from "../../components/Comment/Comment";
 import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal/Modal";
-import Alert from "../../components/Modal/Alert/Alert";
+// import Alert from "../../components/Modal/Alert/Alert";
 import PostEdit from "../../components/Post/PostEdit/PostEdit";
 import BasicProfile from "../../assets/images/basic-profile-lg.svg";
 import { postInfoApi } from "../../api/post";
@@ -19,12 +19,14 @@ import {
   WriteCommentSection,
   DetailPostWrapper,
 } from "./DetailPostStyle";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 
 export default function DetailPost() {
-  const [modalShow, setModalShow] = useState(false);
-  const [modalType, setModalType] = useState("setting");
+  // const [modalShow, setModalShow] = useState(false);
+  // const [modalType, setModalType] = useState("setting");
   const [inputValue, setInputValue] = useState("");
-  const [selectedId, setSelectedId] = useState(null);
+  // const [selectedId, setSelectedId] = useState(null);
   const [commentList, setCommentList] = useState([]);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   const location = useLocation();
@@ -37,30 +39,39 @@ export default function DetailPost() {
   const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
   const [myImg, setMyImg] = useState("");
-  const [alertShow, setAlertShow] = useState(false);
+  // const [alertShow, setAlertShow] = useState(false);
   const navigate = useNavigate();
   const handleInputChange = event => {
     setInputValue(event.target.value);
   };
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
-  function modalOpen(type, id) {
-    setModalShow(true);
-    setModalType(type);
-    setSelectedId(id);
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
+  // function modalOpen(type, id) {
+  //   setModalShow(true);
+  //   setModalType(type);
+  //   setSelectedId(id);
+  // }
+  const [modal, setModal] = useRecoilState(modalState);
+  console.log(modal);
+  const modalOpen = (type, id) => {
+    setModal({
+      show: true,
+      type,
+      postId: id,
+    });
+  };
 
-  function alertClose(e) {
-    if (e.target === e.currentTarget) {
-      setAlertShow(false);
-    }
-  }
+  // function alertClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setAlertShow(false);
+  //   }
+  // }
   const fetchPostInfo = async () => {
     try {
-      const res = await postInfoApi(selectedId ?? id, token);
+      const res = await postInfoApi(modal.postId ?? id, token);
       const post = res.data.post;
       setMyPostInfo(post);
       setShouldFetchPostInfo(false);
@@ -68,9 +79,9 @@ export default function DetailPost() {
       navigate("/error");
     }
   };
-  function alertOpen() {
-    setAlertShow(true);
-  }
+  // function alertOpen() {
+  //   setAlertShow(true);
+  // }
   const uploadComment = async () => {
     try {
       const res = await commentUploadApi(id, inputValue, token);
@@ -103,7 +114,7 @@ export default function DetailPost() {
   const closePostEditModal = () => {
     setPostEditModalOpen(false);
     setShouldFetchPostInfo(true);
-    setModalShow(false);
+    setModal(prevModal => ({ ...prevModal, show: false }));
   };
   useEffect(() => {
     loadcommentList();
@@ -131,7 +142,6 @@ export default function DetailPost() {
                 where === infoToIterate.author.accountname
                   ? "modification"
                   : "report",
-
                 myPostInfo.id,
               )
             }
@@ -160,23 +170,23 @@ export default function DetailPost() {
           </BtnDisplay>
         </WriteCommentSection>
       </DetailPostWrapper>
-      {modalShow && (
+      {modal.show && (
         <Modal
-          type={modalType}
-          modalClose={modalClose}
-          alertOpen={alertOpen}
-          postId={selectedId}
+          type={modal.type}
+          // modalClose={modalClose}
+          // alertOpen={alertOpen}
+          // postId={selectedId}
           handlerPostEdit={openPostEditModal}
         />
       )}
-      {alertShow && (
-        <Alert type="logout" alertClose={alertClose} postId={selectedId} />
-      )}
+      {/* {alertShow && (
+        <Alert type="logout" alertClose={alertClose} postId={modal.postId} />
+      )} */}
       {postEditModalOpen && (
         <PostEdit
           closeModal={closePostEditModal}
-          postId={selectedId}
-          postInfo={infoToIterate}
+          postId={modal.postId}
+          // postInfo={infoToIterate}
         />
       )}
     </>

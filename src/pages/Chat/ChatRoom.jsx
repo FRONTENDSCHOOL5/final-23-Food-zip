@@ -9,6 +9,8 @@ import { MessageWrap } from "../../components/Chat/SendMessage";
 import { MessageText } from "../../components/Chat/SendMessage";
 import { TimeStamp } from "../../components/Chat/SendMessage";
 import { useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 
 const List = styled.section`
   padding: 48px 0 60px 0;
@@ -21,19 +23,20 @@ const List = styled.section`
 
 export default function ChatRoom() {
   const location = useLocation();
+  const [modal, setModal] = useRecoilState(modalState);
   const [modalShow, setModalShow] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [chatValue, setChatValue] = useState([]);
   const yourAccountname = location?.state?.yourAccountname || "foodzim";
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
+  // function modalClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setModalShow(false);
+  //   }
+  // }
 
-  function modalOpen() {
-    setModalShow(true);
-  }
+  // function modalOpen() {
+  //   setModalShow(true);
+  // }
 
   const handleInputChange = event => {
     setInputValue(event.target.value);
@@ -49,11 +52,7 @@ export default function ChatRoom() {
   return (
     <>
       <h1 className="a11y-hidden">채팅방 페이지</h1>
-      <Header
-        type="chat"
-        modalOpen={modalOpen}
-        yourAccountname={yourAccountname}
-      />
+      <Header type="chat" yourAccountname={yourAccountname} />
       <List>
         <ReceiveMessage />
         <SendMessage />
@@ -66,7 +65,8 @@ export default function ChatRoom() {
           </MessageWrap>
         ))}
       </List>
-      {modalShow && <Modal type="chat" modalClose={modalClose} />}
+      {/* {modalShow && <Modal type="chat" modalClose={modalClose} />} */}
+      {modal.show && <Modal type={modal.type} />}
       <ChatNavigation
         inputValue={inputValue}
         handleInputChange={handleInputChange}
