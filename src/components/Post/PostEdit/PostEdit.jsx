@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
-import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg";
-import uploadPhoto from "../../../assets/images/camera-btn.svg";
 import Button from "../../common/Button/Button";
 import {
   ModalContent,
@@ -270,10 +268,7 @@ export default function PostEdit({ closeModal, postId }) {
                 onChange={handleUploadImg}
                 ref={fileInputRef}
               />
-              <UploadImgIcon
-                src={uploadPhoto}
-                alt="사진을 올리는 버튼 이미지"
-              />
+              <SocialSVG id="camera-btn" size="90" />
             </UploadImgWrapper>
             {uploadPreview?.map((preview, index) => (
               <UploadImgDiv key={index}>

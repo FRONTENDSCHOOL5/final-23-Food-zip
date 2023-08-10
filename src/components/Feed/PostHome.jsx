@@ -16,7 +16,7 @@ const List = styled.ul`
 
 export default function PostHome() {
   const [modal, setModal] = useRecoilState(modalState);
-//   const [selectedId, setSelectedId] = useState(null);
+  // const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [skip, setSkip] = useState(0);
   const [myFeed, setMyFeed] = useState([]);
@@ -56,12 +56,6 @@ export default function PostHome() {
   useEffect(() => {
     loadFeed({ token, limit: 10, skip });
   }, [page]);
-
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
 
   const modalOpen = id => {
     setModal({

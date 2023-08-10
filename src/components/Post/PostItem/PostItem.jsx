@@ -133,13 +133,13 @@ export default function PostItem({
         )}
         <PostContent>
           <PostText>{infoToIterate.content}</PostText>
-//           {infoToIterate.image !== "" && (
-//             <PostImg
-//               src={infoToIterate.image}
-//               alt="포스트 이미지"
-//               onClick={() => {
-//                 moveDetail(infoToIterate.id);
-//               }}
+          {/* {infoToIterate.image !== "" && (
+             <PostImg
+               src={infoToIterate.image}
+               alt="포스트 이미지"
+               onClick={() => {
+                 moveDetail(infoToIterate.id);
+               }} */}
           {infoToIterate.image && infoToIterate.author && (
             <Carousel
               images={infoToIterate.image}
