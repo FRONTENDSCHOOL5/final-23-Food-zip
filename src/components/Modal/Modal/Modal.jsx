@@ -7,7 +7,7 @@ import {
   ModalLineSpan,
   ModalTextBtn,
 } from "./ModalStyle";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { modalState } from "../../../atoms/modalAtom";
 
 export default function Modal({
@@ -15,7 +15,7 @@ export default function Modal({
   // modalClose,
   // postId,
   productId,
-  commentId,
+  // commentId,
   restaurantName,
   handlerPostEdit,
   handlerRecommendEdit,
@@ -46,8 +46,6 @@ export default function Modal({
     });
     setModal(prevModal => ({ ...prevModal, show: false }));
   }
-  console.log(modal);
-  console.log("here!!!!!!!", handlerPostEdit);
   const UI = {
     setting: (
       <ModalWrapArticle>

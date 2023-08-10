@@ -153,12 +153,12 @@ const MapTest = () => {
   //   setModalType(type);
   // }
 
-  const [alertShow, setAlertShow] = useState(false);
-  function alertClose(e) {
-    if (e.target === e.currentTarget) {
-      setAlertShow(false);
-    }
-  }
+  // const [alertShow, setAlertShow] = useState(false);
+  // function alertClose(e) {
+  //   if (e.target === e.currentTarget) {
+  //     setAlertShow(false);
+  //   }
+  // }
 
   // function alertOpen() {
   //   setAlertShow(true);

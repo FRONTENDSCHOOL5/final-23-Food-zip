@@ -26,7 +26,6 @@ export default function PostHome({ myFeed, authorInfo }) {
   //   setModalShow(true);
   // }
   const [modal, setModal] = useRecoilState(modalState);
-  console.log(modal);
   const modalOpen = id => {
     setModal({
       show: true,
