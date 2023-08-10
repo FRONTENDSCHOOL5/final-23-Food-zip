@@ -1,15 +1,12 @@
 import styled from "styled-components";
 
-const StyledCommentWrapper = styled.ul`
-  display: flex;
-  flex-direction: column-reverse;
-`;
 const StyledComment = styled.li`
   position: relative;
   display: flex;
   gap: 12px;
   padding: 10px 0 0;
 `;
+
 const CommentUserProfile = styled.img`
   border-radius: 50%;
   width: 36px;
@@ -37,11 +34,9 @@ const StyledCommentUserInfo = styled.div`
     align-items: center;
   }
 `;
-
 const StyledCommentContent = styled.div`
   flex-grow: 1;
 `;
-
 const CommentContent = styled.p`
   font-size: 14px;
   font-weight: 400;
@@ -56,9 +51,7 @@ const SocialSvg = styled.div`
   height: 20px;
   margin-top: 5px;
 `;
-
 export {
-  StyledCommentWrapper,
   StyledComment,
   StyledCommentUserInfo,
   CommentUserProfile,

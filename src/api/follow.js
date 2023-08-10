@@ -23,9 +23,10 @@ export const unfollowApi = async (accountname, token) => {
   });
 };
 
-export const followerListApi = async (accountname, token) => {
+export const followerListApi = async (accountname, token, limit, skip) => {
+  const query = `?limit=${limit}&skip=${skip}`;
   const res = await axios.get(
-    `${BASE_URL}/profile/${accountname}/follower?limit=Number&skip=Number`,
+    `${BASE_URL}/profile/${accountname}/follower/${query}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -36,9 +37,10 @@ export const followerListApi = async (accountname, token) => {
   return res;
 };
 
-export const followingListApi = async (accountname, token) => {
+export const followingListApi = async (accountname, token, limit, skip) => {
+  const query = `?limit=${limit}&skip=${skip}`;
   const res = await axios.get(
-    `${BASE_URL}/profile/${accountname}/following?limit=Number&skip=Number`,
+    `${BASE_URL}/profile/${accountname}/following${query}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

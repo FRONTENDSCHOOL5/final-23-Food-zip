@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import Alert from "../Modal/Alert/Alert";
 import Modal from "../Modal/Modal/Modal";
 import sprite from "../../assets/images/SpriteIcon.svg";
 import {
-  StyledCommentWrapper,
   StyledComment,
   SocialSvg,
   StyledCommentUserInfo,
@@ -34,6 +33,7 @@ export default function Comment({ commentList, postId }) {
       </svg>
     </SocialSvg>
   );
+
   const elapsedTime = commentDate => {
     const now = new Date();
     const commentTime = new Date(commentDate);
@@ -102,7 +102,7 @@ export default function Comment({ commentList, postId }) {
   // }
 
   return (
-    <StyledCommentWrapper>
+    <>
       {commentList?.map(comment => {
         return (
           <StyledComment key={comment.id}>
@@ -141,14 +141,6 @@ export default function Comment({ commentList, postId }) {
           // postId={postId}
         />
       )}
-      {/* {alertShow && (
-        <Alert
-          type="comment"
-          alertClose={alertClose}
-          // commentId={selectedId}
-          // postId={postId}
-        />
-      )} */}
-    </StyledCommentWrapper>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BtnComment,
@@ -26,8 +26,10 @@ export default function PostItem({
   otherInfo,
   getUserInfo,
   commentCnt,
-  getOtherInfo,
   fetchPostInfo,
+  getFeed,
+  // loadFeed,
+  skip,
 }) {
   const SocialSVG = ({
     id,
@@ -46,6 +48,8 @@ export default function PostItem({
 
   const infoToIterate = postInfo || otherInfo;
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -62,15 +66,24 @@ export default function PostItem({
       } else {
         await postLikeApi(infoToIterate.id, token);
       }
-      if (getUserInfo) getUserInfo();
-      if (fetchPostInfo) fetchPostInfo();
-      if (getOtherInfo) getOtherInfo();
+      if (getUserInfo) {
+        console.log("getUserInfo실행됨");
+        getUserInfo();
+      }
+      if (fetchPostInfo) {
+        console.log("fetchPostInfo  ㄱㄱ");
+        // fetchPostInfo();
+      }
+      if (getFeed) {
+        console.log("getFeed  ㄱㄱ");
+        getFeed({ token, test: 1 });
+        // getFeed({ token, test: 1, skip });
+      }
     } catch (error) {
       console.error(error);
       return false;
     }
   };
-
   function moveProfile(accountname) {
     const where = localStorage.getItem("accountname");
     if (accountname === where) {
@@ -150,7 +163,7 @@ export default function PostItem({
                 }}
               >
                 <SocialSVG id="icon-message-circle-1" />
-                {commentCnt || infoToIterate.comments.length}
+                {infoToIterate.comments.length}
               </BtnComment>
             </PostBtnBox>
             <PostDate>{formatDate(infoToIterate.updatedAt)}</PostDate>
