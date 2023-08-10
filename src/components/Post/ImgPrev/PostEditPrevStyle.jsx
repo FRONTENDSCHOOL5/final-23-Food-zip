@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import closeBtn from "../../../assets/images/close-btn.svg";
 
-const UploadContainer = styled.form`
+const UploadContainer = styled.div`
   width: 100%;
   padding: 20px 16px;
-  overflow: auto;
+  overflow-x: auto;
   box-sizing: border-box;
   background-color: white;
   display: flex;
+  white-space: nowrap;
   border-bottom: 1px solid #c4c4c4;
 `;
 
@@ -24,6 +25,12 @@ const UploadImgInput = styled.input`
   display: none;
 `;
 
+const UploadImgIcon = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+`;
 const UploadImgDiv = styled.div`
   position: relative;
 `;
@@ -48,6 +55,7 @@ export {
   UploadContainer,
   UploadImg,
   UploadImgDiv,
+  UploadImgIcon,
   UploadImgInput,
   UploadImgWrapper,
   CloseImgBtn,

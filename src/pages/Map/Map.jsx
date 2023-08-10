@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../../components/common/Header/Header";
-import arrow from "../../assets/images/arrow.svg";
-import Car from "../../assets/images/car-solid.svg";
-import BookMark from "../../assets/images/bookmark-solid.svg";
 import Marker from "../../assets/images/location.svg";
 import { useLocation } from "react-router-dom";
 import "./MapStyle.css";
 import Modal from "../../components/Modal/Modal/Modal";
 import Alert from "../../components/Modal/Alert/Alert";
+import sprite from "../../assets/images/SpriteIcon.svg";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 const MapWrapper = styled.div`
@@ -67,10 +65,6 @@ const MapBtn = styled.button`
   height: 100%;
 `;
 
-const MapImg = styled.img`
-  margin: auto;
-  display: block;
-`;
 const { kakao } = window;
 
 const MapTest = () => {
@@ -139,8 +133,11 @@ const MapTest = () => {
     }
   }, [recommendName, map]);
 
-  // const [modalShow, setModalShow] = useState(false);
-  // const [modalType, setModalType] = useState("setting");
+  const SocialSVG = ({ id, color = "white", size = 25 }) => (
+    <svg fill={color} width={size} height={size}>
+      <use href={`${sprite}#${id}`} />
+    </svg>
+  );
 
   // function modalClose(e) {
   //   if (e.target === e.currentTarget) {
@@ -178,17 +175,17 @@ const MapTest = () => {
           <BtnList>
             <MapLi>
               <MapBtn>
-                <MapImg src={arrow} alt="화살표" />
+                <SocialSVG id="arrow" size="20" />
               </MapBtn>
             </MapLi>
             <MapLi>
               <MapBtn>
-                <MapImg src={Car} alt="자동차" />
+                <SocialSVG id="car-solid" size="25" />
               </MapBtn>
             </MapLi>
             <MapLi>
               <MapBtn>
-                <MapImg src={BookMark} alt="북마크" />
+                <SocialSVG id="bookmark-solid" size="19" />
               </MapBtn>
             </MapLi>
           </BtnList>

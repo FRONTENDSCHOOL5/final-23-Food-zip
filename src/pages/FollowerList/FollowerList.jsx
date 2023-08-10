@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import FollowItem from "../../components/FollowItem/FollowItem";
 import Header from "../../components/common/Header/Header";
 import Navigation from "../../components/common/Nav/Navigation";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { FollowList, FollowListItem } from "./FollowerListStyle";
 import { followerListApi, followingListApi } from "../../api/follow";
 
@@ -14,28 +13,57 @@ export default function FollowerList({ type, followType }) {
   const accountname = location.state.accountname;
   const [followerList, setFollowerList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [skip, setSkip] = useState(0);
+  const limit = 15;
+  const observer = useRef();
+
+  const getFollowerList = async (limit, skip) => {
+    try {
+      const res = await followerListApi(accountname, token, limit, skip);
+      console.log("api결과: ", res.data);
+      setFollowerList(prev => [...prev, ...res.data]);
+      setSkip(prev => prev + res.data.length);
+    } catch (err) {
+      navigate("/error");
+    }
+  };
+  console.log("skip!: ", skip);
+  console.log("followerList!: ", followerList);
+  const getFollowingList = async (limit, skip) => {
+    try {
+      const res = await followingListApi(accountname, token, limit, skip);
+      setFollowingList(prev => [...prev, ...res.data]);
+      setSkip(prev => prev + res.data.length);
+    } catch (err) {
+      navigate("/error");
+    }
+  };
+  // 댓글 무한 스크롤
+  useEffect(() => {
+    const onIntersect = entries => {
+      const target = entries[0];
+      if (target.isIntersecting) setPage(p => p + 1);
+      console.log("감지됨", target.target, target.isIntersecting);
+    };
+    const io = new IntersectionObserver(onIntersect, {
+      threshold: 1,
+    });
+
+    if (observer?.current) {
+      io.observe(observer.current);
+    }
+    return () => io && io.disconnect();
+  }, [observer]);
 
   useEffect(() => {
-    type === "followers" ? getFollowerList() : getFollowingList();
-  }, []);
+    console.log("실행됩니다유");
+    if (page === 0) return;
 
-  const getFollowerList = async () => {
-    try {
-      const res = await followerListApi(accountname, token);
-      setFollowerList(res.data);
-    } catch (err) {
-      navigate("/error");
-    }
-  };
-
-  const getFollowingList = async () => {
-    try {
-      const res = await followingListApi(accountname, token);
-      setFollowingList(res.data);
-    } catch (err) {
-      navigate("/error");
-    }
-  };
+    type === "followers"
+      ? getFollowerList(limit, skip)
+      : getFollowingList(limit, skip);
+  }, [page]);
 
   const followTypeUI = {
     followerList: (
@@ -55,6 +83,7 @@ export default function FollowerList({ type, followType }) {
               </FollowListItem>
             );
           })}
+          <div ref={observer} />
         </FollowList>
         <Navigation />
       </>
@@ -79,6 +108,7 @@ export default function FollowerList({ type, followType }) {
               </FollowListItem>
             );
           })}
+          <div ref={observer} />
         </FollowList>
         <Navigation />
       </>

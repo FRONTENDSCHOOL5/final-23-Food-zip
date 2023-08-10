@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  BtnMore,
   BtnComment,
-  BtnImg,
   BtnLike,
   PostBtnBox,
   PostContent,
@@ -17,19 +15,41 @@ import {
   PostUserImg,
   PostUserName,
   Container,
+  SocialSvg,
 } from "./PostItemStyle";
 import { postLikeApi, postUnlikeApi } from "../../../api/post";
+import sprite from "../../../assets/images/SpriteIcon.svg";
+import Carousel from "../../common/Carousels/Carousel";
 export default function PostItem({
   postInfo,
   modalOpen,
   otherInfo,
   getUserInfo,
   commentCnt,
-  getOtherInfo,
   fetchPostInfo,
+  getFeed,
+  // loadFeed,
+  skip,
 }) {
+  const SocialSVG = ({
+    id,
+    color = "white",
+    size = 20,
+    strokeColor = "#767676",
+    onClick,
+    margin = "0",
+  }) => (
+    <SocialSvg onClick={onClick} style={{ margin: margin }}>
+      <svg fill={color} width={size} height={size} stroke={strokeColor}>
+        <use href={`${sprite}#${id}`} style={{ stroke: "strokeColor" }} />
+      </svg>
+    </SocialSvg>
+  );
+
   const infoToIterate = postInfo || otherInfo;
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -40,22 +60,30 @@ export default function PostItem({
   }
   const postLike = async () => {
     const token = localStorage.getItem("token");
-    console.log("check");
     try {
       if (infoToIterate.hearted) {
         await postUnlikeApi(infoToIterate.id, token);
       } else {
         await postLikeApi(infoToIterate.id, token);
       }
-      if (getUserInfo) getUserInfo();
-      if (fetchPostInfo) fetchPostInfo();
-      if (getOtherInfo) getOtherInfo();
+      if (getUserInfo) {
+        console.log("getUserInfo실행됨");
+        getUserInfo();
+      }
+      if (fetchPostInfo) {
+        console.log("fetchPostInfo  ㄱㄱ");
+        // fetchPostInfo();
+      }
+      if (getFeed) {
+        console.log("getFeed  ㄱㄱ");
+        getFeed({ token, test: 1 });
+        // getFeed({ token, test: 1, skip });
+      }
     } catch (error) {
       console.error(error);
       return false;
     }
   };
-
   function moveProfile(accountname) {
     const where = localStorage.getItem("accountname");
     if (accountname === where) {
@@ -72,7 +100,6 @@ export default function PostItem({
       });
     }
   }
-
   function formatDate(dateString) {
     const dateObj = new Date(dateString);
     const year = dateObj.getFullYear();
@@ -96,53 +123,52 @@ export default function PostItem({
               <PostUserName>{infoToIterate.author.username}</PostUserName>
               <PostUserId>@ {infoToIterate.author.accountname}</PostUserId>
             </PostUserBox>
+            <SocialSVG
+              id="icon-more-vertical"
+              strokeColor="#c4c4c4"
+              margin="0 0 0 0 auto"
+              onClick={() => modalOpen(infoToIterate.id)}
+            />
           </PostUser>
         )}
         <PostContent>
           <PostText>{infoToIterate.content}</PostText>
-          {infoToIterate.image !== "" && (
-            <PostImg src={infoToIterate.image} alt="포스트 이미지" />
+//           {infoToIterate.image !== "" && (
+//             <PostImg
+//               src={infoToIterate.image}
+//               alt="포스트 이미지"
+//               onClick={() => {
+//                 moveDetail(infoToIterate.id);
+//               }}
+          {infoToIterate.image && infoToIterate.author && (
+            <Carousel
+              images={infoToIterate.image}
+              userInfo={infoToIterate.author.username}
+            />
           )}
           <PostInfoBox>
             <PostBtnBox>
               <BtnLike onClick={() => postLike(infoToIterate.id)}>
                 {infoToIterate.hearted ? (
-                  <BtnImg
-                    src={
-                      require("../../../assets/images/icon-heart-fill.svg")
-                        .default
-                    }
-                    alt="게시글 좋아요"
-                  />
+                  <SocialSVG id="icon-heart" color="red" strokeColor="red" />
                 ) : (
-                  <BtnImg
-                    src={
-                      require("../../../assets/images/icon-heart.svg").default
-                    }
-                    alt="게시글 좋아요"
-                  />
+                  <SocialSVG id="icon-heart" />
                 )}
                 {infoToIterate.heartCount}
               </BtnLike>
+
               <BtnComment
                 onClick={() => {
                   moveDetail(infoToIterate.id);
                 }}
               >
-                <BtnImg
-                  src={
-                    require("../../../assets/images/icon-message-circle-1.svg")
-                      .default
-                  }
-                  alt="게시글 댓글"
-                />
-                {commentCnt || infoToIterate.comments.length}
+                <SocialSVG id="icon-message-circle-1" />
+                {infoToIterate.comments.length}
               </BtnComment>
             </PostBtnBox>
             <PostDate>{formatDate(infoToIterate.updatedAt)}</PostDate>
           </PostInfoBox>
         </PostContent>
-        <BtnMore onClick={() => modalOpen(infoToIterate.id)}></BtnMore>
       </Container>
     </>
   );

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ImgStar from "../../../assets/images/star.svg";
 
 const RecommendDiv = styled.div`
   position: fixed;
@@ -38,7 +37,6 @@ const RecommendTextSection = styled.section`
 
 const RecommendName = styled.h4`
   font-size: 17px;
-  margin-bottom: 13px;
   line-height: 20px;
   font-weight: 600;
   display: inline-block;
@@ -48,26 +46,13 @@ const RecommendScoreSpan = styled.span`
   display: inline-block;
   color: #000;
   position: relative;
-  padding-left: 23px;
   font-size: 15px;
   font-weight: 600;
   line-height: 16px;
-  &::after {
-    display: block;
-    content: "";
-    width: 16px;
-    height: 16px;
-    background-image: url(${ImgStar});
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: absolute;
-    top: 45%;
-    left: 4px;
-    transform: translateY(-50%);
-  }
 `;
 
 const RecommendLocationP = styled.p`
+  margin-top: 13px;
   font-size: 15px;
   margin-bottom: 27px;
   line-height: 17px;
@@ -84,6 +69,12 @@ const RecommendCloseBtn = styled.button`
   font-weight: 600;
 `;
 
+const TitleWrapper = styled.article`
+  display: flex;
+  gap: 2px;
+  align-items: center;
+`;
+
 export {
   RecommendDiv,
   RecommendCardArticle,
@@ -94,4 +85,5 @@ export {
   RecommendLocationP,
   RecommendMoreBtn,
   RecommendCloseBtn,
+  TitleWrapper,
 };

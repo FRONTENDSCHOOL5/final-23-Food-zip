@@ -1,5 +1,4 @@
 import { GlobalStyle } from "./components/styles/Globalstyle";
-import styled from "styled-components";
 import Routers from "./routes/Routers";
 import { RecoilRoot, useRecoilState } from "recoil";
 import Modal from "./components/Modal/Modal/Modal";

@@ -3,8 +3,8 @@ import styled from "styled-components";
 const DetailPostWrapper = styled.section`
   width: 100%;
   height: 100vh;
-  margin-top: 48px;
-  padding: 20px 0 0px 0;
+  /* margin-top: 48px; */
+  padding: 68px 0 0px 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -45,12 +45,15 @@ const PostUserImg = styled.img`
 `;
 const CommentSection = styled.section`
   width: 100%;
-  padding: 5px 15px 65px;
+  padding: 5px 20px 65px;
   box-sizing: border-box;
   border-top: 1px solid #dbdbdb;
   background-color: #fff;
 `;
-
+const CommentWrapper = styled.ul`
+  /* display: flex;
+  flex-direction: column-reverse; */
+`;
 export {
   PostItemSection,
   CommentSection,
@@ -59,4 +62,5 @@ export {
   WriteComment,
   WriteCommentSection,
   DetailPostWrapper,
+  CommentWrapper,
 };

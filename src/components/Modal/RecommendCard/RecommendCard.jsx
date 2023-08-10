@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
-import IconMoreVertical from "../../../assets/images/icon-more-vertical.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import RecommendEdit from "../../Post/PostEdit/RecommendEdit";
 import {
@@ -13,12 +12,19 @@ import {
   RecommendLocationP,
   RecommendMoreBtn,
   RecommendCloseBtn,
+  TitleWrapper,
 } from "./RecommendCardStyle";
 import { getRecommendInfoApi } from "../../../api/recommend";
+import sprite from "../../../assets/images/SpriteIcon.svg";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../../atoms/modalAtom";
 
 export default function RecommendCard({ cardClose, id }) {
+  const SocialSVG = ({ id, color = "white", size = 22 }) => (
+    <svg fill={color} width={size} height={size}>
+      <use href={`${sprite}#${id}`} />
+    </svg>
+  );
   const location = useLocation();
   const { accountname } = location.state || {};
   const [recommendInfo, setRecommendInfo] = useState({
@@ -86,11 +92,14 @@ export default function RecommendCard({ cardClose, id }) {
         <h3 className="a11y-hidden">추천 맛집 카드</h3>
         <RecommendListImg src={recommendInfo.itemImage} alt="" />
         <RecommendTextSection>
-          <RecommendName>{recommendInfo.itemName}</RecommendName>
-          <RecommendScoreSpan>{recommendInfo.price}.0</RecommendScoreSpan>
+          <TitleWrapper>
+            <RecommendName>{recommendInfo.itemName}</RecommendName>
+            <SocialSVG id="star" size="16px" />
+            <RecommendScoreSpan>{recommendInfo.price}.0</RecommendScoreSpan>
+          </TitleWrapper>
           <RecommendLocationP>{recommendInfo.link}</RecommendLocationP>
           <RecommendMoreBtn type="button" onClick={modalOpen}>
-            <img src={IconMoreVertical} alt="더보기 아이콘" />
+            <SocialSVG id="icon-more-vertical" />
           </RecommendMoreBtn>
           <RecommendCloseBtn type="button" onClick={cardClose}>
             &#60; 닫기
