@@ -23,6 +23,7 @@ export default function Alert({
   // postId,
   modalClose,
   productId,
+  handleCommentDelete,
 }) {
   const navigate = useNavigate();
   const [modal, setModal] = useRecoilState(modalState);
@@ -73,7 +74,8 @@ export default function Alert({
       await commentDeleteApi(modal.postId, modal.commentId, token);
       alertClose("comment");
       modalClose("delete");
-      window.location.reload();
+      handleCommentDelete(modal.commentId);
+      // window.location.reload();
     } catch (error) {
       console.error("Delete request failed", error);
     }

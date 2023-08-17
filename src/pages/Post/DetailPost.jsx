@@ -164,6 +164,14 @@ export default function DetailPost() {
     loadCommentList({ id, token, limit: 14, skip });
   }, [page]);
 
+  // 댓글 삭제
+  const handleCommentDelete = deletedCommentId => {
+    const updatedCommentList = commentList.filter(
+      comment => comment.id !== deletedCommentId,
+    );
+    setCommentList(updatedCommentList);
+  };
+
   return (
     <>
       <Header
@@ -227,6 +235,7 @@ export default function DetailPost() {
           // alertOpen={alertOpen}
           // postId={selectedId}
           handlerPostEdit={openPostEditModal}
+          handleCommentDelete={handleCommentDelete}
         />
       )}
       {/* {alertShow && (

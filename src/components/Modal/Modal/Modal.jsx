@@ -19,6 +19,7 @@ export default function Modal({
   restaurantName,
   handlerPostEdit,
   handlerRecommendEdit,
+  handleCommentDelete,
 }) {
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
@@ -120,6 +121,7 @@ export default function Modal({
           // postId={modal.postId}
           productId={productId}
           // commentId={commentId}
+          handleCommentDelete={handleCommentDelete}
         />
       )}
     </>
