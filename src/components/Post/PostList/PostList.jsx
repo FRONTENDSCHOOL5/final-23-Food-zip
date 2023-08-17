@@ -172,6 +172,7 @@ export default function PostList() {
                     }
                     postInfo={item}
                     getUserInfo={getUserInfo}
+                    commentCnt={item.commentCount}
                   />
                 </PostListItem>
               ))}
