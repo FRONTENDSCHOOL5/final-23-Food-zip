@@ -62,7 +62,6 @@ export default function DetailPost() {
   //   setSelectedId(id);
   // }
   const [modal, setModal] = useRecoilState(modalState);
-  console.log(modal);
   const modalOpen = (type, id) => {
     setModal({
       show: true,
@@ -73,7 +72,7 @@ export default function DetailPost() {
 
   const fetchPostInfo = async () => {
     try {
-      const res = await postInfoApi(modal.postId ?? id, token);
+      const res = await postInfoApi(id, token);
       const post = res.data.post;
       setMyPostInfo(post);
       setShouldFetchPostInfo(false);
@@ -81,9 +80,6 @@ export default function DetailPost() {
       navigate("/error");
     }
   };
-  // function alertOpen() {
-  //   setAlertShow(true);
-  // }
   const uploadComment = async () => {
     try {
       const res = await commentUploadApi(id, inputValue, token);

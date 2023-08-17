@@ -19,6 +19,7 @@ export default function Comment({ commentList, postId }) {
   // const [modalType, setModalType] = useState("delete");
   // const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
+  console.log("@#@#@#", commentList);
 
   const SocialSVG = ({
     id,
@@ -132,15 +133,16 @@ export default function Comment({ commentList, postId }) {
           </StyledComment>
         );
       })}
-      {modal.show && (
+      {/* {modal.show && (
         <Modal
           type={modal.type}
+          commentList={commentList}
           // modalClose={modalClose}
           // alertOpen={alertOpen}
           // commentId={selectedId}
           // postId={postId}
         />
-      )}
+      )} */}
     </>
   );
 }
