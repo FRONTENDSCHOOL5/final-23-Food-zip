@@ -9,7 +9,6 @@ import {
   CloseImgBtn,
 } from "./PostImgPrevStyle";
 import sprite from "../../../assets/images/SpriteIcon.svg";
-import { imgUpload } from "../../../api/imgUpload";
 
 export default function PostImgPrev({ onImageUrlChange }) {
   const SocialSVG = ({ id, color = "white", size = 90 }) => (
@@ -18,9 +17,10 @@ export default function PostImgPrev({ onImageUrlChange }) {
     </svg>
   );
   const [imgUrl, setImgUrl] = useState([]);
-  const [boardImage, setBoardImage] = useState(null);
+  const [imgFile, setImgFile] = useState([]);
   const [uploadPreview, setUploadPreview] = useState([]);
-
+  const dragItem = useRef(); // 드래그할 아이템의 인덱스
+  const dragOverItem = useRef();
   const fileInputRef = useRef(null);
   const maxSize = 10 * 1024 * 1024;
   console.log("maek", uploadPreview);
@@ -97,7 +97,8 @@ export default function PostImgPrev({ onImageUrlChange }) {
     await Promise.all(imageUploadPromises);
     onImageUrlChange(uploadedFileObjects, uploadedFileUrls);
     setImgUrl(prevImgUrl => [...prevImgUrl, ...uploadedFileUrls]);
-    console.log("!!!", imgUrl);
+    setImgFile(prevImgFile => [...prevImgFile, ...uploadedFileObjects]);
+    console.log("!!!", uploadedFileObjects, uploadedFileUrls);
   };
 
   const formDataHandler = async dataURI => {
@@ -125,6 +126,46 @@ export default function PostImgPrev({ onImageUrlChange }) {
     onImageUrlChange(null, updatedImageUrls);
     setImgUrl(updatedImageUrls);
   };
+  console.log("이미지", imgUrl);
+  const dragStart = (e, position) => {
+    dragItem.current = position;
+    console.log(e.target.innerHTML);
+  };
+
+  // 드래그중인 대상이 위로 포개졌을 때
+  const dragEnter = (e, position) => {
+    dragOverItem.current = position;
+    console.log(e.target.innerHTML);
+  };
+
+  // 드랍 (커서 뗐을 때)
+  //uploadedFileObjects, uploadedFileUrls
+  const drop = e => {
+    const newPreviewList = [...uploadPreview];
+    const newFileList = [...imgFile]; // imgUrl 리스트도 변경되야 해서 복사합니다.
+    const newUrlList = [...imgUrl]; // imgUrl 리스트도 변경되야 해서 복사합니다.
+
+    const dragItemValue = newPreviewList[dragItem.current];
+    newPreviewList.splice(dragItem.current, 1);
+    newPreviewList.splice(dragOverItem.current, 0, dragItemValue);
+
+    // imgUrl 순서도 바꿔줍니다.
+    const dragItemUrl = newUrlList[dragItem.current];
+    newUrlList.splice(dragItem.current, 1);
+    newUrlList.splice(dragOverItem.current, 0, dragItemUrl);
+
+    const dragItemFile = newFileList[dragItem.current];
+    newFileList.splice(dragItem.current, 1);
+    newFileList.splice(dragOverItem.current, 0, dragItemFile);
+
+    dragItem.current = null;
+    dragOverItem.current = null;
+
+    setUploadPreview(newPreviewList); // 변경된 순서의 imgUrl을 설정합니다.
+    console.log("드래그", imgFile, imgUrl);
+    onImageUrlChange(newFileList, newUrlList); // 변경된 순서로 onImageUrlChange를 호출해 적용합니다.
+  };
+
   return (
     <UploadContainer>
       <UploadImgWrapper htmlFor="file-input">
@@ -142,19 +183,21 @@ export default function PostImgPrev({ onImageUrlChange }) {
         <UploadImgDiv key={index}>
           <CloseImgBtn
             onClick={event => {
-              event.preventDefault(); // 기본 동작 취소
               removeImg(index);
             }}
           ></CloseImgBtn>
-          <UploadImg src={preview} alt="업로드된 이미지" />
+          <UploadImg
+            draggable
+            onDragStart={e => dragStart(e, index)}
+            onDragEnter={e => dragEnter(e, index)}
+            onDragEnd={drop}
+            onDragOver={e => e.preventDefault()}
+            key={index}
+            src={preview}
+            alt="업로드된 이미지"
+          />
         </UploadImgDiv>
       ))}
-      {/* {uploadPreview.length > 0 && (
-        <UploadImgDiv>
-          <CloseImgBtn onClick={removeImg}></CloseImgBtn>
-          <UploadImg src={uploadPreview} alt="업로드된 이미지" />
-        </UploadImgDiv>
-      )} */}
     </UploadContainer>
   );
 }

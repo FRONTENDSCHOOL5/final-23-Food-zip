@@ -153,6 +153,9 @@ export default function PostItem({
             <Carousel
               images={infoToIterate.image}
               userInfo={infoToIterate.author.username}
+              onImageClick={() => {
+                moveDetail(infoToIterate.id);
+              }}
             />
           )}
           <PostInfoBox>

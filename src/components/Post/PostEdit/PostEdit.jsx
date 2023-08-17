@@ -34,9 +34,7 @@ export default function PostEdit({ closeModal, postId }) {
   const navigate = useNavigate();
   const [postInfo, setPostInfo] = useState({});
   const [splitResult, setSplitResult] = useState([]);
-
   const [imgUrl, setImgUrl] = useState([]);
-  const [boardImage, setBoardImage] = useState(null);
   const [uploadPreview, setUploadPreview] = useState([]);
   const dragItem = useRef(); // 드래그할 아이템의 인덱스
   const dragOverItem = useRef();
@@ -50,7 +48,6 @@ export default function PostEdit({ closeModal, postId }) {
   useEffect(() => {
     setUploadPreview(splitResult);
   }, [splitResult]);
-  console.log("prev", splitResult, uploadPreview);
 
   const handleUploadImg = async e => {
     if (!e.target?.files) {
@@ -58,8 +55,7 @@ export default function PostEdit({ closeModal, postId }) {
     }
 
     const fileList = Array.from(e.target.files);
-    console.log("check", e.target.files);
-    // 이미 업로드된 이미지와 선택된 이미지의 합이 3개를 초과할 경우 주의 메시지를 표시합니다
+
     if (uploadPreview.length + fileList.length > 3) {
       alert("최대 3개의 이미지만 업로드 가능합니다.");
       return;
@@ -140,7 +136,6 @@ export default function PostEdit({ closeModal, postId }) {
     return file;
   };
   const removeImg = index => {
-    console.log("remove", index, imgUrl, uploadPreview);
     const updatedUploadPreview = uploadPreview.filter(
       (_imageData, currentIndex) => currentIndex !== index,
     );
@@ -283,13 +278,14 @@ export default function PostEdit({ closeModal, postId }) {
                     }
                   }}
                 ></CloseImgBtn>
+
                 <UploadImg
                   draggable
                   onDragStart={e => dragStart(e, index)}
                   onDragEnter={e => dragEnter(e, index)}
                   onDragEnd={drop}
                   onDragOver={e => e.preventDefault()}
-                  ket={index}
+                  key={index}
                   src={preview}
                   alt="업로드된 이미지"
                 />
