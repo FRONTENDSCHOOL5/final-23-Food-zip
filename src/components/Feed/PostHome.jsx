@@ -77,6 +77,7 @@ export default function PostHome() {
                   modalOpen={modalOpen}
                   otherInfo={item}
                   getFeed={getFeed}
+                  commentCnt={item.commentCount}
                   // loadFeed={loadFeed}
                   skip={skip}
                 />

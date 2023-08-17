@@ -64,6 +64,7 @@ export default function DetailPost() {
       console.log("fetch", post);
       setMyPostInfo(post);
       setShouldFetchPostInfo(false);
+      setCommentCnt(post.commentCount);
     } catch (error) {
       navigate("/error");
       console.log("fetch오류");
@@ -203,6 +204,12 @@ export default function DetailPost() {
             placeholder="댓글 입력하기"
             value={inputValue}
             onChange={handleInputChange}
+            onKeyDown={e => {
+              if (e.key === "Enter" && inputValue.trim().length > 0) {
+                e.preventDefault();
+                uploadComment();
+              }
+            }}
           />
           <BtnDisplay
             type="submit"
