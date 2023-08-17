@@ -8,7 +8,8 @@ import Navigation from "../../components/common/Nav/Navigation";
 import { useState, useEffect } from "react";
 import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard/RecommendCard";
-// import { useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
+import { cardShowState } from "../../atoms/cardShowAtom";
 // import { modalState } from "../../atoms/modalAtom";
 
 export default function Profile({ type }) {
@@ -42,7 +43,7 @@ export default function Profile({ type }) {
   //   setAlertType(customType || type);
   // }
 
-  const [cardShow, setCardShow] = useState(false);
+  const [cardShow, setCardShow] = useRecoilState(cardShowState);
   function cardClose(e) {
     if (e.target === e.currentTarget) {
       setCardShow(false);

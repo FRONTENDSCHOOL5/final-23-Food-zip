@@ -15,16 +15,18 @@ import { commentDeleteApi, commentReportApi } from "../../../api/comment";
 import { userInfoApi } from "../../../api/user";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../../atoms/modalAtom";
+import { cardShowState } from "../../../atoms/cardShowAtom";
+
 export default function Alert({
   type,
   alertClose,
   // postId,
   modalClose,
   productId,
-  // commentId,
 }) {
   const navigate = useNavigate();
   const [modal, setModal] = useRecoilState(modalState);
+  const [cardShow, setCardShow] = useRecoilState(cardShowState);
   const onClickLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("accountname");
@@ -33,7 +35,6 @@ export default function Alert({
     navigate("/welcome");
     setModal(prevModal => ({ ...prevModal, show: false }));
   };
-
   const handleDeletePost = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -56,9 +57,10 @@ export default function Alert({
     try {
       await recommendDeleteApi(productId, token);
       alertClose("product");
-      modalClose("modification");
+      modalClose("product");
       navigate("/myprofile");
-      window.location.reload();
+      setCardShow(false);
+      // window.location.reload();
     } catch (error) {
       console.error("Delete request failed", error);
       navigate("/error");

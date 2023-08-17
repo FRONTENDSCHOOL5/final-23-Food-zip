@@ -10,6 +10,7 @@ import {
   CommentUserProfile,
   StyledCommentContent,
   CommentContent,
+  MoreBtn,
 } from "./CommentStyle";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
@@ -19,6 +20,7 @@ export default function Comment({ commentList, postId }) {
   // const [modalType, setModalType] = useState("delete");
   // const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
+  console.log("@#@#@#", commentList);
 
   const SocialSVG = ({
     id,
@@ -120,27 +122,30 @@ export default function Comment({ commentList, postId }) {
               </StyledCommentUserInfo>
               <CommentContent>{comment.content}</CommentContent>
             </StyledCommentContent>
-            <SocialSVG
-              id="icon-more-vertical"
-              onClick={() =>
-                modalOpen(
-                  where === comment.author.accountname ? "delete" : "report",
-                  comment.id,
-                )
-              }
-            />
+            <MoreBtn>
+              <SocialSVG
+                id="icon-more-vertical"
+                onClick={() =>
+                  modalOpen(
+                    where === comment.author.accountname ? "delete" : "report",
+                    comment.id,
+                  )
+                }
+              />
+            </MoreBtn>
           </StyledComment>
         );
       })}
-      {modal.show && (
+      {/* {modal.show && (
         <Modal
           type={modal.type}
+          commentList={commentList}
           // modalClose={modalClose}
           // alertOpen={alertOpen}
           // commentId={selectedId}
           // postId={postId}
         />
-      )}
+      )} */}
     </>
   );
 }

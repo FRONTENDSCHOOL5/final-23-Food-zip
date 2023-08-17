@@ -16,13 +16,13 @@ import {
   Likes,
   Comments,
   InfoContainer,
-  GridIconImg,
 } from "./PostListStyle";
 import { userPostListApi } from "../../../api/post";
 import sprite from "../../../assets/images/SpriteIcon.svg";
 import Stack from "../../../assets/images/stack.svg";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../../atoms/modalAtom";
+import { useRef } from "react";
 
 export default function PostList() {
   const [viewMode, setViewMode] = useState("list");
@@ -38,37 +38,40 @@ export default function PostList() {
     setViewMode(mode);
   };
   const [postInfo, setPostInfo] = useState([]);
-  const [authorInfo, setAuthorInfo] = useState([]);
+  // const [authorInfo, setAuthorInfo] = useState([]);
   const [hasPosts, setHasPosts] = useState(false);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
-
-  useEffect(() => {
-    getUserInfo();
-  }, [location]);
-
+  const [modal, setModal] = useRecoilState(modalState);
+  const observer = useRef();
+  const [skip, setSkip] = useState(0);
+  const [page, setPage] = useState(0);
+  const limit = 10;
   const getUserInfo = async () => {
     const token = localStorage.getItem("token");
     try {
       const res = await userPostListApi(
         accountname || localStorage.getItem("accountname"),
         token,
+        limit,
+        skip,
       );
       const posts = res.data.post;
-      if (posts.length === 0) {
+      setSkip(prev => prev + posts.length);
+      // console.log("API 통신 posts: ", posts);
+      if (posts.length === 0 && page === 0) {
         setHasPosts(false);
-        setAuthorInfo([]);
-        setPostInfo([]);
+        // setAuthorInfo([]);
+        // setPostInfo([]);
       } else {
-        const authors = res.data.post[0].author;
+        // const authors = res.data.post[0].author;
         setHasPosts(true);
-        setPostInfo(posts);
-        setAuthorInfo(authors);
+        setPostInfo(prev => [...prev, ...posts]);
+        // setAuthorInfo(authors);
       }
     } catch (error) {
       console.log("error");
     }
   };
-
   function moveDetail(id, item) {
     navigate(`/detailpost`, {
       state: {
@@ -77,29 +80,6 @@ export default function PostList() {
       },
     });
   }
-
-  // const [modalShow, setModalShow] = useState(false);
-  // const [selectedId, setSelectedId] = useState(null);
-
-  // function modalClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     setModalShow(false);
-  //   }
-  // }
-
-  // function modalOpen(id) {
-  //   setSelectedId(id);
-  //   setModalShow(true);
-  // }
-  const [modal, setModal] = useRecoilState(modalState);
-
-  // const modalOpen = id => {
-  //   setModal({
-  //     show: true,
-  //     type: !accountname ? "modification" : "report",
-  //     postId: id,
-  //   });
-  // };
 
   const modalOpen = (type, id) => {
     setModal({
@@ -118,6 +98,37 @@ export default function PostList() {
     setModal(prevModal => ({ ...prevModal, show: false }));
     getUserInfo();
   };
+
+  useEffect(() => {
+    const onIntersect = entries => {
+      const target = entries[0];
+      // console.log("감지됨", target);
+      if (target.isIntersecting) setPage(p => p + 1);
+    };
+    const io = new IntersectionObserver(onIntersect, { threshold: 1 });
+
+    if (observer?.current) {
+      io.observe(observer.current);
+    }
+    return () => io && io.disconnect();
+  }, [observer]);
+
+  useEffect(() => {
+    if (page === 0) return;
+    getUserInfo(limit, skip);
+  }, [page]);
+
+  useEffect(() => {
+    setSkip(0);
+    setPage(0);
+    setPostInfo([]);
+  }, [location]);
+
+  // console.log("page: ", page);
+  // console.log("skip: ", skip);
+  // console.log("location: ", location);
+  // console.log("postInfo: ", postInfo);
+
   return (
     <>
       {hasPosts && (
@@ -164,6 +175,7 @@ export default function PostList() {
                   />
                 </PostListItem>
               ))}
+              {/* <div ref={observer} /> */}
             </PostItemList>
           ) : (
             <GridItemWrap>
@@ -208,6 +220,7 @@ export default function PostList() {
           )}
         </>
       )}
+      <div ref={observer} />
       {modal.show && (
         <Modal
           type={modal.type}

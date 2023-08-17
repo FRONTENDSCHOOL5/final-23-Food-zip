@@ -103,12 +103,16 @@ export const postUnlikeApi = async (postId, token) => {
   });
 };
 
-export const userPostListApi = async (accountname, token) => {
-  const res = await axios.get(`${BASE_URL}/post/${accountname}/userpost`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-type": "application/json",
+export const userPostListApi = async (accountname, token, limit, skip) => {
+  const query = `?limit=${limit}&skip=${skip}`;
+  const res = await axios.get(
+    `${BASE_URL}/post/${accountname}/userpost/${query}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
     },
-  });
+  );
   return res;
 };
