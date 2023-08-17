@@ -80,6 +80,9 @@ const SocialSvg = styled.div`
   height: 20px;
   margin-left: auto;
 `;
+const MoreBtn = styled.button`
+  margin-left: auto;
+`;
 export {
   BtnComment,
   BtnLike,
@@ -96,4 +99,5 @@ export {
   PostUserName,
   Container,
   SocialSvg,
+  MoreBtn,
 };

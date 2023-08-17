@@ -51,6 +51,10 @@ const SocialSvg = styled.div`
   height: 20px;
   margin-top: 5px;
 `;
+const MoreBtn = styled.button`
+  width: 20px;
+  height: 20px;
+`;
 export {
   StyledComment,
   StyledCommentUserInfo,
@@ -58,4 +62,5 @@ export {
   StyledCommentContent,
   CommentContent,
   SocialSvg,
+  MoreBtn,
 };
