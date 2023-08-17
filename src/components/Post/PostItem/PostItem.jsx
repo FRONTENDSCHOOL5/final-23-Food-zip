@@ -48,7 +48,6 @@ export default function PostItem({
 
   const infoToIterate = postInfo || otherInfo;
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
 
   function moveDetail(id) {
     navigate("/detailpost", {
@@ -137,13 +136,16 @@ export default function PostItem({
              <PostImg
                src={infoToIterate.image}
                alt="포스트 이미지"
-               onClick={() => {
-                 moveDetail(infoToIterate.id);
+              onClick={() => {
+                 moveDetail(infoToIterate.id); 
                }} */}
           {infoToIterate.image && infoToIterate.author && (
             <Carousel
               images={infoToIterate.image}
               userInfo={infoToIterate.author.username}
+              onImageClick={() => {
+                moveDetail(infoToIterate.id);
+              }}
             />
           )}
           <PostInfoBox>

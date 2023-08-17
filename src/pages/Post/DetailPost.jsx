@@ -40,29 +40,16 @@ export default function DetailPost() {
   const [myPostInfo, setMyPostInfo] = useState(infoToIterate);
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
   const [myImg, setMyImg] = useState("");
-  // const [alertShow, setAlertShow] = useState(false);
   const navigate = useNavigate();
-
+  console.log("d", infoToIterate);
   const [skip, setSkip] = useState(0);
   const [page, setPage] = useState(0);
-  // const [loading, setLoading] = useState(true);
   const observer = useRef();
-  // console.log("!!", infoToIterate);
+
   const handleInputChange = event => {
     setInputValue(event.target.value);
   };
-  // function modalClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     setModalShow(false);
-  //   }
-  // }
-  // function modalOpen(type, id) {
-  //   setModalShow(true);
-  //   setModalType(type);
-  //   setSelectedId(id);
-  // }
   const [modal, setModal] = useRecoilState(modalState);
-  console.log(modal);
   const modalOpen = (type, id) => {
     setModal({
       show: true,
@@ -70,20 +57,17 @@ export default function DetailPost() {
       postId: id,
     });
   };
-
   const fetchPostInfo = async () => {
     try {
-      const res = await postInfoApi(modal.postId ?? id, token);
+      const res = await postInfoApi(id, token);
       const post = res.data.post;
+      console.log("fetch", post);
       setMyPostInfo(post);
       setShouldFetchPostInfo(false);
     } catch (error) {
       navigate("/error");
     }
   };
-  // function alertOpen() {
-  //   setAlertShow(true);
-  // }
   const uploadComment = async () => {
     try {
       const res = await commentUploadApi(id, inputValue, token);
@@ -94,22 +78,22 @@ export default function DetailPost() {
       setInputValue("");
     } catch (err) {}
   };
+  console.log(comment);
   const getCommentList = async options => {
     const res = await commentListApi(options);
     // setCommentList(res.data.comments);
     return res.data.comments;
   };
   const loadCommentList = async options => {
+    console.log("야");
     try {
       const comments = await getCommentList(options);
-      console.log("통신한 comments: ", comments);
-      console.log("1.skip: ", skip);
       setCommentList(prev => [...prev, ...comments]);
       setSkip(prev => prev + comments.length);
+      console.log("comment", commentList);
       // setCommentCnt(comments.length);
     } catch (err) {}
   };
-
   const getUserInfo = async () => {
     try {
       const res = await userInfoApi(token);
@@ -129,11 +113,12 @@ export default function DetailPost() {
     setModal(prevModal => ({ ...prevModal, show: false }));
   };
   useEffect(() => {
-    // loadCommentList();
+    fetchPostInfo();
+    loadCommentList();
     if (shouldFetchPostInfo) {
       fetchPostInfo();
     }
-  }, [shouldFetchPostInfo]);
+  }, [shouldFetchPostInfo, comment]);
 
   //   useEffect(() => {
   //     fetchPostInfo();
@@ -147,7 +132,7 @@ export default function DetailPost() {
     getUserInfo();
     fetchPostInfo();
   }, []);
-
+  console.log("myPostInfo", myPostInfo);
   // 댓글 무한 스크롤
   useEffect(() => {
     const onIntersect = entries => {
