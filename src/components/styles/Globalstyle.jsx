@@ -18,9 +18,9 @@ export const GlobalStyle = createGlobalStyle`
       display: none;
     }
   }
-li{
-  list-style:none;
-}
+  li{
+    list-style:none;
+  }
   button {
     font-family: 'SUIT-Regular', sans-serif;
     cursor: pointer;
