@@ -10,6 +10,7 @@ import {
   CommentUserProfile,
   StyledCommentContent,
   CommentContent,
+  MoreBtn,
 } from "./CommentStyle";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
@@ -121,15 +122,17 @@ export default function Comment({ commentList, postId }) {
               </StyledCommentUserInfo>
               <CommentContent>{comment.content}</CommentContent>
             </StyledCommentContent>
-            <SocialSVG
-              id="icon-more-vertical"
-              onClick={() =>
-                modalOpen(
-                  where === comment.author.accountname ? "delete" : "report",
-                  comment.id,
-                )
-              }
-            />
+            <MoreBtn>
+              <SocialSVG
+                id="icon-more-vertical"
+                onClick={() =>
+                  modalOpen(
+                    where === comment.author.accountname ? "delete" : "report",
+                    comment.id,
+                  )
+                }
+              />
+            </MoreBtn>
           </StyledComment>
         );
       })}
