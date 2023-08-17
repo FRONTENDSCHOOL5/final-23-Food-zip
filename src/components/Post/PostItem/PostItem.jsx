@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BtnComment,
@@ -6,6 +6,7 @@ import {
   PostBtnBox,
   PostContent,
   PostDate,
+  PostImg,
   PostInfoBox,
   PostText,
   PostUser,
@@ -15,7 +16,6 @@ import {
   PostUserName,
   Container,
   SocialSvg,
-  MoreBtn,
 } from "./PostItemStyle";
 import { postLikeApi, postUnlikeApi } from "../../../api/post";
 import sprite from "../../../assets/images/SpriteIcon.svg";
@@ -28,6 +28,8 @@ export default function PostItem({
   commentCnt,
   fetchPostInfo,
   getFeed,
+  // loadFeed,
+  skip,
 }) {
   const SocialSVG = ({
     id,
@@ -46,13 +48,8 @@ export default function PostItem({
 
   const infoToIterate = postInfo || otherInfo;
   const navigate = useNavigate();
-  const [isHearted, setIsHearted] = useState(infoToIterate.hearted);
-  const [heartCnt, setHeartCnt] = useState(infoToIterate.heartCount);
-  // const [commentCnt, setCommentCnt] = useState(infoToIterate.commentCount);
-  // console.log("내가 원하는 데이터:", infoToIterate.hearted);
-  // console.log("실제 하트: ", isHearted);
-  // console.log("!!!", infoToIterate.heartCnt);
-  console.log("댓글 개수 : ", infoToIterate.commentCount);
+  const token = localStorage.getItem("token");
+
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -64,14 +61,10 @@ export default function PostItem({
   const postLike = async () => {
     const token = localStorage.getItem("token");
     try {
-      if (isHearted) {
+      if (infoToIterate.hearted) {
         await postUnlikeApi(infoToIterate.id, token);
-        setIsHearted(!isHearted);
-        setHeartCnt(heartCnt - 1);
       } else {
         await postLikeApi(infoToIterate.id, token);
-        setIsHearted(!isHearted);
-        setHeartCnt(heartCnt + 1);
       }
       if (getUserInfo) {
         console.log("getUserInfo실행됨");
@@ -83,7 +76,7 @@ export default function PostItem({
       }
       if (getFeed) {
         console.log("getFeed  ㄱㄱ");
-        // getFeed({ token, test: 1 });
+        getFeed({ token, test: 1 });
         // getFeed({ token, test: 1, skip });
       }
     } catch (error) {
@@ -114,13 +107,6 @@ export default function PostItem({
     const day = dateObj.getDate();
     return `${year}년 ${month}월 ${day}일`;
   }
-
-  useEffect(() => {
-    if (infoToIterate.hearted !== isHearted) {
-      setIsHearted(!isHearted);
-      setHeartCnt(infoToIterate.heartCount);
-    }
-  }, [postInfo]);
   return (
     <>
       <Container>
@@ -137,18 +123,23 @@ export default function PostItem({
               <PostUserName>{infoToIterate.author.username}</PostUserName>
               <PostUserId>@ {infoToIterate.author.accountname}</PostUserId>
             </PostUserBox>
-            <MoreBtn>
-              <SocialSVG
-                id="icon-more-vertical"
-                strokeColor="#c4c4c4"
-                margin="0 0 0 0 auto"
-                onClick={() => modalOpen(infoToIterate.id)}
-              />
-            </MoreBtn>
+            <SocialSVG
+              id="icon-more-vertical"
+              strokeColor="#c4c4c4"
+              margin="0 0 0 0 auto"
+              onClick={() => modalOpen(infoToIterate.id)}
+            />
           </PostUser>
         )}
         <PostContent>
           <PostText>{infoToIterate.content}</PostText>
+          {/* {infoToIterate.image !== "" && (
+             <PostImg
+               src={infoToIterate.image}
+               alt="포스트 이미지"
+               onClick={() => {
+                 moveDetail(infoToIterate.id);
+               }} */}
           {infoToIterate.image && infoToIterate.author && (
             <Carousel
               images={infoToIterate.image}
@@ -158,18 +149,12 @@ export default function PostItem({
           <PostInfoBox>
             <PostBtnBox>
               <BtnLike onClick={() => postLike(infoToIterate.id)}>
-                {/* {infoToIterate.hearted ? (
-                  <SocialSVG id="icon-heart" color="red" strokeColor="red" />
-                ) : (
-                  <SocialSVG id="icon-heart" />
-                )} */}
-                {isHearted ? (
+                {infoToIterate.hearted ? (
                   <SocialSVG id="icon-heart" color="red" strokeColor="red" />
                 ) : (
                   <SocialSVG id="icon-heart" />
                 )}
-                {/* {infoToIterate.heartCount} */}
-                {heartCnt}
+                {infoToIterate.heartCount}
               </BtnLike>
 
               <BtnComment
@@ -178,7 +163,8 @@ export default function PostItem({
                 }}
               >
                 <SocialSVG id="icon-message-circle-1" />
-                {infoToIterate.comments.length}
+                {/* {infoToIterate.comments.length} */}
+                {commentCnt}
               </BtnComment>
             </PostBtnBox>
             <PostDate>{formatDate(infoToIterate.updatedAt)}</PostDate>
