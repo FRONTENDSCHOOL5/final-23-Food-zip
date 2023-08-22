@@ -9,6 +9,7 @@ import {
 } from "./ModalStyle";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../../atoms/modalAtom";
+import { cardShowState } from "../../../atoms/cardShowAtom";
 
 export default function Modal({
   type,
@@ -25,6 +26,7 @@ export default function Modal({
   const [alertShow, setAlertShow] = useState(false);
   const [alertType, setAlertType] = useState("logout");
   const [modal, setModal] = useRecoilState(modalState);
+  const [cardShow, setCardShow] = useRecoilState(cardShowState);
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModal(prevModal => ({ ...prevModal, show: false }));
@@ -46,6 +48,7 @@ export default function Modal({
       },
     });
     setModal(prevModal => ({ ...prevModal, show: false }));
+    setCardShow(false);
   }
   const UI = {
     setting: (
