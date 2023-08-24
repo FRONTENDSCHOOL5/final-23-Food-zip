@@ -41,7 +41,6 @@ export default function DetailPost() {
   const [shouldFetchPostInfo, setShouldFetchPostInfo] = useState(false);
   const [myImg, setMyImg] = useState("");
   const navigate = useNavigate();
-  console.log("d", infoToIterate);
   const [skip, setSkip] = useState(0);
   const [page, setPage] = useState(0);
   const observer = useRef();
@@ -82,14 +81,13 @@ export default function DetailPost() {
       setInputValue("");
     } catch (err) {}
   };
-  console.log(comment);
   const getCommentList = async options => {
     const res = await commentListApi(options);
     // setCommentList(res.data.comments);
     return res.data.comments;
   };
   const loadCommentList = async options => {
-    console.log("야");
+    console.log("loadCommentList");
     try {
       const comments = await getCommentList(options);
       const uniqueComments = comments.filter(
@@ -140,13 +138,12 @@ export default function DetailPost() {
     getUserInfo();
     fetchPostInfo();
   }, []);
-  console.log("myPostInfo", myPostInfo);
+
   // 댓글 무한 스크롤
   useEffect(() => {
     const onIntersect = entries => {
       const target = entries[0];
       if (target.isIntersecting) setPage(p => p + 1);
-      // console.log("감지됨", target.isIntersecting);
     };
     const io = new IntersectionObserver(onIntersect, {
       threshold: 1,
@@ -159,7 +156,6 @@ export default function DetailPost() {
   }, [observer]);
 
   useEffect(() => {
-    console.log("실행됩니다유");
     if (page === 0) return;
     loadCommentList({ id, token, limit: 14, skip });
   }, [page]);
@@ -170,6 +166,7 @@ export default function DetailPost() {
       comment => comment.id !== deletedCommentId,
     );
     setCommentList(updatedCommentList);
+    setCommentCnt(prev => prev - 1);
   };
 
   return (
@@ -191,8 +188,9 @@ export default function DetailPost() {
               )
             }
             postInfo={myPostInfo}
-            commentCnt={commentCnt}
             getUserInfo={fetchPostInfo}
+            setCommentCnt={setCommentCnt}
+            commentCnt={commentCnt}
           />
         </PostItemSection>
         <CommentSection>

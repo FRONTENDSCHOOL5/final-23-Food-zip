@@ -52,7 +52,6 @@ export default function PostItem({
   // console.log("내가 원하는 데이터:", infoToIterate.hearted);
   // console.log("실제 하트: ", isHearted);
   // console.log("!!!", infoToIterate.heartCnt);
-  console.log("댓글 개수 : ", infoToIterate.commentCount);
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -121,6 +120,7 @@ export default function PostItem({
       setHeartCnt(infoToIterate.heartCount);
     }
   }, [postInfo]);
+
   return (
     <>
       <Container>
@@ -181,7 +181,7 @@ export default function PostItem({
                 {commentCnt}
               </BtnComment>
             </PostBtnBox>
-            <PostDate>{formatDate(infoToIterate.updatedAt)}</PostDate>
+            <PostDate>{formatDate(infoToIterate.createdAt)}</PostDate>
           </PostInfoBox>
         </PostContent>
       </Container>
