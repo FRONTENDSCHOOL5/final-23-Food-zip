@@ -108,6 +108,7 @@ const Likes = styled.div`
   width: 100%;
   font-weight: bold;
   display: flex;
+  gap: 5px;
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
@@ -117,6 +118,7 @@ const Comments = styled.div`
   width: 100%;
   font-weight: bold;
   display: flex;
+  gap: 6px;
   justify-content: center;
   align-items: center;
 `;

@@ -109,10 +109,10 @@ export default function RecommendCard({ cardClose, id }) {
       {modal.show && (
         <Modal
           type={modal.type}
-          // modalClose={modalClose}
           productId={id}
           restaurantName={recommendInfo.itemName}
           handlerRecommendEdit={openRecommendEditModal}
+          recommendInfo={recommendInfo}
         />
       )}
       {recommendEditModalOpen && (

@@ -153,7 +153,10 @@ export default function PostEdit({ closeModal, postId }) {
         const post = res.data.post;
         setPostInfo(post);
         if (typeof post.image === "string") {
-          const splitImages = post.image.split(",").map(image => image.trim());
+          const splitImages = post.image
+            .split(",")
+            .map(image => image.trim())
+            .filter(image => image !== "");
           setSplitResult(splitImages); //기존 게시물
         } else {
           console.error("post.image is not a string");
