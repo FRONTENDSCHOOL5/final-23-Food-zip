@@ -6,7 +6,7 @@
 ## 🖥 프로젝트 소개
 FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 이들을 위한 식당 공유 커뮤니티입니다. 이 프로젝트는 사용자들이 맛있는 음식을 찾고 공유하며 즐거운 식사 경험을 공유하는 데 초점을 맞추고 있습니다. 해당 커뮤니티를 통해 사용자들은 원하는 식당을 쉽게 찾고, 다양한 음식에 대한 정보를 얻을 수 있으며, 같은 관심사를 가진 사람들과 소통할 수 있습니다. 함께 맛있는 음식과 즐거운 식사를 즐길 수 있는 FOODZIP에 여러분을 초대합니다!
 #### 개발 기간
-![개발기간](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/bfbd2dff-0e30-4416-83fe-ca01faad91cd)
+![개발기간](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/05bd88f3-64a4-4797-b2e5-c3074b68f78f)
 
 ## 🧑‍🤝‍🧑 어? 금지의 조원 소개
  <table>
@@ -59,7 +59,7 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 </table>
 
 ### 역할 분담
-![역할분담](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/79e6f1fe-334c-4abb-afa2-e833e8c4644e)
+![역할분담](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/ac83c2e6-ca83-46c3-99d4-50cfad30be7d)
 
 ### 팀 문화
 - <strong>투명한 정보 공유</strong> : 협업에 있어 서로의 작업에 대한 이해를 깊게 합니다.
