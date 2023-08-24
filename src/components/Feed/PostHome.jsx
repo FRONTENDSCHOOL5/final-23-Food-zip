@@ -8,10 +8,28 @@ import Loading from "../../pages/Loading/Loading";
 import EmptyHome from "./EmptyHome";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
+import topIcon from "../../assets/images/arrow_top.svg";
 
 const List = styled.ul`
   background-color: white;
   padding: 57px 24px 69px 24px;
+`;
+
+const ScrollButton = styled.button`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #629678;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 999;
+`;
+
+const TopIcon = styled.img`
+  width: 24px;
+  height: 24px;
 `;
 
 export default function PostHome() {
@@ -27,6 +45,12 @@ export default function PostHome() {
     const res = await feed(options);
     if (options.test === 1) setMyFeed(res.data.posts);
     return res.data.posts;
+  };
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const loadFeed = async options => {
@@ -71,6 +95,9 @@ export default function PostHome() {
       ) : myFeed.length > 1 ? (
         <main>
           <List>
+            <ScrollButton onClick={scrollToTop}>
+              <TopIcon src={topIcon} alt="Top" />
+            </ScrollButton>
             {myFeed.map(item => (
               <li key={item.id}>
                 <PostItem
