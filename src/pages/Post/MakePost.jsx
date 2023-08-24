@@ -105,10 +105,7 @@ export default function MakePost() {
         },
       );
       navigate("/myprofile");
-    } catch (error) {
-      console.error(error);
-      navigate("/error");
-    }
+    } catch (error) {}
   };
   const handleUpload = () => {
     if (isValid) {
@@ -118,12 +115,11 @@ export default function MakePost() {
     }
   };
   const checkContent = () => {
-    if (!content || content.trim().length === 0) {
-      if (imgUrl) {
-        setIsValid(true);
-      } else {
-        setIsValid(false);
-      }
+    if (
+      (!content || content.trim().length === 0) &&
+      (!imgUrl || imgUrl.length === 0)
+    ) {
+      setIsValid(false);
     } else {
       setIsValid(true);
     }
