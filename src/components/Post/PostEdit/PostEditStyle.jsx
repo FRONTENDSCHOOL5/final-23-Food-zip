@@ -53,7 +53,7 @@ const PostContent = styled.textarea`
 const EditImgWrapper = styled.div`
   display: flex;
   /* height: 200px; */
-  padding: 05px 16px;
+  padding: 05px 0px;
   margin-bottom: 20px;
   box-sizing: border-box;
   gap: 8px;

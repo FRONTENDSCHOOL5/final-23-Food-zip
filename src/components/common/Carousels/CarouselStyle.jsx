@@ -24,24 +24,28 @@ const CarouselImages = styled.div`
 
 const CarouselControlButton = styled.button`
   position: absolute;
-  top: 59%;
+  top: 54%;
   transform: translateY(-80%);
   font-size: 22px;
   border: 0;
   color: white;
-  padding: 16px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border-radius: 50%;
+  &:hover {
+    background-color: #767676;
+    opacity: 0.7;
+  }
 `;
 
 const LeftButton = styled(CarouselControlButton)`
-  left: -10px;
+  left: 0;
 `;
 
 const RightButton = styled(CarouselControlButton)`
-  right: -9px;
+  right: 0;
 `;
 
 const CarouselIndicator = styled.div`

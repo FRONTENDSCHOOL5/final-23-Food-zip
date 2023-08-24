@@ -10,7 +10,6 @@ import {
 import Left from "../../../assets/images/chevron-left.svg";
 import Right from "../../../assets/images/chevron-right.svg";
 export default function Carousel({ images, userInfo, onImageClick }) {
-  console.log("image", images);
   const carouselImages = images.includes(",") ? images.split(",") : [images];
   const [currentIndex, setCurrentIndex] = useState(0);
   // let carouselImages = images.split(",");

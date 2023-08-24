@@ -96,7 +96,8 @@ export default function PostList() {
   const closePostEditModal = () => {
     setPostEditModalOpen(false);
     setModal(prevModal => ({ ...prevModal, show: false }));
-    getUserInfo();
+    window.location.reload();
+    // getUserInfo();
   };
 
   useEffect(() => {
@@ -203,11 +204,11 @@ export default function PostList() {
                     )}
                     <InfoContainer>
                       <Likes>
-                        <SocialSVG id="icon-heart" />
+                        <SocialSVG id="icon-heart" size={19} />
                         {item.heartCount}
                       </Likes>
                       <Comments>
-                        <SocialSVG id="icon-message-circle-1" />
+                        <SocialSVG id="icon-message-circle" size={18} />
                         {item.commentCount}
                       </Comments>
                     </InfoContainer>

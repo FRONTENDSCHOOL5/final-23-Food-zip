@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const NavWrapper = styled.nav`
   position: fixed;
   max-width: 390px;
-
+  z-index: 100;
   margin: 0 auto;
   left: 0;
   right: 0;
