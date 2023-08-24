@@ -165,10 +165,7 @@ export default function PostList() {
                 <PostListItem key={item.id}>
                   <PostItem
                     modalOpen={() =>
-                      modalOpen(
-                        !accountname ? "modification" : "report",
-                        item.id,
-                      )
+                      modalOpen(!accountname ? "deletePost" : "report", item.id)
                     }
                     postInfo={item}
                     getUserInfo={getUserInfo}

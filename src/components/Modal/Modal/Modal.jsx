@@ -60,6 +60,12 @@ export default function Modal({
         </ModalTextBtn>
       </ModalWrapArticle>
     ),
+    deletePost: (
+      <ModalWrapArticle>
+        <ModalLineSpan />
+        <ModalTextBtn onClick={() => alertOpen("post")}>삭제</ModalTextBtn>
+      </ModalWrapArticle>
+    ),
     modification: (
       <ModalWrapArticle>
         <ModalLineSpan />
