@@ -8,29 +8,29 @@ import Loading from "../../pages/Loading/Loading";
 import EmptyHome from "./EmptyHome";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
-import topIcon from "../../assets/images/arrow_top.svg";
+// import topIcon from "../../assets/images/arrow_top.svg";
 
 const List = styled.ul`
   background-color: white;
   padding: 57px 24px 69px 24px;
 `;
 
-const ScrollButton = styled.button`
-  position: sticky;
-  top: 88%;
-  left: 85%;
-  background-color: #629678;
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 999;
-`;
+// const ScrollButton = styled.button`
+//   position: sticky;
+//   top: 88%;
+//   left: 85%;
+//   background-color: #629678;
+//   border: none;
+//   padding: 10px;
+//   border-radius: 50%;
+//   cursor: pointer;
+//   z-index: 999;
+// `;
 
-const TopIcon = styled.img`
-  width: 24px;
-  height: 24px;
-`;
+// const TopIcon = styled.img`
+//   width: 24px;
+//   height: 24px;
+// `;
 
 export default function PostHome() {
   const [modal, setModal] = useRecoilState(modalState);
@@ -39,7 +39,7 @@ export default function PostHome() {
   const [skip, setSkip] = useState(0);
   const [myFeed, setMyFeed] = useState([]);
   const [page, setPage] = useState(0);
-  const [showButton, setShowButton] = useState(false);
+  // const [showButton, setShowButton] = useState(false);
   const observer = useRef();
   const token = localStorage.getItem("token");
   const getFeed = async options => {
@@ -47,25 +47,25 @@ export default function PostHome() {
     if (options.test === 1) setMyFeed(res.data.posts);
     return res.data.posts;
   };
-  const scrollToTop = () => {
-    window.scroll({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-  useEffect(() => {
-    const showButtonClick = () => {
-      if (window.scrollY > 800) {
-        setShowButton(true);
-      } else {
-        setShowButton(false);
-      }
-    };
-    window.addEventListener("scroll", showButtonClick);
-    return () => {
-      window.removeEventListener("scroll", showButtonClick);
-    };
-  }, []);
+  // const scrollToTop = () => {
+  //   window.scroll({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // };
+  // useEffect(() => {
+  //   const showButtonClick = () => {
+  //     if (window.scrollY > 800) {
+  //       setShowButton(true);
+  //     } else {
+  //       setShowButton(false);
+  //     }
+  //   };
+  //   window.addEventListener("scroll", showButtonClick);
+  //   return () => {
+  //     window.removeEventListener("scroll", showButtonClick);
+  //   };
+  // }, []);
   const loadFeed = async options => {
     const posts = await getFeed(options);
     setMyFeed(prev => [...prev, ...posts]);
@@ -102,11 +102,11 @@ export default function PostHome() {
         <Loading />
       ) : myFeed.length > 1 ? (
         <main>
-          {showButton && (
+          {/* {showButton && (
             <ScrollButton onClick={scrollToTop}>
               <TopIcon src={topIcon} alt="Top" />
             </ScrollButton>
-          )}
+          )} */}
           <List>
             {myFeed.map(item => (
               <li key={item.id}>

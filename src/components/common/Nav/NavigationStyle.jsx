@@ -36,5 +36,36 @@ const StyledNavText = styled.p`
   margin-top: 4px;
   font-size: 10px;
 `;
+const ButtonContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  top: -50px;
+  right: 0;
+`;
+const ScrollButton = styled.button`
+  position: sticky;
+  top: 88%;
+  left: 85%;
+  background-color: #629678;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 999;
+  margin-right: 12px;
+`;
 
-export { NavWrapper, NavList, NavLink, StyledNavText };
+const TopIcon = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
+export {
+  NavWrapper,
+  NavList,
+  NavLink,
+  StyledNavText,
+  ScrollButton,
+  TopIcon,
+  ButtonContainer,
+};
