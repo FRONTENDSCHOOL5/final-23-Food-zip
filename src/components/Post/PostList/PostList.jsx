@@ -138,6 +138,7 @@ export default function PostList() {
             <PostListBtn
               type="button"
               onClick={() => handleViewModeChange("list")}
+              aria-label="게시물 리스트 타입으로 보기 버튼"
             >
               <SocialSVG
                 id={
@@ -150,6 +151,7 @@ export default function PostList() {
             <PostListBtn
               type="button"
               onClick={() => handleViewModeChange("album")}
+              aria-label="게시물 앨범 형태로 보기 버튼"
             >
               <SocialSVG
                 id={

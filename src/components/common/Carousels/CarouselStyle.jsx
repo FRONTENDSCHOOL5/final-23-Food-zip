@@ -34,6 +34,7 @@ const CarouselControlButton = styled.button`
   align-items: center;
   cursor: pointer;
   border-radius: 50%;
+  translate: 0;
   &:hover {
     background-color: #767676;
     opacity: 0.7;
@@ -42,10 +43,16 @@ const CarouselControlButton = styled.button`
 
 const LeftButton = styled(CarouselControlButton)`
   left: 0;
+  & img {
+    translate: -0.5px -0.1px;
+  }
 `;
 
 const RightButton = styled(CarouselControlButton)`
   right: 0;
+  & img {
+    translate: -2px;
+  }
 `;
 
 const CarouselIndicator = styled.div`

@@ -137,7 +137,7 @@ export default function PostItem({
               <PostUserName>{infoToIterate.author.username}</PostUserName>
               <PostUserId>@ {infoToIterate.author.accountname}</PostUserId>
             </PostUserBox>
-            <MoreBtn>
+            <MoreBtn aria-label="더보기 버튼">
               <SocialSVG
                 id="icon-more-vertical"
                 strokeColor="#c4c4c4"
