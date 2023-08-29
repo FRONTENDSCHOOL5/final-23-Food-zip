@@ -223,19 +223,10 @@ export default function PostList() {
       )}
       <div ref={observer} />
       {modal.show && (
-        <Modal
-          type={modal.type}
-          // modalClose={modalClose}
-          // postId={selectedId}
-          handlerPostEdit={openPostEditModal}
-        />
+        <Modal type={modal.type} handlerPostEdit={openPostEditModal} />
       )}
       {postEditModalOpen && (
-        <PostEdit
-          closeModal={closePostEditModal}
-          postId={modal.postId}
-          // postInfo={postInfo}
-        />
+        <PostEdit closeModal={closePostEditModal} postId={modal.postId} />
       )}
     </>
   );

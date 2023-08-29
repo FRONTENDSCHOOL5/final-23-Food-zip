@@ -63,6 +63,7 @@ export const GlobalStyle = createGlobalStyle`
     position: absolute;
   }
   .my-icon{
-    margin: 10px auto 0;
+    margin: 20px auto 0;
+    border: 4px solid;
   }
 `;

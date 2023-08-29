@@ -24,11 +24,9 @@ import { modalState } from "../../../atoms/modalAtom";
 
 export default function Header({
   type,
-  // modalOpen,
   uploadHandler,
   searchKeyword,
   handleSearchKeyword,
-  // handleSaveBtn,
   handleUploadBtn,
   yourAccountname,
 }) {
@@ -161,25 +159,6 @@ export default function Header({
         {renderHeaderText("Followings")}
       </HeaderLayoutSection>
     ),
-    // save: (
-    //   <HeaderLayoutDiv>
-    //     <HeaderLeftBtn type="button">
-    //       <img
-    //         src={IconArrowLeft}
-    //         alt="뒤로가기 아이콘"
-    //         onClick={() => navigate(-1)}
-    //       />
-    //     </HeaderLeftBtn>
-    //     <Button
-    //       type="submit"
-    //       content="저장"
-    //       size="ms"
-    //       width="ms"
-    //       bgColor="inactive"
-    //       onClick={handleSaveBtn}
-    //     ></Button>
-    //   </HeaderLayoutDiv>
-    // ),
     upload: (
       <HeaderLayoutSection>
         <HeaderTitle className="a11y-hidden">게시물 작성</HeaderTitle>
