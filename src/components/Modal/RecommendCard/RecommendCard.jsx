@@ -32,12 +32,10 @@ export default function RecommendCard({ cardClose, id }) {
     restaurantname: "",
     price: "",
     address: "",
-    // author: "",
   });
   const navigation = useNavigate();
   const [recommendEditModalOpen, setRecommendEditModalOpen] = useState(false);
   const [shouldFetchProductInfo, setShouldFetchProductInfo] = useState(false);
-  // const [modalShow, setModalShow] = useState(false);
   const [modal, setModal] = useRecoilState(modalState);
   const modalOpen = () => {
     setModal({ show: true, type: !accountname ? "product" : "yourproduct" });
@@ -64,14 +62,6 @@ export default function RecommendCard({ cardClose, id }) {
       navigation("/error");
     }
   };
-  // function modalClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     setModalShow(false);
-  //   }
-  // }
-  // function modalOpen() {
-  //   setModalShow(true);
-  // }
   const openRecommendEditModal = () => {
     setRecommendEditModalOpen(true);
   };

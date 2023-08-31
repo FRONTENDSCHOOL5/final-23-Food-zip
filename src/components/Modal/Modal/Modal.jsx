@@ -13,10 +13,7 @@ import { cardShowState } from "../../../atoms/cardShowAtom";
 
 export default function Modal({
   type,
-  // modalClose,
-  // postId,
   productId,
-  // commentId,
   restaurantName,
   handlerPostEdit,
   handlerRecommendEdit,
@@ -174,9 +171,7 @@ export default function Modal({
           type={alertType}
           modalClose={modalClose}
           alertClose={alertClose}
-          // postId={modal.postId}
           productId={productId}
-          // commentId={commentId}
           handleCommentDelete={handleCommentDelete}
         />
       )}

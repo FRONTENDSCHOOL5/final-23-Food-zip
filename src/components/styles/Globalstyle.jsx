@@ -62,4 +62,8 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     position: absolute;
   }
+  .my-icon{
+    margin: 20px auto 0;
+    border: 4px solid;
+  }
 `;

@@ -4,7 +4,6 @@ import PostItem from "../../components/Post/PostItem/PostItem";
 import Comment from "../../components/Comment/Comment";
 import Header from "../../components/common/Header/Header";
 import Modal from "../../components/Modal/Modal/Modal";
-// import Alert from "../../components/Modal/Alert/Alert";
 import PostEdit from "../../components/Post/PostEdit/PostEdit";
 import BasicProfile from "../../assets/images/basic-profile-lg.svg";
 import { postInfoApi } from "../../api/post";
@@ -24,8 +23,6 @@ import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 
 export default function DetailPost() {
-  // const [modalShow, setModalShow] = useState(false);
-  // const [modalType, setModalType] = useState("setting");
   const [inputValue, setInputValue] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const [commentList, setCommentList] = useState([]);
@@ -229,22 +226,12 @@ export default function DetailPost() {
       {modal.show && (
         <Modal
           type={modal.type}
-          // modalClose={modalClose}
-          // alertOpen={alertOpen}
-          // postId={selectedId}
           handlerPostEdit={openPostEditModal}
           handleCommentDelete={handleCommentDelete}
         />
       )}
-      {/* {alertShow && (
-        <Alert type="logout" alertClose={alertClose} postId={modal.postId} />
-      )} */}
       {postEditModalOpen && (
-        <PostEdit
-          closeModal={closePostEditModal}
-          postId={modal.postId}
-          // postInfo={infoToIterate}
-        />
+        <PostEdit closeModal={closePostEditModal} postId={modal.postId} />
       )}
     </>
   );

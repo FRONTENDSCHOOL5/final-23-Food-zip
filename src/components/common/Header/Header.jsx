@@ -24,11 +24,9 @@ import { modalState } from "../../../atoms/modalAtom";
 
 export default function Header({
   type,
-  // modalOpen,
   uploadHandler,
   searchKeyword,
   handleSearchKeyword,
-  // handleSaveBtn,
   handleUploadBtn,
   yourAccountname,
 }) {
@@ -87,7 +85,7 @@ export default function Header({
   };
   function renderHeaderLeftBtn() {
     return (
-      <HeaderLeftBtn type="button">
+      <HeaderLeftBtn type="button" aria-label="뒤로가기 버튼">
         <SocialSVG id="icon-arrow-left" onClick={() => navigate(-1)} />
       </HeaderLeftBtn>
     );
@@ -95,7 +93,7 @@ export default function Header({
   function renderHeaderText(text) {
     return (
       <HeaderSpan>
-        <HeaderLeftBtn type="button">
+        <HeaderLeftBtn type="button" aria-label="뒤로가기 버튼">
           <SocialSVG id="icon-arrow-left" onClick={() => navigate(-1)} />
         </HeaderLeftBtn>
         <HeaderTextP>{text}</HeaderTextP>
@@ -105,7 +103,11 @@ export default function Header({
 
   function renderHeaderRightBtn() {
     return (
-      <HeaderRightBtn type="button" onClick={modalOpen}>
+      <HeaderRightBtn
+        type="button"
+        onClick={modalOpen}
+        aria-label="더보기 버튼"
+      >
         <SocialSVG id="icon-more-vertical" />
       </HeaderRightBtn>
     );
@@ -115,8 +117,13 @@ export default function Header({
     home: (
       <HeaderLayoutSection>
         <HeaderTitle>FOODZIP</HeaderTitle>
-        <HeaderLogoBtn type="button" onClick={randomOpen} />
-        <HeaderRightBtn type="button">
+        <HeaderLogoBtn
+          type="button"
+          onClick={randomOpen}
+          aria-label="추천 음식 버튼"
+        />
+
+        <HeaderRightBtn type="button" aria-label="검색페이지 이동 버튼">
           <SocialSVG id="icon-search" onClick={handleClick} />
         </HeaderRightBtn>
       </HeaderLayoutSection>
@@ -152,25 +159,6 @@ export default function Header({
         {renderHeaderText("Followings")}
       </HeaderLayoutSection>
     ),
-    // save: (
-    //   <HeaderLayoutDiv>
-    //     <HeaderLeftBtn type="button">
-    //       <img
-    //         src={IconArrowLeft}
-    //         alt="뒤로가기 아이콘"
-    //         onClick={() => navigate(-1)}
-    //       />
-    //     </HeaderLeftBtn>
-    //     <Button
-    //       type="submit"
-    //       content="저장"
-    //       size="ms"
-    //       width="ms"
-    //       bgColor="inactive"
-    //       onClick={handleSaveBtn}
-    //     ></Button>
-    //   </HeaderLayoutDiv>
-    // ),
     upload: (
       <HeaderLayoutSection>
         <HeaderTitle className="a11y-hidden">게시물 작성</HeaderTitle>

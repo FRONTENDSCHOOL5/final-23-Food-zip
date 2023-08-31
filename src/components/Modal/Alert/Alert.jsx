@@ -20,7 +20,6 @@ import { cardShowState } from "../../../atoms/cardShowAtom";
 export default function Alert({
   type,
   alertClose,
-  // postId,
   modalClose,
   productId,
   handleCommentDelete,
@@ -61,7 +60,6 @@ export default function Alert({
       modalClose("product");
       navigate("/myprofile");
       setCardShow(false);
-      // window.location.reload();
     } catch (error) {
       console.error("Delete request failed", error);
       navigate("/error");
@@ -75,7 +73,6 @@ export default function Alert({
       alertClose("comment");
       modalClose("delete");
       handleCommentDelete(modal.commentId);
-      // window.location.reload();
     } catch (error) {
       console.error("Delete request failed", error);
     }
