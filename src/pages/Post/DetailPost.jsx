@@ -24,7 +24,7 @@ import { modalState } from "../../atoms/modalAtom";
 
 export default function DetailPost() {
   const [inputValue, setInputValue] = useState("");
-  const [selectedId, setSelectedId] = useState(null);
+  // const [selectedId, setSelectedId] = useState(null);
   const [commentList, setCommentList] = useState([]);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   const location = useLocation();
@@ -57,20 +57,17 @@ export default function DetailPost() {
     try {
       const res = await postInfoApi(id, token);
       const post = res.data.post;
-      console.log("fetch", post);
       setMyPostInfo(post);
       setShouldFetchPostInfo(false);
       setCommentCnt(post.commentCount);
     } catch (error) {
       navigate("/error");
-      console.log("fetch오류");
     }
   };
   const uploadComment = async () => {
     try {
       const res = await commentUploadApi(id, inputValue, token);
       setInputValue("");
-      console.log("실행됨!");
       loadCommentList();
       setCommentList(prev => [res.data.comment, ...prev]);
       setComment(res.data.comment);
@@ -80,11 +77,9 @@ export default function DetailPost() {
   };
   const getCommentList = async options => {
     const res = await commentListApi(options);
-    // setCommentList(res.data.comments);
     return res.data.comments;
   };
   const loadCommentList = async options => {
-    console.log("loadCommentList");
     try {
       const comments = await getCommentList(options);
       const uniqueComments = comments.filter(
@@ -93,7 +88,6 @@ export default function DetailPost() {
             existingComment => existingComment.id === newComment.id,
           ),
       );
-
       setCommentList(prevComments => [...prevComments, ...uniqueComments]);
       setSkip(prev => prev + uniqueComments.length);
     } catch (err) {}
@@ -122,14 +116,6 @@ export default function DetailPost() {
       fetchPostInfo();
     }
   }, [shouldFetchPostInfo, comment]);
-
-  //   useEffect(() => {
-  //     fetchPostInfo();
-  //     loadcommentList();
-  //     if (shouldFetchPostInfo || myPostInfo.hearted) {
-  //       fetchPostInfo();
-  //     }
-  //   }, [comment, shouldFetchPostInfo, myPostInfo.hearted]);
 
   useEffect(() => {
     getUserInfo();

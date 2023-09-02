@@ -26,8 +26,6 @@ export default function PostItem({
   otherInfo,
   getUserInfo,
   commentCnt,
-  fetchPostInfo,
-  getFeed,
 }) {
   const SocialSVG = ({
     id,
@@ -48,10 +46,7 @@ export default function PostItem({
   const navigate = useNavigate();
   const [isHearted, setIsHearted] = useState(infoToIterate.hearted);
   const [heartCnt, setHeartCnt] = useState(infoToIterate.heartCount);
-  // const [commentCnt, setCommentCnt] = useState(infoToIterate.commentCount);
-  // console.log("내가 원하는 데이터:", infoToIterate.hearted);
-  // console.log("실제 하트: ", isHearted);
-  // console.log("!!!", infoToIterate.heartCnt);
+
   function moveDetail(id) {
     navigate("/detailpost", {
       state: {
@@ -73,20 +68,9 @@ export default function PostItem({
         setHeartCnt(heartCnt + 1);
       }
       if (getUserInfo) {
-        console.log("getUserInfo실행됨");
         getUserInfo();
       }
-      if (fetchPostInfo) {
-        console.log("fetchPostInfo  ㄱㄱ");
-        // fetchPostInfo();
-      }
-      if (getFeed) {
-        console.log("getFeed  ㄱㄱ");
-        // getFeed({ token, test: 1 });
-        // getFeed({ token, test: 1, skip });
-      }
     } catch (error) {
-      console.error(error);
       return false;
     }
   };
@@ -161,17 +145,11 @@ export default function PostItem({
           <PostInfoBox>
             <PostBtnBox>
               <BtnLike onClick={() => postLike(infoToIterate.id)}>
-                {/* {infoToIterate.hearted ? (
-                  <SocialSVG id="icon-heart" color="red" strokeColor="red" />
-                ) : (
-                  <SocialSVG id="icon-heart" />
-                )} */}
                 {isHearted ? (
                   <SocialSVG id="icon-heart" color="red" strokeColor="red" />
                 ) : (
                   <SocialSVG id="icon-heart" />
                 )}
-                {/* {infoToIterate.heartCount} */}
                 {heartCnt}
               </BtnLike>
 

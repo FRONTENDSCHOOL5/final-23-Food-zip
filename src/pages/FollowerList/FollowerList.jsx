@@ -21,15 +21,13 @@ export default function FollowerList({ type, followType }) {
   const getFollowerList = async (limit, skip) => {
     try {
       const res = await followerListApi(accountname, token, limit, skip);
-      console.log("api결과: ", res.data);
       setFollowerList(prev => [...prev, ...res.data]);
       setSkip(prev => prev + res.data.length);
     } catch (err) {
       navigate("/error");
     }
   };
-  console.log("skip!: ", skip);
-  console.log("followerList!: ", followerList);
+
   const getFollowingList = async (limit, skip) => {
     try {
       const res = await followingListApi(accountname, token, limit, skip);
@@ -44,7 +42,6 @@ export default function FollowerList({ type, followType }) {
     const onIntersect = entries => {
       const target = entries[0];
       if (target.isIntersecting) setPage(p => p + 1);
-      console.log("감지됨", target.target, target.isIntersecting);
     };
     const io = new IntersectionObserver(onIntersect, {
       threshold: 1,
@@ -57,7 +54,6 @@ export default function FollowerList({ type, followType }) {
   }, [observer]);
 
   useEffect(() => {
-    console.log("실행됩니다유");
     if (page === 0) return;
 
     type === "followers"
