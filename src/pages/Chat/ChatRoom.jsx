@@ -28,15 +28,6 @@ export default function ChatRoom() {
   const [inputValue, setInputValue] = useState("");
   const [chatValue, setChatValue] = useState([]);
   const yourAccountname = location?.state?.yourAccountname || "foodzim";
-  // function modalClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     setModalShow(false);
-  //   }
-  // }
-
-  // function modalOpen() {
-  //   setModalShow(true);
-  // }
 
   const handleInputChange = event => {
     setInputValue(event.target.value);
@@ -65,7 +56,6 @@ export default function ChatRoom() {
           </MessageWrap>
         ))}
       </List>
-      {/* {modalShow && <Modal type="chat" modalClose={modalClose} />} */}
       {modal.show && <Modal type={modal.type} />}
       <ChatNavigation
         inputValue={inputValue}

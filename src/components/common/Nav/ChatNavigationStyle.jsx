@@ -4,7 +4,6 @@ const ChatNavBar = styled.nav`
   position: fixed;
   max-width: 356px;
   margin: 0 auto;
-  /* height: 34px; */
   left: 0;
   right: 0;
   bottom: 0;
