@@ -115,7 +115,6 @@ export default function PostHome() {
                   otherInfo={item}
                   getFeed={getFeed}
                   commentCnt={item.commentCount}
-                  // loadFeed={loadFeed}
                   skip={skip}
                 />
               </li>
@@ -123,7 +122,6 @@ export default function PostHome() {
           </List>
           <div ref={observer} />
           {modal.show && <Modal type="report" />}
-          {/* 무한 스크롤을 위한 Ref */}
         </main>
       ) : (
         <EmptyHome />

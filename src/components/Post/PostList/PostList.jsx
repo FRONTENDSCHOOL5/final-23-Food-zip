@@ -38,7 +38,6 @@ export default function PostList() {
     setViewMode(mode);
   };
   const [postInfo, setPostInfo] = useState([]);
-  // const [authorInfo, setAuthorInfo] = useState([]);
   const [hasPosts, setHasPosts] = useState(false);
   const [postEditModalOpen, setPostEditModalOpen] = useState(false);
   const [modal, setModal] = useRecoilState(modalState);
@@ -57,16 +56,11 @@ export default function PostList() {
       );
       const posts = res.data.post;
       setSkip(prev => prev + posts.length);
-      // console.log("API 통신 posts: ", posts);
       if (posts.length === 0 && page === 0) {
         setHasPosts(false);
-        // setAuthorInfo([]);
-        // setPostInfo([]);
       } else {
-        // const authors = res.data.post[0].author;
         setHasPosts(true);
         setPostInfo(prev => [...prev, ...posts]);
-        // setAuthorInfo(authors);
       }
     } catch (error) {
       console.log("error");
@@ -97,13 +91,11 @@ export default function PostList() {
     setPostEditModalOpen(false);
     setModal(prevModal => ({ ...prevModal, show: false }));
     window.location.reload();
-    // getUserInfo();
   };
 
   useEffect(() => {
     const onIntersect = entries => {
       const target = entries[0];
-      // console.log("감지됨", target);
       if (target.isIntersecting) setPage(p => p + 1);
     };
     const io = new IntersectionObserver(onIntersect, { threshold: 1 });
@@ -124,11 +116,6 @@ export default function PostList() {
     setPage(0);
     setPostInfo([]);
   }, [location]);
-
-  // console.log("page: ", page);
-  // console.log("skip: ", skip);
-  // console.log("location: ", location);
-  // console.log("postInfo: ", postInfo);
 
   return (
     <>
@@ -176,7 +163,6 @@ export default function PostList() {
                   />
                 </PostListItem>
               ))}
-              {/* <div ref={observer} /> */}
             </PostItemList>
           ) : (
             <GridItemWrap>

@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-// import Alert from "../Modal/Alert/Alert";
-import Modal from "../Modal/Modal/Modal";
 import sprite from "../../assets/images/SpriteIcon.svg";
 import {
   StyledComment,
@@ -16,11 +14,7 @@ import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 export default function Comment({ commentList, postId }) {
   const where = localStorage.getItem("accountname");
-  // const [modalShow, setModalShow] = useState(false);
-  // const [modalType, setModalType] = useState("delete");
-  // const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
-  console.log("@#@#@#", commentList);
 
   const SocialSVG = ({
     id,
@@ -71,17 +65,6 @@ export default function Comment({ commentList, postId }) {
     }
   }
 
-  // function modalClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     setModalShow(false);
-  //   }
-  // }
-
-  // function modalOpen(type, id) {
-  //   setModalShow(true);
-  //   setModalType(type);
-  //   setSelectedId(id);
-  // }
   const [modal, setModal] = useRecoilState(modalState);
   const modalOpen = (type, id) => {
     setModal({
@@ -91,17 +74,6 @@ export default function Comment({ commentList, postId }) {
       postId: postId,
     });
   };
-
-  // const [alertShow, setAlertShow] = useState(false);
-  // function alertClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     setAlertShow(false);
-  //   }
-  // }
-
-  // function alertOpen() {
-  //   setAlertShow(true);
-  // }
 
   return (
     <>
@@ -136,16 +108,6 @@ export default function Comment({ commentList, postId }) {
           </StyledComment>
         );
       })}
-      {/* {modal.show && (
-        <Modal
-          type={modal.type}
-          commentList={commentList}
-          // modalClose={modalClose}
-          // alertOpen={alertOpen}
-          // commentId={selectedId}
-          // postId={postId}
-        />
-      )} */}
     </>
   );
 }
