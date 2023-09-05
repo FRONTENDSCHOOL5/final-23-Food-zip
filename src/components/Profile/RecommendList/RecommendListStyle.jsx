@@ -61,14 +61,9 @@ const RecommendScoreSpan = styled.span`
   margin-left: 2px;
   line-height: 17px;
 `;
-
-const RecommendStarImg = styled.img`
-  display: inline-block;
-  width: 15px;
-  vertical-align: top;
-  margin-bottom: 8px;
+const TitleWrapper = styled.article`
+  display: flex;
 `;
-
 export {
   RecommendWrap,
   RecommendTitle,
@@ -77,5 +72,5 @@ export {
   RecommendListImg,
   RecommendNameP,
   RecommendScoreSpan,
-  RecommendStarImg,
+  TitleWrapper,
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import imageIcon from "../../../assets/images/img-button.svg";
 import { ChatNavBar, ImageIcon, Input, SendBtn } from "./ChatNavigationStyle";
+
 export default function ChatNavigation({
   inputValue,
   handleInputChange,
