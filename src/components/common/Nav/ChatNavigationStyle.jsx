@@ -35,4 +35,4 @@ const SendBtn = styled.button`
   cursor: pointer;
 `;
 
-export { ChatNavBar, ImageIcon, Input, SendBtn };
+export { ChatNavBar, Input, ImageIcon, SendBtn };

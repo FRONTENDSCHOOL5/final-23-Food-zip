@@ -13,27 +13,32 @@ import { postDeleteApi, postReportApi } from "../../../api/post";
 import { recommendDeleteApi } from "../../../api/recommend";
 import { commentDeleteApi, commentReportApi } from "../../../api/comment";
 import { userInfoApi } from "../../../api/user";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../../atoms/modalAtom";
+import { cardShowState } from "../../../atoms/cardShowAtom";
+
 export default function Alert({
   type,
   alertClose,
-  postId,
   modalClose,
   productId,
-  commentId,
+  handleCommentDelete,
 }) {
   const navigate = useNavigate();
+  const [modal, setModal] = useRecoilState(modalState);
+  const [cardShow, setCardShow] = useRecoilState(cardShowState);
   const onClickLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("accountname");
     localStorage.removeItem("_id");
     localStorage.removeItem("follow");
     navigate("/welcome");
+    setModal(prevModal => ({ ...prevModal, show: false }));
   };
-
   const handleDeletePost = async () => {
     const token = localStorage.getItem("token");
     try {
-      await postDeleteApi(postId, token);
+      await postDeleteApi(modal.postId, token);
       alertClose("post");
       navigate("/myprofile");
       modalClose("modification");
@@ -52,9 +57,9 @@ export default function Alert({
     try {
       await recommendDeleteApi(productId, token);
       alertClose("product");
-      modalClose("modification");
+      modalClose("product");
       navigate("/myprofile");
-      window.location.reload();
+      setCardShow(false);
     } catch (error) {
       console.error("Delete request failed", error);
       navigate("/error");
@@ -64,10 +69,10 @@ export default function Alert({
   const handleDeleteComment = async () => {
     const token = localStorage.getItem("token");
     try {
-      await commentDeleteApi(postId, commentId, token);
+      await commentDeleteApi(modal.postId, modal.commentId, token);
       alertClose("comment");
       modalClose("delete");
-      window.location.reload();
+      handleCommentDelete(modal.commentId);
     } catch (error) {
       console.error("Delete request failed", error);
     }
@@ -75,7 +80,7 @@ export default function Alert({
   const handleReportComment = async () => {
     const token = localStorage.getItem("token");
     try {
-      await commentReportApi(postId, commentId, token);
+      await commentReportApi(modal.postId, modal.commentId, token);
       alertClose("report");
       modalClose("report");
       alert("해당 댓글을 신고하였습니다.");
@@ -86,7 +91,7 @@ export default function Alert({
   const handleReportPost = async () => {
     const token = localStorage.getItem("token");
     try {
-      await postReportApi(postId, token);
+      await postReportApi(modal.postId, token);
       alertClose("report");
       modalClose("report");
       alert("해당 게시글을 신고하였습니다.");
@@ -117,7 +122,7 @@ export default function Alert({
     ),
     product: (
       <AlertWrapArticle>
-        <AlertTextP>상품을 삭제할까요?</AlertTextP>
+        <AlertTextP>맛집을 삭제할까요?</AlertTextP>
         <AlertBottomSection>
           <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
           <AlertLineSpan></AlertLineSpan>

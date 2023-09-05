@@ -2,46 +2,18 @@ import React from "react";
 import ProfileInformation from "../../components/Profile/ProfileInformation/ProfileInformation";
 import PostList from "../../components/Post/PostList/PostList";
 import RecommendList from "../../components/Profile/RecommendList/RecommendList";
-import Modal from "../../components/Modal/Modal/Modal";
 import Navigation from "../../components/common/Nav/Navigation";
-import Alert from "../../components/Modal/Alert/Alert";
 import { useState, useEffect } from "react";
 import Header from "../../components/common/Header/Header";
 import RecommendCard from "../../components/Modal/RecommendCard/RecommendCard";
+import { useRecoilState } from "recoil";
+import { cardShowState } from "../../atoms/cardShowAtom";
 
 export default function Profile({ type }) {
-  const [modalShow, setModalShow] = useState(false);
-  const [modalType, setModalType] = useState("setting");
   const [selectedId, setSelectedId] = useState(null);
   const [cardClosed, setCardClosed] = useState(false);
 
-  function modalClose(e) {
-    if (e.target === e.currentTarget) {
-      setModalShow(false);
-    }
-  }
-
-  function modalOpen(type) {
-    setModalShow(true);
-    setModalType(type);
-  }
-
-  const [alertShow, setAlertShow] = useState(false);
-  function alertClose(e) {
-    if (e.target === e.currentTarget) {
-      setAlertShow(false);
-    }
-  }
-
-  // function alertOpen() {
-  //   setAlertShow(true);
-  // }
-  // function alertOpen(customType) {
-  //   setAlertShow(true);
-  //   setAlertType(customType || type);
-  // }
-
-  const [cardShow, setCardShow] = useState(false);
+  const [cardShow, setCardShow] = useRecoilState(cardShowState);
   function cardClose(e) {
     if (e.target === e.currentTarget) {
       setCardShow(false);
@@ -61,13 +33,11 @@ export default function Profile({ type }) {
 
   return (
     <>
-      <Header type="profile" modalOpen={() => modalOpen("setting")} />
+      <Header type="profile" />
       <main>
         <ProfileInformation type={type} />
         <RecommendList cardOpen={cardOpen} cardClosed={cardClosed} />
         <PostList />
-        {modalShow && <Modal type={modalType} modalClose={modalClose} />}
-        {alertShow && <Alert type="logout" alertClose={alertClose} />}
         {cardShow && <RecommendCard cardClose={cardClose} id={selectedId} />}
       </main>
       <Navigation />

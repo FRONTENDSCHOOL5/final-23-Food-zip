@@ -23,11 +23,15 @@ export default function FollowItem({
   const navigate = useNavigate();
 
   function moveProfile(accountname) {
-    navigate(`/profile/${accountname}`, {
-      state: {
-        accountname: accountname,
-      },
-    });
+    if (accountname === myaccountname) {
+      navigate("/myprofile");
+    } else {
+      navigate(`/profile/${accountname}`, {
+        state: {
+          accountname: accountname,
+        },
+      });
+    }
   }
 
   const toggleFollow = async () => {

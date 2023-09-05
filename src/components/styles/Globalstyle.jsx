@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle`
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
   }
   :root {
     font-family: 'SUIT-Regular', sans-serif;
@@ -17,9 +18,9 @@ export const GlobalStyle = createGlobalStyle`
       display: none;
     }
   }
-li{
-  list-style:none;
-}
+  li{
+    list-style:none;
+  }
   button {
     font-family: 'SUIT-Regular', sans-serif;
     cursor: pointer;
@@ -60,5 +61,9 @@ li{
     overflow: hidden;
     padding: 0;
     position: absolute;
+  }
+  .my-icon{
+    margin: 20px auto 0;
+    border: 4px solid;
   }
 `;

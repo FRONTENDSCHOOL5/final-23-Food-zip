@@ -7,21 +7,30 @@ import {
   ModalLineSpan,
   ModalTextBtn,
 } from "./ModalStyle";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../../atoms/modalAtom";
+import { cardShowState } from "../../../atoms/cardShowAtom";
 
 export default function Modal({
   type,
-  modalClose,
-  postId,
   productId,
-  commentId,
   restaurantName,
   handlerPostEdit,
   handlerRecommendEdit,
+  handleCommentDelete,
+  recommendInfo,
 }) {
   const navigate = useNavigate();
   const [alertShow, setAlertShow] = useState(false);
   const [alertType, setAlertType] = useState("logout");
+  const [modal, setModal] = useRecoilState(modalState);
+  const [cardShow, setCardShow] = useRecoilState(cardShowState);
 
+  function modalClose(e) {
+    if (e.target === e.currentTarget) {
+      setModal(prevModal => ({ ...prevModal, show: false }));
+    }
+  }
   function alertClose(e) {
     if (e.target === e.currentTarget) {
       setAlertShow(false);
@@ -37,6 +46,49 @@ export default function Modal({
         restaurantname: restaurantName,
       },
     });
+    setModal(prevModal => ({ ...prevModal, show: false }));
+    setCardShow(false);
+  }
+  const initializeKakao = () => {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init("cac39e5e6556a7917d1c0c5b966012b7");
+    }
+  };
+
+  function kakaoButton(recommendInfo) {
+    initializeKakao();
+    if (!window.Kakao) {
+      return;
+    }
+    const kakao = window.Kakao;
+
+    kakao.Share.sendDefault({
+      objectType: "location",
+      address: recommendInfo.link,
+      addressTitle: recommendInfo.itemName,
+      content: {
+        title: recommendInfo.itemName,
+        imageUrl: recommendInfo.itemImage,
+        description: recommendInfo.link,
+        link: {
+          mobileWebUrl: "https://foodzip.netlify.app",
+          webUrl: "https://foodzip.netlify.app",
+        },
+      },
+      social: {
+        likeCount: recommendInfo.price,
+      },
+      buttons: [
+        {
+          title: "웹으로 보기",
+          link: {
+            mobileWebUrl: "https://foodzip.netlify.app",
+            webUrl: "https://foodzip.netlify.app",
+          },
+        },
+      ],
+    });
+    setModal(prevModal => ({ ...prevModal, show: false }));
   }
   const UI = {
     setting: (
@@ -46,6 +98,12 @@ export default function Modal({
         <ModalTextBtn onClick={() => alertOpen("logout")}>
           로그아웃
         </ModalTextBtn>
+      </ModalWrapArticle>
+    ),
+    deletePost: (
+      <ModalWrapArticle>
+        <ModalLineSpan />
+        <ModalTextBtn onClick={() => alertOpen("post")}>삭제</ModalTextBtn>
       </ModalWrapArticle>
     ),
     modification: (
@@ -63,7 +121,9 @@ export default function Modal({
         <ModalTextBtn onClick={handlerOpenMap}>
           카카오맵으로 이동하기
         </ModalTextBtn>
-        <ModalTextBtn>SNS 공유하기</ModalTextBtn>
+        <ModalTextBtn onClick={() => kakaoButton(recommendInfo)}>
+          SNS 공유하기
+        </ModalTextBtn>
       </ModalWrapArticle>
     ),
     yourproduct: (
@@ -72,14 +132,18 @@ export default function Modal({
         <ModalTextBtn onClick={handlerOpenMap}>
           카카오맵으로 이동하기
         </ModalTextBtn>
-        <ModalTextBtn>SNS 공유하기</ModalTextBtn>
+        <ModalTextBtn onClick={() => kakaoButton(recommendInfo)}>
+          SNS 공유하기
+        </ModalTextBtn>
       </ModalWrapArticle>
     ),
     report: (
       <ModalWrapArticle>
         <ModalLineSpan />
         <ModalTextBtn
-          onClick={() => alertOpen(commentId ? "commentReport" : "postReport")}
+          onClick={() =>
+            alertOpen(modal.commentId ? "commentReport" : "postReport")
+          }
         >
           신고하기
         </ModalTextBtn>
@@ -107,9 +171,8 @@ export default function Modal({
           type={alertType}
           modalClose={modalClose}
           alertClose={alertClose}
-          postId={postId}
           productId={productId}
-          commentId={commentId}
+          handleCommentDelete={handleCommentDelete}
         />
       )}
     </>

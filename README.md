@@ -6,7 +6,7 @@
 ## 🖥 프로젝트 소개
 FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 이들을 위한 식당 공유 커뮤니티입니다. 이 프로젝트는 사용자들이 맛있는 음식을 찾고 공유하며 즐거운 식사 경험을 공유하는 데 초점을 맞추고 있습니다. 해당 커뮤니티를 통해 사용자들은 원하는 식당을 쉽게 찾고, 다양한 음식에 대한 정보를 얻을 수 있으며, 같은 관심사를 가진 사람들과 소통할 수 있습니다. 함께 맛있는 음식과 즐거운 식사를 즐길 수 있는 FOODZIP에 여러분을 초대합니다!
 #### 개발 기간
-![개발기간](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/bfbd2dff-0e30-4416-83fe-ca01faad91cd)
+![개발기간](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/05bd88f3-64a4-4797-b2e5-c3074b68f78f)
 
 ## 🧑‍🤝‍🧑 어? 금지의 조원 소개
  <table>
@@ -59,7 +59,7 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 </table>
 
 ### 역할 분담
-![역할분담](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/79e6f1fe-334c-4abb-afa2-e833e8c4644e)
+![역할분담](https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/ac83c2e6-ca83-46c3-99d4-50cfad30be7d)
 
 ### 팀 문화
 - <strong>투명한 정보 공유</strong> : 협업에 있어 서로의 작업에 대한 이해를 깊게 합니다.
@@ -73,7 +73,7 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 - <strong>협업의 효율성 극대화</strong> : 피드백 과정을 통해 작업 과정을 개선하고 팀원들끼리 서로를 환기할 수 있습니다.
 
 ## 🛠 테크 스택
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">  <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">  <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white">  <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=white">  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">  <img src="https://img.shields.io/badge/KakaoAPI-FFCD00?style=for-the-badge&logo=kakao&logoColor=white">  <img src="https://img.shields.io/badge/reacthookform-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">  <img src="https://img.shields.io/badge/netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">  <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">  <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white">  <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=white">  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">  <img src="https://img.shields.io/badge/KakaoAPI-FFCD00?style=for-the-badge&logo=kakao&logoColor=white">  <img src="https://img.shields.io/badge/reacthookform-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">  <img src="https://img.shields.io/badge/netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white"> <img src="https://img.shields.io/badge/recoil-3578E5?style=for-the-badge&logo=react&logoColor=white">
 
 
 ## 👨‍👩‍👧‍👧 협업 툴
@@ -93,14 +93,21 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 
 |검색|팔로우 페이지|
 |:----:|:----:|
-|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/b2502b6a-b237-421c-8089-a3502f0348e0" width="250"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/f33d49cb-ab3c-476d-be82-95c988802b94" width="250"/>|
+|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/3a9cbf84-f3da-4b47-9ecc-34e7cf63834d" width="250"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/f33d49cb-ab3c-476d-be82-95c988802b94" width="250"/>|
 |<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 유저 검색<br>- 클릭 시 프로필로 이동 <br> - debounce 이용<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 유저 팔로우, 언팔로우 기능<br>- 유저 프로필 페이지 이동<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|
 
 
 |채팅|업로드 페이지|
 |:----:|:----:|
-|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/3c67bf0a-3641-436f-8625-5910d79697a2" width="250"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/bf6b00ce-6b7e-48b2-bbb7-cfbf92738a6d" width="250"/>|
-|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 채팅 페이지 구현<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 이미지 업로드<br>- 이미지 압축 기능<br>- 게시물 업로드, 수정, 삭제 기능<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|
+|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/3c67bf0a-3641-436f-8625-5910d79697a2" width="250"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/f9bca881-68bb-4014-8ee5-64ee57bf637f" width="250"/>|
+|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 채팅 페이지 구현<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 게시물 업로드 기능<br>- 이미지 압축 기능<br>- 이미지 3장 업로드 및 드래그 앤 드랍 기능<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|
+
+
+|게시물 수정|게시물 삭제|
+|:----:|:----:|
+|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/80e301f1-9f2b-439b-a8cd-c270e1ca3a39" width="250"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/97d8e2cb-afac-4b55-a9d9-fd9e58fe99a8" width="250"/>|
+|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 게시물 이미지 및 내용 변경 가능 <div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 게시물 삭제 기능<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|
+
 
 
 |프로필 페이지|프로필 수정 페이지|
@@ -115,16 +122,16 @@ FOODZIP은 식사를 즐기며 맛있는 음식과 훌륭한 식당을 찾는 �
 |<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 추천맛집 등록, 수정, 삭제 기능<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 카카오맵 API를 이용하여 추천 맛집 위치 확인<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|
 
 
-|게시글 상세 페이지|랜덤 음식 추천|
+|게시물 상세 페이지|랜덤 음식 추천|
 |:----:|:----:|
 |<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/0e31fcf0-26a5-4ffb-834d-05109105d201" width="250"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/cc3164b2-8a44-4a49-af7a-4b0d920ed007" width="250"/>|
 |<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 댓글 등록, 삭제, 신고 기능<br>- 좋아요 기능<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 로고 클릭 시 랜덤 음식 추천 기능<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|
 
 
-|로그아웃|에러 페이지|
+|SNS 공유하기|로그아웃|
 |:----:|:----:|
-|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/a4e235e5-ad71-47f0-98f7-c3997ed0e781" width="250"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/547e891d-0b2a-4f59-ad18-fed54180df21" width="250"/>|
-|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 로그아웃 시 웰컴 페이지로 이동<br>- 로컬스토리지에서 토큰 삭제<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- API 통신 실패 시 404 페이지<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|
+|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/ca84ae78-a8d2-46be-9f7e-f3780ad50a42" width="250"/>|<img src="https://github.com/FRONTENDSCHOOL5/final-23-Food-zip/assets/119276010/a4e235e5-ad71-47f0-98f7-c3997ed0e781" width="250"/>|
+|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 추천맛집 식당 SNS로 공유 가능<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|<pre><div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div>- 로그아웃 시 웰컴 페이지로 이동<br>- 로컬스토리지에서 토큰 삭제<div>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</div></pre>|
 
 
 ## 📌 주요 기능 소개

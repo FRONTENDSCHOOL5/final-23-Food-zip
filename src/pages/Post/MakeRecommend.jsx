@@ -68,14 +68,12 @@ const StyledSelect = styled.select`
   background: transparent;
   padding: 6px 0 0;
   cursor: pointer;
-  /* appearance: none; */
 `;
 const { kakao } = window;
 export default function MakeRecommend() {
   const [imgFile, setImgFile] = useState(null);
   const [imgUrl, setImgUrl] = useState("");
   const [restaurantname, setRestaurantname] = useState("");
-  // const [address, setAddress] = useState("");
   const token = localStorage.getItem("token");
   const [rating, setRating] = useState(0);
   const [isValid, setIsValid] = useState(false);
@@ -92,8 +90,10 @@ export default function MakeRecommend() {
   };
   const uploadRecommend = async () => {
     try {
+      const RecImg = await convertBase64ToBlob(imgUrl);
       const formData = new FormData();
-      formData.append("image", imgUrl);
+      formData.append("image", RecImg);
+
       const uploadResponse = await imgUpload(formData);
       const imageUrl =
         "https://api.mandarin.weniv.co.kr/" + uploadResponse.data.filename;
@@ -138,17 +138,19 @@ export default function MakeRecommend() {
 
   const placesSearchCB = (data, status, pagination) => {
     if (status === kakao.maps.services.Status.OK) {
-      console.log("해당 가게의 주소는", data);
       setAddressList(data);
       setSelectedAddress(data[0].road_address_name);
     }
   };
-
+  const convertBase64ToBlob = async base64Data => {
+    const response = await fetch(base64Data);
+    const blob = await response.blob();
+    return new File([blob], "image.jpg", { type: "image/jpeg" });
+  };
   const onButtonClick = event => {
     event.preventDefault(); // 이벤트 버블링 방지
-    console.log("현재 가게 이름", restaurantname);
+
     if (restaurantname) {
-      console.log("검색 수행");
       const ps = new kakao.maps.services.Places();
       ps.keywordSearch(restaurantname, placesSearchCB);
     } else {
@@ -157,7 +159,6 @@ export default function MakeRecommend() {
   };
   const onAddressChange = event => {
     setSelectedAddress(event.target.value);
-    console.log("선택된 가게는", selectedAddress);
   };
   return (
     <>
