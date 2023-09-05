@@ -1,2 +1,2 @@
-User-agent: *Allow:/
-Sitemap: https://foodzip.netlify.app/sitemap.xml
+User-agent: *
+Allow:/
