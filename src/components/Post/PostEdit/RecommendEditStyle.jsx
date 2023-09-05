@@ -21,6 +21,7 @@ const ProductImage = styled.img`
   height: 180px;
   border-radius: 10px;
   margin-bottom: 30px;
+  object-fit: cover;
 `;
 const HeaderLayoutDiv = styled.div`
   display: flex;

@@ -14,7 +14,7 @@ const List = styled.section`
 `;
 export default function ChatList() {
   const [modal, setModal] = useRecoilState(modalState);
-  console.log(modal);
+
   return (
     <>
       <h1 className="a11y-hidden">채팅 리스트 페이지</h1>

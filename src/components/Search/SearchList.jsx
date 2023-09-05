@@ -58,8 +58,8 @@ export default function SearchList({ searchKeyword }) {
         const res = await userSearch(keyword, token);
         const filteredData = res.data.filter(
           item =>
-            !item.image.startsWith("https://mandarin.api.weniv") &&
-            item.image.startsWith("https://api.mandarin.weniv.co.kr"),
+            !item.image.startsWith("https://mandarin.api.weniv/") &&
+            item.image.startsWith("https://api.mandarin.weniv.co.kr/"),
         );
         setSearchListData(filteredData);
       } catch (error) {
@@ -79,7 +79,11 @@ export default function SearchList({ searchKeyword }) {
           key={searchItem.accountname}
           onClick={() => handleClick(searchItem.accountname)}
         >
-          <ProfileImg src={searchItem.image} alt="프로필 이미지" />
+          <ProfileImg
+            src={searchItem.image}
+            alt="프로필 이미지"
+            crossOrigin="anonymous"
+          />
           <TextWrap>
             <UserName>
               {highlightKeyword(searchItem.username, searchKeyword)}

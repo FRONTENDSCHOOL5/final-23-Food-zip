@@ -103,7 +103,7 @@ export default function PostEdit({ closeModal, postId }) {
               const base64data = reader.result;
               const imageUrl = await formDataHandler(base64data);
               uploadedFileUrls.push(imageUrl);
-              console.log("check", uploadedFileUrls);
+
               resolve();
             };
           }),
@@ -120,7 +120,6 @@ export default function PostEdit({ closeModal, postId }) {
     // 모든 이미지 업로드가 완료된 후
     await Promise.all(imageUploadPromises);
     setImgUrl(prevImgUrl => [...prevImgUrl, ...uploadedFileUrls]);
-    console.log("!!!", imgUrl);
   };
 
   const formDataHandler = async dataURI => {
@@ -132,7 +131,6 @@ export default function PostEdit({ closeModal, postId }) {
     }
     const blob = new Blob([ab], { type: "image/jpeg" });
     const file = new File([blob], "image.jpg", { type: "image/jpeg" });
-    console.log("File object:", file); // 이 부분을 추가합니다.
     return file;
   };
   const removeImg = index => {
@@ -170,15 +168,14 @@ export default function PostEdit({ closeModal, postId }) {
 
   const postEditUpload = async () => {
     try {
-      const newSplitResult = [...splitResult]; // Create a shallow copy of splitResult
+      const newSplitResult = [...splitResult];
       if (imgUrl) {
-        console.log("here");
         const uploadedImageUrls = [];
         for (const image of imgUrl) {
           const formData = new FormData();
           formData.append("image", image);
           const uploadResponse = await imgUpload(formData);
-          console.log("upload", uploadResponse);
+
           let imageUrl = "";
           if (uploadResponse.data.filename) {
             imageUrl =
@@ -186,14 +183,12 @@ export default function PostEdit({ closeModal, postId }) {
               uploadResponse.data.filename;
           }
           uploadedImageUrls.push(imageUrl);
-          console.log("new", uploadedImageUrls);
-          newSplitResult.push(imageUrl); // Update the newSplitResult array directly
-          console.log("if", newSplitResult.join(", "));
+
+          newSplitResult.push(imageUrl);
         }
       }
-      console.log("img", newSplitResult);
-      setSplitResult(newSplitResult); // Update the state once after the loop is finished
 
+      setSplitResult(newSplitResult);
       const res = await postEditApi(
         postId,
         token,
@@ -201,7 +196,7 @@ export default function PostEdit({ closeModal, postId }) {
         newSplitResult.join(", "),
       );
       const updatedPost = res.data.post;
-      console.log("update", updatedPost);
+
       setPostInfo(updatedPost);
       closeModal();
     } catch (error) {
@@ -216,13 +211,11 @@ export default function PostEdit({ closeModal, postId }) {
 
   const dragStart = (e, position) => {
     dragItem.current = position;
-    console.log(e.target.innerHTML);
   };
 
   // 드래그중인 대상이 위로 포개졌을 때
   const dragEnter = (e, position) => {
     dragOverItem.current = position;
-    console.log(e.target.innerHTML);
   };
 
   // 드랍 (커서 뗐을 때)
@@ -253,7 +246,6 @@ export default function PostEdit({ closeModal, postId }) {
             ></Button>
           </HeaderLayoutDiv>
           <EditImgWrapper>
-            {/* <UploadContainer> */}
             <UploadImgWrapper htmlFor="file-input">
               <UploadImgInput
                 type="file"
@@ -294,7 +286,6 @@ export default function PostEdit({ closeModal, postId }) {
                 />
               </UploadImgDiv>
             ))}
-            {/* </UploadContainer> */}
           </EditImgWrapper>
           <PostContent
             rows="10"

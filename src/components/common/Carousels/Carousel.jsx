@@ -12,7 +12,6 @@ import Right from "../../../assets/images/chevron-right.svg";
 export default function Carousel({ images, userInfo, onImageClick }) {
   const carouselImages = images.includes(",") ? images.split(",") : [images];
   const [currentIndex, setCurrentIndex] = useState(0);
-  // let carouselImages = images.split(",");
   const handlePrevious = () => {
     setCurrentIndex(prevIndex =>
       prevIndex - 1 < 0 ? carouselImages.length - 1 : prevIndex - 1,
@@ -37,7 +36,7 @@ export default function Carousel({ images, userInfo, onImageClick }) {
             className={currentIndex === index ? "active" : "inactive"}
             alt={`포스트이미지 by @${images.userInfo}.`}
             crossOrigin="anonymous"
-            // loading="lazy"
+            loading="lazy"
             onClick={onImageClick}
           />
         ))}

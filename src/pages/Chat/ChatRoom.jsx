@@ -24,7 +24,6 @@ const List = styled.section`
 export default function ChatRoom() {
   const location = useLocation();
   const [modal, setModal] = useRecoilState(modalState);
-  const [modalShow, setModalShow] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [chatValue, setChatValue] = useState([]);
   const yourAccountname = location?.state?.yourAccountname || "foodzim";

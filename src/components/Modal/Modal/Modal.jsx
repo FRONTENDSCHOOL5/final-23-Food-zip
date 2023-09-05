@@ -25,7 +25,7 @@ export default function Modal({
   const [alertType, setAlertType] = useState("logout");
   const [modal, setModal] = useRecoilState(modalState);
   const [cardShow, setCardShow] = useRecoilState(cardShowState);
-  const { kakao } = window;
+
   function modalClose(e) {
     if (e.target === e.currentTarget) {
       setModal(prevModal => ({ ...prevModal, show: false }));

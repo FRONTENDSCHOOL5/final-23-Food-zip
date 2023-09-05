@@ -5,7 +5,6 @@ import Marker from "../../assets/images/location.svg";
 import { useLocation } from "react-router-dom";
 import "./MapStyle.css";
 import Modal from "../../components/Modal/Modal/Modal";
-import Alert from "../../components/Modal/Alert/Alert";
 import sprite from "../../assets/images/SpriteIcon.svg";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
@@ -139,38 +138,15 @@ const MapTest = () => {
     </svg>
   );
 
-  // function modalClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     setModalShow(false);
-  //   }
-  // }
-
-  // function modalOpen(type) {
-  //   setModalShow(true);
-  //   setModalType(type);
-  // }
-
-  // const [alertShow, setAlertShow] = useState(false);
-  // function alertClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     setAlertShow(false);
-  //   }
-  // }
-
-  // function alertOpen() {
-  //   setAlertShow(true);
-  // }
   const [modal, setModal] = useRecoilState(modalState);
-  console.log(modal);
+
   return (
     <>
-      {/* <Header type="map" modalOpen={() => modalOpen("setting")} /> */}
       <Header type="map" />
       <MapWrapper>
         <Map id="map"></Map>
         <InfoWrapper>
           <ResName>{recommendName}</ResName>
-          {/* <FoodType>돈까스 우동</FoodType> */}
           <Address>{place}</Address>
           <BtnList>
             <MapLi>
@@ -191,11 +167,7 @@ const MapTest = () => {
           </BtnList>
         </InfoWrapper>
       </MapWrapper>
-      {/* {modalShow && (
-        <Modal type={modalType} modalClose={modalClose} alertOpen={alertOpen} />
-      )} */}
       {modal.show && <Modal type={modal.type} />}
-      {/* {alertShow && <Alert type="logout" alertClose={alertClose} />} */}
     </>
   );
 };
