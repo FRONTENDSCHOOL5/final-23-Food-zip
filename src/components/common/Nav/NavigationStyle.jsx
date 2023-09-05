@@ -38,7 +38,6 @@ const StyledNavText = styled.p`
 `;
 const ButtonContainer = styled.div`
   position: absolute;
-  width: 100%;
   top: -58px;
   right: 0;
 `;

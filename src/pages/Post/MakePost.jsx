@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-// import PostImgPrev from "../../components/Post/ImgPrev/PostImgPrev";
 import Header from "../../components/common/Header/Header";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -42,12 +41,9 @@ const StyledPost = styled.textarea`
 export default function MakePost() {
   const [imgFile, setImgFile] = useState([]);
   const [imgUrl, setImgUrl] = useState([]);
-  // const [imageUrls, setImageUrls] = useState("");
   const [content, setContent] = useState("");
   const [isValid, setIsValid] = useState(false);
   const token = localStorage.getItem("token");
-  // const [imgUrl, setImgUrl] = useState([]);
-  // const [imgFile, setImgFile] = useState([]);
   const [uploadPreview, setUploadPreview] = useState([]);
   const dragItem = useRef(); // 드래그할 아이템의 인덱스
   const dragOverItem = useRef();
@@ -55,18 +51,8 @@ export default function MakePost() {
   const maxSize = 10 * 1024 * 1024;
   const navigate = useNavigate();
 
-  // const handleImageUrlChange = (file, url) => {
-  //   setImgFile(prevImgFile => [...prevImgFile, ...file]);
-  //   setImgUrl(prevImgUrl => [...prevImgUrl, ...url]);
-  //   // setImgFile(file);
-  //   // setImgUrl(url);
-  //   // console.log("url object in MakePost:", url);
-  //   // console.log("File object in MakePost:", file);
-  // };
-
   const uploadPost = async (url, content) => {
     try {
-      console.log("ce", imgUrl);
       const uploadedImageUrls = [];
       for (const image of imgUrl) {
         const formData = new FormData();
@@ -88,7 +74,6 @@ export default function MakePost() {
 
         uploadedImageUrls.push(imageUrl); // 결과를 배열에 추가
       }
-      console.log("up", uploadedImageUrls.join(", "));
       await axios.post(
         "https://api.mandarin.weniv.co.kr/post",
         {
@@ -124,7 +109,6 @@ export default function MakePost() {
       setIsValid(true);
     }
   };
-  console.log("이미지", imgUrl);
   useEffect(() => {
     checkContent();
   }, [content, imgUrl]);
@@ -193,7 +177,6 @@ export default function MakePost() {
               const base64data = reader.result;
               const imageUrl = await formDataHandler(base64data);
               uploadedFileUrls.push(imageUrl);
-              console.log("check", uploadedFileUrls);
               resolve();
             };
           }),
@@ -210,7 +193,6 @@ export default function MakePost() {
     // 모든 이미지 업로드가 완료된 후
     await Promise.all(imageUploadPromises);
     setImgUrl(prevImgUrl => [...prevImgUrl, ...uploadedFileUrls]);
-    console.log("!!!", uploadedFileObjects, uploadedFileUrls);
   };
 
   const formDataHandler = async dataURI => {
@@ -222,34 +204,30 @@ export default function MakePost() {
     }
     const blob = new Blob([ab], { type: "image/jpeg" });
     const file = new File([blob], "image.jpg", { type: "image/jpeg" });
-    console.log("File object:", file); // 이 부분을 추가합니다.
     return file;
   };
   const removeImg = index => {
-    console.log("remove", index);
     const updatedUploadPreview = uploadPreview.filter(
       (_imageData, currentIndex) => currentIndex !== index,
     );
     const updatedImageUrls = imgUrl.filter(
       (_imageUrl, currentIndex) => currentIndex !== index,
     );
-    console.log("제거", updatedUploadPreview, updatedImageUrls);
+
     setUploadPreview(updatedUploadPreview);
     setImgUrl(updatedImageUrls);
   };
   const dragStart = (e, position) => {
     dragItem.current = position;
-    console.log(e.target.innerHTML);
   };
 
   // 드래그중인 대상이 위로 포개졌을 때
   const dragEnter = (e, position) => {
     dragOverItem.current = position;
-    console.log(e.target.innerHTML);
   };
 
   // 드랍 (커서 뗐을 때)
-  const drop = e => {
+  const drop = () => {
     const newPreviewList = [...uploadPreview];
     const newFileList = [...imgFile]; // imgUrl 리스트도 변경되야 해서 복사합니다.
     const newUrlList = [...imgUrl]; // imgUrl 리스트도 변경되야 해서 복사합니다.
@@ -282,7 +260,6 @@ export default function MakePost() {
         uploadHandler={handleUpload}
       />
       <StyledContainer>
-        {/* <PostImgPrev onImageUrlChange={handleImageUrlChange} /> */}
         <UploadContainer>
           <UploadImgWrapper htmlFor="file-input">
             <UploadImgInput

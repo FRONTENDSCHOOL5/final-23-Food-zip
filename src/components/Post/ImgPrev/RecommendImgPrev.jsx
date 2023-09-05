@@ -18,7 +18,6 @@ export default function RecommendImgPrev({
   iconStyle,
   wrapperStyle,
 }) {
-  const [imgUrl, setImgUrl] = useState("");
   const fileInputRef = useRef(null);
   const [boardImage, setBoardImage] = useState(null);
   const [uploadPreview, setUploadPreview] = useState([]);
@@ -33,7 +32,6 @@ export default function RecommendImgPrev({
 
   const handleUploadImg = async e => {
     let file = e.target?.files[0];
-    console.log("pre1", file);
     if (file.size > maxSize) {
       alert("파일 사이즈는 10MB 이하만 가능합니다");
       return;

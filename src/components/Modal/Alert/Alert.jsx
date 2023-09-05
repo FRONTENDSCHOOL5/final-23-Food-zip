@@ -122,7 +122,7 @@ export default function Alert({
     ),
     product: (
       <AlertWrapArticle>
-        <AlertTextP>상품을 삭제할까요?</AlertTextP>
+        <AlertTextP>맛집을 삭제할까요?</AlertTextP>
         <AlertBottomSection>
           <AlertCancelBtn onClick={alertClose}>취소</AlertCancelBtn>
           <AlertLineSpan></AlertLineSpan>
