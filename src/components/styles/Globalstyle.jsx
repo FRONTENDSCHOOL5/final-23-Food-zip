@@ -27,6 +27,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: 0;
     background-color: transparent;
+    color: inherit;
   }
 
   img {
@@ -42,6 +43,8 @@ export const GlobalStyle = createGlobalStyle`
     border: 0;
     font-family: 'SUIT-Regular';
     resize: none;
+    -webkit-appearance: none;
+	  -webkit-border-radius: 0;
     &:focus {
       outline: none;
     }
