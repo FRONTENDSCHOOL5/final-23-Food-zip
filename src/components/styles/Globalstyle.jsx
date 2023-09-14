@@ -44,7 +44,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'SUIT-Regular';
     resize: none;
     -webkit-appearance: none;
-	/* -webkit-border-radius: 0; */
+	  -webkit-border-radius: 0;
     &:focus {
       outline: none;
     }
